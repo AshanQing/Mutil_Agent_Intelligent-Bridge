@@ -1,0 +1,14 @@
+{% include "tasks/_legacy_initial_layout_base.md.j2" %}
+
+{% include "partials/output_constraints.md.j2" %}
+
+## 动态加载的设计规范/规则库
+{{ standards_text | default("无动态规范文本。", true) }}
+
+## Few-shot 参考样本
+{{ few_shots_json }}
+
+## 当前任务输入
+以下输入已完成工程化清洗，仅保留设桥布跨推理所需的线路、纵断面、横断面、平曲线与障碍物信息。
+
+{{ design_input_json }}

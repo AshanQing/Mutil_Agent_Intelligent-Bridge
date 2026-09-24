@@ -1,0 +1,2495 @@
+metadata:
+  library_name: JTG_B01_2014_table_registry
+  standard: JTG B01-2014
+  standard_code: JTG B01-2014
+  table_schema: compact_table_registry
+  file_version: v0.1
+  standard_name: 公路工程技术标准
+  library_type: table_registry
+  item_count: 37
+  version: reasonableness_fixed_v0.1
+  generation_note: 根据 library_reasonableness_review.md 修正：补充 formula_status、显式化规则调用表格/公式ID、标记人工复核规则、修正表9.1.5查表口径、标注变量误报风险。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+tables:
+- id: T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+  meta:
+    title: 设计车辆外廓尺寸
+    source: JTG B01-2014, 表3.2.1
+    clause: 3.2.1
+    table_type: parameter
+    applicability: 公路几何设计代表车型外廓尺寸
+  structure:
+    index_fields:
+    - vehicle_type
+    value_fields:
+    - total_length
+    - total_width
+    - total_height
+    - front_overhang
+    - wheelbase
+    - rear_overhang
+    unit:
+      total_length: m
+      total_width: m
+      total_height: m
+      front_overhang: m
+      wheelbase: m
+      rear_overhang: m
+  data:
+  - condition:
+      vehicle_type: 小客车
+    value:
+      total_length: 6
+      total_width: 1.8
+      total_height: 2
+      front_overhang: 0.8
+      wheelbase: '3.8'
+      rear_overhang: 1.4
+  - condition:
+      vehicle_type: 大型客车
+    value:
+      total_length: 13.7
+      total_width: 2.55
+      total_height: 4
+      front_overhang: 2.6
+      wheelbase: 6.5+1.5
+      rear_overhang: 3.1
+  - condition:
+      vehicle_type: 铰接客车
+    value:
+      total_length: 18
+      total_width: 2.5
+      total_height: 4
+      front_overhang: 1.7
+      wheelbase: 5.8+6.7
+      rear_overhang: 3.8
+  - condition:
+      vehicle_type: 载重汽车
+    value:
+      total_length: 12
+      total_width: 2.5
+      total_height: 4
+      front_overhang: 1.5
+      wheelbase: '6.5'
+      rear_overhang: 4
+  - condition:
+      vehicle_type: 铰接列车
+    value:
+      total_length: 18.1
+      total_width: 2.55
+      total_height: 4
+      front_overhang: 1.5
+      wheelbase: 3.3+11
+      rear_overhang: 2.3
+  lookup:
+    input:
+    - VAR_vehicle_type
+    output:
+    - VAR_vehicle_length
+    - VAR_vehicle_width
+    - VAR_vehicle_height
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_3_2_1_DESIGN_VEHICLE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_vehicle_type
+    - VAR_vehicle_length
+    - VAR_vehicle_width
+    - VAR_vehicle_height
+- id: T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+  meta:
+    title: 各汽车代表车型及车辆折算系数
+    source: JTG B01-2014, 表3.3.2
+    clause: 3.3.2
+    table_type: coefficient
+    applicability: 交通量换算采用小客车为标准车型
+  structure:
+    index_fields:
+    - vehicle_class
+    value_fields:
+    - conversion_factor
+    - description
+    unit:
+      conversion_factor: '-'
+  data:
+  - condition:
+      vehicle_class: 小客车
+    value:
+      conversion_factor: 1.0
+      description: 座位≤19座的客车和载质量≤2t的货车
+  - condition:
+      vehicle_class: 中型车
+    value:
+      conversion_factor: 1.5
+      description: 座位>19座的客车和2t<载质量≤7t的货车
+  - condition:
+      vehicle_class: 大型车
+    value:
+      conversion_factor: 2.5
+      description: 7t<载质量≤20t的货车
+  - condition:
+      vehicle_class: 汽车列车
+    value:
+      conversion_factor: 4.0
+      description: 载质量>20t的货车
+  lookup:
+    input:
+    - VAR_vehicle_class
+    output:
+    - VAR_conversion_factor
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_3_3_2_TRAFFIC_CONVERSION
+    tables: []
+    formulas: []
+    variables:
+    - VAR_vehicle_class
+    - VAR_conversion_factor
+- id: T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  meta:
+    title: 各级公路设计服务水平
+    source: JTG B01-2014, 表3.4.2
+    clause: 3.4.2
+    table_type: limit_value
+    applicability: 各级公路设计服务水平最低要求
+  structure:
+    index_fields:
+    - highway_class
+    value_fields:
+    - design_service_level
+    unit:
+      design_service_level: level
+  data:
+  - condition:
+      highway_class: 高速公路
+    value:
+      design_service_level: 三级
+  - condition:
+      highway_class: 一级公路
+    value:
+      design_service_level: 三级
+  - condition:
+      highway_class: 二级公路
+    value:
+      design_service_level: 四级
+  - condition:
+      highway_class: 三级公路
+    value:
+      design_service_level: 四级
+  - condition:
+      highway_class: 四级公路
+    value:
+      design_service_level: 四级
+  lookup:
+    input:
+    - VAR_highway_class
+    output:
+    - VAR_design_service_level
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_design_service_level
+- id: T_B01_3_5_1_DESIGN_SPEED
+  meta:
+    title: 设计速度
+    source: JTG B01-2014, 表3.5.1
+    clause: 3.5.1
+    table_type: parameter
+    applicability: 各级公路设计速度选用
+  structure:
+    index_fields:
+    - highway_class
+    value_fields:
+    - design_speed_options
+    unit:
+      design_speed_options: km/h
+  data:
+  - condition:
+      highway_class: 高速公路
+    value:
+      design_speed_options:
+      - 120
+      - 100
+      - 80
+  - condition:
+      highway_class: 一级公路
+    value:
+      design_speed_options:
+      - 100
+      - 80
+      - 60
+  - condition:
+      highway_class: 二级公路
+    value:
+      design_speed_options:
+      - 80
+      - 60
+  - condition:
+      highway_class: 三级公路
+    value:
+      design_speed_options:
+      - 40
+      - 30
+  - condition:
+      highway_class: 四级公路
+    value:
+      design_speed_options:
+      - 30
+      - 20
+  lookup:
+    input:
+    - VAR_highway_class
+    output:
+    - VAR_B01_v
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_3_5_1_DESIGN_SPEED
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_B01_v
+- id: T_B01_3_6_1_CLEARANCE_HEIGHT
+  meta:
+    title: 公路建筑限界净高
+    source: JTG B01-2014, 3.6.1
+    clause: 3.6.1
+    table_type: limit_value
+    applicability: 各级公路及人行自行车设施净高要求
+  structure:
+    index_fields:
+    - facility_type
+    value_fields:
+    - clearance_height
+    unit:
+      clearance_height: m
+  data:
+  - condition:
+      facility_type: 高速公路、一级公路、二级公路
+    value:
+      clearance_height: 5.0
+  - condition:
+      facility_type: 三级公路、四级公路
+    value:
+      clearance_height: 4.5
+  - condition:
+      facility_type: 人行道、自行车道、检修道
+    value:
+      clearance_height: 2.5
+  lookup:
+    input:
+    - VAR_facility_type
+    output:
+    - VAR_H_clearance
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_3_6_1_CLEARANCE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_facility_type
+    - VAR_H_clearance
+- id: T_B01_4_0_2_LANE_WIDTH
+  meta:
+    title: 车道宽度
+    source: JTG B01-2014, 表4.0.2
+    clause: 4.0.2
+    table_type: parameter
+    applicability: 根据设计速度查取车道宽度
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - lane_width
+    unit:
+      design_speed: km/h
+      lane_width: m
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      lane_width: 3.75
+  - condition:
+      design_speed: 100
+    value:
+      lane_width: 3.75
+  - condition:
+      design_speed: 80
+    value:
+      lane_width: 3.75
+  - condition:
+      design_speed: 60
+    value:
+      lane_width: 3.5
+  - condition:
+      design_speed: 40
+    value:
+      lane_width: 3.5
+  - condition:
+      design_speed: 30
+    value:
+      lane_width: 3.25
+  - condition:
+      design_speed: 20
+    value:
+      lane_width: 3.0
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_lane_width
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_2_LANE_WIDTH
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_lane_width
+- id: T_B01_4_0_3_LANE_COUNT
+  meta:
+    title: 各级公路车道数
+    source: JTG B01-2014, 表4.0.3
+    clause: 4.0.3
+    table_type: parameter
+    applicability: 各级公路车道数要求
+  structure:
+    index_fields:
+    - highway_class
+    value_fields:
+    - lane_count
+    unit:
+      lane_count: lane
+  data:
+  - condition:
+      highway_class: 高速公路、一级公路
+    value:
+      lane_count: '>=4'
+  - condition:
+      highway_class: 二级公路
+    value:
+      lane_count: 2
+  - condition:
+      highway_class: 三级公路
+    value:
+      lane_count: 2
+  - condition:
+      highway_class: 四级公路
+    value:
+      lane_count: 2或1
+  lookup:
+    input:
+    - VAR_highway_class
+    output:
+    - VAR_B01_lane_count
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_3_LANE_COUNT
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_B01_lane_count
+- id: T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+  meta:
+    title: 左侧路缘带宽度
+    source: JTG B01-2014, 表4.0.4
+    clause: 4.0.4
+    table_type: parameter
+    applicability: 高速公路和一级公路左侧路缘带宽度
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - left_edge_strip_width
+    unit:
+      design_speed: km/h
+      left_edge_strip_width: m
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      left_edge_strip_width: 0.75
+  - condition:
+      design_speed: 100
+    value:
+      left_edge_strip_width: 0.75
+  - condition:
+      design_speed: 80
+    value:
+      left_edge_strip_width: 0.5
+  - condition:
+      design_speed: 60
+    value:
+      left_edge_strip_width: 0.5
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_left_edge_strip_width
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_4_MEDIAN
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_left_edge_strip_width
+- id: T_B01_4_0_5_1_SHOULDER_WIDTH
+  meta:
+    title: 路肩宽度
+    source: JTG B01-2014, 表4.0.5-1
+    clause: 4.0.5
+    table_type: parameter
+    applicability: 各级公路右侧硬路肩和土路肩宽度
+  structure:
+    index_fields:
+    - highway_class_or_function
+    - design_speed
+    value_fields:
+    - right_hard_shoulder_general
+    - right_hard_shoulder_min
+    - earth_shoulder_general
+    - earth_shoulder_min
+    unit:
+      design_speed: km/h
+      right_hard_shoulder_general: m
+      right_hard_shoulder_min: m
+      earth_shoulder_general: m
+      earth_shoulder_min: m
+  data:
+  - condition:
+      highway_class_or_function: 高速公路
+      design_speed: 120
+    value:
+      right_hard_shoulder_general: 3.0
+      right_hard_shoulder_min: 1.5
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.75
+  - condition:
+      highway_class_or_function: 高速公路
+      design_speed: 100
+    value:
+      right_hard_shoulder_general: 3.0
+      right_hard_shoulder_min: 1.5
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.75
+  - condition:
+      highway_class_or_function: 高速公路
+      design_speed: 80
+    value:
+      right_hard_shoulder_general: 3.0
+      right_hard_shoulder_min: 1.5
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.75
+  - condition:
+      highway_class_or_function: 一级公路干线
+      design_speed: 100
+    value:
+      right_hard_shoulder_general: 3.0
+      right_hard_shoulder_min: 1.5
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.75
+  - condition:
+      highway_class_or_function: 一级公路干线
+      design_speed: 80
+    value:
+      right_hard_shoulder_general: 3.0
+      right_hard_shoulder_min: 1.5
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.75
+  - condition:
+      highway_class_or_function: 一级公路集散或二级公路
+      design_speed: 80
+    value:
+      right_hard_shoulder_general: 1.5
+      right_hard_shoulder_min: 0.75
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.5
+  - condition:
+      highway_class_or_function: 一级公路集散或二级公路
+      design_speed: 60
+    value:
+      right_hard_shoulder_general: 0.75
+      right_hard_shoulder_min: 0.25
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.5
+  - condition:
+      highway_class_or_function: 三级公路、四级公路
+      design_speed: 40
+    value:
+      right_hard_shoulder_general: null
+      right_hard_shoulder_min: null
+      earth_shoulder_general: 0.75
+      earth_shoulder_min: 0.5
+  - condition:
+      highway_class_or_function: 三级公路、四级公路
+      design_speed: 30
+    value:
+      right_hard_shoulder_general: null
+      right_hard_shoulder_min: null
+      earth_shoulder_general: 0.5
+      earth_shoulder_min: 0.5
+  - condition:
+      highway_class_or_function: 四级公路双车道
+      design_speed: 20
+    value:
+      right_hard_shoulder_general: null
+      right_hard_shoulder_min: null
+      earth_shoulder_general: 0.25
+      earth_shoulder_min: 0.25
+  - condition:
+      highway_class_or_function: 四级公路单车道
+      design_speed: 20
+    value:
+      right_hard_shoulder_general: null
+      right_hard_shoulder_min: null
+      earth_shoulder_general: 0.5
+      earth_shoulder_min: 0.5
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_B01_v
+    output:
+    - VAR_shoulder_width
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_5_SHOULDER_WIDTH
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_B01_v
+    - VAR_shoulder_width
+- id: T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+  meta:
+    title: 分离式断面左侧路肩宽度
+    source: JTG B01-2014, 表4.0.5-2
+    clause: 4.0.5
+    table_type: parameter
+    applicability: 分离式断面高速公路和一级公路左侧路肩宽度
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - left_hard_shoulder_width
+    - left_earth_shoulder_width
+    unit:
+      design_speed: km/h
+      left_hard_shoulder_width: m
+      left_earth_shoulder_width: m
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      left_hard_shoulder_width: 1.25
+      left_earth_shoulder_width: 0.75
+  - condition:
+      design_speed: 100
+    value:
+      left_hard_shoulder_width: 1.0
+      left_earth_shoulder_width: 0.75
+  - condition:
+      design_speed: 80
+    value:
+      left_hard_shoulder_width: 0.75
+      left_earth_shoulder_width: 0.75
+  - condition:
+      design_speed: 60
+    value:
+      left_hard_shoulder_width: 0.75
+      left_earth_shoulder_width: 0.5
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_left_hard_shoulder_width
+    - VAR_left_earth_shoulder_width
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_5_SHOULDER_WIDTH
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_left_hard_shoulder_width
+- id: T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+  meta:
+    title: 高速公路、一级公路停车视距
+    source: JTG B01-2014, 表4.0.15-1
+    clause: 4.0.15
+    table_type: limit_value
+    applicability: 高速公路、一级公路停车视距
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - stopping_sight_distance
+    unit:
+      design_speed: km/h
+      stopping_sight_distance: m
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      stopping_sight_distance: 210
+  - condition:
+      design_speed: 100
+    value:
+      stopping_sight_distance: 160
+  - condition:
+      design_speed: 80
+    value:
+      stopping_sight_distance: 110
+  - condition:
+      design_speed: 60
+    value:
+      stopping_sight_distance: 75
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_D_required
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_15_SIGHT_DISTANCE
+    tables: []
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+    variables:
+    - VAR_B01_v
+    - VAR_D_required
+- id: T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+  meta:
+    title: 二三四级公路停车、会车与超车视距
+    source: JTG B01-2014, 表4.0.15-2
+    clause: 4.0.15
+    table_type: limit_value
+    applicability: 二、三、四级公路停车、会车与超车视距
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - stopping_sight_distance
+    - meeting_sight_distance
+    - passing_sight_distance
+    unit:
+      design_speed: km/h
+      stopping_sight_distance: m
+      meeting_sight_distance: m
+      passing_sight_distance: m
+  data:
+  - condition:
+      design_speed: 80
+    value:
+      stopping_sight_distance: 110
+      meeting_sight_distance: 220
+      passing_sight_distance: 550
+  - condition:
+      design_speed: 60
+    value:
+      stopping_sight_distance: 75
+      meeting_sight_distance: 150
+      passing_sight_distance: 350
+  - condition:
+      design_speed: 40
+    value:
+      stopping_sight_distance: 40
+      meeting_sight_distance: 80
+      passing_sight_distance: 200
+  - condition:
+      design_speed: 30
+    value:
+      stopping_sight_distance: 30
+      meeting_sight_distance: 60
+      passing_sight_distance: 150
+  - condition:
+      design_speed: 20
+    value:
+      stopping_sight_distance: 20
+      meeting_sight_distance: 40
+      passing_sight_distance: 100
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_D_required
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_15_SIGHT_DISTANCE
+    tables: []
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+    variables:
+    - VAR_B01_v
+    - VAR_D_required
+- id: T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+  meta:
+    title: 圆曲线最小半径
+    source: JTG B01-2014, 表4.0.17
+    clause: 4.0.17
+    table_type: limit_value
+    applicability: 圆曲线最小半径及不设超高最小半径
+  structure:
+    index_fields:
+    - design_speed
+    - superelevation_condition
+    value_fields:
+    - minimum_radius
+    unit:
+      design_speed: km/h
+      minimum_radius: m
+  data:
+  - condition:
+      design_speed: 120
+      superelevation_condition: 最大超高10%
+    value:
+      minimum_radius: 570
+  - condition:
+      design_speed: 100
+      superelevation_condition: 最大超高10%
+    value:
+      minimum_radius: 360
+  - condition:
+      design_speed: 80
+      superelevation_condition: 最大超高10%
+    value:
+      minimum_radius: 220
+  - condition:
+      design_speed: 60
+      superelevation_condition: 最大超高10%
+    value:
+      minimum_radius: 115
+  - condition:
+      design_speed: 120
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 650
+  - condition:
+      design_speed: 100
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 400
+  - condition:
+      design_speed: 80
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 250
+  - condition:
+      design_speed: 60
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 125
+  - condition:
+      design_speed: 40
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 60
+  - condition:
+      design_speed: 30
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 30
+  - condition:
+      design_speed: 20
+      superelevation_condition: 最大超高8%
+    value:
+      minimum_radius: 15
+  - condition:
+      design_speed: 120
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 5500
+  - condition:
+      design_speed: 100
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 4000
+  - condition:
+      design_speed: 80
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 2500
+  - condition:
+      design_speed: 60
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 1500
+  - condition:
+      design_speed: 40
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 600
+  - condition:
+      design_speed: 30
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 350
+  - condition:
+      design_speed: 20
+      superelevation_condition: 不设超高且路拱≤2.0%
+    value:
+      minimum_radius: 150
+  lookup:
+    input:
+    - VAR_B01_v
+    - VAR_superelevation_condition
+    output:
+    - VAR_R_curve_min
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_17_CURVE_RADIUS
+    tables: []
+    formulas:
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+    variables:
+    - VAR_B01_v
+    - VAR_R_curve_min
+- id: T_B01_4_0_20_MAX_GRADE
+  meta:
+    title: 最大纵坡
+    source: JTG B01-2014, 表4.0.20
+    clause: 4.0.20
+    table_type: limit_value
+    applicability: 各设计速度最大纵坡
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - max_longitudinal_grade
+    unit:
+      design_speed: km/h
+      max_longitudinal_grade: '%'
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      max_longitudinal_grade: 3
+  - condition:
+      design_speed: 100
+    value:
+      max_longitudinal_grade: 4
+  - condition:
+      design_speed: 80
+    value:
+      max_longitudinal_grade: 5
+  - condition:
+      design_speed: 60
+    value:
+      max_longitudinal_grade: 6
+  - condition:
+      design_speed: 40
+    value:
+      max_longitudinal_grade: 7
+  - condition:
+      design_speed: 30
+    value:
+      max_longitudinal_grade: 8
+  - condition:
+      design_speed: 20
+    value:
+      max_longitudinal_grade: 9
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_i_grade_max
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_20_MAX_GRADE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_i_grade_max
+- id: T_B01_4_0_21_MAX_GRADE_LENGTH
+  meta:
+    title: 不同纵坡的最大坡长
+    source: JTG B01-2014, 表4.0.21
+    clause: 4.0.21
+    table_type: limit_value
+    applicability: 按设计速度和纵坡坡度查取最大坡长
+  structure:
+    index_fields:
+    - design_speed
+    - grade
+    value_fields:
+    - max_grade_length
+    unit:
+      design_speed: km/h
+      grade: '%'
+      max_grade_length: m
+  data:
+  - condition:
+      design_speed: 120
+      grade: 3
+    value:
+      max_grade_length: 900
+  - condition:
+      design_speed: 100
+      grade: 3
+    value:
+      max_grade_length: 1000
+  - condition:
+      design_speed: 80
+      grade: 3
+    value:
+      max_grade_length: 1100
+  - condition:
+      design_speed: 60
+      grade: 3
+    value:
+      max_grade_length: 1200
+  - condition:
+      design_speed: 120
+      grade: 4
+    value:
+      max_grade_length: 700
+  - condition:
+      design_speed: 100
+      grade: 4
+    value:
+      max_grade_length: 800
+  - condition:
+      design_speed: 80
+      grade: 4
+    value:
+      max_grade_length: 900
+  - condition:
+      design_speed: 60
+      grade: 4
+    value:
+      max_grade_length: 1000
+  - condition:
+      design_speed: 40
+      grade: 4
+    value:
+      max_grade_length: 1100
+  - condition:
+      design_speed: 30
+      grade: 4
+    value:
+      max_grade_length: 1100
+  - condition:
+      design_speed: 20
+      grade: 4
+    value:
+      max_grade_length: 1200
+  - condition:
+      design_speed: 100
+      grade: 5
+    value:
+      max_grade_length: 600
+  - condition:
+      design_speed: 80
+      grade: 5
+    value:
+      max_grade_length: 700
+  - condition:
+      design_speed: 60
+      grade: 5
+    value:
+      max_grade_length: 800
+  - condition:
+      design_speed: 40
+      grade: 5
+    value:
+      max_grade_length: 900
+  - condition:
+      design_speed: 30
+      grade: 5
+    value:
+      max_grade_length: 900
+  - condition:
+      design_speed: 20
+      grade: 5
+    value:
+      max_grade_length: 1000
+  lookup:
+    input:
+    - VAR_B01_v
+    - VAR_i_grade
+    output:
+    - VAR_L_grade_max
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_4_0_21_MAX_GRADE_LENGTH
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_i_grade
+    - VAR_L_grade_max
+- id: T_B01_4_0_22_VERTICAL_CURVE
+  meta:
+    title: 竖曲线最小半径和最小长度
+    source: JTG B01-2014, 表4.0.22
+    clause: 4.0.22
+    table_type: limit_value
+    applicability: 竖曲线最小半径和最小长度
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - crest_vertical_curve_min_radius
+    - sag_vertical_curve_min_radius
+    - vertical_curve_min_length
+    unit:
+      design_speed: km/h
+      crest_vertical_curve_min_radius: m
+      sag_vertical_curve_min_radius: m
+      vertical_curve_min_length: m
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      crest_vertical_curve_min_radius: 11000
+      sag_vertical_curve_min_radius: 4000
+      vertical_curve_min_length: 100
+  - condition:
+      design_speed: 100
+    value:
+      crest_vertical_curve_min_radius: 6500
+      sag_vertical_curve_min_radius: 3000
+      vertical_curve_min_length: 85
+  - condition:
+      design_speed: 80
+    value:
+      crest_vertical_curve_min_radius: 3000
+      sag_vertical_curve_min_radius: 2000
+      vertical_curve_min_length: 70
+  - condition:
+      design_speed: 60
+    value:
+      crest_vertical_curve_min_radius: 1400
+      sag_vertical_curve_min_radius: 1000
+      vertical_curve_min_length: 50
+  - condition:
+      design_speed: 40
+    value:
+      crest_vertical_curve_min_radius: 450
+      sag_vertical_curve_min_radius: 450
+      vertical_curve_min_length: 35
+  - condition:
+      design_speed: 30
+    value:
+      crest_vertical_curve_min_radius: 250
+      sag_vertical_curve_min_radius: 250
+      vertical_curve_min_length: 25
+  - condition:
+      design_speed: 20
+    value:
+      crest_vertical_curve_min_radius: 100
+      sag_vertical_curve_min_radius: 100
+      vertical_curve_min_length: 20
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_R_vertical_min
+    - VAR_L_vertical_min
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_4_0_22_VERTICAL_CURVE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_R_vertical_min
+    - VAR_L_vertical_min
+- id: T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  meta:
+    title: 路基设计洪水频率
+    source: JTG B01-2014, 表5.0.2
+    clause: 5.0.2
+    table_type: limit_value
+    applicability: 路基设计洪水频率
+  structure:
+    index_fields:
+    - highway_class
+    value_fields:
+    - design_flood_frequency
+    unit:
+      design_flood_frequency: '-'
+  data:
+  - condition:
+      highway_class: 高速公路
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 一级公路
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 二级公路
+    value:
+      design_flood_frequency: 1/50
+  - condition:
+      highway_class: 三级公路
+    value:
+      design_flood_frequency: 1/25
+  - condition:
+      highway_class: 四级公路
+    value:
+      design_flood_frequency: 按具体情况确定
+  lookup:
+    input:
+    - VAR_highway_class
+    output:
+    - VAR_design_flood_frequency
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_design_flood_frequency
+- id: T_B01_5_0_4_SUBGRADE_COMPACTION
+  meta:
+    title: 路基压实度
+    source: JTG B01-2014, 表5.0.4
+    clause: 5.0.4
+    table_type: limit_value
+    applicability: 路基不同部位压实度最低要求
+  structure:
+    index_fields:
+    - subgrade_position
+    - depth
+    - traffic_load_level
+    - highway_class_group
+    value_fields:
+    - compaction_degree
+    unit:
+      depth: m
+      compaction_degree: '%'
+  data:
+  - condition:
+      subgrade_position: 上路床
+      depth: 0~0.3
+      traffic_load_level: 任意
+      highway_class_group: 高速公路、一级公路
+    value:
+      compaction_degree: '>=96'
+  - condition:
+      subgrade_position: 上路床
+      depth: 0~0.3
+      traffic_load_level: 任意
+      highway_class_group: 二级公路
+    value:
+      compaction_degree: '>=95'
+  - condition:
+      subgrade_position: 上路床
+      depth: 0~0.3
+      traffic_load_level: 任意
+      highway_class_group: 三级公路、四级公路
+    value:
+      compaction_degree: '>=94'
+  - condition:
+      subgrade_position: 下路床
+      depth: 0.3~0.8
+      traffic_load_level: 轻、中及重交通
+      highway_class_group: 高速公路、一级公路
+    value:
+      compaction_degree: '>=96'
+  - condition:
+      subgrade_position: 下路床
+      depth: 0.3~0.8
+      traffic_load_level: 轻、中及重交通
+      highway_class_group: 二级公路
+    value:
+      compaction_degree: '>=95'
+  - condition:
+      subgrade_position: 下路堤
+      depth: '>1.5或>1.9'
+      traffic_load_level: 任意
+      highway_class_group: 高速公路、一级公路
+    value:
+      compaction_degree: '>=93'
+  lookup:
+    input:
+    - VAR_subgrade_position
+    - VAR_depth
+    - VAR_highway_class
+    output:
+    - VAR_compaction_degree
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_5_0_4_SUBGRADE_COMPACTION
+    tables: []
+    formulas: []
+    variables:
+    - VAR_compaction_degree
+- id: T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+  meta:
+    title: 公路路面结构设计使用年限
+    source: JTG B01-2014, 表5.0.8
+    clause: 5.0.8
+    table_type: limit_value
+    applicability: 不同等级和路面类型的设计使用年限
+  structure:
+    index_fields:
+    - highway_class
+    - pavement_type
+    value_fields:
+    - design_life
+    unit:
+      design_life: year
+  data:
+  - condition:
+      highway_class: 高速公路
+      pavement_type: 沥青混凝土路面
+    value:
+      design_life: 15
+  - condition:
+      highway_class: 一级公路
+      pavement_type: 沥青混凝土路面
+    value:
+      design_life: 15
+  - condition:
+      highway_class: 二级公路
+      pavement_type: 沥青混凝土路面
+    value:
+      design_life: 12
+  - condition:
+      highway_class: 三级公路
+      pavement_type: 沥青混凝土路面
+    value:
+      design_life: 10
+  - condition:
+      highway_class: 四级公路
+      pavement_type: 沥青混凝土路面
+    value:
+      design_life: 8
+  - condition:
+      highway_class: 高速公路
+      pavement_type: 水泥混凝土路面
+    value:
+      design_life: 30
+  - condition:
+      highway_class: 一级公路
+      pavement_type: 水泥混凝土路面
+    value:
+      design_life: 30
+  - condition:
+      highway_class: 二级公路
+      pavement_type: 水泥混凝土路面
+    value:
+      design_life: 20
+  - condition:
+      highway_class: 三级公路
+      pavement_type: 水泥混凝土路面
+    value:
+      design_life: 15
+  - condition:
+      highway_class: 四级公路
+      pavement_type: 水泥混凝土路面
+    value:
+      design_life: 10
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_pavement_type
+    output:
+    - VAR_design_life
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_design_life
+- id: T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+  meta:
+    title: 桥涵分类
+    source: JTG B01-2014, 表6.0.2
+    clause: 6.0.2
+    table_type: classification
+    applicability: 按多孔跨径总长和单孔跨径进行桥涵分类
+  structure:
+    index_fields:
+    - total_span_length
+    - single_span_length
+    value_fields:
+    - bridge_culvert_class
+    unit:
+      total_span_length: m
+      single_span_length: m
+  data:
+  - condition:
+      total_span_length: L>1000
+      single_span_length: L>150
+    value:
+      bridge_culvert_class: 特大桥
+  - condition:
+      total_span_length: 100≤L≤1000
+      single_span_length: 40≤L≤150
+    value:
+      bridge_culvert_class: 大桥
+  - condition:
+      total_span_length: 30<L<100
+      single_span_length: 20≤L<40
+    value:
+      bridge_culvert_class: 中桥
+  - condition:
+      total_span_length: 8≤L≤30
+      single_span_length: 5≤L<20
+    value:
+      bridge_culvert_class: 小桥
+  - condition:
+      total_span_length: L<5
+      single_span_length: L<5
+    value:
+      bridge_culvert_class: 涵洞
+  lookup:
+    input:
+    - VAR_bridge_total_length
+    - VAR_single_span_length
+    output:
+    - VAR_bridge_class
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_6_0_2_BRIDGE_CLASSIFICATION
+    tables: []
+    formulas: []
+    variables:
+    - VAR_bridge_total_length
+    - VAR_single_span_length
+    - VAR_bridge_class
+- id: T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  meta:
+    title: 桥涵设计洪水频率
+    source: JTG B01-2014, 表6.0.5
+    clause: 6.0.5
+    table_type: limit_value
+    applicability: 桥涵按公路等级和桥涵分类确定设计洪水频率
+  structure:
+    index_fields:
+    - highway_class
+    - bridge_culvert_class
+    value_fields:
+    - design_flood_frequency
+    unit:
+      design_flood_frequency: '-'
+  data:
+  - condition:
+      highway_class: 高速公路
+      bridge_culvert_class: 特大桥
+    value:
+      design_flood_frequency: 1/300
+  - condition:
+      highway_class: 高速公路
+      bridge_culvert_class: 大桥
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 高速公路
+      bridge_culvert_class: 中桥
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 高速公路
+      bridge_culvert_class: 小桥
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 高速公路
+      bridge_culvert_class: 涵洞及小型排水构造物
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 二级公路
+      bridge_culvert_class: 特大桥
+    value:
+      design_flood_frequency: 1/100
+  - condition:
+      highway_class: 二级公路
+      bridge_culvert_class: 小桥
+    value:
+      design_flood_frequency: 1/50
+  - condition:
+      highway_class: 三级公路
+      bridge_culvert_class: 大桥
+    value:
+      design_flood_frequency: 1/50
+  - condition:
+      highway_class: 四级公路
+      bridge_culvert_class: 涵洞及小型排水构造物
+    value:
+      design_flood_frequency: 不作规定
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_bridge_class
+    output:
+    - VAR_design_flood_frequency
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_bridge_class
+    - VAR_design_flood_frequency
+- id: T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+  meta:
+    title: 桥涵设计使用年限
+    source: JTG B01-2014, 表6.0.11
+    clause: 6.0.11
+    table_type: limit_value
+    applicability: 桥涵主体结构和可更换部件设计使用年限
+  structure:
+    index_fields:
+    - highway_class_group
+    - component_type
+    - bridge_class
+    value_fields:
+    - design_life
+    unit:
+      design_life: year
+  data:
+  - condition:
+      highway_class_group: 高速公路、一级公路
+      component_type: 主体结构
+      bridge_class: 特大桥、大桥
+    value:
+      design_life: 100
+  - condition:
+      highway_class_group: 高速公路、一级公路
+      component_type: 主体结构
+      bridge_class: 中桥、小桥
+    value:
+      design_life: 100
+  - condition:
+      highway_class_group: 二级公路、三级公路
+      component_type: 主体结构
+      bridge_class: 特大桥、大桥
+    value:
+      design_life: 100
+  - condition:
+      highway_class_group: 二级公路、三级公路
+      component_type: 主体结构
+      bridge_class: 中桥
+    value:
+      design_life: 50
+  - condition:
+      highway_class_group: 二级公路、三级公路
+      component_type: 主体结构
+      bridge_class: 小桥、涵洞
+    value:
+      design_life: 30
+  - condition:
+      highway_class_group: 四级公路
+      component_type: 主体结构
+      bridge_class: 特大桥、大桥
+    value:
+      design_life: 100
+  - condition:
+      highway_class_group: 四级公路
+      component_type: 主体结构
+      bridge_class: 中桥、小桥、涵洞
+    value:
+      design_life: 50
+  - condition:
+      highway_class_group: 任意
+      component_type: 可更换部件-斜拉索吊索系杆等
+      bridge_class: 任意
+    value:
+      design_life: 30
+  - condition:
+      highway_class_group: 任意
+      component_type: 可更换部件-栏杆伸缩缝支座等
+      bridge_class: 任意
+    value:
+      design_life: 15
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_component_type
+    - VAR_bridge_class
+    output:
+    - VAR_design_life
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_design_life
+- id: T_B01_7_0_2_VEHICLE_LOAD_GRADE
+  meta:
+    title: 汽车荷载等级
+    source: JTG B01-2014, 表7.0.2
+    clause: 7.0.2
+    table_type: load_value
+    applicability: 各级公路桥涵设计汽车荷载等级
+  structure:
+    index_fields:
+    - highway_class
+    value_fields:
+    - vehicle_load_grade
+    unit:
+      vehicle_load_grade: '-'
+  data:
+  - condition:
+      highway_class: 高速公路
+    value:
+      vehicle_load_grade: 公路-I级
+  - condition:
+      highway_class: 一级公路
+    value:
+      vehicle_load_grade: 公路-I级
+  - condition:
+      highway_class: 二级公路
+    value:
+      vehicle_load_grade: 公路-I级
+  - condition:
+      highway_class: 三级公路
+    value:
+      vehicle_load_grade: 公路-II级
+  - condition:
+      highway_class: 四级公路
+    value:
+      vehicle_load_grade: 公路-II级
+  lookup:
+    input:
+    - VAR_highway_class
+    output:
+    - VAR_vehicle_load_grade
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_7_0_2_VEHICLE_LOAD_GRADE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_vehicle_load_grade
+- id: T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+  meta:
+    title: 车辆荷载主要技术指标
+    source: JTG B01-2014, 表7.0.4
+    clause: 7.0.4
+    table_type: load_value
+    applicability: 车辆荷载标准值及布置参数
+  structure:
+    index_fields:
+    - parameter_name
+    value_fields:
+    - value
+    unit:
+      value: mixed
+  data:
+  - condition:
+      parameter_name: 车辆重力标准值
+    value:
+      value: 550 kN
+  - condition:
+      parameter_name: 前轴重力标准值
+    value:
+      value: 30 kN
+  - condition:
+      parameter_name: 中轴重力标准值
+    value:
+      value: 2×120 kN
+  - condition:
+      parameter_name: 后轴重力标准值
+    value:
+      value: 2×140 kN
+  - condition:
+      parameter_name: 轴距
+    value:
+      value: 3+1.4+7+1.4 m
+  - condition:
+      parameter_name: 轮距
+    value:
+      value: 1.8 m
+  - condition:
+      parameter_name: 车辆外形尺寸
+    value:
+      value: 15×2.5 m
+  lookup:
+    input:
+    - VAR_vehicle_load_parameter
+    output:
+    - VAR_vehicle_load_value
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+    tables: []
+    formulas: []
+    variables:
+    - VAR_vehicle_load_value
+- id: T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+  meta:
+    title: 桥涵设计车道数
+    source: JTG B01-2014, 表7.0.6-1
+    clause: 7.0.6
+    table_type: parameter
+    applicability: 按桥面宽度确定桥涵设计车道数
+  structure:
+    index_fields:
+    - traffic_direction
+    - bridge_width_range
+    value_fields:
+    - bridge_design_lane_count
+    unit:
+      bridge_width_range: m
+      bridge_design_lane_count: lane
+  data:
+  - condition:
+      traffic_direction: 单向行驶桥梁
+      bridge_width_range: W<7.0
+    value:
+      bridge_design_lane_count: 1
+  - condition:
+      traffic_direction: 单向行驶桥梁
+      bridge_width_range: 7.0≤W<10.5
+    value:
+      bridge_design_lane_count: 2
+  - condition:
+      traffic_direction: 单向行驶桥梁
+      bridge_width_range: 10.5≤W<14.0
+    value:
+      bridge_design_lane_count: 3
+  - condition:
+      traffic_direction: 单向行驶桥梁
+      bridge_width_range: 14.0≤W<17.5
+    value:
+      bridge_design_lane_count: 4
+  - condition:
+      traffic_direction: 双向行驶桥梁
+      bridge_width_range: 6.0≤W<14.0
+    value:
+      bridge_design_lane_count: 2
+  - condition:
+      traffic_direction: 双向行驶桥梁
+      bridge_width_range: 14.0≤W<21.0
+    value:
+      bridge_design_lane_count: 4
+  - condition:
+      traffic_direction: 双向行驶桥梁
+      bridge_width_range: 21.0≤W<28.0
+    value:
+      bridge_design_lane_count: 6
+  - condition:
+      traffic_direction: 双向行驶桥梁
+      bridge_width_range: 28.0≤W<35.0
+    value:
+      bridge_design_lane_count: 8
+  lookup:
+    input:
+    - VAR_bridge_width
+    - VAR_traffic_direction
+    output:
+    - VAR_bridge_design_lane_count
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_7_0_6_BRIDGE_DESIGN_LANE_COUNT
+    tables: []
+    formulas: []
+    variables:
+    - VAR_bridge_width
+    - VAR_bridge_design_lane_count
+- id: T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+  meta:
+    title: 横向车道布载系数
+    source: JTG B01-2014, 表7.0.6-2
+    clause: 7.0.6
+    table_type: coefficient
+    applicability: 横桥向多车道汽车荷载折减或单车道提高
+  structure:
+    index_fields:
+    - loaded_lane_count
+    value_fields:
+    - transverse_lane_load_factor
+    unit:
+      transverse_lane_load_factor: '-'
+  data:
+  - condition:
+      loaded_lane_count: 1
+    value:
+      transverse_lane_load_factor: 1.2
+  - condition:
+      loaded_lane_count: 2
+    value:
+      transverse_lane_load_factor: 1.0
+  - condition:
+      loaded_lane_count: 3
+    value:
+      transverse_lane_load_factor: 0.78
+  - condition:
+      loaded_lane_count: 4
+    value:
+      transverse_lane_load_factor: 0.67
+  - condition:
+      loaded_lane_count: 5
+    value:
+      transverse_lane_load_factor: 0.6
+  - condition:
+      loaded_lane_count: 6
+    value:
+      transverse_lane_load_factor: 0.55
+  - condition:
+      loaded_lane_count: 7
+    value:
+      transverse_lane_load_factor: 0.52
+  - condition:
+      loaded_lane_count: 8
+    value:
+      transverse_lane_load_factor: 0.5
+  lookup:
+    input:
+    - VAR_loaded_lane_count
+    output:
+    - VAR_eta_n
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_7_0_6_TRANSVERSE_LANE_FACTOR
+    tables: []
+    formulas:
+    - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+    variables:
+    - VAR_loaded_lane_count
+    - VAR_eta_n
+- id: T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+  meta:
+    title: 纵向折减系数
+    source: JTG B01-2014, 表7.0.7
+    clause: 7.0.7
+    table_type: coefficient
+    applicability: 大跨径桥梁车道荷载纵向折减
+  structure:
+    index_fields:
+    - span_range
+    value_fields:
+    - longitudinal_reduction_factor
+    unit:
+      span_range: m
+      longitudinal_reduction_factor: '-'
+  data:
+  - condition:
+      span_range: 150<L<400
+    value:
+      longitudinal_reduction_factor: 0.97
+  - condition:
+      span_range: 400≤L<600
+    value:
+      longitudinal_reduction_factor: 0.96
+  - condition:
+      span_range: 600≤L<800
+    value:
+      longitudinal_reduction_factor: 0.95
+  - condition:
+      span_range: 800≤L<1000
+    value:
+      longitudinal_reduction_factor: 0.94
+  - condition:
+      span_range: L≥1000
+    value:
+      longitudinal_reduction_factor: 0.93
+  lookup:
+    input:
+    - VAR_B01_L_0
+    output:
+    - VAR_eta_L
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_7_0_7_LONGITUDINAL_REDUCTION
+    tables: []
+    formulas:
+    - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+    variables:
+    - VAR_B01_L_0
+    - VAR_eta_L
+- id: T_B01_8_0_2_TUNNEL_CLASSIFICATION
+  meta:
+    title: 隧道分类
+    source: JTG B01-2014, 表8.0.2
+    clause: 8.0.2
+    table_type: classification
+    applicability: 按隧道长度分类
+  structure:
+    index_fields:
+    - tunnel_length
+    value_fields:
+    - tunnel_class
+    unit:
+      tunnel_length: m
+  data:
+  - condition:
+      tunnel_length: L>3000
+    value:
+      tunnel_class: 特长隧道
+  - condition:
+      tunnel_length: 3000≥L>1000
+    value:
+      tunnel_class: 长隧道
+  - condition:
+      tunnel_length: 1000≥L>500
+    value:
+      tunnel_class: 中隧道
+  - condition:
+      tunnel_length: L≤500
+    value:
+      tunnel_class: 短隧道
+  lookup:
+    input:
+    - VAR_tunnel_length
+    output:
+    - VAR_tunnel_class
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_8_0_2_TUNNEL_CLASSIFICATION
+    tables: []
+    formulas: []
+    variables:
+    - VAR_tunnel_length
+    - VAR_tunnel_class
+- id: T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+  meta:
+    title: 隧道最小侧向宽度
+    source: JTG B01-2014, 表8.0.3
+    clause: 8.0.3
+    table_type: limit_value
+    applicability: 隧道左右侧最小侧向宽度
+  structure:
+    index_fields:
+    - highway_class_group
+    - design_speed
+    value_fields:
+    - left_side_width
+    - right_side_width
+    unit:
+      design_speed: km/h
+      left_side_width: m
+      right_side_width: m
+  data:
+  - condition:
+      highway_class_group: 高速公路、一级公路
+      design_speed: 120
+    value:
+      left_side_width: 0.75
+      right_side_width: 1.25
+  - condition:
+      highway_class_group: 高速公路、一级公路
+      design_speed: 100
+    value:
+      left_side_width: 0.75
+      right_side_width: 1.0
+  - condition:
+      highway_class_group: 高速公路、一级公路
+      design_speed: 80
+    value:
+      left_side_width: 0.5
+      right_side_width: 0.75
+  - condition:
+      highway_class_group: 高速公路、一级公路
+      design_speed: 60
+    value:
+      left_side_width: 0.5
+      right_side_width: 0.75
+  - condition:
+      highway_class_group: 二、三、四级公路
+      design_speed: 80
+    value:
+      left_side_width: 0.75
+      right_side_width: 0.75
+  - condition:
+      highway_class_group: 二、三、四级公路
+      design_speed: 60
+    value:
+      left_side_width: 0.5
+      right_side_width: 0.5
+  - condition:
+      highway_class_group: 二、三、四级公路
+      design_speed: 40
+    value:
+      left_side_width: 0.25
+      right_side_width: 0.25
+  - condition:
+      highway_class_group: 二、三、四级公路
+      design_speed: 30
+    value:
+      left_side_width: 0.25
+      right_side_width: 0.25
+  - condition:
+      highway_class_group: 二、三、四级公路
+      design_speed: 20
+    value:
+      left_side_width: 0.5
+      right_side_width: 0.5
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_B01_v
+    output:
+    - VAR_left_side_width
+    - VAR_right_side_width
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_8_0_3_TUNNEL_CLEARANCE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_left_side_width
+    - VAR_right_side_width
+- id: T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+  meta:
+    title: 隧道设计使用年限
+    source: JTG B01-2014, 表8.0.9
+    clause: 8.0.9
+    table_type: limit_value
+    applicability: 隧道主体结构和可更换修复构件设计使用年限
+  structure:
+    index_fields:
+    - highway_class_group
+    - tunnel_class
+    - component_type
+    value_fields:
+    - design_life
+    unit:
+      design_life: year
+  data:
+  - condition:
+      highway_class_group: 高速公路、一级公路、二级公路
+      tunnel_class: 特长、长、中隧道
+      component_type: 主体结构
+    value:
+      design_life: 100
+  - condition:
+      highway_class_group: 三级公路
+      tunnel_class: 特长、长隧道
+      component_type: 主体结构
+    value:
+      design_life: 100
+  - condition:
+      highway_class_group: 三级公路
+      tunnel_class: 中隧道
+      component_type: 主体结构
+    value:
+      design_life: 50
+  - condition:
+      highway_class_group: 三级公路
+      tunnel_class: 短隧道
+      component_type: 主体结构
+    value:
+      design_life: 30
+  - condition:
+      highway_class_group: 四级公路
+      tunnel_class: 特长、长、中、短隧道
+      component_type: 主体结构
+    value:
+      design_life: 50
+  - condition:
+      highway_class_group: 任意
+      tunnel_class: 任意
+      component_type: 可更换、修复构件
+    value:
+      design_life: 50
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_tunnel_class
+    - VAR_component_type
+    output:
+    - VAR_design_life
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_design_life
+- id: T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+  meta:
+    title: 平面交叉最小间距
+    source: JTG B01-2014, 表9.1.5
+    clause: 9.1.5
+    table_type: limit_value
+    applicability: 一、二级公路平面交叉最小间距
+  structure:
+    index_fields:
+    - highway_class
+    - highway_function
+    - value_type
+    value_fields:
+    - intersection_spacing
+    unit:
+      intersection_spacing: m
+  data:
+  - condition:
+      highway_class: 一级公路
+      highway_function: 干线公路
+      value_type: 一般值
+    value:
+      intersection_spacing: 2000
+  - condition:
+      highway_class: 一级公路
+      highway_function: 干线公路
+      value_type: 最小值
+    value:
+      intersection_spacing: 1000
+  - condition:
+      highway_class: 一级公路
+      highway_function: 集散公路
+      value_type: 一般值
+    value:
+      intersection_spacing: 500
+  - condition:
+      highway_class: 二级公路
+      highway_function: 干线公路
+      value_type: 一般值
+    value:
+      intersection_spacing: 500
+  - condition:
+      highway_class: 二级公路
+      highway_function: 集散公路
+      value_type: 一般值
+    value:
+      intersection_spacing: 300
+  lookup:
+    input:
+    - VAR_highway_class
+    - VAR_highway_function
+    - VAR_value_type
+    output:
+    - VAR_intersection_spacing_min
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    tables: []
+    formulas: []
+    variables:
+    - VAR_intersection_spacing_min
+    - VAR_value_type
+  notes:
+  - 表9.1.5同时包含一般值和最小值，查表时必须输入 value_type（一般值/最小值），避免误把两类控制口径合并。
+- id: T_B01_9_2_4_RAMP_DESIGN_SPEED
+  meta:
+    title: 互通式立体交叉匝道设计速度
+    source: JTG B01-2014, 表9.2.4
+    clause: 9.2.4
+    table_type: parameter
+    applicability: 匝道设计速度
+  structure:
+    index_fields:
+    - interchange_type
+    - ramp_type
+    value_fields:
+    - ramp_design_speed
+    unit:
+      ramp_design_speed: km/h
+  data:
+  - condition:
+      interchange_type: 枢纽互通式立体交叉
+      ramp_type: 直连式
+    value:
+      ramp_design_speed: 50~80
+  - condition:
+      interchange_type: 枢纽互通式立体交叉
+      ramp_type: 半直连式
+    value:
+      ramp_design_speed: 40~80
+  - condition:
+      interchange_type: 枢纽互通式立体交叉
+      ramp_type: 环形匝道
+    value:
+      ramp_design_speed: 40
+  - condition:
+      interchange_type: 一般互通式立体交叉
+      ramp_type: 直连式
+    value:
+      ramp_design_speed: 40~60
+  - condition:
+      interchange_type: 一般互通式立体交叉
+      ramp_type: 半直连式
+    value:
+      ramp_design_speed: 40~60
+  - condition:
+      interchange_type: 一般互通式立体交叉
+      ramp_type: 环形匝道
+    value:
+      ramp_design_speed: 30~40
+  lookup:
+    input:
+    - VAR_interchange_type
+    - VAR_ramp_type
+    output:
+    - VAR_ramp_design_speed
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_9_2_4_INTERCHANGE_SPACING_AND_RAMP_SPEED
+    tables: []
+    formulas: []
+    variables:
+    - VAR_ramp_design_speed
+- id: T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+  meta:
+    title: 各等级监控设施适用范围
+    source: JTG B01-2014, 表10.4.2
+    clause: 10.4.2
+    table_type: classification
+    applicability: 公路监控设施等级适用范围
+  structure:
+    index_fields:
+    - monitoring_level
+    value_fields:
+    - applicable_scope
+    unit:
+      monitoring_level: '-'
+  data:
+  - condition:
+      monitoring_level: A
+    value:
+      applicable_scope: 高速公路（全程监控）
+  - condition:
+      monitoring_level: B
+    value:
+      applicable_scope: 高速公路（分段监控）
+  - condition:
+      monitoring_level: C
+    value:
+      applicable_scope: 干线一级、二级公路
+  - condition:
+      monitoring_level: D
+    value:
+      applicable_scope: 集散公路、支线公路
+  lookup:
+    input:
+    - VAR_monitoring_level
+    output:
+    - VAR_applicable_scope
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_10_4_2_MONITORING_LEVEL
+    tables: []
+    formulas: []
+    variables:
+    - VAR_monitoring_level
+- id: T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+  meta:
+    title: 高速公路路段服务水平分级
+    source: JTG B01-2014, 表A.0.1-1
+    clause: A.0.1
+    table_type: classification
+    applicability: 高速公路路段服务水平按v/C分级
+  structure:
+    index_fields:
+    - design_speed
+    - v_C_range
+    value_fields:
+    - service_level
+    - max_service_traffic
+    unit:
+      design_speed: km/h
+      max_service_traffic: pcu/(h·ln)
+  data:
+  - condition:
+      design_speed: 120
+      v_C_range: v/C≤0.35
+    value:
+      service_level: 一级
+      max_service_traffic: 750
+  - condition:
+      design_speed: 120
+      v_C_range: 0.35<v/C≤0.55
+    value:
+      service_level: 二级
+      max_service_traffic: 1200
+  - condition:
+      design_speed: 120
+      v_C_range: 0.55<v/C≤0.75
+    value:
+      service_level: 三级
+      max_service_traffic: 1650
+  - condition:
+      design_speed: 120
+      v_C_range: 0.75<v/C≤0.90
+    value:
+      service_level: 四级
+      max_service_traffic: 1980
+  - condition:
+      design_speed: 120
+      v_C_range: 0.90<v/C≤1.00
+    value:
+      service_level: 五级
+      max_service_traffic: 2200
+  - condition:
+      design_speed: 100
+      v_C_range: 0.55<v/C≤0.75
+    value:
+      service_level: 三级
+      max_service_traffic: 1600
+  - condition:
+      design_speed: 80
+      v_C_range: 0.55<v/C≤0.75
+    value:
+      service_level: 三级
+      max_service_traffic: 1500
+  lookup:
+    input:
+    - VAR_B01_v
+    - VAR_v_C
+    output:
+    - VAR_service_level
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+    tables: []
+    formulas:
+    - F_B01_L0_VC_RATIO
+    variables:
+    - VAR_v_C
+    - VAR_service_level
+- id: T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+  meta:
+    title: 一级公路路段服务水平分级
+    source: JTG B01-2014, 表A.0.1-2
+    clause: A.0.1
+    table_type: classification
+    applicability: 一级公路路段服务水平按v/C分级
+  structure:
+    index_fields:
+    - design_speed
+    - v_C_range
+    value_fields:
+    - service_level
+    - max_service_traffic
+    unit:
+      design_speed: km/h
+      max_service_traffic: pcu/(h·ln)
+  data:
+  - condition:
+      design_speed: 100
+      v_C_range: v/C≤0.3
+    value:
+      service_level: 一级
+      max_service_traffic: 600
+  - condition:
+      design_speed: 100
+      v_C_range: 0.3<v/C≤0.5
+    value:
+      service_level: 二级
+      max_service_traffic: 1000
+  - condition:
+      design_speed: 100
+      v_C_range: 0.5<v/C≤0.7
+    value:
+      service_level: 三级
+      max_service_traffic: 1400
+  - condition:
+      design_speed: 80
+      v_C_range: 0.5<v/C≤0.7
+    value:
+      service_level: 三级
+      max_service_traffic: 1250
+  - condition:
+      design_speed: 60
+      v_C_range: 0.5<v/C≤0.7
+    value:
+      service_level: 三级
+      max_service_traffic: 1100
+  lookup:
+    input:
+    - VAR_B01_v
+    - VAR_v_C
+    output:
+    - VAR_service_level
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+    tables: []
+    formulas:
+    - F_B01_L0_VC_RATIO
+    variables:
+    - VAR_v_C
+    - VAR_service_level
+- id: T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  meta:
+    title: 货车停车视距
+    source: JTG B01-2014, 表B.0.1-1~表B.0.1-3
+    clause: B.0.1
+    table_type: limit_value
+    applicability: 货车停车视距及下坡修正值
+  structure:
+    index_fields:
+    - design_speed
+    - grade
+    value_fields:
+    - truck_stopping_sight_distance
+    unit:
+      design_speed: km/h
+      grade: '%'
+      truck_stopping_sight_distance: m
+  data:
+  - condition:
+      design_speed: 120
+      grade: 0
+    value:
+      truck_stopping_sight_distance: 245
+  - condition:
+      design_speed: 100
+      grade: 0
+    value:
+      truck_stopping_sight_distance: 180
+  - condition:
+      design_speed: 80
+      grade: 0
+    value:
+      truck_stopping_sight_distance: 125
+  - condition:
+      design_speed: 60
+      grade: 0
+    value:
+      truck_stopping_sight_distance: 85
+  - condition:
+      design_speed: 120
+      grade: 3
+    value:
+      truck_stopping_sight_distance: 265
+  - condition:
+      design_speed: 100
+      grade: 3
+    value:
+      truck_stopping_sight_distance: 190
+  - condition:
+      design_speed: 80
+      grade: 3
+    value:
+      truck_stopping_sight_distance: 130
+  - condition:
+      design_speed: 60
+      grade: 3
+    value:
+      truck_stopping_sight_distance: 89
+  - condition:
+      design_speed: 80
+      grade: 5
+    value:
+      truck_stopping_sight_distance: 136
+  - condition:
+      design_speed: 60
+      grade: 5
+    value:
+      truck_stopping_sight_distance: 93
+  - condition:
+      design_speed: 40
+      grade: 5
+    value:
+      truck_stopping_sight_distance: 50
+  lookup:
+    input:
+    - VAR_B01_v
+    - VAR_i_grade
+    output:
+    - VAR_D_required
+    method: range_match
+  related_refs:
+    rules:
+    - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    tables: []
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+    variables:
+    - VAR_B01_v
+    - VAR_i_grade
+    - VAR_D_required
+- id: T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+  meta:
+    title: 不同设计速度对应的识别视距
+    source: JTG B01-2014, 表B.0.2
+    clause: B.0.2
+    table_type: limit_value
+    applicability: 不同设计速度对应的识别视距
+  structure:
+    index_fields:
+    - design_speed
+    value_fields:
+    - identifying_sight_distance
+    - complex_environment_identifying_sight_distance
+    unit:
+      design_speed: km/h
+      identifying_sight_distance: m
+      complex_environment_identifying_sight_distance: m
+  data:
+  - condition:
+      design_speed: 120
+    value:
+      identifying_sight_distance: 350
+      complex_environment_identifying_sight_distance: 460
+  - condition:
+      design_speed: 100
+    value:
+      identifying_sight_distance: 290
+      complex_environment_identifying_sight_distance: 380
+  - condition:
+      design_speed: 80
+    value:
+      identifying_sight_distance: 230
+      complex_environment_identifying_sight_distance: 300
+  - condition:
+      design_speed: 60
+    value:
+      identifying_sight_distance: 170
+      complex_environment_identifying_sight_distance: 240
+  lookup:
+    input:
+    - VAR_B01_v
+    output:
+    - VAR_identifying_sight_distance
+    method: exact_match
+  related_refs:
+    rules:
+    - R_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_identifying_sight_distance

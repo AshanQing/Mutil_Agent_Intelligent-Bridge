@@ -1,0 +1,95 @@
+prompts:
+  agents.task_allocation.v1:
+    path: agents/task_allocation.md.j2
+    version: v1
+    role: system
+    required_context: []
+  agents.initial_design.v1:
+    path: agents/initial_design.md.j2
+    version: v1
+    role: system
+    required_context: []
+  agents.layout_revision.v1:
+    path: agents/layout_revision.md.j2
+    version: v1
+    role: system
+    required_context: []
+  agents.structural_design.v1:
+    path: agents/structural_design.md.j2
+    version: v1
+    role: system
+    required_context: []
+  agents.modeling_check.v1:
+    path: agents/modeling_check.md.j2
+    version: v1
+    role: system
+    required_context: []
+  tasks.initial_layout_design.v1:
+    path: tasks/initial_layout_design.md.j2
+    version: v1
+    role: user
+    required_context:
+      - design_input_json
+      - few_shots_json
+  tasks.layout_revision_design.v1:
+    path: tasks/layout_revision_design.md.j2
+    version: v1
+    role: user
+    required_context:
+      - ROLE_BLOCK
+      - STANDARDS_BLOCK
+      - DESIGN_INPUT_JSON
+      - PREVIOUS_LAYOUT_JSON
+      - REVISION_INSTRUCTION_TEXT
+      - OUTPUT_SCHEMA_BLOCK
+  tasks.design_unit_extraction.v1:
+    path: tasks/design_unit_extraction.md.j2
+    version: v1
+    role: user
+    required_context:
+      - layout_result_json
+      - validation_feedback_json
+  tasks.cap_dimension_design.v1:
+    path: tasks/cap_dimension_design.md.j2
+    version: v1
+    role: user
+    required_context: []
+  tasks.cap_reinforcement_design.v1:
+    path: tasks/cap_reinforcement_design.md.j2
+    version: v1
+    role: user
+    required_context:
+      - REINFORCEMENT_EXAMPLES
+      - CURRENT_REINFORCEMENT_TASK_INPUT
+  tasks.modeling_feedback.v1:
+    path: tasks/modeling_feedback.md.j2
+    version: v1
+    role: system
+    required_context:
+      - payload_json
+  tasks.design_review_assessment.v1:
+    path: tasks/design_review_assessment.md.j2
+    version: v1
+    role: user
+    required_context:
+      - project_evidence
+      - code_evidence
+      - index_version
+  tasks.design_review_qa.v1:
+    path: tasks/design_review_qa.md.j2
+    version: v1
+    role: user
+    required_context:
+      - question
+      - history
+      - project_evidence
+      - code_evidence
+      - index_version
+  tasks.design_review_routing.v1:
+    path: tasks/design_review_routing.md.j2
+    version: v1
+    role: user
+    required_context:
+      - question
+      - available_types
+      - artifact_menu

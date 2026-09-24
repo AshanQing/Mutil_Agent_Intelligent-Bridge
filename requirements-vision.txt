@@ -1,0 +1,12 @@
+-r requirements.txt
+
+# CPU-compatible semantic-segmentation stack for Windows/Python 3.11.
+--extra-index-url https://download.pytorch.org/whl/cpu
+--find-links https://download.openmmlab.com/mmcv/dist/cpu/torch2.1.0/index.html
+
+torch==2.1.0+cpu
+torchvision==0.16.0+cpu
+mmengine>=0.7.4
+mmcv==2.1.0
+mmsegmentation==1.2.2
+ftfy

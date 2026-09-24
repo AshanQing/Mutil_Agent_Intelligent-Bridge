@@ -1,0 +1,909 @@
+示例1:
+  输入:
+    基本信息:
+      drawing_id: 12
+      remarks: 双幅桥，左幅
+      system_type: 先简支后连续
+      pier_role: 中间墩
+      pier_type: 柱式墩
+      foundation_type: 桩基础
+
+    上部布置与支承条件:
+      span_length: 40.0
+      deck_width: 12.75
+      next_deck_width: 12.75
+      deck_slope: 0.0288
+      is_double_support: false
+      support_symmetry: null
+
+      front_span:
+        t_beam_count: 5
+        t_beam_spacing: 2.55
+        support_center_distance: 1.1
+        support_edge_distance:
+          left: 0.749
+          right: 0.735
+
+      rear_span:
+        t_beam_count: null
+        t_beam_spacing: null
+        support_center_distance: 1.1
+        support_edge_distance:
+          left: null
+          right: null
+
+    盖梁几何信息:
+      cap_length: 11.7
+      cap_width: 2.2
+      cap_height_mid: 1.8
+      cap_height_end: 0.95
+      cantilever_length: 1.15
+      cap_slope: 0.0288
+
+    墩柱几何信息:
+      column_count: 2
+      column_diameter: 1.8
+      column_spacing: 7.0
+      column_tie_beam:
+        exists: true
+        width: 1.2
+        height: 1.6
+
+    基础信息:
+      pile_diameter: 2.0
+      lower_tie_beam:
+        exists: true
+        width: 1.5
+        height: 1.8
+
+    # 全局坐标系：原点位于盖梁底部中心
+    # x：横桥向（沿盖梁长度方向）
+    # y：竖向（向上为正）
+    # z：顺桥向（沿盖梁宽度方向）
+    保护层与控制参数:
+      cover_x: 60
+      cover_y: 60
+      cover_z: 70
+      top_cover: 顶部最外层钢筋位置
+      bottom_cover: 底部最外层钢筋位置
+      pier_centerline_x: -column_spacing / 2
+      cap_centerline_x: 0
+
+    内力摘要_当前分析文件:
+      note: "以下内力摘要来自当前上传的 internal_force_output_full_beam_13.json，对应40m、13.0m宽样本，仅作为压缩表达模板示例"
+      analysis:
+        software: OpenSeesPy
+        combination_name: ULS_basic
+        combination_rule:
+          dead: 1.2
+          live: 1.4
+        moment_sign_convention: 跨中正弯矩为正，支点负弯矩为负
+
+      force_summary:
+        negative_moment_controls:
+          - region: 左柱顶附近
+            x_peak_m: -3.625
+            M_peak_kN_m: -5779.3
+          - region: 右柱顶附近
+            x_peak_m: 3.625
+            M_peak_kN_m: -5779.3
+
+        positive_moment_controls:
+          - region: 跨中
+            x_peak_m: 0.0
+            M_peak_kN_m: 6438.3
+
+        high_shear_zones:
+          - region: 左柱顶附近
+            x_range_m: [-3.625, -2.612]
+            V_abs_peak_kN: 5905.0
+          - region: 右柱顶附近
+            x_range_m: [2.612, 3.625]
+            V_abs_peak_kN: 5904.2
+
+        distribution_features:
+          overall_symmetry: true
+          top_negative_moment_dominant: true
+          midspan_positive_moment_significant: true
+          support_region_shear_dominant: true
+
+  输出:
+    reinforcement:
+      pier_cap:
+
+        # 1. z向骨架排布样式
+        z_patterns:
+          full: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+          pattern_1: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]
+          pattern_2: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
+
+        # 2. 纵向钢筋骨架定义
+        skeleton_definitions:
+          skeleton_1:
+            name: 主骨架
+            function: 顶底通长主筋 + 弯起钢筋
+            rebar_groups: [N1, N2, N3, N4, N5, N6]
+            z_pattern: pattern_1
+
+          skeleton_2:
+            name: 加强骨架
+            function: 顶底通长主筋 + 顶层局部加强筋
+            rebar_groups: [N1, N2, N7]
+            z_pattern: pattern_2
+
+        # 3. 骨架排布规则
+        skeleton_layout:
+          total_positions: 23
+          odd_positions_use: skeleton_1
+          even_positions_use: skeleton_2
+
+        # 4. 纵向钢筋定义
+        longitudinal_bars:
+
+          # N1
+          - id: N1
+            category: 主筋
+            subtype: 顶部全长通长主筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: full
+
+            range_definition:
+              x_start_expr: "-(cap_length / 2 - cover_x)"
+              x_end_expr: "0"
+
+            layer_definition:
+              y_ref: top_cover
+              y_offset: 0
+
+            geometry_rule:
+              type: constant
+              direction: horizontal
+
+          # N2
+          - id: N2
+            category: 主筋
+            subtype: 底部全长通长主筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: full
+
+            range_definition:
+              x_start_expr: "-(cap_length / 2 - cover_x)"
+              x_end_expr: "0"
+
+            layer_definition:
+              y_ref: bottom_cover
+              y_offset: 0
+
+            geometry_rule:
+              type: constant
+              direction: horizontal
+
+          # N3
+          - id: N3
+            category: 弯起钢筋
+            subtype: 底部上弯起钢筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                left_bend_point:
+                  x_expr: "pier_centerline_x - 300"
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+                right_bend_point:
+                  x_expr: "pier_centerline_x + 300"
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+              branch_rules:
+                left_branch:
+                  start_from: left_bend_point
+                  direction: left_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+                middle_branch:
+                  start_from: left_bend_point
+                  end_at: right_bend_point
+                  direction: horizontal
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+                right_branch:
+                  step_1:
+                    start_from: right_bend_point
+                    direction: right_down
+                    until:
+                      y_ref: bottom_cover
+                      y_offset: "dia * 1"
+                  step_2:
+                    direction: horizontal
+                    end_at:
+                      x: cap_centerline_x
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+          # N4
+          - id: N4
+            category: 弯起钢筋
+            subtype: 顶部下弯起钢筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                left_bend_point:
+                  x_expr: "pier_centerline_x - (800 + 300)"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_bend_point:
+                  x_expr: "pier_centerline_x + (300 + 650 + 650)"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+              branch_rules:
+                left_branch:
+                  start_from: left_bend_point
+                  direction: left_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+                middle_branch:
+                  start_from: left_bend_point
+                  end_at: right_bend_point
+                  direction: horizontal
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_branch:
+                  start_from: right_bend_point
+                  direction: right_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+          # N5
+          - id: N5
+            category: 弯起钢筋
+            subtype: 独立斜筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                bend_start_point:
+                  x_expr: "pier_centerline_x + (300 + 650)"
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+              branch_rules:
+                main_branch:
+                  start_from: bend_start_point
+                  direction: right_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 2"
+
+          # N6
+          - id: N6
+            category: 弯起钢筋
+            subtype: 圆弧过渡弯起钢筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                arc_left_point:
+                  x_expr: "pier_centerline_x - radius * math.tan(math.radians(bend_angle))"
+
+                arc_right_point:
+                  x_expr: "pier_centerline_x + radius * math.tan(math.radians(bend_angle))"
+
+                right_bottom_end:
+                  x_expr: "pier_centerline_x + 1300"
+                  y_ref: bottom_cover
+                  y_offset: "dia * 1"
+
+              arc_definition:
+                mode: by_radius
+                radius: 350
+                start_from: arc_left_point
+                end_at: arc_right_point
+
+              branch_rules:
+                right_branch:
+                  start_from: right_bottom_end
+                  direction: left_up
+                  angle: 45
+                  end_at: arc_right_point
+
+                middle_arc:
+                  type: arc
+                  start_from: arc_right_point
+                  end_at: arc_left_point
+                  radius: 350
+
+                left_branch:
+                  start_from: arc_left_point
+                  direction: left_down
+                  angle: 45
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+          # N7
+          - id: N7
+            category: 加强钢筋
+            subtype: 顶部局部水平加强筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_2
+
+            range_definition:
+              x_start_expr: "pier_centerline_x - 2100"
+              x_end_expr: "pier_centerline_x + 2100"
+
+            layer_definition:
+              y_ref: top_cover
+              y_offset: "dia * 1"
+
+            geometry_rule:
+              type: constant
+              direction: horizontal
+
+        # 5. 箍筋定义
+        stirrups:
+          longitudinal_distribution:
+            - name: left_blank
+              x_from: "- cap_length / 2 - cover_x"
+              x_to: "-(cap_length / 2 - 90 - cover_x)"
+              spacing: "90"
+
+            - name: 墩柱左侧加密区
+              x_from: "-(cap_length / 2 - 90 - cover_x)"
+              x_to: "pier_centerline_x - 150 * 5"
+              spacing: 100
+
+            - name: 普通区1
+              x_from: "pier_centerline_x - 150 * 5"
+              x_to: "pier_centerline_x + 150 * 5"
+              spacing: 150
+
+            - name: 墩柱右侧加密区
+              x_from: "pier_centerline_x + 150 * 5"
+              x_to: "pier_centerline_x + 150 * 5 + 100 * 21"
+              spacing: 100
+
+            - name: 普通区2
+              x_from: "pier_centerline_x + 150 * 5 + 100 * 21"
+              x_to: "0"
+              spacing: 150
+
+          distribution_overview:
+            x_start_expr: "-(cap_length / 2 - cover_x)"
+            x_end_expr: 0
+            construction_expr: "90 * 1 + 100 * 15 + 150 * 10 + 100 * 21 + 150 * 4"
+            total_length_value: 5790
+            unit: mm
+            segment_sequence:
+              - { name: left_blank, spacing: 90, count: 1 }
+              - { name: 墩柱左侧加密区, spacing: 100, count: 15 }
+              - { name: 普通区1, spacing: 150, count: 10 }
+              - { name: 墩柱右侧加密区, spacing: 100, count: 21 }
+              - { name: 普通区2, spacing: 150, count: 4 }
+
+          transverse_cage_definition:
+            stirrup_system: 8肢箍
+            dia: 12
+
+            longitudinal_bar_grid:
+              total_positions: 23
+              indexing: left_to_right
+
+            cage_layouts:
+                components:
+                  - id: N10_left
+                    type: 子箍
+                    enclosed_range: [1, 7]
+                  - id: N10_right
+                    type: 子箍
+                    enclosed_range: [17, 23]
+                  - id: N11_left
+                    type: 子箍
+                    enclosed_range: [4, 14]
+                  - id: N11_right
+                    type: 子箍
+                    enclosed_range: [10, 20]
+
+示例2:
+  输入:
+    基本信息:
+      drawing_id: 2
+      remarks: 双幅桥，右幅
+      system_type: 简支
+      pier_role: 中间墩
+      pier_type: 柱式墩
+      foundation_type: 桩基础
+
+    上部布置与支承条件:
+      span_length: 30.0
+      deck_width: 12.5
+      next_deck_width: 12.5
+      deck_slope: -0.05
+      is_double_support: true
+      support_symmetry: 对称
+
+      front_span:
+        t_beam_count: 5
+        t_beam_spacing: 2.525
+        support_center_distance: 1.1
+        support_edge_distance:
+          left: 0.749
+          right: 0.735
+
+      rear_span:
+        t_beam_count: 5
+        t_beam_spacing: 2.525
+        support_center_distance: 1.1
+        support_edge_distance:
+          left: 0.749
+          right: 0.735
+
+    盖梁几何信息:
+      cap_length: 11.4
+      cap_width: 2.0
+      cap_height_mid: 1.6
+      cap_height_end: 0.85
+      cantilever_length: 1.2
+      cap_slope: -0.05
+
+    墩柱几何信息:
+      column_count: 2
+      column_diameter: 1.4
+      column_spacing: 6.9
+      column_tie_beam:
+        exists: false
+        width: null
+        height: null
+
+    基础信息:
+      pile_diameter: 1.6
+      lower_tie_beam:
+        exists: true
+        width: 1.2
+        height: 1.4
+    # 全局坐标系：原点位于盖梁底部中心
+    # x：横桥向（沿盖梁长度方向）
+    # y：竖向（向上为正）
+    # z：顺桥向（沿盖梁宽度方向）
+    保护层与控制参数:
+      cover_x: 50
+      cover_y: 50
+      cover_z: 60
+      top_cover: 顶部最外层钢筋位置
+      bottom_cover: 底部最外层钢筋位置
+      pier_centerline_x: -column_spacing / 2
+      cap_centerline_x: 0
+
+  输出:
+    reinforcement:
+      pier_cap:
+
+        # 1. z向骨架排布样式
+        z_patterns:
+          full: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+          pattern_1: [2, 4, 5, 7, 8, 10, 11, 13, 14, 16]
+          pattern_2: [3, 6, 9, 12, 15]
+          pattern_3: [1, 17]
+        # 2. 纵向钢筋骨架定义
+        skeleton_definitions:
+          skeleton_1:
+            name: 骨架A
+            function: 顶底通长主筋 + 弯起钢筋+ 底层局部加强筋
+            rebar_groups: [N1, N2, N3, N4, N5, N6]
+            z_pattern: pattern_1
+
+          skeleton_2:
+            name: 加强骨架
+            function: 顶底通长主筋 + 弯起钢筋
+            rebar_groups: [N1, N2, N7, N8, N9]
+            z_pattern: pattern_2
+
+          skeleton_2:
+            name: 加强骨架
+            function: 顶底通长主筋 + 底层局部加强筋
+            rebar_groups: [N1, N2, N4]
+            z_pattern: pattern_3
+        # 3. 骨架排布规则
+        skeleton_layout:
+          total_positions: 17
+          pattern_1_use: skeleton_1
+          pattern_2_use: skeleton_2
+          pattern_3_use: skeleton_3          
+
+        # 4. 纵向钢筋定义
+        longitudinal_bars:
+
+          # N1
+          - id: N1
+            category: 主筋
+            subtype: 全长通长主筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: full
+
+            range_definition:
+              x_start_expr: "-(cap_length / 2 - cover_x)"
+              x_end_expr: "0"
+
+            layer_definition:
+              y_ref: top_cover
+              y_offset: 0
+
+
+          # N2
+          - id: N2
+            category: 主筋
+            subtype: 全长通长主筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: full
+
+            range_definition:
+              x_start_expr: "-(cap_length / 2 - cover_x)"
+              x_end_expr: "0"
+
+            layer_definition:
+              y_ref: bottom_cover
+              y_offset: 0
+
+
+          # N3
+          - id: N3
+            category: 弯起钢筋
+            subtype: 多段弯起
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                left_bend_point:
+                  x_expr: "-(cap_length / 2 - cover_x)"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_bend_point:
+                  x_expr: "pier_centerline_x + (300 + 750 + 750)"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+              branch_rules:
+                left_branch:
+                  start_from: left_bend_point
+                  end_at: right_bend_point
+                  direction: horizontal
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_branch:
+                  step_1:
+                    start_from: right_bend_point
+                    direction: right_down
+                    until:
+                      y_ref: bottom_cover
+                      y_offset: "dia * 3"
+                  step_2:
+                    direction: horizontal
+                    end_at: cap_centerline_x
+                    y_ref: bottom_cover
+                    y_offset: "dia * 3"
+
+          # N4
+          - id: N4
+            category: 加强钢筋
+            subtype: 局部水平加强筋
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1+pattern_3
+
+            range_definition:
+              x_start_expr: "pier_centerline_x - 500"
+              x_end_expr: 0
+
+            layer_definition:
+              y_ref: bottom_cover
+              y_offset: "dia * 1"
+
+            geometry_rule:
+              type: constant
+              direction: horizontal
+
+          # N5
+          - id: N5
+            category: 弯起钢筋
+            subtype: 多段弯起
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                left_bend_point:
+                  x_expr: "pier_centerline_x - 300"
+                  y_ref: top_cover
+                  y_offset: "dia * 3"
+
+                right_bend_point:
+                  x_expr: "pier_centerline_x + 300"
+                  y_ref: top_cover
+                  y_offset: "dia * 3"
+
+              branch_rules:
+                left_branch:
+                  start_from: left_bend_point
+                  direction: left_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+                middle_branch:
+                  start_from: left_bend_point
+                  end_at: right_bend_point
+                  direction: horizontal
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_branch:
+                  step_1:
+                    start_from: right_bend_point
+                    direction: right_down
+                    until:
+                      y_ref: bottom_cover
+                      y_offset: "dia * 2"
+                  step_2:
+                    direction: horizontal
+                    end_at: cap_centerline_x
+                    y_ref: bottom_cover
+                    y_offset: "dia * 2"
+
+          # N6
+          - id: N6
+            category: 弯起钢筋
+            subtype: 多段弯起
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                left_bend_point:
+                  x_expr: "pier_centerline_x - (300 + 800)"
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+                right_bend_point:
+                  x_expr: "pier_centerline_x + (300 + 750)"
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+              branch_rules:
+                left_branch:
+                  start_from: left_bend_point
+                  direction: left_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+                middle_branch:
+                  start_from: left_bend_point
+                  end_at: right_bend_point
+                  direction: horizontal
+                  y_ref: top_cover
+                  y_offset: "dia * 2"
+
+                right_branch:
+                  step_1:
+                    start_from: right_bend_point
+                    direction: right_down
+                    until:
+                      y_ref: bottom_cover
+                      y_offset: "dia * 3"
+
+          # N7
+          - id: N7
+            category: 弯起钢筋
+            subtype: 多段弯起
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_1
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                left_bend_point:
+                  x_expr: "pier_centerline_x - 300"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_bend_point:
+                  x_expr: "pier_centerline_x + 300"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+              branch_rules:
+                left_branch:
+                  start_from: left_bend_point
+                  direction: left_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+                middle_branch:
+                  start_from: left_bend_point
+                  end_at: right_bend_point
+                  direction: horizontal
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+                right_branch:
+                  step_1:
+                    start_from: right_bend_point
+                    direction: right_down
+                    until:
+                      y_ref: bottom_cover
+                      y_offset: "dia * 1"
+
+          # N8
+          - id: N8
+            category: 弯起钢筋
+            subtype: 单段弯起
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_2
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                bend_start_point:
+                  x_expr: "pier_centerline_x - (300 + 800)"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+              branch_rules:
+                main_branch:
+                  start_from: bend_start_point
+                  direction: left_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+          # N9
+          - id: N9
+            category: 弯起钢筋
+            subtype: 单段弯起
+            dia: 28
+            mirror: longitudinal
+            z_pattern: pattern_2
+
+            control_definition:
+              reference_axis: pier_centerline_x
+              bend_angle: 45
+
+              key_points:
+                bend_start_point:
+                  x_expr: "pier_centerline_x + (300 + 750)"
+                  y_ref: top_cover
+                  y_offset: "dia * 1"
+
+              branch_rules:
+                main_branch:
+                  start_from: bend_start_point
+                  direction: right_down
+                  until:
+                    y_ref: bottom_cover
+                    y_offset: "dia * 1"
+
+        # 5. 箍筋定义
+        stirrups:
+          longitudinal_distribution:
+            - name: left_blank
+              x_from: "- cap_length / 2"
+              x_to: "-(cap_length / 2 - 150-cover_x)"
+              spacing: "150 + cover_x"
+
+            - name: 墩柱左侧加密区
+              x_from: "-(cap_length / 2 - 150-cover_x)"
+              x_to: "pier_centerline_x - 150 * 3"
+              spacing: 100
+
+            - name: 普通区1
+              x_from: "pier_centerline_x - 150 * 3"
+              x_to: "pier_centerline_x + 150 * 3"
+              spacing: 150
+
+            - name: 墩柱右侧加密区
+              x_from: "pier_centerline_x + 150 * 3"
+              x_to: "pier_centerline_x + 150 * 3 + 100 * 16"
+              spacing: 100
+
+            - name: 普通区2
+              x_from: "pier_centerline_x + 150 * 3 + 100 * 16"
+              x_to: "pier_centerline_x + 150 * 3 + 100 * 16+ 150 * 9"
+              spacing: 150
+
+            - name: right_blank
+              x_from: "pier_centerline_x + 150 * 3 + 100 * 16+ 150 * 9"
+              x_to: 0
+              spacing: 50
+
+          distribution_overview:
+            x_start_expr: "-(cap_length / 2 - 150-cover_x)"
+            x_end_expr: -50
+            construction_expr: "100 * 16 + 150 * 6 + 100 * 16 + 150 * 9"
+            total_length_value: 5450
+            unit: mm
+            segment_sequence:
+              - { name: 墩柱左侧加密区, spacing: 100, count: 16 }
+              - { name: 普通区1, spacing: 150, count: 6 }
+              - { name: 墩柱右侧加密区, spacing: 100, count: 16 }
+              - { name: 普通区2, spacing: 150, count: 9 }
+
+          transverse_cage_definition:
+            stirrup_system: 8肢箍
+            dia: 12
+
+            longitudinal_bar_grid:
+              total_positions: 23
+              indexing: left_to_right
+
+            cage_layouts:
+                components:
+                  - id: N10_left
+                    type: 子箍
+                    enclosed_range: [1, 5]
+                  - id: N10_right
+                    type: 子箍
+                    enclosed_range: [13, 17]
+                  - id: N11_left
+                    type: 子箍
+                    enclosed_range: [3, 10]
+                  - id: N11_right
+                    type: 子箍
+                    enclosed_range: [8, 15]

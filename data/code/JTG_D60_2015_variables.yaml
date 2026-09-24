@@ -1,0 +1,1506 @@
+metadata:
+  library_name: JTG_D60_2015_variable_registry
+  standard: JTG D60-2015
+  standard_code: JTG D60-2015
+  based_on:
+  - rules_aligned
+  - tables_aligned
+  - formula_registry_v0.1
+  schema: compact_variable_registry
+  file_version: v0.1
+  standard_name: 公路桥涵设计通用规范
+  library_type: variable_registry
+  version: reasonableness_fixed_v0.1
+  generation_note: 根据 JTG_D60_2015_reasonableness_review.md 修正：补充 formula_status，回写表格/公式/变量关联，对人工判断语义规则标记 hybrid/manual_review，保留需人工复核的泛化变量。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+variable_groups:
+  geometry:
+  - VAR_l_a
+  - VAR_l
+  - VAR_b
+  - VAR_D60_alpha
+  - VAR_B
+  - VAR_H
+  - VAR_h
+  - VAR_D
+  - VAR_D60_l_i
+  - VAR_D60_L_0
+  - VAR_l_0
+  - VAR_A
+  - VAR_V
+  - VAR_V_w
+  - VAR_R
+  material_geotechnical_environment:
+  - VAR_gamma
+  - VAR_gamma_water
+  - VAR_D60_phi
+  - VAR_delta
+  - VAR_beta
+  - VAR_R_ik
+  - VAR_R_bk
+  - VAR_t
+  - VAR_D60_K
+  - VAR_C_t
+  - VAR_m
+  - VAR_m_0
+  - VAR_g
+  coefficients:
+  - VAR_gamma_0
+  - VAR_gamma_Gi
+  - VAR_gamma_Q1
+  - VAR_gamma_L1
+  - VAR_gamma_Qj
+  - VAR_gamma_Lj
+  - VAR_psi_c
+  - VAR_psi_f1
+  - VAR_psi_q1
+  - VAR_psi_qj
+  - VAR_xi
+  - VAR_mu_active
+  - VAR_lambda
+  - VAR_mu
+  - VAR_C
+  - VAR_eta_brake
+  - VAR_mu_friction
+  actions_effects:
+  - VAR_G_ik
+  - VAR_Q_1k
+  - VAR_Q_jk
+  - VAR_G_id
+  - VAR_Q_1d
+  - VAR_Q_jd
+  - VAR_A_d
+  - VAR_S_ud
+  - VAR_S_ad
+  - VAR_S_fd
+  - VAR_S_qd
+  - VAR_G_k
+  - VAR_F_pe
+  - VAR_e_j
+  - VAR_E_j
+  - VAR_E
+  - VAR_q_v
+  - VAR_q_H
+  - VAR_F_buoyancy
+  - VAR_D60_P_k
+  - VAR_Q_vehicle
+  - VAR_Q_impact
+  - VAR_Q_centrifugal
+  - VAR_sum_G
+  - VAR_D60_q_p
+  - VAR_F_w
+  - VAR_F_i
+  - VAR_F_xi
+  - VAR_F_ci
+  - VAR_F_friction
+  - VAR_F_drift
+  prestress:
+  - VAR_D60_sigma_pe
+  - VAR_sigma_con
+  - VAR_sigma_l
+  - VAR_A_p
+  kinematics_angle_other:
+  - VAR_D60_v
+  - VAR_f
+  - VAR_theta
+  - VAR_omega
+  - VAR_tan_theta
+  - VAR_D60_lane_count
+  - VAR_n
+  - VAR_T
+variables:
+- id: VAR_A
+  symbol: A
+  name: 阻水面积
+  unit: m^2
+  dimension: area
+  data_type: float
+  value_source: geometry_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_FLOWING_WATER_PRESSURE
+  related_rules:
+  - R_D60_CH04_025
+  aliases:
+  - A
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_A_d
+  symbol: A_d
+  name: 偶然作用设计值或设计值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+- id: VAR_A_p
+  symbol: A_p
+  name: 预应力钢筋截面面积
+  unit: mm^2
+  dimension: area
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_PRESTRESS_FORCE
+  related_rules:
+  - R_D60_CH04_012
+- id: VAR_B
+  symbol: B
+  name: 计算宽度或挡土墙计算长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+  - F_D60_L1_RETAINING_WALL_DISTRIBUTION_LENGTH
+  related_rules:
+  - R_D60_CH04_013
+  - R_D60_CH04_020
+  aliases:
+  - B
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_C
+  symbol: C
+  name: 离心力系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+  - F_D60_L2_CENTRIFUGAL_FORCE
+  related_rules:
+  - R_D60_CH04_019
+  aliases:
+  - C
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_C_t
+  symbol: C_t
+  name: 冰厚影响系数或温度系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_ON_PIER
+  - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_D
+  symbol: D
+  name: 桩柱直径或等效宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_SMALL_COLUMN
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_LARGE_COLUMN
+  related_rules:
+  - R_D60_CH04_013
+  aliases:
+  - D
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_E
+  symbol: E
+  name: 主动土压力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_E_j
+  symbol: E_j
+  name: 单位宽度静止土压力标准值
+  unit: kN/m
+  dimension: line_force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_F_buoyancy
+  symbol: F_buoyancy
+  name: 水的浮力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_WATER_BUOYANCY
+  related_rules:
+  - R_D60_CH04_015
+- id: VAR_F_ci
+  symbol: F_ci
+  name: 倾斜表面冰压力竖向分力
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_VERTICAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_F_drift
+  symbol: F_drift
+  name: 漂流物横桥向撞击力设计值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_DRIFT_IMPACT_FORCE
+  related_rules:
+  - R_D60_CH04_031
+- id: VAR_F_friction
+  symbol: F_friction
+  name: 支座摩阻力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_SUPPORT_FRICTION_FORCE
+  related_rules:
+  - R_D60_CH04_029
+- id: VAR_F_i
+  symbol: F_i
+  name: 冰压力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_ON_PIER
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_F_pe
+  symbol: F_pe
+  name: 预加力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_PRESTRESS_FORCE
+  related_rules:
+  - R_D60_CH04_012
+- id: VAR_F_w
+  symbol: F_w
+  name: 流水压力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_FLOWING_WATER_PRESSURE
+  related_rules:
+  - R_D60_CH04_025
+- id: VAR_F_xi
+  symbol: F_xi
+  name: 倾斜表面冰压力水平分力
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  - F_D60_L2_ICE_PRESSURE_VERTICAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_G_id
+  symbol: G_id
+  name: 第i个永久作用设计值或设计值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_003
+- id: VAR_G_ik
+  symbol: G_ik
+  name: 第i个永久作用标准值或标准值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  - F_D60_L3_SLS_FREQUENT_COMBINATION
+  - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_G_k
+  symbol: G_k
+  name: 结构重力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_STRUCTURE_SELF_WEIGHT
+  related_rules:
+  - R_D60_CH04_011
+- id: VAR_H
+  symbol: H
+  name: 填土高度、墙高或计算高度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  - F_D60_L1_RETAINING_WALL_DISTRIBUTION_LENGTH
+  related_rules:
+  - R_D60_CH04_013
+  - R_D60_CH04_020
+  aliases:
+  - H
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_D60_K
+  symbol: K
+  name: 流水压力形状系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_FLOWING_WATER_PRESSURE
+  - F_B01_L1_AADT_SECONDARY_HIGHWAY
+  related_rules:
+  - R_D60_CH04_025
+- id: VAR_D60_L_0
+  symbol: L_0
+  name: 计算跨径或加载长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_VEHICLE_CONCENTRATED_LOAD_INTERPOLATION
+  - F_D60_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+  - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  related_rules:
+  - R_D60_CH04_017
+  - R_D60_CH04_022
+  - R_B01_7_0_3_LANE_LOAD
+  - R_B01_7_0_7_LONGITUDINAL_REDUCTION
+  - R_B01_7_0_8_PEDESTRIAN_LOAD
+  related_tables:
+  - T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+- id: VAR_D60_P_k
+  symbol: P_k
+  name: 车道荷载集中荷载标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed_or_table_lookup
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L1_VEHICLE_CONCENTRATED_LOAD_INTERPOLATION
+  - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+  - F_B01_L2_LANE_LOAD_SHEAR_PK
+  related_rules:
+  - R_D60_CH04_017
+  - R_B01_7_0_3_LANE_LOAD
+- id: VAR_Q_1d
+  symbol: Q_1d
+  name: 主导可变作用设计值或设计值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_003
+- id: VAR_Q_1k
+  symbol: Q_1k
+  name: 主导可变作用标准值或标准值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  - F_D60_L3_SLS_FREQUENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_Q_centrifugal
+  symbol: Q_centrifugal
+  name: 汽车荷载离心力标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_CENTRIFUGAL_FORCE
+  related_rules:
+  - R_D60_CH04_019
+- id: VAR_Q_impact
+  symbol: Q_impact
+  name: 汽车荷载冲击作用标准值
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_VEHICLE_IMPACT_ACTION
+  related_rules:
+  - R_D60_CH04_018
+- id: VAR_Q_jd
+  symbol: Q_jd
+  name: 第j个其他可变作用设计值或设计值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_003
+- id: VAR_Q_jk
+  symbol: Q_jk
+  name: 第j个其他可变作用标准值或标准值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  - F_D60_L3_SLS_FREQUENT_COMBINATION
+  - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_Q_vehicle
+  symbol: Q_vehicle
+  name: 汽车荷载标准值或标准值效应
+  unit: kN_or_effect
+  dimension: action_or_effect
+  data_type: float
+  value_source: computed_or_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_VEHICLE_IMPACT_ACTION
+  - F_D60_L2_CENTRIFUGAL_FORCE
+  related_rules:
+  - R_D60_CH04_018
+  - R_D60_CH04_019
+- id: VAR_R
+  symbol: R
+  name: 曲线半径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+  related_rules:
+  - R_D60_CH04_019
+  aliases:
+  - R
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_R_bk
+  symbol: R_bk
+  name: 冰抗弯强度标准值
+  unit: kPa
+  dimension: strength
+  data_type: float
+  value_source: environment_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_R_ik
+  symbol: R_ik
+  name: 冰抗压强度标准值
+  unit: kPa
+  dimension: strength
+  data_type: float
+  value_source: environment_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_ON_PIER
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_S_ad
+  symbol: S_ad
+  name: 承载能力极限状态偶然组合效应设计值
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+- id: VAR_S_fd
+  symbol: S_fd
+  name: 正常使用极限状态频遇组合效应设计值
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L3_SLS_FREQUENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_S_qd
+  symbol: S_qd
+  name: 正常使用极限状态准永久组合效应设计值
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_S_ud
+  symbol: S_ud
+  name: 承载能力极限状态作用组合效应设计值
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+  - R_D60_CH04_003
+- id: VAR_T
+  symbol: T
+  name: 撞击持续时间
+  unit: s
+  dimension: time
+  data_type: float
+  value_source: design_input_or_table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_DRIFT_IMPACT_FORCE
+  related_rules:
+  - R_D60_CH04_031
+- id: VAR_V
+  symbol: V
+  name: 构件体积
+  unit: m^3
+  dimension: volume
+  data_type: float
+  value_source: design_input_or_geometry
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_STRUCTURE_SELF_WEIGHT
+  related_rules:
+  - R_D60_CH04_011
+  aliases:
+  - V
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_V_w
+  symbol: V_w
+  name: 排开水体积
+  unit: m^3
+  dimension: volume
+  data_type: float
+  value_source: geometry_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_WATER_BUOYANCY
+  related_rules:
+  - R_D60_CH04_015
+- id: VAR_W
+  symbol: W
+  name: 上部结构重力或漂流物重量
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_SUPPORT_FRICTION_FORCE
+  - F_D60_L2_DRIFT_IMPACT_FORCE
+  related_rules:
+  - R_D60_CH04_029
+  - R_D60_CH04_031
+  aliases:
+  - W
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_D60_alpha
+  symbol: alpha
+  name: 斜交角或墙背倾角
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+  - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+  - F_3362_L1_HAUNCH_SLAB_EFFECTIVE_HEIGHT
+  related_rules:
+  - R_D60_CH03_012
+  - R_D60_CH04_013
+  - R_3362_CH04_016
+- id: VAR_b
+  symbol: b
+  name: 墩（台）宽度或土压力计算宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_SMALL_COLUMN
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_LARGE_COLUMN
+  - F_D60_L2_ICE_PRESSURE_ON_PIER
+  related_rules:
+  - R_D60_CH03_012
+  - R_D60_CH04_013
+  - R_D60_CH04_027
+  aliases:
+  - b
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_beta
+  symbol: beta
+  name: 填土表面倾角或冰压力倾斜角
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  - F_D60_L2_ICE_PRESSURE_VERTICAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_013
+  - R_D60_CH04_027
+- id: VAR_delta
+  symbol: delta
+  name: 墙背与填土间摩擦角
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: geotechnical_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_e_j
+  symbol: e_j
+  name: 任一高度处静止土压力强度
+  unit: kPa
+  dimension: pressure
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_eta_brake
+  symbol: eta_brake
+  name: 制动力多车道折算系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: computed_or_table_lookup
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L1_BREAKING_FORCE_EQUIVALENT_WIDTH
+  related_rules:
+  - R_D60_CH04_021
+- id: VAR_f
+  symbol: f
+  name: 结构基频
+  unit: Hz
+  dimension: frequency
+  data_type: float
+  value_source: computed_or_modal_analysis
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_VEHICLE_IMPACT_COEFFICIENT
+  related_rules:
+  - R_D60_CH04_018
+- id: VAR_g
+  symbol: g
+  name: 重力加速度
+  unit: m/s^2
+  dimension: acceleration
+  data_type: float
+  value_source: constant
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_FLOWING_WATER_PRESSURE
+  - F_D60_L2_DRIFT_IMPACT_FORCE
+  related_rules:
+  - R_D60_CH04_025
+  - R_D60_CH04_031
+- id: VAR_gamma
+  symbol: gamma
+  name: 材料或填土重度
+  unit: kN/m^3
+  dimension: unit_weight
+  data_type: float
+  value_source: table_lookup_or_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_STRUCTURE_SELF_WEIGHT
+  - F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+  - F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  - F_D60_L2_VERTICAL_FILL_PRESSURE
+  - F_D60_L2_HORIZONTAL_FILL_PRESSURE
+  - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+  related_rules:
+  - R_D60_CH04_011
+  - R_D60_CH04_013
+  - R_D60_CH04_020
+- id: VAR_gamma_0
+  symbol: gamma_0
+  name: 结构重要性系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+  - R_D60_CH04_003
+- id: VAR_gamma_Gi
+  symbol: gamma_Gi
+  name: 第i个永久作用分项系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+- id: VAR_gamma_L1
+  symbol: gamma_L1
+  name: 主导可变作用结构设计使用年限调整系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+- id: VAR_gamma_Lj
+  symbol: gamma_Lj
+  name: 第j个其他可变作用设计使用年限调整系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+- id: VAR_gamma_Q1
+  symbol: gamma_Q1
+  name: 主导可变作用分项系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+- id: VAR_gamma_Qj
+  symbol: gamma_Qj
+  name: 第j个其他可变作用分项系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+- id: VAR_gamma_water
+  symbol: gamma_w
+  name: 水的重度
+  unit: kN/m^3
+  dimension: unit_weight
+  data_type: float
+  value_source: constant_or_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_WATER_BUOYANCY
+  - F_D60_L2_FLOWING_WATER_PRESSURE
+  related_rules:
+  - R_D60_CH04_015
+  - R_D60_CH04_025
+- id: VAR_h
+  symbol: h
+  name: 计算深度或车辆荷载等代土层厚度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input_or_computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  - F_D60_L2_VERTICAL_FILL_PRESSURE
+  - F_D60_L2_HORIZONTAL_FILL_PRESSURE
+  - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+  related_rules:
+  - R_D60_CH04_013
+  - R_D60_CH04_020
+  aliases:
+  - h
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_l
+  symbol: l
+  name: 相邻墩（台）边缘之间的净距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+  related_rules:
+  - R_D60_CH03_012
+  aliases:
+  - l
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_l_0
+  symbol: l_0
+  name: 车辆荷载分布长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+  related_rules:
+  - R_D60_CH04_020
+- id: VAR_l_a
+  symbol: l_a
+  name: 一孔桥跨垂直水流方向的净距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+  related_rules:
+  - R_D60_CH03_012
+- id: VAR_D60_l_i
+  symbol: l_i
+  name: 相邻桩柱间净距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+  related_rules:
+  - R_D60_CH04_013
+  - R_3362_CH04_020
+  related_tables:
+  - T_3362_CH04_4_3_4_THEORETICAL_SPAN
+- id: VAR_lambda
+  symbol: lambda
+  name: 侧压系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L2_HORIZONTAL_FILL_PRESSURE
+  - F_D60_L1_LATERAL_PRESSURE_COEFFICIENT
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_D60_lane_count
+  symbol: lane_count
+  name: 设计车道数
+  unit: '-'
+  dimension: count
+  data_type: int_or_float
+  value_source: design_input_or_table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_BREAKING_FORCE_EQUIVALENT_WIDTH
+  related_rules:
+  - R_D60_CH04_021
+  - R_B01_4_0_3_LANE_COUNT
+  - R_B01_4_0_12_PASSING_BAY
+  related_tables:
+  - T_B01_4_0_3_LANE_COUNT
+- id: VAR_m
+  symbol: m
+  name: 冰压力形状或局部系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_ON_PIER
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_m_0
+  symbol: m_0
+  name: 倾斜面冰压力系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_mu
+  symbol: mu
+  name: 汽车荷载冲击系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L1_VEHICLE_IMPACT_COEFFICIENT
+  - F_D60_L2_VEHICLE_IMPACT_ACTION
+  related_rules:
+  - R_D60_CH04_018
+  semantic_scope: general_or_friction_coefficient
+  review_note: 与其他变量存在相同 symbol，但工程语义不同，当前保留独立ID。
+- id: VAR_mu_active
+  symbol: mu
+  name: 主动土压力系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+  - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  related_rules:
+  - R_D60_CH04_013
+  semantic_scope: active_earth_pressure_coefficient
+  review_note: 与其他变量存在相同 symbol，但工程语义不同，当前保留独立ID。
+- id: VAR_mu_friction
+  symbol: mu_f
+  name: 支座摩擦系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup_or_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_SUPPORT_FRICTION_FORCE
+  related_rules:
+  - R_D60_CH04_029
+- id: VAR_n
+  symbol: n
+  name: 桩柱数量或计算修正参数
+  unit: '-'
+  dimension: count
+  data_type: int_or_float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_SMALL_COLUMN
+  - F_D60_L1_SOIL_PRESSURE_WIDTH_LARGE_COLUMN
+  related_rules:
+  - R_D60_CH04_013
+  aliases:
+  - n
+  semantic_scope: D60_context_specific
+  review_note: 变量ID较泛化；当前未强制重命名，调用时应结合 related_formulas / related_rules 判断语义，避免跨公式误用。
+- id: VAR_omega
+  symbol: omega
+  name: 墙背与竖直线夹角相关参数
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_D60_phi
+  symbol: phi
+  name: 土的内摩擦角
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: geotechnical_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+  - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+  - F_D60_L1_LATERAL_PRESSURE_COEFFICIENT
+  - F_3362_L2_ARCH_FOOT_BENDING_MOMENT
+  related_rules:
+  - R_D60_CH04_013
+  - R_3362_CH04_035
+- id: VAR_psi_c
+  symbol: psi_c
+  name: 可变作用组合值系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_002
+- id: VAR_psi_f1
+  symbol: psi_f1
+  name: 主导可变作用频遇值系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  - F_D60_L3_SLS_FREQUENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_psi_q1
+  symbol: psi_q1
+  name: 主导可变作用准永久值系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+- id: VAR_psi_qj
+  symbol: psi_qj
+  name: 第j个可变作用准永久值系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  - F_D60_L3_SLS_FREQUENT_COMBINATION
+  - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+  related_rules:
+  - R_D60_CH04_005
+  - R_D60_CH04_006
+  - R_D60_CH04_002
+- id: VAR_q_H
+  symbol: q_H
+  name: 压实填土水平压力强度
+  unit: kPa
+  dimension: pressure
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_HORIZONTAL_FILL_PRESSURE
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_D60_q_p
+  symbol: q_p
+  name: 人群荷载标准值
+  unit: kN/m^2
+  dimension: area_load
+  data_type: float
+  value_source: computed_or_table_lookup
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+  related_rules:
+  - R_D60_CH04_022
+  - R_B01_7_0_8_PEDESTRIAN_LOAD
+- id: VAR_q_v
+  symbol: q_v
+  name: 压实填土竖向压力强度
+  unit: kPa
+  dimension: pressure
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_VERTICAL_FILL_PRESSURE
+  related_rules:
+  - R_D60_CH04_013
+  - R_D60_CH04_020
+- id: VAR_sigma_con
+  symbol: sigma_con
+  name: 张拉控制应力
+  unit: MPa
+  dimension: stress
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_EFFECTIVE_PRESTRESS
+  related_rules:
+  - R_D60_CH04_012
+- id: VAR_sigma_l
+  symbol: sigma_l
+  name: 相应阶段预应力损失
+  unit: MPa
+  dimension: stress
+  data_type: float
+  value_source: computed_or_external
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_EFFECTIVE_PRESTRESS
+  related_rules:
+  - R_D60_CH04_012
+- id: VAR_D60_sigma_pe
+  symbol: sigma_pe
+  name: 有效预应力
+  unit: MPa
+  dimension: stress
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L2_PRESTRESS_FORCE
+  - F_D60_L2_EFFECTIVE_PRESTRESS
+  - F_3362_CH06_6_1_7_3_POST_TENSION_INTERNAL_RESULTANT_FORCE
+  - F_3362_CH06_6_1_7_4_POST_TENSION_INTERNAL_RESULTANT_ECCENTRICITY
+  - F_3362_CH06_6_1_7_5_POST_TENSION_MIXED_RESULTANT_FORCE
+  - F_3362_CH06_6_1_7_6_POST_TENSION_MIXED_RESULTANT_ECCENTRICITY
+  related_rules:
+  - R_D60_CH04_012
+  - R_3362_CH06_6_1_7
+- id: VAR_sum_G
+  symbol: sum_G
+  name: 车辆荷载总重
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed_or_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+  related_rules:
+  - R_D60_CH04_020
+- id: VAR_t
+  symbol: t
+  name: 冰厚
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: environment_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_ICE_PRESSURE_ON_PIER
+  - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  related_rules:
+  - R_D60_CH04_027
+- id: VAR_tan_theta
+  symbol: tan_theta
+  name: 破裂面夹角正切值
+  unit: '-'
+  dimension: dimensionless
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  related_formulas:
+  - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_theta
+  symbol: theta
+  name: 破裂面与竖直线夹角
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+  related_rules:
+  - R_D60_CH04_013
+- id: VAR_D60_v
+  symbol: v
+  name: 设计速度或水流速度
+  unit: km/h_or_m/s
+  dimension: velocity
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+  - F_D60_L2_FLOWING_WATER_PRESSURE
+  - F_D60_L2_DRIFT_IMPACT_FORCE
+  - F_B01_L1_CIRCULAR_CURVE_RADIUS
+  - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  related_rules:
+  - R_D60_CH04_019
+  - R_D60_CH04_025
+  - R_D60_CH04_031
+  - R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+  - R_B01_3_5_1_DESIGN_SPEED
+  - R_B01_3_5_2_OPERATING_SPEED_CHECK
+  - R_B01_4_0_2_LANE_WIDTH
+  - R_B01_4_0_4_MEDIAN
+  - R_B01_4_0_5_SHOULDER_WIDTH
+  - R_B01_4_0_15_SIGHT_DISTANCE
+  - R_B01_4_0_17_CURVE_RADIUS
+  - R_B01_4_0_20_MAX_GRADE
+  - R_B01_4_0_21_MAX_GRADE_LENGTH
+  - R_B01_4_0_22_VERTICAL_CURVE
+  - R_B01_8_0_4_TUNNEL_PORTAL_TRANSITION
+  - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  - R_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+  related_tables:
+  - T_B01_3_5_1_DESIGN_SPEED
+  - T_B01_4_0_2_LANE_WIDTH
+  - T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+  - T_B01_4_0_5_1_SHOULDER_WIDTH
+  - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+  - T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+  - T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+  - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+  - T_B01_4_0_20_MAX_GRADE
+  - T_B01_4_0_21_MAX_GRADE_LENGTH
+  - T_B01_4_0_22_VERTICAL_CURVE
+  - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  - T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+- id: VAR_xi
+  symbol: xi
+  name: 静止土压力系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+  - F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+  - F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+  related_rules:
+  - R_D60_CH04_013
+notes:
+- 变量库采用公式库中的VAR_*作为主键，保证规则库、表格库、公式库之间可互相索引。
+- 若同一符号在不同公式中语义不同，当前版本优先保留工程通用含义；后续可拆分为更细变量ID。
+- kN_or_effect、effect表示该变量既可为作用值，也可为作用效应值，具体类型由调用规则确定。
+- 角度变量默认输入单位为deg，执行公式时按需要转换为rad。

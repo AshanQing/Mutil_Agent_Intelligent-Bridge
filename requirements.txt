@@ -1,0 +1,31 @@
+# Core agent and LLM integrations
+python-dotenv
+langgraph
+langgraph-checkpoint-sqlite
+langchain-core
+langchain-openai
+openai
+
+# Configuration and data processing
+PyYAML
+numpy>=1.26.4,<2
+sentence-transformers==2.7.0
+transformers==4.35.2
+pandas
+pydantic
+jinja2
+pytest
+
+# HTTP and utilities
+httpx
+tqdm
+
+# Drawing and visualization
+opencv-python<4.12
+matplotlib
+ezdxf
+PySide6>=6.7,<7
+# OpenSeesPy 3.7.0.3 Windows wheel links against python312.dll;
+# 3.5.1.11 is the Python 3.11-compatible Windows build used by this project.
+openseespy==3.5.1.11
+openseespywin==3.5.1.11; platform_system == "Windows"

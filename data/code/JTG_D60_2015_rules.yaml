@@ -1,0 +1,4372 @@
+metadata:
+  library_type: rule_registry
+  standard: JTG D60-2015
+  standard_name: 公路桥涵设计通用规范
+  version: reasonableness_fixed_v0.1
+  description: 由 01总则、03设计要求、04作用 三个章节规则库合并生成的 D60 规则库。
+  source_files:
+  - 01总则.yaml
+  - 03设计要求.yaml
+  - 04作用.yaml
+  source_rule_counts:
+    01总则.yaml: 8
+    03设计要求.yaml: 58
+    04作用.yaml: 34
+  total_rules: 100
+  merge_policy:
+    preserve_rule_content: true
+    preserve_source_file: true
+    duplicate_id_handling: 若出现重复ID，为后续重复项追加 __DUPn 后缀，并在 meta.alias_ids 中保留原ID。
+    relation_policy: 本次只合并规则库，不创建新的表格、公式、变量对象；原 related_refs 保持不变。
+  generation_note: 根据 JTG_D60_2015_reasonableness_review.md 修正：补充 formula_status，回写表格/公式/变量关联，对人工判断语义规则标记 hybrid/manual_review，保留需人工复核的泛化变量。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+rules:
+- id: R_D60_CH01_001
+  meta:
+    name: 桥涵设计基本原则
+    source: JTG D60-2015, 1.0.1条
+    original_text: 为规范公路桥涵设计，按照安全、耐久、适用、环保、经济和美观的原则，制定本规范。
+    mandatory_level: 应
+    rule_type: principle
+    description: 公路桥涵设计应从安全性、耐久性、适用性、环保性、经济性和美观性六个方面进行综合控制。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行公路桥涵设计、方案审查或验算结果评价时
+    stage:
+    - 总体设计
+    - 方案比选
+    - 结构验算
+    - 结果审查
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 桥梁上部结构
+    - 桥梁下部结构
+    - 基础结构
+    - 附属结构
+  logic:
+    inputs:
+    - design_scheme
+    - check_results
+    outputs:
+    - design_principle_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 该规则不直接参与数值计算。 在自动化验算报告中，将其作为总体审查维度； 若结构安全性、耐久性或适用性相关验算不满足，则总体设计原则审查不得通过。
+    note: 原则性规则，主要用于报告审查、方案评价和设计结果总评。
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_002
+  meta:
+    name: 规范适用范围规则
+    source: JTG D60-2015, 1.0.2条
+    original_text: 本规范适用于新建和改建各等级公路桥涵的设计。
+    mandatory_level: 应
+    rule_type: applicability
+    description: 当工程类型为新建或改建，且对象属于各等级公路桥梁或公路涵洞时， JTG D60-2015可作为顶层设计规则和作用规则来源。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 建立桥梁或涵洞设计验算任务前
+    stage:
+    - 规则库初始化
+    - 总体设计
+    - 结构验算
+    object:
+    - 公路桥梁
+    - 公路涵洞
+  logic:
+    inputs:
+    - project_type
+    - road_grade
+    - structure_category
+    outputs:
+    - standard_applicability
+    - applicable_standard
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 判断 project_type 是否属于“新建”或“改建”； 判断 structure_category 是否属于“公路桥梁”或“公路涵洞”； 若均满足，则 standard_applicability
+      = true， applicable_standard 中加入 JTG D60-2015。
+    note: 该规则为规则库入口规则，用于判断后续D60规则是否可调用。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_003
+  meta:
+    name: 设计基准期规则
+    source: JTG D60-2015, 1.0.3条
+    original_text: 公路桥涵结构的设计基准期为100年。
+    mandatory_level: 应
+    rule_type: parameter
+    description: 对适用于本规范的公路桥涵结构，设计基准期统一取100年。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 初始化桥梁或涵洞设计验算任务时
+    stage:
+    - 总体设计
+    - 结构验算
+    - 作用取值
+    - 作用组合
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 桥梁构件
+    - 涵洞构件
+  logic:
+    inputs:
+    - standard_applicability
+    outputs:
+    - design_reference_period_years
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 将 design_reference_period_years 赋值为 100。
+    note: 直接赋值规则，不需要调用公式或表格。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。 补充 standard_applicability 作为前置输入，表示仅当
+      D60 适用时才写入设计基准期。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_004
+  meta:
+    name: 设计使用年限规则
+    source: JTG D60-2015, 1.0.4条
+    original_text: 公路桥涵主体结构和可更换部件的设计使用年限不应低于表1.0.4的规定。
+    mandatory_level: 不应低于
+    rule_type: table_lookup
+    description: 公路桥涵主体结构和可更换部件应根据公路等级、桥涵类别和构件类型确定设计使用年限； 实际采用的设计使用年限不得低于规范表1.0.4规定值。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_1_0_4_DESIGN_WORKING_LIFE
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 确定桥梁主体结构或可更换部件的设计使用年限时
+    stage:
+    - 总体设计
+    - 耐久性设计
+    - 构件设计
+    - 结构验算
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 主体结构
+    - 可更换部件
+    - 支座
+    - 伸缩装置
+    - 斜拉索
+    - 吊索
+    - 系杆
+  logic:
+    inputs:
+    - road_grade
+    - bridge_class
+    - component_type
+    - replaceable_component_flag
+    outputs:
+    - design_working_life_years
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用表格 T_D60_1_0_4_DESIGN_WORKING_LIFE； 根据 road_grade、bridge_class、component_type 和 replaceable_component_flag
+      查询规定设计使用年限； 输出 design_working_life_years。 若用户输入的设计使用年限小于表格规定值，则判定为不满足。
+    note: 表1.0.4的具体年限数据应放入表格库，不在规则文件中展开。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_005
+  meta:
+    name: 桥涵分类规则
+    source: JTG D60-2015, 1.0.5条
+    original_text: 特大、大、中、小桥及涵洞按单孔跨径或多孔跨径总长分类规定见表1.0.5。
+    mandatory_level: 应
+    rule_type: classification
+    description: 桥梁或涵洞类别应根据多孔跨径总长和单孔跨径进行判定。 当按多孔跨径总长和单孔跨径得到的类别不一致时，应取较高类别作为最终分类结果。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_1_0_5_BRIDGE_CLASSIFICATION
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 需要确定桥梁或涵洞类别时
+    stage:
+    - 总体设计
+    - 跨径布置
+    - 水文设计
+    - 结构验算
+    object:
+    - 桥梁
+    - 涵洞
+    - 整桥
+  logic:
+    inputs:
+    - bridge_total_length
+    - single_span_length
+    outputs:
+    - bridge_class
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用表格 T_D60_1_0_5_BRIDGE_CLASSIFICATION； 分别根据 bridge_total_length 和 single_span_length 查询桥涵类别； 对两个分类结果进行等级比较，取较高类别作为
+      bridge_class。
+    note: 表1.0.5的分类阈值应放入表格库；该规则只描述查表逻辑和取高原则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_006
+  meta:
+    name: 减灾防灾设计规则
+    source: JTG D60-2015, 1.0.6条
+    original_text: 公路桥涵应进行抗风、抗震、抗撞等减灾防灾设计。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 公路桥涵设计应根据工程环境和结构特点考虑抗风、抗震、抗撞等减灾防灾设计要求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 建立桥涵结构设计和验算任务树时
+    stage:
+    - 总体设计
+    - 结构验算
+    - 抗风设计
+    - 抗震设计
+    - 防撞设计
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 桥梁上部结构
+    - 桥梁下部结构
+    - 基础结构
+    - 防撞设施
+    - 支座系统
+  logic:
+    inputs:
+    - bridge_type
+    - bridge_site_condition
+    - wind_check_required
+    - seismic_check_required
+    - collision_check_required
+    outputs:
+    - disaster_prevention_check_tasks
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥型、桥位环境、结构重要性及专项设计要求， 判断是否触发抗风验算、抗震验算、抗撞验算等任务； 将触发结果写入 disaster_prevention_check_tasks。
+    note: 该规则只负责触发专项验算任务，具体抗风、抗震、抗撞计算应调用相应专项规范和公式库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_007
+  meta:
+    name: 环境保护与资源节约规则
+    source: JTG D60-2015, 1.0.7条
+    original_text: 公路桥涵设计应满足环境保护和资源节约的有关要求。
+    mandatory_level: 应
+    rule_type: principle
+    description: 桥涵设计应考虑环境保护和资源节约要求，避免对周边环境造成不合理影响， 并优先采用资源消耗合理、环境适应性较好的设计方案。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥涵方案设计、材料选择、施工方案比选或设计结果审查时
+    stage:
+    - 总体设计
+    - 方案比选
+    - 材料选择
+    - 施工组织
+    - 设计审查
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 桥梁结构体系
+    - 桥梁构件
+    - 施工方案
+  logic:
+    inputs:
+    - design_scheme
+    - material_scheme
+    - construction_scheme
+    - environmental_constraints
+    outputs:
+    - environmental_resource_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 该规则不直接进行结构数值计算； 在方案审查中生成环境保护和资源节约审查项； 若工程存在特殊环保约束，应将相关约束传递给总体布置、材料选择和施工方案模块。
+    note: 原则性审查规则，适合作为方案比选和设计报告评价项。
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH01_008
+  meta:
+    name: 相关标准协调规则
+    source: JTG D60-2015, 1.0.8条
+    original_text: 公路桥涵设计除应符合本规范的规定外，尚应符合国家和行业现行有关标准的规定。
+    mandatory_level: 应
+    rule_type: applicability
+    description: JTG D60-2015作为公路桥涵设计的通用规范，不能单独覆盖所有构件承载力和专项验算； 具体材料、构件、基础、抗震、施工等验算还应调用相应国家或行业现行标准。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 建立完整桥梁设计验算规则体系时
+    stage:
+    - 规则库初始化
+    - 结构验算
+    - 专项验算
+    - 报告生成
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 桥梁上部结构
+    - 桥梁下部结构
+    - 基础结构
+    - 附属结构
+  logic:
+    inputs:
+    - check_object
+    - material_type
+    - structure_type
+    - check_task
+    outputs:
+    - required_standard_list
+    - required_rule_library_list
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 check_object、material_type、structure_type 和 check_task， 判断是否需要调用混凝土桥规、钢结构桥规、地基基础规范、抗震规范、施工规范等外部规则库；
+      输出 required_standard_list 和 required_rule_library_list。
+    note: 该规则用于建立多规范协同调用机制，避免将D60误用为全部验算依据。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 01总则.yaml
+  _source_chapter: '01'
+- id: R_D60_CH03_001
+  meta:
+    name: 桥涵总体设计原则
+    source: JTG D60-2015, 3.1.1条
+    original_text: 摘要：桥涵应根据公路功能、技术等级、施工养护等因素进行总体设计，并满足设计使用年限内正常交通荷载通行需求。
+    mandatory_level: 应
+    rule_type: principle
+    description: 桥涵总体设计应综合考虑公路功能、技术等级、因地制宜、就地取材、施工养护便利性， 并保证设计使用年限内正常交通荷载通行需求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥涵总体设计或方案初始化时
+    stage:
+    - 总体设计
+    - 方案比选
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 整桥
+  logic:
+    inputs:
+    - road_function
+    - technical_grade
+    - construction_condition
+    - maintenance_condition
+    - design_traffic_load
+    outputs:
+    - general_design_requirement
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 生成总体设计审查项；若设计方案不能满足交通功能、施工养护或正常荷载通行要求， 则标记为总体设计不满足。
+    note: 原则性规则，主要用于总体方案审查。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_002
+  meta:
+    name: 桥涵线形设计规则
+    source: JTG D60-2015, 3.1.2条
+    original_text: 摘要：桥涵线形设计应符合路线总体要求，特大桥和大桥应综合考虑路线、地质、地形、通行、通航、环境等因素。
+    mandatory_level: 应
+    rule_type: principle
+    description: 中小桥涵线形应服从路线总体设计；特大桥、大桥线形设计应综合考虑路线走向、 桥区地质地形、安全通行、通航、既有设施和环境敏感区等因素。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥位、桥轴线或纵横断面线形设计时
+    stage:
+    - 总体设计
+    - 路线协调
+    - 桥位设计
+    object:
+    - 公路桥梁
+    - 中小桥
+    - 特大桥
+    - 大桥
+  logic:
+    inputs:
+    - bridge_class
+    - route_alignment
+    - geology_condition
+    - terrain_condition
+    - traffic_safety_requirement
+    - navigation_requirement
+    - environmental_sensitive_area
+    outputs:
+    - alignment_design_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 根据桥梁类别生成线形设计审查项；对特大桥和大桥，应额外检查桥位环境、 通航通行和环境敏感因素。
+    note: 原则性规则，后续可结合路线几何数据进行半自动审查。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_003
+  meta:
+    name: 极限状态设计规则
+    source: JTG D60-2015, 3.1.3条
+    original_text: 摘要：桥涵结构应按承载能力极限状态和正常使用极限状态设计。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 桥涵结构验算应划分为承载能力极限状态和正常使用极限状态。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 建立结构验算任务树时
+    stage:
+    - 结构验算
+    object:
+    - 桥梁结构
+    - 涵洞结构
+    - 构件
+    - 截面
+  logic:
+    inputs:
+    - check_object
+    - check_purpose
+    outputs:
+    - limit_state_list
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 为验算对象生成承载能力极限状态和正常使用极限状态两个验算入口。
+    note: 顶层验算任务触发规则。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_004
+  meta:
+    name: 设计状况分类规则
+    source: JTG D60-2015, 3.1.4条
+    original_text: 摘要：桥涵应根据作用类别、影响和环境条件，按持久、短暂、偶然、地震状况进行极限状态设计。
+    mandatory_level: 应
+    rule_type: classification
+    description: 持久状况应进行承载能力极限状态和正常使用极限状态设计； 短暂状况应进行承载能力极限状态设计，必要时进行正常使用极限状态设计； 偶然状况和地震状况应进行承载能力极限状态设计。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行作用组合或验算工况生成前
+    stage:
+    - 运营阶段验算
+    - 施工阶段验算
+    - 偶然状况验算
+    - 抗震验算
+    object:
+    - 桥梁结构
+    - 涵洞结构
+    - 构件
+  logic:
+    inputs:
+    - design_stage
+    - action_type
+    - environmental_condition
+    - accidental_event
+    - seismic_check_required
+    outputs:
+    - design_situation
+    - required_limit_state
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据设计阶段和作用类型识别设计状况，并确定应执行的极限状态验算类型。
+    note: 与作用组合规则直接关联。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_005
+  meta:
+    name: 抗疲劳设计触发规则
+    source: JTG D60-2015, 3.1.5条
+    original_text: 摘要：桥梁钢结构部分应根据需要进行抗疲劳设计。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 当桥梁钢结构部分可能受重复车辆荷载或反复应力影响时，应触发抗疲劳设计任务。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 构件存在钢结构部分且承受重复荷载作用时
+    stage:
+    - 运营阶段验算
+    - 疲劳验算
+    object:
+    - 钢结构构件
+    - 钢梁
+    - 钢箱梁
+    - 钢混组合结构
+  logic:
+    inputs:
+    - material_type
+    - component_type
+    - repeated_load_sensitive
+    outputs:
+    - fatigue_check_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 若 material_type 包含钢结构且 repeated_load_sensitive 为 true， 则 fatigue_check_required = true。
+    note: 具体疲劳验算公式应调用钢结构桥梁相关规范。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_006
+  meta:
+    name: 设计阶段风险评估规则
+    source: JTG D60-2015, 3.1.6条
+    original_text: 摘要：桥涵应按相关规定进行设计阶段风险评估。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 桥涵设计阶段应根据工程规模、结构复杂性和环境风险进行风险评估。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥涵设计阶段安全风险识别时
+    stage:
+    - 设计阶段
+    - 风险评估
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 特大桥
+    - 大桥
+    - 复杂结构
+  logic:
+    inputs:
+    - bridge_class
+    - structural_complexity
+    - site_risk
+    - construction_risk
+    outputs:
+    - design_risk_assessment_required
+    - risk_assessment_items
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 对特大桥、大桥、复杂结构或高风险环境工程，触发设计风险评估任务。
+    note: 风险评估方法需结合专项规定。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_007
+  meta:
+    name: 耐久性设计规则
+    source: JTG D60-2015, 3.1.7条
+    original_text: 摘要：桥涵应按设计使用年限和环境条件进行耐久性设计。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 桥涵结构和构件应根据设计使用年限及环境作用条件进行耐久性设计。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行构件设计、材料设计或保护层设计时
+    stage:
+    - 耐久性设计
+    - 结构验算
+    object:
+    - 桥梁结构
+    - 涵洞结构
+    - 主体结构
+    - 可更换构件
+  logic:
+    inputs:
+    - design_working_life
+    - environmental_condition
+    - material_type
+    - exposure_class
+    outputs:
+    - durability_design_required
+    - durability_check_items
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据设计使用年限和环境类别生成耐久性设计审查项，并传递给材料和构造规则库。
+    note: 具体耐久性限值由材料设计规范提供。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_008
+  meta:
+    name: 可检查可维修可更换设计规则
+    source: JTG D60-2015, 3.1.8条
+    original_text: 摘要：桥涵应考虑养护需要，并按可到达、可检查、可维修和可更换要求进行设计。
+    mandatory_level: 应
+    rule_type: principle
+    description: 桥涵设计应满足养护需求，使关键构件和可更换部件具备可到达、可检查、可维修和可更换条件。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥梁构造、附属设施或养护通道设计时
+    stage:
+    - 构造设计
+    - 养护设计
+    object:
+    - 桥梁结构
+    - 支座
+    - 伸缩缝
+    - 吊索
+    - 拉索
+    - 附属设施
+  logic:
+    inputs:
+    - maintenance_requirement
+    - replaceable_component_flag
+    - inspection_access_condition
+    outputs:
+    - maintainability_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 对支座、伸缩缝、索类构件及其他可更换部件生成养护可达性审查项。
+    note: 原则性规则，可结合BIM或构造布置数据进行审查。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_009
+  meta:
+    name: 景观协调设计规则
+    source: JTG D60-2015, 3.1.9条
+    original_text: 摘要：桥涵应与自然环境和景观协调，特殊大桥宜进行景观设计。
+    mandatory_level: 宜
+    rule_type: principle
+    description: 桥涵方案应与自然环境和景观相协调；特殊大桥宜进行专项景观设计。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥梁总体方案、桥型方案或景观敏感区设计时
+    stage:
+    - 总体设计
+    - 方案比选
+    - 景观设计
+    object:
+    - 公路桥梁
+    - 特殊大桥
+    - 景观敏感桥梁
+  logic:
+    inputs:
+    - landscape_sensitivity
+    - bridge_class
+    - surrounding_environment
+    outputs:
+    - landscape_design_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 当 bridge_class 为特殊大桥或 landscape_sensitivity 较高时，触发景观协调审查。
+    note: 适合作为方案比选评价项。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_010
+  meta:
+    name: 桥梁综合布置规则
+    source: JTG D60-2015, 3.2.1条
+    original_text: 摘要：桥梁应结合公路功能、等级、通行能力、防洪防灾、水文、地质、通航、环境等条件综合布置。
+    mandatory_level: 应
+    rule_type: principle
+    description: 桥梁布置应综合考虑道路功能、等级、交通能力、防洪防灾、水文地质、通航和环境条件。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥位选择、跨径布置或桥梁总体布置时
+    stage:
+    - 桥位设计
+    - 总体布置
+    - 跨径布置
+    object:
+    - 桥梁
+    - 特大桥
+    - 大桥
+  logic:
+    inputs:
+    - road_function
+    - road_grade
+    - traffic_capacity
+    - flood_control_requirement
+    - hydrology_condition
+    - geology_condition
+    - navigation_requirement
+    - environmental_condition
+    outputs:
+    - bridge_layout_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 生成桥梁布置综合审查项；特大桥、大桥应优先选择河道顺直、河床稳定、地质良好的桥位。
+    note: 原则性布置规则。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_011
+  meta:
+    name: 多河槽及滩地桥涵布置规则
+    source: JTG D60-2015, 3.2.2条
+    original_text: 摘要：多稳定河槽或滩地流量较大时，可分槽设桥；平坦、草原、漫流地区可分片泄洪布置桥涵。
+    mandatory_level: 宜
+    rule_type: layout
+    description: 当桥址存在多个稳定河槽、滩地流量较大或漫流分布明显时，应结合水流条件进行分槽或分片布置。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 桥址处存在多个河槽、滩地流量或漫流区时
+    stage:
+    - 桥涵布置
+    - 水文设计
+    object:
+    - 桥梁
+    - 涵洞
+    - 跨河桥
+  logic:
+    inputs:
+    - river_channel_count
+    - floodplain_flow_ratio
+    - water_flow_pattern
+    - terrain_type
+    outputs:
+    - multi_opening_layout_strategy
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据河槽数量、滩地流量比例和漫流分布情况，判断是否采用分槽设桥或分片泄洪桥涵布置。
+    note: 可与水文模型和路线布置模块联动。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_012
+  meta:
+    name: 桥轴线与主流方向协调规则
+    source: JTG D60-2015, 3.2.3条
+    original_text: 摘要：桥梁纵轴线宜与洪水主流方向正交，通航桥梁墩台轴线宜与最高通航水位时主流方向一致。
+    mandatory_level: 宜
+    rule_type: geometry
+    description: 桥梁纵轴线宜与洪水主流方向正交；通航河流中墩台轴线宜与最高通航水位时主流方向一致。 斜交不可避免且交角较大时，应按规范公式计算墩台边缘净距。
+    related_refs:
+      formulas:
+      - F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+      tables: []
+      variables:
+      - VAR_D60_alpha
+      - VAR_b
+      - VAR_l
+      - VAR_l_a
+      rules: []
+  applicability:
+    trigger_condition: 进行跨河桥桥轴线、墩台轴线或斜交桥布置时
+    stage:
+    - 桥位设计
+    - 墩台布置
+    object:
+    - 跨河桥
+    - 通航桥梁
+    - 墩台
+  logic:
+    inputs:
+    - bridge_axis_angle_to_flow
+    - navigation_required
+    - skew_angle
+    - abutment_length
+    - required_effective_span
+    outputs:
+    - alignment_flow_review
+    - embankment_edge_clearance
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 判断桥轴线与主流方向夹角是否满足要求； 当 skew_angle 大于控制条件时，调用公式 F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION 计算净距。
+    note: 公式应放入公式库，图示数据不在规则内展开。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_013
+  meta:
+    name: 水文水力计算规范协调规则
+    source: JTG D60-2015, 3.2.4条
+    original_text: 摘要：桥涵水文、水力计算应符合工程地质勘察和水文勘测设计相关规范。
+    mandatory_level: 应
+    rule_type: applicability
+    description: 桥涵水文、水力计算应调用现行工程地质勘察和水文勘测设计相关规范。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥涵水文、水力计算时
+    stage:
+    - 水文计算
+    - 水力计算
+    object:
+    - 桥梁
+    - 涵洞
+    - 跨河桥
+  logic:
+    inputs:
+    - hydrology_calculation_required
+    - hydraulic_calculation_required
+    outputs:
+    - required_hydrology_standards
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 当需要水文或水力计算时，将相关专项规范加入 required_hydrology_standards。
+    note: 多规范调用入口规则。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_014
+  meta:
+    name: 通航桥梁布置规则
+    source: JTG D60-2015, 3.2.5条
+    original_text: 摘要：通航海轮、内河通航桥梁的布置应满足相应通航标准。
+    mandatory_level: 应
+    rule_type: applicability
+    description: 跨越通航水域的桥梁布置应满足海轮或内河通航标准，并考虑河床演变和通航水位变化。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 桥梁跨越通航水域时
+    stage:
+    - 桥梁布置
+    - 通航净空设计
+    object:
+    - 通航桥梁
+    - 跨海桥
+    - 跨河桥
+  logic:
+    inputs:
+    - navigation_required
+    - waterway_type
+    - navigation_standard
+    outputs:
+    - navigation_layout_requirement
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 waterway_type 判断调用海轮通航标准或内河通航标准。
+    note: 通航净空具体数据由通航标准提供。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_015
+  meta:
+    name: 通航水域桥墩布置及防撞规则
+    source: JTG D60-2015, 3.2.6条
+    original_text: 摘要：通航水域中桥墩宜减少设置并布置于浅水区，可能受撞击时应考虑撞击作用并设警示、防撞设施。
+    mandatory_level: 宜
+    rule_type: layout
+    description: 通航水域桥墩布置应尽量减少对通航影响；存在船舶或漂流物撞击风险时，应考虑撞击作用并设置警示和防撞设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 桥梁位于通航水域时
+    stage:
+    - 桥墩布置
+    - 防撞设计
+    object:
+    - 桥墩
+    - 通航桥梁
+    - 防撞设施
+  logic:
+    inputs:
+    - navigation_water_area
+    - pier_location
+    - collision_risk
+    outputs:
+    - pier_layout_review
+    - collision_protection_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 pier_location 和 collision_risk 判断是否触发防撞设计任务。
+    note: 防撞作用计算应调用作用章节和专项规范。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_016
+  meta:
+    name: 跨越多车道公路桥墩布置规则
+    source: JTG D60-2015, 3.2.7条
+    original_text: 摘要：桥梁跨越设中央分隔带的多车道公路时，不宜在中央分隔带内设置桥墩。
+    mandatory_level: 不宜
+    rule_type: layout
+    description: 跨越多车道公路时，桥墩不宜设置在中央分隔带内； 跨线桥桥墩不得侵入公路建筑限界，必要时应设置防护设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 桥梁跨越多车道公路或桥下道路时
+    stage:
+    - 桥墩布置
+    - 交通安全设计
+    object:
+    - 跨线桥
+    - 桥墩
+    - 桥下公路
+  logic:
+    inputs:
+    - underpass_road_type
+    - median_width
+    - pier_position
+    - building_limit
+    outputs:
+    - pier_position_review
+    - protection_facility_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查 pier_position 是否侵入中央分隔带或公路建筑限界； 不满足时输出防护或调整建议。
+    note: 可与道路横断面数据联动检查。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_017
+  meta:
+    name: 调治构造物布置规则
+    source: JTG D60-2015, 3.2.8条
+    original_text: 摘要：为保证桥位附近水流顺畅，可设置调治构造物，并应符合有关布置和高程要求。
+    mandatory_level: 应
+    rule_type: layout
+    description: 调治构造物的形式和布置应结合水流性质、地形地质、河滩水流、通航要求、 桥头引道和水利设施等因素确定。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 桥位附近河槽、河岸或水流可能发生不利变形时
+    stage:
+    - 水文设计
+    - 桥涵布置
+    object:
+    - 调治构造物
+    - 导流堤
+    - 河道防护
+    - 桥位
+  logic:
+    inputs:
+    - water_flow_condition
+    - river_channel_stability
+    - regulation_structure_type
+    - design_flood_level
+    outputs:
+    - regulation_structure_layout
+    - regulation_structure_elevation_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据调治构造物类型和设计洪水位检查布置及顶面高程要求； 必要时调用高程控制规则。
+    note: 具体构造尺寸和高程控制可在表格库或专项规则中细化。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_018
+  meta:
+    name: 设计洪水频率规则
+    source: JTG D60-2015, 3.2.9条
+    original_text: 摘要：桥涵设计洪水频率应符合表3.2.9规定，并结合公路等级、桥涵类别和特殊情况调整。
+    mandatory_level: 应
+    rule_type: table_lookup
+    description: 桥涵设计洪水频率应根据公路等级和桥涵类别查表确定； 对冲刷严重、特殊桥型或允许有限交通中断的情况，应按条文附加要求调整。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_3_2_9_DESIGN_FLOOD_FREQUENCY
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 进行桥涵水文设计或确定设计洪水标准时
+    stage:
+    - 水文设计
+    - 总体设计
+    object:
+    - 桥梁
+    - 涵洞
+    - 漫水桥
+    - 过水路面
+  logic:
+    inputs:
+    - road_grade
+    - bridge_class
+    - structure_type
+    - flood_scour_condition
+    - traffic_interruption_allowance
+    outputs:
+    - design_flood_frequency
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用表格 T_D60_3_2_9_DESIGN_FLOOD_FREQUENCY； 根据 road_grade 和 bridge_class 查询 design_flood_frequency； 对特殊条件执行附加判断。
+    note: 表3.2.9具体频率数据放入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_019
+  meta:
+    name: 桥涵孔径总体控制规则
+    source: JTG D60-2015, 3.3.1条
+    original_text: 摘要：桥涵孔径应保证设计洪水、流冰、泥石流、漂浮物等安全通过，并考虑壅水、冲刷及邻近结构影响。
+    mandatory_level: 应
+    rule_type: check
+    description: 桥涵孔径应保证设计洪水及相关漂浮物、泥石流、流冰等安全通过， 并避免不合理压缩河道或改变天然水流状态。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥涵孔径设计时
+    stage:
+    - 孔径设计
+    - 水文水力设计
+    object:
+    - 桥梁孔径
+    - 涵洞孔径
+    - 跨河桥
+  logic:
+    inputs:
+    - design_flood_flow
+    - debris_flow_condition
+    - ice_flow_condition
+    - backwater_effect
+    - scour_effect
+    - nearby_structure
+    outputs:
+    - opening_design_review
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查孔径方案是否满足过水、安全、冲刷和周边影响控制要求。
+    note: 具体孔径计算应调用水力公式库。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_020
+  meta:
+    name: 小桥涵孔径确定规则
+    source: JTG D60-2015, 3.3.2条
+    original_text: 摘要：小桥、涵洞孔径应根据设计洪水流量、河床地质、河床和锥坡加固形式等确定。
+    mandatory_level: 应
+    rule_type: check
+    description: 小桥、涵洞孔径应根据洪水流量、河床地质和防护条件确定； 缺少水文资料时可利用现场调查和既有经验估算。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行小桥或涵洞孔径设计时
+    stage:
+    - 孔径设计
+    - 水文设计
+    object:
+    - 小桥
+    - 涵洞
+  logic:
+    inputs:
+    - design_flood_flow
+    - riverbed_geology
+    - riverbed_protection_type
+    - upstream_storage_condition
+    - historical_flood_marks
+    outputs:
+    - small_bridge_culvert_opening
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 依据水文资料完整性选择计算法或经验法； 若上游允许积水，可按规范要求考虑流量折减限制。
+    note: 流量折减和经验估算方法后续可进入公式库或经验规则库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_021
+  meta:
+    name: 大中桥孔径综合比较规则
+    source: JTG D60-2015, 3.3.3条
+    original_text: 摘要：特大、大、中桥孔径布置应按设计洪水流量和桥位河段特性计算，并进行综合比较。
+    mandatory_level: 应
+    rule_type: check
+    description: 大中型桥梁孔径布置应结合设计洪水、河段特性、结构形式、冲刷深度、 桥头引道和调治构造物布置进行综合比较。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行特大桥、大桥或中桥孔径设计时
+    stage:
+    - 孔径设计
+    - 桥涵布置
+    object:
+    - 特大桥
+    - 大桥
+    - 中桥
+  logic:
+    inputs:
+    - design_flood_flow
+    - river_reach_characteristics
+    - opening_size
+    - structure_type
+    - scour_depth
+    - abutment_layout
+    - regulation_structure_layout
+    outputs:
+    - bridge_opening_comparison
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 对多个孔径布置方案计算水力及结构影响，并输出综合比较结果。
+    note: 可与水力计算和方案比选模块联动。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_022
+  meta:
+    name: 桥下冲刷影响计算规则
+    source: JTG D60-2015, 3.3.4条
+    original_text: 摘要：计算桥下冲刷时，应考虑桥孔压缩、墩台阻水、局部冲刷、河床演变和调治构造物影响。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 桥下冲刷计算应综合考虑桥孔压缩、墩台阻水、局部冲刷、河床演变及调治构造物影响。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥下冲刷或基础埋深设计时
+    stage:
+    - 水文水力设计
+    - 基础设计
+    object:
+    - 桥墩
+    - 桥台
+    - 基础
+    - 河床
+  logic:
+    inputs:
+    - bridge_opening_compression
+    - pier_obstruction
+    - abutment_obstruction
+    - riverbed_evolution
+    - regulation_structure_effect
+    outputs:
+    - scour_depth
+    - foundation_scour_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 将相关影响因素传递给冲刷计算公式库，输出控制冲刷深度。
+    note: 具体冲刷公式由水文水力公式库维护。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_023
+  meta:
+    name: 桥梁全长计算规则
+    source: JTG D60-2015, 3.3.5条
+    original_text: 摘要：有桥台时桥梁全长为两岸桥台侧墙或八字墙尾端间距离；无桥台时为桥面系长度。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 桥梁全长应根据是否设有桥台采用不同定义。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_1_0_5_BRIDGE_CLASSIFICATION
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 计算桥梁全长或进行桥涵分类时
+    stage:
+    - 总体设计
+    - 桥涵分类
+    object:
+    - 桥梁
+    - 整桥
+  logic:
+    inputs:
+    - abutment_exists
+    - abutment_wall_tail_distance
+    - deck_system_length
+    outputs:
+    - bridge_total_length
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 若 abutment_exists = true，则 bridge_total_length 取两岸桥台侧墙或八字墙尾端间距离； 否则取桥面系长度。
+    note: 可与第1章桥涵分类规则联动。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_024
+  meta:
+    name: 标准化跨径采用规则
+    source: JTG D60-2015, 3.3.6条
+    original_text: 摘要：桥涵跨径在50m及以下时，宜采用标准化跨径，并宜采用装配式、机械化、工厂化施工。
+    mandatory_level: 宜
+    rule_type: table_lookup
+    description: 当桥涵跨径为50m及以下时，宜从规范标准化跨径序列中选取跨径。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_3_3_6_STANDARD_SPAN_LIST
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 选择50m及以下桥涵跨径时
+    stage:
+    - 跨径布置
+    - 标准化设计
+    object:
+    - 桥梁
+    - 涵洞
+    - 标准跨径桥梁
+  logic:
+    inputs:
+    - span_length
+    - construction_method
+    outputs:
+    - standardized_span_recommendation
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用 T_D60_3_3_6_STANDARD_SPAN_LIST 判断 span_length 是否属于标准跨径序列。
+    note: 标准跨径列表放入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_025
+  meta:
+    name: 桥涵建筑限界与桥面净宽规则
+    source: JTG D60-2015, 3.4.1条
+    original_text: 摘要：桥涵净空应符合公路建筑限界规定，并根据路线条件、桥型和安全设施进行桥面净宽控制。
+    mandatory_level: 应
+    rule_type: check
+    description: 桥涵净空应满足公路建筑限界要求，桥面净宽及安全设施不得侵入净空界限。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥面净宽、建筑限界或安全设施布置时
+    stage:
+    - 桥面布置
+    - 净空设计
+    object:
+    - 桥梁
+    - 涵洞
+    - 桥面
+    - 建筑限界
+  logic:
+    inputs:
+    - roadbed_width
+    - bridge_clear_width
+    - road_grade
+    - bridge_class
+    - safety_facility_layout
+    outputs:
+    - bridge_clearance_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用公路工程技术标准中的建筑限界参数，检查桥面净宽和安全设施布置。
+    note: 需调用JTG B01相关表格。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_026
+  meta:
+    name: 桥面人行道自行车道及护栏布置规则
+    source: JTG D60-2015, 3.4.2条
+    original_text: 摘要：桥面人行道、自行车道和护栏设施布置应满足道路等级、交通组织和安全防护要求。
+    mandatory_level: 应
+    rule_type: layout
+    description: 桥面人行道、自行车道、行车道及护栏设施应按道路等级、交通需求和安全防护要求协调布置。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥面横断面和附属设施布置时
+    stage:
+    - 桥面布置
+    - 交通安全设计
+    object:
+    - 桥面
+    - 人行道
+    - 自行车道
+    - 护栏
+  logic:
+    inputs:
+    - road_grade
+    - pedestrian_required
+    - bicycle_lane_required
+    - guardrail_type
+    - sidewalk_width
+    - bicycle_lane_width
+    outputs:
+    - deck_auxiliary_layout_review
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查人行道、自行车道、护栏、路缘石等横向布置是否满足相应宽度和安全要求。
+    note: 部分限值可后续拆入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_027
+  meta:
+    name: 桥下净空确定规则
+    source: JTG D60-2015, 3.4.3条
+    original_text: 摘要：桥下净空应根据计算水位或最高流冰水位加安全高度确定，并满足非通航河流最小净空要求。
+    mandatory_level: 应
+    rule_type: table_lookup
+    description: 桥下净空应结合设计水位、最高流冰水位和安全高度确定； 非通航河流桥还应满足规范表3.4.3最小净空要求。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_3_4_3_MIN_UNDERBRIDGE_CLEARANCE
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 进行桥下净空设计时
+    stage:
+    - 净空设计
+    - 水文设计
+    object:
+    - 桥梁
+    - 桥下净空
+    - 非通航河流桥
+  logic:
+    inputs:
+    - design_water_level
+    - highest_ice_level
+    - debris_condition
+    - bridge_part
+    outputs:
+    - required_underbridge_clearance
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用表格 T_D60_3_4_3_MIN_UNDERBRIDGE_CLEARANCE 查询最小净空。
+    note: 表3.4.3具体数据放入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_028
+  meta:
+    name: 无压力式涵洞净高规则
+    source: JTG D60-2015, 3.4.4条
+    original_text: 摘要：涵洞宜设计为无压力式，无压力式涵洞内顶点至洞内设计洪水频率标准水位的净高应符合表3.4.4。
+    mandatory_level: 宜
+    rule_type: table_lookup
+    description: 涵洞宜采用无压力式，洞内顶点至设计洪水位的净高应满足规范表3.4.4要求。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_3_4_4_CULVERT_FREEBOARD
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 进行涵洞水力和净空设计时
+    stage:
+    - 涵洞设计
+    - 净空设计
+    object:
+    - 涵洞
+    - 管涵
+    - 拱涵
+    - 箱涵
+  logic:
+    inputs:
+    - culvert_type
+    - culvert_inlet_height
+    - design_flood_water_level
+    outputs:
+    - culvert_freeboard_requirement
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用 T_D60_3_4_4_CULVERT_FREEBOARD 根据涵洞类型和进口高度查询净高要求。
+    note: 表3.4.4具体数据放入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_029
+  meta:
+    name: 立体交叉跨线桥净空规则
+    source: JTG D60-2015, 3.4.5条
+    original_text: 摘要：公路、铁路、农村道路与公路立体交叉时，跨线桥桥下净空和布孔应满足相应视距、通行和净宽要求。
+    mandatory_level: 应
+    rule_type: check
+    description: 立体交叉跨线桥应根据被交道路或铁路类型满足桥下净高、净宽、布孔和视距要求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 桥梁作为跨线桥或被跨越对象为公路、铁路、农村道路时
+    stage:
+    - 净空设计
+    - 立体交叉设计
+    object:
+    - 跨线桥
+    - 桥下道路
+    - 铁路
+    - 农村道路
+  logic:
+    inputs:
+    - crossing_type
+    - underpass_traffic_type
+    - required_clear_height
+    - required_clear_width
+    - sight_distance_requirement
+    outputs:
+    - grade_separation_clearance_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 crossing_type 分别调用公路、铁路或农村道路净空控制规则。
+    note: 具体净空限值可拆入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_030
+  meta:
+    name: 车行天桥与人行天桥净宽规则
+    source: JTG D60-2015, 3.4.6条
+    original_text: 摘要：车行天桥桥面净宽可按交通量和农业机械类型选用；人行天桥桥面净宽不应小于规定值。
+    mandatory_level: 应
+    rule_type: check
+    description: 车行天桥净宽应根据交通量和通行农业机械类型确定； 人行天桥桥面净宽应满足人行通行需求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 设计车行天桥或人行天桥时
+    stage:
+    - 桥面布置
+    - 净宽设计
+    object:
+    - 车行天桥
+    - 人行天桥
+  logic:
+    inputs:
+    - overpass_type
+    - traffic_volume
+    - agricultural_machine_type
+    - pedestrian_volume
+    outputs:
+    - overpass_clear_width
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 overpass_type 选择车行或人行净宽控制逻辑。
+    note: 条文中的净宽推荐值可后续整理为表格参数。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_031
+  meta:
+    name: 管线设施布置规则
+    source: JTG D60-2015, 3.4.7条
+    original_text: 摘要：管线设施不得侵入桥涵净空限界，不得妨害交通安全和桥涵构造设施，危险管线严禁利用或通过桥梁。
+    mandatory_level: 不得
+    rule_type: check
+    description: 管线设施布置不得侵入桥涵净空限界，不得影响交通安全和桥涵构造； 易燃、易爆、高压等管线不得利用或通过公路桥梁。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 桥梁或涵洞附近布置电信、电力、燃气、高压管线等设施时
+    stage:
+    - 附属设施设计
+    - 安全设计
+    object:
+    - 管线设施
+    - 桥梁
+    - 桥涵净空
+    - 高压线
+  logic:
+    inputs:
+    - pipeline_type
+    - pipeline_position
+    - bridge_clearance_limit
+    - safety_distance
+    outputs:
+    - pipeline_layout_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 pipeline_type 和 pipeline_position 判断是否侵入净空或违反安全距离。
+    note: 高压线、燃气管线等安全距离可整理为专项表格。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_032
+  meta:
+    name: 桥上线形纵坡控制规则
+    source: JTG D60-2015, 3.5.1条
+    original_text: 摘要：桥上纵坡和桥头引道纵坡应满足规范限值，并与桥梁线形匹配。
+    mandatory_level: 应
+    rule_type: check
+    description: 桥上纵坡和桥头引道纵坡应根据道路等级、交通条件和冰雪环境进行控制。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥上线形或桥头引道设计时
+    stage:
+    - 路线设计
+    - 桥头引道设计
+    object:
+    - 桥上纵坡
+    - 桥头引道
+    - 桥梁线形
+  logic:
+    inputs:
+    - bridge_longitudinal_slope
+    - approach_longitudinal_slope
+    - road_grade
+    - freezing_snow_condition
+    outputs:
+    - longitudinal_slope_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查桥上纵坡和桥头引道纵坡是否超过相应限值； 对易结冰、积雪桥梁采用更严格控制。
+    note: 纵坡限值可整理为表格参数。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_033
+  meta:
+    name: 洪水泛滥区桥头引道路肩高程规则
+    source: JTG D60-2015, 3.5.2条
+    original_text: 摘要：洪水泛滥区内桥头引道路肩高程应高出相应水位，并考虑壅水、波浪、河弯超高、河床淤积等影响。
+    mandatory_level: 应
+    rule_type: check
+    description: 洪水泛滥区桥头引道路肩高程应高于相应设计水位，并综合考虑壅水、波浪、 河弯超高和河床淤积等影响。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 桥梁位于洪水泛滥区或桥头引道受水位影响时
+    stage:
+    - 桥头引道设计
+    - 水文设计
+    object:
+    - 桥头引道
+    - 路肩高程
+    - 洪水泛滥区
+  logic:
+    inputs:
+    - bridge_class
+    - design_flood_level
+    - backwater_height
+    - wave_height
+    - river_bend_superelevation
+    - riverbed_aggradation
+    outputs:
+    - approach_shoulder_elevation_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥涵类别和水文影响项计算或查取最小路肩高程要求。
+    note: 条文中的高程控制值可进入公式或表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_034
+  meta:
+    name: 桥头锥体及引道边坡规则
+    source: JTG D60-2015, 3.5.3条
+    original_text: 摘要：桥头锥体及引道填筑、边坡坡度、防护和铺砌层高度应满足规定。
+    mandatory_level: 应
+    rule_type: check
+    description: 桥头锥体、桥台背后填筑及引道边坡应根据桥台形式、填料、受水影响和防护要求确定坡率及防护层高度。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥头锥坡、桥台填筑和引道边坡设计时
+    stage:
+    - 桥头引道设计
+    - 防护设计
+    object:
+    - 桥头锥坡
+    - 桥台
+    - 引道边坡
+    - 防护层
+  logic:
+    inputs:
+    - abutment_type
+    - fill_material
+    - slope_height
+    - flood_affected
+    - protection_type
+    outputs:
+    - cone_slope_design_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 abutment_type、slope_height 和 flood_affected 检查边坡坡率与防护层高度。
+    note: 坡率和防护层高度可后续表格化。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_035
+  meta:
+    name: 侧墙及悬臂梁桥头锥坡长度规则
+    source: JTG D60-2015, 3.5.4条
+    original_text: 摘要：桥台侧墙后端和悬臂梁桥悬臂端深入桥头锥坡顶点以内的长度不得小于规定值。
+    mandatory_level: 不应小于
+    rule_type: check
+    description: 桥台侧墙后端和悬臂梁桥悬臂端进入桥头锥坡顶点以内的长度应满足最小长度要求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 设计桥台侧墙、悬臂梁桥端部及桥头锥坡时
+    stage:
+    - 构造设计
+    - 桥头处理
+    object:
+    - 桥台侧墙
+    - 悬臂梁桥
+    - 桥头锥坡
+  logic:
+    inputs:
+    - side_wall_length_inside_slope
+    - cantilever_end_length_inside_slope
+    outputs:
+    - embedded_length_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查输入长度是否不小于规范限值。
+    note: 限值0.75m可放入变量或表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_036
+  meta:
+    name: 桥头搭板设置规则
+    source: JTG D60-2015, 3.5.5条
+    original_text: 摘要：高速、一级、二级和三级公路桥头宜设置搭板，搭板长度、宽度和厚度应满足规定。
+    mandatory_level: 宜
+    rule_type: check
+    description: 高速公路、一级公路、二级公路和三级公路桥头宜设置搭板； 搭板长度、宽度和厚度应满足相应构造要求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 设计桥头路桥过渡段时
+    stage:
+    - 桥头引道设计
+    - 构造设计
+    object:
+    - 桥头搭板
+    - 桥头引道
+    - 路桥过渡段
+  logic:
+    inputs:
+    - road_grade
+    - abutment_height
+    - slab_length
+    - slab_width
+    - slab_thickness
+    - carriageway_width
+    outputs:
+    - approach_slab_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 road_grade 和 abutment_height 判断是否应设置搭板，并检查搭板几何尺寸。
+    note: 搭板尺寸限值可进入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_037
+  meta:
+    name: 桥涵结构基本构造要求
+    source: JTG D60-2015, 3.6.1条
+    original_text: 摘要：桥涵结构在制造、运输、安装和使用过程中应具有规定的强度、刚度、稳定性和耐久性。
+    mandatory_level: 应
+    rule_type: principle
+    description: 桥涵结构应满足制造、运输、安装和使用全过程中的强度、刚度、稳定性和耐久性要求； 构造应尽量减小附加应力、局部应力，并便于制造、施工和养护。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥涵结构体系或构件设计时
+    stage:
+    - 结构设计
+    - 构造设计
+    - 施工阶段设计
+    object:
+    - 桥梁结构
+    - 涵洞结构
+    - 构件
+  logic:
+    inputs:
+    - structural_system
+    - construction_method
+    - transport_method
+    - material_properties
+    outputs:
+    - structural_detailing_review
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 生成结构构造审查项；对制造、运输、安装、运营等阶段分别检查。
+    note: 总体构造原则规则。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_038
+  meta:
+    name: 变形缝与伸缩装置设置规则
+    source: JTG D60-2015, 3.6.2条
+    original_text: 摘要：桥涵上下部构造应视需要设置变形缝或伸缩缝，并配置适用的伸缩装置。
+    mandatory_level: 应
+    rule_type: layout
+    description: 桥梁上下部构造应根据变形需求设置变形缝或伸缩缝； 高速和一级公路多孔梁板桥宜采用结构连续或桥面连续。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥梁体系、桥面连续或伸缩缝设计时
+    stage:
+    - 构造设计
+    - 体系设计
+    object:
+    - 桥梁上部结构
+    - 下部结构
+    - 伸缩缝
+    - 变形缝
+  logic:
+    inputs:
+    - structural_system
+    - span_arrangement
+    - temperature_deformation
+    - shrinkage_creep_effect
+    - deck_continuity_required
+    outputs:
+    - expansion_joint_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据体系类型和变形需求判断伸缩缝布置位置及是否推荐桥面连续。
+    note: 伸缩量计算进入公式库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_039
+  meta:
+    name: 小桥涵河床整治与防冲规则
+    source: JTG D60-2015, 3.6.3条
+    original_text: 摘要：小桥涵可在进出口和所在范围内整治、加固河床，必要时设置减冲、防冲设施。
+    mandatory_level: 可
+    rule_type: layout
+    description: 小桥涵进出口及其范围内河床可进行整治和加固，必要时设置减冲、防冲设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 小桥涵进出口存在冲刷、淤积或河床不稳定时
+    stage:
+    - 涵洞设计
+    - 防冲设计
+    object:
+    - 小桥
+    - 涵洞
+    - 河床
+    - 进出口
+  logic:
+    inputs:
+    - inlet_condition
+    - outlet_condition
+    - riverbed_stability
+    - scour_risk
+    outputs:
+    - riverbed_protection_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据进出口水流条件和冲刷风险判断是否设置防冲设施。
+    note: 防冲结构尺寸由专项规则确定。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_040
+  meta:
+    name: 漫水桥阻水控制与基础防冲规则
+    source: JTG D60-2015, 3.6.4条
+    original_text: 摘要：漫水桥应尽量减少阻水面积，上部构造与墩台连接应可靠，并采取措施防止基础冲毁。
+    mandatory_level: 应
+    rule_type: check
+    description: 漫水桥应减少桥面和桥墩阻水面积，并保证上部构造与墩台连接可靠，基础具备防冲安全性。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 设计漫水桥或过水桥面结构时
+    stage:
+    - 结构设计
+    - 水文防护设计
+    object:
+    - 漫水桥
+    - 上部结构
+    - 墩台
+    - 基础
+  logic:
+    inputs:
+    - obstructed_flow_area
+    - superstructure_substructure_connection
+    - foundation_scour_risk
+    outputs:
+    - low_water_bridge_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查阻水面积、连接可靠性和基础防冲措施。
+    note: 可与水力和冲刷验算模块联动。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_041
+  meta:
+    name: 通风排水防护与维修空间规则
+    source: JTG D60-2015, 3.6.5条
+    original_text: 摘要：桥涵应有必要的通风、排水、防护措施和维修工作空间。
+    mandatory_level: 应
+    rule_type: layout
+    description: 桥涵结构应根据构造形式设置必要的通风、排水、防护和维修工作空间。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥涵构造和养护设施设计时
+    stage:
+    - 构造设计
+    - 养护设计
+    object:
+    - 桥梁
+    - 涵洞
+    - 箱梁
+    - 空心结构
+    - 维修空间
+  logic:
+    inputs:
+    - ventilation_required
+    - drainage_required
+    - maintenance_space_required
+    outputs:
+    - ventilation_drainage_maintenance_review
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 对箱梁、涵洞、封闭空间等构造生成通风、排水和维修空间审查项。
+    note: 可作为构造审查规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_042
+  meta:
+    name: 护栏桥梁连接规则
+    source: JTG D60-2015, 3.6.6条
+    original_text: 摘要：设置护栏的桥梁，护栏与桥面板应可靠连接，可采用直接埋入、地脚螺栓或预埋钢筋连接。
+    mandatory_level: 应
+    rule_type: check
+    description: 桥梁护栏应与桥面板可靠连接，连接方式应满足受力和构造要求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 桥梁设置桥梁护栏时
+    stage:
+    - 附属设施设计
+    - 构造设计
+    object:
+    - 护栏
+    - 桥面板
+    - 桥梁附属结构
+  logic:
+    inputs:
+    - guardrail_type
+    - connection_type
+    - deck_slab_detail
+    outputs:
+    - guardrail_connection_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查护栏连接方式是否属于允许构造类型，并传递给护栏受力验算模块。
+    note: 护栏受力计算由交通安全设施规范提供。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_043
+  meta:
+    name: 栏杆设计规则
+    source: JTG D60-2015, 3.6.7条
+    original_text: 摘要：设置栏杆的桥梁，栏杆应满足受力要求并注意美观，栏杆高度不应小于规定值。
+    mandatory_level: 不应小于
+    rule_type: check
+    description: 栏杆应满足受力要求和美观要求，栏杆高度不得小于规范规定值。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 桥梁设置栏杆时
+    stage:
+    - 附属设施设计
+    object:
+    - 栏杆
+    - 人行桥
+    - 桥梁附属结构
+  logic:
+    inputs:
+    - railing_height
+    - railing_load_requirement
+    - aesthetic_requirement
+    outputs:
+    - railing_design_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查 railing_height 是否满足最小高度要求，并触发栏杆受力验算。
+    note: 最小高度1.1m可存入变量库或表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_044
+  meta:
+    name: 桥梁支座设计规则
+    source: JTG D60-2015, 3.6.8条
+    original_text: 摘要：桥梁支座应根据跨径、结构形式、反力、位移和转角选择；支座传力面应保持水平，并预留安装维护更换空间。
+    mandatory_level: 应
+    rule_type: check
+    description: 支座应按跨径、结构形式、反力、位移和转角变形选型； 支座传力面应保持水平，并预留安装、维护和更换空间。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥梁支座选型和支座布置设计时
+    stage:
+    - 支座设计
+    - 构造设计
+    object:
+    - 支座
+    - 梁桥
+    - 墩台
+  logic:
+    inputs:
+    - span_length
+    - structural_system
+    - support_reaction
+    - support_displacement
+    - support_rotation
+    - bearing_type
+    - bearing_surface_level
+    - maintenance_space
+    outputs:
+    - bearing_design_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据支座受力和变形需求筛选支座类型，检查传力面水平和维护空间。
+    note: 支座选型表和限值可后续独立整理。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_045
+  meta:
+    name: 伸缩装置功能规则
+    source: JTG D60-2015, 3.6.9条
+    original_text: 摘要：桥面伸缩装置应能自由伸缩，满足承载和变形要求，使车辆平稳通过，并具有密水、排水和便于检查养护性能。
+    mandatory_level: 应
+    rule_type: check
+    description: 伸缩装置应满足自由伸缩、承载、变形、行车平顺、密水、排水和养护检查要求。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥面伸缩装置设计时
+    stage:
+    - 附属设施设计
+    - 构造设计
+    object:
+    - 伸缩装置
+    - 桥面
+    - 伸缩缝
+  logic:
+    inputs:
+    - expansion_movement
+    - load_requirement
+    - deformation_requirement
+    - waterproof_requirement
+    - drainage_requirement
+    outputs:
+    - expansion_joint_device_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据伸缩量、车辆荷载和构造需求检查伸缩装置类型及性能。
+    note: 伸缩量计算进入公式库。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_046
+  meta:
+    name: 桥面铺装总体规则
+    source: JTG D60-2015, 3.7.1条
+    original_text: 摘要：桥面铺装应与公路路面协调，具备防水和排水功能，并与桥梁上部结构综合考虑。
+    mandatory_level: 应
+    rule_type: principle
+    description: 桥面铺装应与公路路面协调，具有完善的桥面防水和排水系统，并与上部结构综合设计。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥面铺装结构设计时
+    stage:
+    - 桥面设计
+    - 附属结构设计
+    object:
+    - 桥面铺装
+    - 桥面板
+    - 上部结构
+  logic:
+    inputs:
+    - pavement_type
+    - road_surface_type
+    - waterproof_required
+    - drainage_required
+    - superstructure_type
+    outputs:
+    - bridge_deck_pavement_review
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查铺装类型、防水层、排水系统和上部结构协调性。
+    note: 铺装厚度和材料要求由后续条文和相关规范细化。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_047
+  meta:
+    name: 防水层与沟排水设置规则
+    source: JTG D60-2015, 3.7.2条
+    original_text: 摘要：圬工拱桥台背面、拱桥拱圈与填料之间应设置防水层并设沟排水。
+    mandatory_level: 应
+    rule_type: layout
+    description: 圬工拱桥相关接触面应设置防水层，并配置沟排水措施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 设计圬工拱桥、拱桥拱圈或填料接触部位时
+    stage:
+    - 防水设计
+    - 排水设计
+    object:
+    - 圬工拱桥
+    - 拱圈
+    - 台背
+    - 防水层
+  logic:
+    inputs:
+    - arch_bridge_type
+    - fill_material
+    - waterproof_layer_required
+    outputs:
+    - waterproof_layer_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 判断结构类型是否需要防水层和沟排水，输出构造布置要求。
+    note: 适用于拱桥及涵洞类似构造。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_048
+  meta:
+    name: 沥青混凝土桥面铺装厚度规则
+    source: JTG D60-2015, 3.7.3条
+    original_text: 摘要：不同公路等级桥梁沥青混凝土桥面铺装层厚度应满足最小值要求，并符合JTG D50。
+    mandatory_level: 不宜小于
+    rule_type: check
+    description: 沥青混凝土桥面铺装层厚度应根据公路等级满足最小厚度要求，并符合相关路面设计规范。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_3_7_3_ASPHALT_PAVEMENT_THICKNESS
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 采用沥青混凝土桥面铺装时
+    stage:
+    - 桥面铺装设计
+    object:
+    - 沥青混凝土桥面铺装
+    - 桥面
+  logic:
+    inputs:
+    - road_grade
+    - asphalt_pavement_thickness
+    outputs:
+    - asphalt_pavement_thickness_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 road_grade 查询最小厚度并与 asphalt_pavement_thickness 比较。
+    note: 厚度限值放入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_049
+  meta:
+    name: 水泥混凝土桥面铺装规则
+    source: JTG D60-2015, 3.7.4条
+    original_text: 摘要：水泥混凝土桥面铺装面层厚度、混凝土强度等级和钢筋网配置应满足规定，并符合JTG D40。
+    mandatory_level: 应
+    rule_type: check
+    description: 水泥混凝土桥面铺装应满足最小厚度、强度等级和钢筋网配置要求。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_3_7_4_CONCRETE_PAVEMENT_REQUIREMENT
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 采用水泥混凝土桥面铺装时
+    stage:
+    - 桥面铺装设计
+    object:
+    - 水泥混凝土桥面铺装
+    - 桥面板
+  logic:
+    inputs:
+    - concrete_pavement_thickness
+    - concrete_strength_grade
+    - steel_mesh_diameter
+    - steel_mesh_spacing
+    outputs:
+    - concrete_pavement_check
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 检查厚度、混凝土等级、钢筋网直径和间距是否满足限值。
+    note: 限值可放入表格库。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_050
+  meta:
+    name: 正交异性钢桥面铺装选型规则
+    source: JTG D60-2015, 3.7.5条
+    original_text: 摘要：正交异性板钢桥面沥青混凝土铺装结构应综合桥梁线形、受力状态、桥面系、气象环境和铺装材料性能选用。
+    mandatory_level: 应
+    rule_type: principle
+    description: 正交异性钢桥面铺装应根据桥梁线形、受力状态、桥面系、环境条件和材料性能综合选型。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行正交异性钢桥面铺装设计时
+    stage:
+    - 桥面铺装设计
+    object:
+    - 正交异性钢桥面
+    - 钢桥面铺装
+  logic:
+    inputs:
+    - bridge_alignment
+    - deck_stress_state
+    - deck_system
+    - climate_condition
+    - paving_material_properties
+    outputs:
+    - steel_deck_pavement_selection
+    expression: ''
+  action:
+    executable: false
+    execution_logic: 根据输入条件生成钢桥面铺装选型审查项。
+    note: 后续可结合材料库和经验库实现推荐。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_051
+  meta:
+    name: 桥面排水规则
+    source: JTG D60-2015, 3.7.6条
+    original_text: 摘要：桥面排水、桥台和支挡构造物排水应符合JTG/T D33，并根据需要设置桥面径流汇集引排系统。
+    mandatory_level: 应
+    rule_type: applicability
+    description: 桥面、桥台和支挡构造物排水应符合相关排水设计规范，并根据需要设置径流汇集和引排设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥面排水和构造物排水设计时
+    stage:
+    - 排水设计
+    - 环境保护设计
+    object:
+    - 桥面排水
+    - 桥台排水
+    - 支挡构造物排水
+  logic:
+    inputs:
+    - drainage_required
+    - runoff_collection_required
+    - bridge_deck_area
+    - environmental_requirement
+    outputs:
+    - drainage_design_requirement
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用 JTG/T D33 相关规则；若需要径流收集，则触发汇集引排系统设计。
+    note: 多规范调用入口规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_052
+  meta:
+    name: 维修养护通道与检查设施规则
+    source: JTG D60-2015, 3.8.1条
+    original_text: 摘要：桥涵应设置维修养护通道，特大、大桥可根据需要设置检查平台、扶梯、照明、人孔井盖和专用检查车等设施。
+    mandatory_level: 应
+    rule_type: layout
+    description: 桥涵应满足维修养护通行和检查需求；特大桥、大桥应根据需要设置检查设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 进行桥梁养护设施设计时
+    stage:
+    - 养护设计
+    - 附属设施设计
+    object:
+    - 桥梁
+    - 涵洞
+    - 检查平台
+    - 养护通道
+  logic:
+    inputs:
+    - bridge_class
+    - maintenance_access_required
+    - inspection_facility_required
+    outputs:
+    - maintenance_facility_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥梁类别和养护需求判断是否设置检查平台、扶梯、照明和专用检查设施。
+    note: 可作为养护设施审查规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_053
+  meta:
+    name: 永久观测点设置规则
+    source: JTG D60-2015, 3.8.2条
+    original_text: 摘要：特大桥和大桥应设置永久观测点，必要时墩台旁可设置水尺或标志。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 特大桥和大桥应设置永久观测点；必要时桥墩、桥台旁可设置水尺或标志。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 设计特大桥、大桥或需要长期监测的桥梁时
+    stage:
+    - 附属设施设计
+    - 监测设计
+    object:
+    - 特大桥
+    - 大桥
+    - 中桥
+    - 桥墩
+    - 桥台
+  logic:
+    inputs:
+    - bridge_class
+    - observation_required
+    - water_level_mark_required
+    outputs:
+    - permanent_observation_point_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 bridge_class 判断是否强制设置永久观测点，并根据需要设置水尺或标志。
+    note: 与结构健康监测规则可联动。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_054
+  meta:
+    name: 受力构件防撞保护规则
+    source: JTG D60-2015, 3.8.3条
+    original_text: 摘要：桥面上的拉索、吊杆、拱肋等受力构件应设置必要的防撞保护设施。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 位于桥面上的拉索、吊杆、拱肋等重要受力构件应设置必要的防撞保护设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 桥面存在拉索、吊杆、拱肋等外露受力构件时
+    stage:
+    - 安全设计
+    - 附属设施设计
+    object:
+    - 拉索
+    - 吊杆
+    - 拱肋
+    - 受力构件
+    - 防撞保护设施
+  logic:
+    inputs:
+    - exposed_force_member_type
+    - collision_risk
+    outputs:
+    - collision_protection_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 若存在外露受力构件且 collision_risk 为 true，则触发防撞保护设计。
+    note: 防撞设施具体设计由专项规范确定。
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_055
+  meta:
+    name: 防雷避雷设施规则
+    source: JTG D60-2015, 3.8.4条
+    original_text: 摘要：桥梁应根据相关规范进行防雷设计，设置避雷设施。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 桥梁应根据相关规范进行防雷设计，并设置避雷设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥梁附属设施或安全设施设计时
+    stage:
+    - 安全设计
+    - 附属设施设计
+    object:
+    - 桥梁
+    - 防雷设施
+    - 避雷设施
+  logic:
+    inputs:
+    - lightning_protection_required
+    - bridge_height
+    - site_lightning_risk
+    outputs:
+    - lightning_protection_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥梁高度和场地雷击风险判断是否需要专项防雷设计。
+    note: 防雷计算由相关专项规范提供。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_056
+  meta:
+    name: 防火照明导航及服务设施规则
+    source: JTG D60-2015, 3.8.5条
+    original_text: 摘要：特大、大、中桥可根据需要设置防火、照明、导航、养护工房、库房、守卫房和紧急电话等设施。
+    mandatory_level: 可
+    rule_type: layout
+    description: 特大桥、大桥和中桥可根据运营维护和安全需要设置防火、照明、导航和管理服务设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 设计特大桥、大桥、中桥附属设施时
+    stage:
+    - 附属设施设计
+    - 安全设计
+    - 运营管理设计
+    object:
+    - 特大桥
+    - 大桥
+    - 中桥
+    - 附属设施
+  logic:
+    inputs:
+    - bridge_class
+    - fire_protection_required
+    - lighting_required
+    - navigation_equipment_required
+    - emergency_phone_required
+    outputs:
+    - auxiliary_facility_layout
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥梁类别和运营需求生成附属设施配置建议。
+    note: 配置标准可后续形成设施配置规则表。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_057
+  meta:
+    name: 大型复杂桥梁结构监测设施规则
+    source: JTG D60-2015, 3.8.6条
+    original_text: 摘要：技术复杂的大型桥梁工程可根据需要设置必要的结构监测设施。
+    mandatory_level: 可
+    rule_type: trigger
+    description: 技术复杂的大型桥梁可根据需要设置结构监测设施。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+  applicability:
+    trigger_condition: 桥梁规模大、结构复杂或需要长期监测时
+    stage:
+    - 监测设计
+    - 运营维护设计
+    object:
+    - 大型桥梁
+    - 复杂桥梁
+    - 结构监测设施
+  logic:
+    inputs:
+    - structural_complexity
+    - bridge_class
+    - monitoring_requirement
+    outputs:
+    - structural_monitoring_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 当 structural_complexity 较高或 monitoring_requirement 为 true 时，触发结构监测设施设计。
+    note: 可与健康监测系统规则库衔接。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH03_058
+  meta:
+    name: 跨越公路和铁路防抛网设置规则
+    source: JTG D60-2015, 3.8.7条
+    original_text: 摘要：桥梁跨越公路和铁路部分应设置防抛网。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 桥梁跨越公路和铁路的部分应设置防抛网。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 桥梁跨越公路或铁路时
+    stage:
+    - 安全设施设计
+    - 附属设施设计
+    object:
+    - 跨线桥
+    - 防抛网
+    - 公路
+    - 铁路
+  logic:
+    inputs:
+    - crossing_road_required
+    - crossing_railway_required
+    - crossing_length
+    outputs:
+    - anti_throwing_net_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 若 crossing_road_required 或 crossing_railway_required 为 true， 则 anti_throwing_net_required = true。
+    note: 防抛网范围和构造参数可后续整理为专项规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 03设计要求.yaml
+  _source_chapter: '03'
+- id: R_D60_CH04_001
+  meta:
+    name: 作用分类规则
+    source: JTG D60-2015, 4.1.1条
+    original_text: 摘要：公路桥涵设计采用的作用分为永久作用、可变作用、偶然作用和地震作用四类。
+    mandatory_level: 应
+    rule_type: classification
+    description: 桥涵设计作用应划分为永久作用、可变作用、偶然作用和地震作用。 结构重力、预加力、土重及土侧压力、混凝土收缩徐变、水浮力、基础变位等属于永久作用； 汽车荷载、人群荷载、风荷载、温度作用、制动力、离心力、流水压力、冰压力等属于可变作用；
+      船舶撞击、漂流物撞击、汽车撞击等属于偶然作用； 地震作用单独归类。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_4_1_1_ACTION_CLASSIFICATION
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥涵作用建模、作用取值或作用组合前
+    stage:
+    - 作用建模
+    - 结构验算
+    - 荷载组合
+    object:
+    - 公路桥梁
+    - 公路涵洞
+    - 上部结构
+    - 下部结构
+    - 基础结构
+    - 附属结构
+  logic:
+    inputs:
+    - action_name
+    - action_source
+    - action_duration
+    - action_variability
+    outputs:
+    - action_category
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 action_name 和 action_source 识别作用类别； 输出 action_category，供代表值选择、作用组合和验算任务调用。
+    note: 作用分类是后续作用代表值和作用组合的前置规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_002
+  meta:
+    name: 作用代表值选择规则
+    source: JTG D60-2015, 4.1.2条
+    original_text: 摘要：永久作用、可变作用、偶然作用和地震作用应按规定采用不同代表值。
+    mandatory_level: 应
+    rule_type: classification
+    description: 永久作用的代表值为标准值； 可变作用的代表值包括标准值、组合值、频遇值和准永久值； 偶然作用取设计值作为代表值； 地震作用的代表值为标准值。
+    related_refs:
+      formulas:
+      - F_D60_L3_SLS_FREQUENT_COMBINATION
+      - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+      - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+      tables:
+      - T_D60_4_1_2_REPRESENTATIVE_VALUE_TYPE
+      variables:
+      - VAR_G_ik
+      - VAR_Q_1k
+      - VAR_Q_jk
+      - VAR_S_fd
+      - VAR_S_qd
+      - VAR_S_ud
+      - VAR_gamma_0
+      - VAR_gamma_Gi
+      - VAR_gamma_L1
+      - VAR_gamma_Lj
+      - VAR_gamma_Q1
+      - VAR_gamma_Qj
+      - VAR_psi_c
+      - VAR_psi_f1
+      - VAR_psi_qj
+      rules: []
+  applicability:
+    trigger_condition: 完成作用分类后、进行作用组合前
+    stage:
+    - 作用取值
+    - 作用组合
+    object:
+    - 永久作用
+    - 可变作用
+    - 偶然作用
+    - 地震作用
+  logic:
+    inputs:
+    - action_category
+    - action_standard_value
+    - combination_type
+    - representative_value_factor
+    outputs:
+    - representative_value_type
+    - action_representative_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 action_category 和 combination_type 确定代表值类型； 可变作用的组合值、频遇值、准永久值由标准值乘以对应系数得到； 对偶然作用和地震作用，分别调用对应设计值或标准值规则。
+    note: 代表值系数应进入表格库，公式只保留计算表达。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_003
+  meta:
+    name: 作用设计值计算规则
+    source: JTG D60-2015, 4.1.3条
+    original_text: 摘要：作用设计值为作用标准值或组合值乘以作用分项系数。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 作用设计值应由作用标准值或组合值乘以相应作用分项系数确定。
+    related_refs:
+      formulas:
+      - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+      tables:
+      - T_D60_4_1_5_2_PERMANENT_ACTION_PARTIAL_FACTOR
+      variables:
+      - VAR_G_id
+      - VAR_Q_1d
+      - VAR_Q_jd
+      - VAR_S_ud
+      - VAR_gamma_0
+      rules: []
+  applicability:
+    trigger_condition: 需要将作用代表值转换为设计值时
+    stage:
+    - 承载能力极限状态验算
+    - 作用组合
+    object:
+    - 永久作用
+    - 可变作用
+  logic:
+    inputs:
+    - action_standard_value
+    - action_combination_value
+    - partial_factor
+    outputs:
+    - action_design_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据作用类别和组合类型选择 action_standard_value 或 action_combination_value； 调用公式 F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+      计算 action_design_value。
+    note: 分项系数从表格库读取，不在规则内硬编码。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_004
+  meta:
+    name: 作用组合原则规则
+    source: JTG D60-2015, 4.1.4条
+    original_text: 摘要：作用组合应考虑结构上可能同时出现的作用，并按最不利效应组合。
+    mandatory_level: 应
+    rule_type: combination
+    description: 作用组合应只考虑结构上可能同时出现的作用； 对结构或构件产生有利影响的可变作用不应参与不利组合； 实际不可能同时出现的作用不应组合； 多个偶然作用不应同时参与组合； 地震作用不应与偶然作用同时参与组合； 施工阶段作用组合应根据结构所处条件确定。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_4_1_4_ACTION_SIMULTANEITY
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 生成承载能力极限状态或正常使用极限状态作用组合时
+    stage:
+    - 作用组合
+    - 结构验算
+    object:
+    - 整桥
+    - 构件
+    - 截面
+    - 基础
+    - 支座
+  logic:
+    inputs:
+    - action_list
+    - action_category
+    - simultaneity
+    - favorable_or_unfavorable
+    - design_situation
+    outputs:
+    - valid_action_combination_list
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 simultaneity 判断作用是否可同时出现； 根据 favorable_or_unfavorable 判断作用是否参与当前不利组合； 剔除不合理组合，输出 valid_action_combination_list。
+    note: 后续可建立作用同时性矩阵，用于自动过滤不合理组合。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_005
+  meta:
+    name: 承载能力极限状态作用组合规则
+    source: JTG D60-2015, 4.1.5条
+    original_text: 摘要：承载能力极限状态设计时，持久状况和短暂状况采用基本组合，偶然状况采用偶然组合，地震状况采用地震组合。
+    mandatory_level: 应
+    rule_type: combination
+    description: 持久状况和短暂状况下，承载能力极限状态应采用基本组合； 偶然状况下应采用偶然组合； 地震状况下应采用地震组合。 对弯桥，当离心力与制动力同时参与组合时，制动力标准值或设计值按70%取用。
+    related_refs:
+      formulas:
+      - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+      - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+      - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+      tables:
+      - T_D60_4_1_5_1_STRUCTURE_SAFETY_LEVEL
+      - T_D60_4_1_5_2_PERMANENT_ACTION_PARTIAL_FACTOR
+      variables:
+      - VAR_A_d
+      - VAR_G_id
+      - VAR_G_ik
+      - VAR_Q_1d
+      - VAR_Q_1k
+      - VAR_Q_jd
+      - VAR_Q_jk
+      - VAR_S_ad
+      - VAR_S_ud
+      - VAR_gamma_0
+      - VAR_gamma_Gi
+      - VAR_gamma_L1
+      - VAR_gamma_Lj
+      - VAR_gamma_Q1
+      - VAR_gamma_Qj
+      - VAR_psi_c
+      - VAR_psi_f1
+      - VAR_psi_q1
+      - VAR_psi_qj
+      rules: []
+  applicability:
+    trigger_condition: 进行承载能力极限状态设计或验算时
+    stage:
+    - 承载能力极限状态验算
+    - 施工阶段验算
+    - 偶然状况验算
+    - 抗震验算
+    object:
+    - 整桥
+    - 上部结构
+    - 下部结构
+    - 基础
+    - 构件
+    - 截面
+  logic:
+    inputs:
+    - permanent_action_effect
+    - leading_variable_action_effect
+    - accompanying_variable_action_effect
+    - accidental_action_effect
+    - seismic_action_effect
+    - partial_factor
+    - combination_factor
+    - importance_factor
+    - design_situation
+    outputs:
+    - design_action_effect_ULS
+    - design_action_effect_accidental
+    - design_action_effect_seismic
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 design_situation 选择基本组合、偶然组合或地震组合； 调用相应组合公式计算设计效应； 将组合设计效应传递给承载力、稳定、抗倾覆、抗滑移和基础验算模块。
+    note: 该规则只生成组合设计效应，具体构件承载力判断由专业验算规则完成。
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_006
+  meta:
+    name: 正常使用极限状态作用组合规则
+    source: JTG D60-2015, 4.1.6条
+    original_text: 摘要：正常使用极限状态设计时，应根据不同设计要求采用频遇组合或准永久组合。
+    mandatory_level: 应
+    rule_type: combination
+    description: 正常使用极限状态验算应根据验算目标采用频遇组合或准永久组合。 频遇组合由永久作用标准值、汽车荷载频遇值和其他可变作用准永久值组成； 准永久组合由永久作用标准值和可变作用准永久值组成。
+    related_refs:
+      formulas:
+      - F_D60_L3_SLS_FREQUENT_COMBINATION
+      - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+      tables: []
+      variables:
+      - VAR_G_ik
+      - VAR_Q_1k
+      - VAR_Q_jk
+      - VAR_S_fd
+      - VAR_S_qd
+      - VAR_psi_f1
+      - VAR_psi_qj
+      rules: []
+  applicability:
+    trigger_condition: 进行正常使用极限状态验算时
+    stage:
+    - 正常使用极限状态验算
+    - 应力验算
+    - 裂缝验算
+    - 挠度验算
+    object:
+    - 整桥
+    - 上部结构
+    - 下部结构
+    - 构件
+    - 截面
+  logic:
+    inputs:
+    - permanent_action_effect
+    - vehicle_load_effect
+    - variable_action_effect
+    - frequent_factor
+    - quasi_permanent_factor
+    outputs:
+    - design_action_effect_SLS_frequent
+    - design_action_effect_SLS_quasi_permanent
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据验算目标选择频遇组合或准永久组合； 调用相应组合公式，生成正常使用极限状态设计效应。
+    note: 裂缝、挠度、应力等具体限值由相应构件设计规范提供。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_007
+  meta:
+    name: 钢结构疲劳设计作用取值规则
+    source: JTG D60-2015, 4.1.7条
+    original_text: 摘要：钢结构构件抗疲劳设计时，除特别指明外，各作用采用标准值，作用分项系数取1.0。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 钢结构构件抗疲劳设计时，各作用应采用标准值，作用分项系数取1.0，除非专项规范另有规定。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行钢结构构件疲劳验算时
+    stage:
+    - 疲劳验算
+    object:
+    - 钢结构构件
+    - 钢梁
+    - 钢桥面系
+    - 钢混组合结构
+  logic:
+    inputs:
+    - fatigue_action_standard_value
+    outputs:
+    - fatigue_action_design_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 将各作用的标准值直接作为疲劳验算作用值； partial_factor = 1.0。
+    note: 疲劳抗力和细部等级应调用钢结构桥梁设计规范。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_008
+  meta:
+    name: 弹性阶段截面应力计算作用取值规则
+    source: JTG D60-2015, 4.1.8条
+    original_text: 摘要：结构构件进行弹性阶段截面应力计算时，除特别指明外，各作用采用标准值，分项系数取1.0。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 弹性阶段截面应力计算中，各作用应采用标准值，作用分项系数取1.0； 应力限值应按相关设计规范采用。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行弹性阶段截面应力计算时
+    stage:
+    - 弹性应力计算
+    - 正常使用验算
+    object:
+    - 桥梁构件
+    - 截面
+  logic:
+    inputs:
+    - action_standard_value
+    outputs:
+    - elastic_stress_action_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 将作用标准值传递给截面应力计算公式； 应力限值从专业构件规范中调用。
+    note: 该规则只规定作用取值，不规定应力限值。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_009
+  meta:
+    name: 抗倾覆与滑动稳定作用系数规则
+    source: JTG D60-2015, 4.1.9条
+    original_text: 摘要：验算结构抗倾覆、滑动稳定时，稳定系数、作用分项系数及摩擦系数应按相关规范确定，支座摩擦系数可按表4.3.13采用。
+    mandatory_level: 应
+    rule_type: standard_dispatch
+    description: 抗倾覆和滑动稳定验算所需稳定系数、作用分项系数及摩擦系数应按相应设计规范确定； 支座摩擦系数可按本章支座摩阻力表取值。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_4_3_13_BEARING_FRICTION_COEFFICIENT
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 进行抗倾覆、抗滑移或支座摩擦相关验算时
+    stage:
+    - 稳定验算
+    - 支座验算
+    object:
+    - 桥墩
+    - 桥台
+    - 基础
+    - 支座
+    - 整体结构
+  logic:
+    inputs:
+    - stability_check_type
+    - support_type
+    - friction_condition
+    outputs:
+    - stability_factor
+    - partial_factor
+    - bearing_friction_coefficient
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据验算对象调用相应专业规范； 当涉及支座摩擦时，调用表 T_D60_4_3_13_BEARING_FRICTION_COEFFICIENT。
+    note: 该规则属于多规范调度规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_010
+  meta:
+    name: 构件吊装运输动力系数规则
+    source: JTG D60-2015, 4.1.10条
+    original_text: 摘要：构件在吊装、运输时，构件重力应乘以动力系数，对结构不利时取1.2，对结构有利时取0.85。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 构件在吊装和运输阶段，其重力应乘以动力系数； 对结构不利时取1.2，对结构有利时取0.85，可根据具体情况适当调整。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行构件吊装、运输阶段验算时
+    stage:
+    - 吊装阶段验算
+    - 运输阶段验算
+    - 短暂状况验算
+    object:
+    - 预制构件
+    - 梁体
+    - 板梁
+    - T梁
+    - 箱梁
+    - 钢构件
+  logic:
+    inputs:
+    - component_self_weight
+    - favorable_or_unfavorable
+    outputs:
+    - dynamic_adjusted_weight
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 判断作用效应是否对结构不利； 若不利，dynamic_factor = 1.2； 若有利，dynamic_factor = 0.85； 调用公式计算调整后的构件重力。
+    note: 适用于施工阶段和运输阶段短暂状况验算。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_011
+  meta:
+    name: 结构重力计算规则
+    source: JTG D60-2015, 4.2.1条
+    original_text: 摘要：结构重力包括结构自重及桥面铺装、附属设备等附加重力，可按材料重度和体积计算。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 结构重力包括结构自重、桥面铺装及附属设备等附加重力； 标准值可按材料重度与体积计算。
+    related_refs:
+      formulas:
+      - F_D60_L2_STRUCTURE_SELF_WEIGHT
+      tables:
+      - T_D60_4_2_1_MATERIAL_UNIT_WEIGHT
+      variables:
+      - VAR_G_k
+      - VAR_V
+      - VAR_gamma
+      rules: []
+  applicability:
+    trigger_condition: 计算永久作用中的结构重力时
+    stage:
+    - 永久作用计算
+    - 恒载计算
+    object:
+    - 上部结构
+    - 下部结构
+    - 基础
+    - 桥面铺装
+    - 附属设备
+  logic:
+    inputs:
+    - material_unit_weight
+    - structural_volume
+    outputs:
+    - structural_gravity_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 调用公式 G = gamma * V 计算结构重力标准值； 材料重度从表格库读取。
+    note: 这是永久作用计算的基础规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_012
+  meta:
+    name: 预加力作用规则
+    source: JTG D60-2015, 4.2.2条
+    original_text: 摘要：预加力在正常使用极限状态和使用阶段构件应力计算中作为永久作用；承载能力极限状态设计时一般不作为作用。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 在正常使用极限状态和使用阶段构件应力计算中，预加力应作为永久作用并计入相应阶段预应力损失； 在承载能力极限状态设计中，预加力不作为一般作用，而应将预应力筋作为结构抗力的一部分； 对连续梁等超静定结构，应考虑预加力引起的次效应。
+    related_refs:
+      formulas:
+      - F_D60_L2_EFFECTIVE_PRESTRESS
+      - F_D60_L2_PRESTRESS_FORCE
+      tables: []
+      variables:
+      - VAR_A_p
+      - VAR_F_pe
+      - VAR_sigma_con
+      - VAR_sigma_l
+      - VAR_D60_sigma_pe
+      rules: []
+  applicability:
+    trigger_condition: 进行预应力结构作用计算或应力验算时
+    stage:
+    - 正常使用验算
+    - 使用阶段应力计算
+    - 承载能力验算
+    object:
+    - 预应力混凝土梁
+    - 预应力构件
+    - 连续梁
+    - 超静定结构
+  logic:
+    inputs:
+    - prestressing_steel_area
+    - effective_prestress
+    - jacking_control_stress
+    - prestress_loss
+    - structural_system
+    outputs:
+    - prestressing_force_standard_value
+    - prestress_primary_effect
+    - prestress_secondary_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据验算状态判断预加力是作为作用输入还是作为抗力组成； 调用预加力标准值计算公式，并根据结构体系判断是否计算次效应。
+    note: 预应力损失计算应由预应力混凝土桥梁设计规范提供。
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_013
+  meta:
+    name: 土重及土侧压力计算规则
+    source: JTG D60-2015, 4.2.3条
+    original_text: 摘要：土的重力及土侧压力可按静土压力、主动土压力、分层土压力、压实填土压力等规定计算。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 土的重力及土侧压力应根据土体参数、结构几何、填土条件和水位影响计算； 土层特性变化或受水位影响时宜分层计算； 土的重度和内摩擦角应根据调查或试验确定，无资料时可按规范表取值。
+    related_refs:
+      formulas:
+      - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+      - F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+      - F_D60_L1_LATERAL_PRESSURE_COEFFICIENT
+      - F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+      - F_D60_L1_SOIL_PRESSURE_WIDTH_LARGE_COLUMN
+      - F_D60_L1_SOIL_PRESSURE_WIDTH_SMALL_COLUMN
+      - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+      - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+      - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+      - F_D60_L2_HORIZONTAL_FILL_PRESSURE
+      - F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+      - F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+      - F_D60_L2_VERTICAL_FILL_PRESSURE
+      tables:
+      - T_D60_4_2_3_SOIL_PARAMETER
+      variables:
+      - VAR_B
+      - VAR_D
+      - VAR_E
+      - VAR_E_j
+      - VAR_H
+      - VAR_D60_alpha
+      - VAR_b
+      - VAR_beta
+      - VAR_delta
+      - VAR_e_j
+      - VAR_gamma
+      - VAR_h
+      - VAR_D60_l_i
+      - VAR_lambda
+      - VAR_mu_active
+      - VAR_n
+      - VAR_omega
+      - VAR_D60_phi
+      - VAR_q_H
+      - VAR_q_v
+      - VAR_tan_theta
+      - VAR_theta
+      - VAR_xi
+      rules: []
+  applicability:
+    trigger_condition: 计算桥台、挡土墙、涵洞或承台所受土压力时
+    stage:
+    - 永久作用计算
+    - 土压力计算
+    object:
+    - 桥台
+    - 挡土墙
+    - 涵洞
+    - 承台
+    - 柱式墩台
+  logic:
+    inputs:
+    - soil_unit_weight
+    - internal_friction_angle
+    - soil_layer_height
+    - wall_geometry
+    - backfill_slope
+    - wall_soil_friction_angle
+    - compacted_fill_condition
+    outputs:
+    - earth_pressure_standard_value
+    - soil_gravity_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据结构类型和填土条件选择静土压力、主动土压力、分层土压力或压实填土压力计算公式； 调用对应公式库输出土压力标准值。
+    note: 该规则对桥台、挡土墙和涵洞验算非常关键。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_014
+  meta:
+    name: 混凝土收缩及徐变作用规则
+    source: JTG D60-2015, 4.2.4条
+    original_text: 摘要：外部超静定混凝土结构、钢-混凝土组合结构等应考虑混凝土收缩及徐变作用。
+    mandatory_level: 应
+    rule_type: trigger
+    description: 外部超静定混凝土结构、钢和混凝土组合结构等应考虑混凝土收缩及徐变作用； 混凝土收缩应变终极值和徐变计算应调用相关混凝土桥梁设计规范。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 结构体系存在收缩徐变约束效应时
+    stage:
+    - 长期作用计算
+    - 正常使用验算
+    - 承载能力验算
+    object:
+    - 混凝土结构
+    - 预应力混凝土结构
+    - 钢混组合结构
+    - 超静定结构
+    - 拱圈
+  logic:
+    inputs:
+    - concrete_material
+    - structural_system
+    - shrinkage_strain
+    - creep_coefficient
+    - restraint_condition
+    outputs:
+    - shrinkage_creep_effect_required
+    - shrinkage_creep_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 判断 structural_system 是否对收缩徐变敏感； 若为超静定结构或组合结构，则触发收缩徐变效应计算任务。
+    note: 具体收缩徐变参数应由混凝土桥规提供。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_015
+  meta:
+    name: 水浮力计算规则
+    source: JTG D60-2015, 4.2.5条
+    original_text: 摘要：桥梁墩台和基础应根据地基透水性、设计水位和结构排水体积考虑水浮力。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 基础位于透水性地基上时，稳定验算应考虑设计水位浮力； 基础嵌入不透水地基时可不考虑水浮力； 不确定地基透水性时，应按透水和不透水两种情况组合，取不利者。 水浮力标准值可按水重度和排水体积计算。
+    related_refs:
+      formulas:
+      - F_D60_L2_WATER_BUOYANCY
+      tables: []
+      variables:
+      - VAR_F_buoyancy
+      - VAR_V_w
+      - VAR_gamma_water
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行墩台、承台、基础稳定或承载验算时
+    stage:
+    - 永久作用计算
+    - 稳定验算
+    - 基础验算
+    object:
+    - 桥墩
+    - 桥台
+    - 承台
+    - 桩基础
+    - 扩大基础
+  logic:
+    inputs:
+    - foundation_soil_permeability
+    - design_water_level
+    - displaced_water_volume
+    - foundation_embedment_condition
+    outputs:
+    - buoyancy_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据地基透水性确定是否考虑水浮力； 若需要计算，则调用浮力公式 F = gamma_w * V_displaced。
+    note: 用于基础稳定、抗浮和承载验算。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_016
+  meta:
+    name: 基础变位作用规则
+    source: JTG D60-2015, 4.2.6条
+    original_text: 摘要：超静定结构考虑地基压密等长期变形影响时，应根据最终位移量计算构件效应。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 超静定结构因地基压密等引起长期变形时，应根据最终位移量计算构件作用效应。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 超静定结构可能受到基础长期变位影响时
+    stage:
+    - 永久作用计算
+    - 结构分析
+    object:
+    - 连续梁
+    - 连续刚构
+    - 拱桥
+    - 超静定结构
+    - 基础
+  logic:
+    inputs:
+    - foundation_final_displacement
+    - structural_system
+    - support_constraint_condition
+    outputs:
+    - foundation_displacement_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 将 foundation_final_displacement 作为支座强迫位移或基础变位输入结构分析模型； 输出由基础变位产生的内力或位移效应。
+    note: 通常需调用结构分析模型或有限元模型。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_017
+  meta:
+    name: 汽车荷载计算规则
+    source: JTG D60-2015, 4.3.1条
+    original_text: 摘要：汽车荷载分为公路-I级和公路-II级，包括车道荷载和车辆荷载，并应考虑横向布载系数、纵向折减等。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 汽车荷载分为公路-I级和公路-II级； 车道荷载由均布荷载和集中荷载组成； 车辆荷载按规定轴载和平面布置采用； 横桥向多车道布载时应考虑横向车道布载系数； 大跨径桥梁应考虑纵向折减。
+    related_refs:
+      formulas:
+      - F_D60_L1_VEHICLE_CONCENTRATED_LOAD_INTERPOLATION
+      tables:
+      - T_D60_4_3_1_1_HIGHWAY_LOAD_GRADE
+      - T_D60_4_3_1_2_CONCENTRATED_LOAD
+      - T_D60_4_3_1_3_VEHICLE_LOAD_DIMENSION
+      - T_D60_4_3_1_4_DESIGN_LANE_NUMBER
+      - T_D60_4_3_1_5_TRANSVERSE_LANE_FACTOR
+      - T_D60_4_3_1_6_LONGITUDINAL_REDUCTION_FACTOR
+      variables:
+      - VAR_D60_L_0
+      - VAR_D60_P_k
+      rules: []
+  applicability:
+    trigger_condition: 进行桥涵车辆荷载建模或活载效应计算时
+    stage:
+    - 可变作用计算
+    - 活载计算
+    - 结构验算
+    object:
+    - 桥梁
+    - 涵洞
+    - 上部结构
+    - 下部结构
+    - 桥面系
+  logic:
+    inputs:
+    - highway_load_grade
+    - calculation_span
+    - bridge_width
+    - lane_number
+    - influence_line
+    - bridge_structure_type
+    outputs:
+    - lane_load_model
+    - vehicle_load_model
+    - vehicle_load_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 highway_load_grade 生成车道荷载和车辆荷载； 根据 bridge_width 查设计车道数； 根据车道数调用横向布载系数； 当 calculation_span 超过纵向折减阈值时调用纵向折减系数；
+      结合影响线计算最不利车辆荷载效应。
+    note: 该规则是桥梁自动化验算中车辆活载建模的核心规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_018
+  meta:
+    name: 汽车荷载冲击力计算规则
+    source: JTG D60-2015, 4.3.2条
+    original_text: 摘要：汽车荷载冲击力标准值为汽车荷载标准值乘以冲击系数，冲击系数按结构基频确定。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 对需考虑冲击作用的结构，汽车荷载冲击力标准值为汽车荷载标准值乘以冲击系数； 冲击系数应按结构基频计算； 填料厚度较大的拱桥、涵洞及重力式墩台可不计冲击力； 局部加载及T梁、箱梁桥面板冲击系数可按规定值采用。
+    related_refs:
+      formulas:
+      - F_D60_L1_VEHICLE_IMPACT_COEFFICIENT
+      - F_D60_L2_VEHICLE_IMPACT_ACTION
+      tables: []
+      variables:
+      - VAR_Q_impact
+      - VAR_Q_vehicle
+      - VAR_f
+      - VAR_mu
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 结构类型需要考虑汽车冲击作用时
+    stage:
+    - 可变作用计算
+    - 活载效应计算
+    object:
+    - 钢桥
+    - 钢筋混凝土桥
+    - 预应力混凝土桥
+    - 拱桥
+    - 支座
+    - 柱式墩台
+  logic:
+    inputs:
+    - vehicle_load_standard_value
+    - structural_frequency
+    - fill_thickness
+    - structure_type
+    - local_loading_flag
+    outputs:
+    - impact_factor
+    - vehicle_impact_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据结构类型判断是否计入冲击力； 若计入，则根据 structural_frequency 调用冲击系数公式； 计算 vehicle_impact_effect。
+    note: 结构基频可由经验公式、模型分析或有限元分析获得。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_019
+  meta:
+    name: 汽车荷载离心力计算规则
+    source: JTG D60-2015, 4.3.3条
+    original_text: 摘要：曲线桥应计算汽车荷载引起的离心力，离心力标准值由车辆荷载标准值乘以离心力系数确定。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 曲线桥应计算汽车荷载引起的离心力； 离心力标准值按车辆荷载标准值乘以离心力系数确定； 多车道桥梁应同时考虑横向车道布载系数； 离心力作用点位于桥面以上1.2m处，也可简化移至桥面。
+    related_refs:
+      formulas:
+      - F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+      - F_D60_L2_CENTRIFUGAL_FORCE
+      tables:
+      - T_D60_4_3_1_5_TRANSVERSE_LANE_FACTOR
+      variables:
+      - VAR_C
+      - VAR_Q_centrifugal
+      - VAR_Q_vehicle
+      - VAR_R
+      - VAR_D60_v
+      rules: []
+  applicability:
+    trigger_condition: 桥梁位于平曲线上或需要考虑车辆离心作用时
+    stage:
+    - 可变作用计算
+    - 横向力计算
+    object:
+    - 曲线桥
+    - 弯桥
+    - 桥墩
+    - 支座
+    - 上部结构
+  logic:
+    inputs:
+    - design_speed
+    - curve_radius
+    - vehicle_load_standard_value
+    - lane_reduction_factor
+    outputs:
+    - centrifugal_force_factor
+    - centrifugal_force_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 design_speed 和 curve_radius 计算离心力系数； 乘以车辆荷载标准值及横向车道布载系数得到离心力标准值。
+    note: 与制动力同时组合时应联动4.1.5的70%折减规则。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_020
+  meta:
+    name: 汽车荷载引起土压力计算规则
+    source: JTG D60-2015, 4.3.4条
+    original_text: 摘要：汽车荷载引起的土压力可采用车辆荷载加载，并按等代均布土层厚度或压力扩散法计算。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 汽车荷载在桥台或挡土墙后填土破坏棱体上引起的土压力可换算为等代均布土层厚度； 涵洞顶上汽车荷载引起的竖向土压力可按车轮着地面积向下按一定角度扩散计算。
+    related_refs:
+      formulas:
+      - F_D60_L1_RETAINING_WALL_DISTRIBUTION_LENGTH
+      - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+      - F_D60_L2_VERTICAL_FILL_PRESSURE
+      tables: []
+      variables:
+      - VAR_B
+      - VAR_H
+      - VAR_gamma
+      - VAR_h
+      - VAR_l_0
+      - VAR_q_v
+      - VAR_sum_G
+      rules: []
+  applicability:
+    trigger_condition: 桥台、挡土墙或涵洞受汽车荷载引起的土压力时
+    stage:
+    - 可变作用计算
+    - 土压力计算
+    object:
+    - 桥台
+    - 挡土墙
+    - 涵洞
+    - 台背填土
+  logic:
+    inputs:
+    - vehicle_wheel_load
+    - backfill_geometry
+    - soil_unit_weight
+    - wall_height
+    - culvert_fill_height
+    outputs:
+    - equivalent_soil_height
+    - vehicle_induced_earth_pressure
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 对桥台和挡土墙，调用等代土层厚度公式； 对涵洞，按车轮压力扩散范围计算竖向土压力。
+    note: 该规则与桥台、挡土墙和涵洞验算密切相关。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_021
+  meta:
+    name: 汽车荷载制动力计算与分配规则
+    source: JTG D60-2015, 4.3.5条
+    original_text: 摘要：汽车荷载制动力按同向行驶汽车荷载计算，并应按纵向折减及支座分配规则传递至墩台。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 汽车荷载制动力按同向行驶的汽车荷载标准值计算，不计冲击力； 一个设计车道的制动力按车道荷载在加载长度上总重力的一定比例计算，并不得低于规范规定最小值； 多车道制动力按车道数调整； 制动力应根据支座布置和结构体系分配至墩台。
+    related_refs:
+      formulas:
+      - F_D60_L1_BREAKING_FORCE_EQUIVALENT_WIDTH
+      tables:
+      - T_D60_4_3_1_6_LONGITUDINAL_REDUCTION_FACTOR
+      - T_D60_4_3_5_BRAKING_FORCE_DISTRIBUTION
+      variables:
+      - VAR_eta_brake
+      - VAR_D60_lane_count
+      rules: []
+  applicability:
+    trigger_condition: 计算桥梁纵向水平力、支座水平力或墩台纵向力时
+    stage:
+    - 可变作用计算
+    - 水平力计算
+    object:
+    - 梁桥
+    - 桥墩
+    - 桥台
+    - 支座
+    - 连续梁
+  logic:
+    inputs:
+    - lane_load_standard_value
+    - loading_length
+    - highway_load_grade
+    - lane_number
+    - support_arrangement
+    - bearing_type
+    - longitudinal_reduction_factor
+    outputs:
+    - braking_force_standard_value
+    - braking_force_distribution
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 计算单车道制动力标准值； 根据车道数和纵向折减系数修正； 根据支座布置调用分配规则，输出墩台承受制动力。
+    note: 对桥墩、支座和下部结构纵向验算十分重要。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_022
+  meta:
+    name: 人群荷载计算规则
+    source: JTG D60-2015, 4.3.6条
+    original_text: 摘要：人群荷载标准值应按表4.3.6采用，并布置于使结构产生最不利效应的位置。
+    mandatory_level: 应
+    rule_type: table_lookup
+    description: 人群荷载标准值应根据规范表取值； 非机动车和行人密集的桥梁应按规定放大； 专用人行桥应采用专用人群荷载； 人群荷载应布置在使结构产生最不利效应的位置。
+    related_refs:
+      formulas:
+      - F_D60_L1_PEDESTRIAN_LOAD_INTERPOLATION
+      tables:
+      - T_D60_4_3_6_CROWD_LOAD
+      variables:
+      - VAR_D60_L_0
+      - VAR_D60_q_p
+      rules: []
+  applicability:
+    trigger_condition: 桥梁设有人行道、人行桥或需考虑人群荷载时
+    stage:
+    - 可变作用计算
+    - 桥面系验算
+    object:
+    - 人行道
+    - 人行桥
+    - 桥面板
+    - 桥梁上部结构
+  logic:
+    inputs:
+    - sidewalk_width
+    - pedestrian_bridge_flag
+    - span_length
+    - pedestrian_density_condition
+    outputs:
+    - crowd_load_standard_value
+    - crowd_load_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥梁用途和人行道条件查表确定人群荷载标准值； 结合影响线或结构模型计算最不利荷载效应。
+    note: 人行道板局部验算也应由该规则触发。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_023
+  meta:
+    name: 汽车疲劳荷载计算规则
+    source: JTG D60-2015, 4.3.7条
+    original_text: 摘要：汽车疲劳荷载应按规定疲劳荷载计算模型采用，桥面系构件疲劳验算应采用相应疲劳模型。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 疲劳验算应采用规范规定的疲劳荷载计算模型； 当构件和连接不满足疲劳荷载模型要求时，应采用更严格模型验算； 桥面系构件疲劳验算应采用规定的疲劳荷载模型。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_4_3_7_FATIGUE_LOAD_MODEL
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 进行桥梁钢结构、钢混组合结构或桥面系疲劳验算时
+    stage:
+    - 疲劳验算
+    object:
+    - 钢结构构件
+    - 钢桥面系
+    - 连接构造
+    - 钢混组合结构
+  logic:
+    inputs:
+    - fatigue_load_model_type
+    - fatigue_vehicle_axle_load
+    - influence_line
+    - component_type
+    outputs:
+    - fatigue_load_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 component_type 选择疲劳荷载模型； 按模型车辆轴载和布置计算疲劳作用效应。
+    note: 疲劳抗力和细部等级应由钢结构桥梁规范补充。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_024
+  meta:
+    name: 风荷载标准值规则
+    source: JTG D60-2015, 4.3.8条
+    original_text: 摘要：风荷载标准值应按现行《公路桥梁抗风设计规范》计算。
+    mandatory_level: 应
+    rule_type: standard_dispatch
+    description: 桥梁风荷载标准值应按现行公路桥梁抗风设计规范计算。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 结构需要考虑风作用时
+    stage:
+    - 可变作用计算
+    - 抗风设计
+    object:
+    - 桥梁上部结构
+    - 桥墩
+    - 索塔
+    - 缆索
+    - 大跨桥梁
+  logic:
+    inputs:
+    - wind_check_required
+    - bridge_site_wind_condition
+    - structural_aerodynamic_parameters
+    outputs:
+    - wind_load_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 若 wind_check_required 为 true，则调用抗风设计规范规则库和公式库计算风荷载标准值。
+    note: 该规则作为抗风规范调度入口。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_025
+  meta:
+    name: 流水压力计算规则
+    source: JTG D60-2015, 4.3.9条
+    original_text: 摘要：作用在桥墩上的流水压力标准值可按水重度、流速、阻水面积和桥墩形状系数计算。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 作用在桥墩上的流水压力标准值可根据水重度、设计流速、桥墩阻水面积和桥墩形状系数计算； 合力作用点可取设计水位线以下0.3倍水深处。
+    related_refs:
+      formulas:
+      - F_D60_L2_FLOWING_WATER_PRESSURE
+      tables:
+      - T_D60_4_3_9_PIER_SHAPE_FACTOR
+      variables:
+      - VAR_A
+      - VAR_F_w
+      - VAR_D60_K
+      - VAR_g
+      - VAR_gamma_water
+      - VAR_D60_v
+      rules: []
+  applicability:
+    trigger_condition: 桥墩位于水流作用区域且需要计算流水压力时
+    stage:
+    - 可变作用计算
+    - 水平力计算
+    object:
+    - 桥墩
+    - 桥台
+    - 水中基础
+  logic:
+    inputs:
+    - water_unit_weight
+    - design_flow_velocity
+    - pier_obstructed_area
+    - gravity_acceleration
+    - pier_shape_factor
+    outputs:
+    - water_flow_pressure_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 从表格库读取桥墩形状系数； 调用流水压力公式计算标准值，并确定作用点位置。
+    note: 用于水中桥墩横向力和基础验算。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_026
+  meta:
+    name: 波浪力作用规则
+    source: JTG D60-2015, 4.3.10条
+    original_text: 摘要：位于外海、海湾、海峡的桥梁结构，下部结构设计必要时应考虑波浪力作用，宜开展专题研究确定。
+    mandatory_level: 宜
+    rule_type: trigger
+    description: 外海、海湾、海峡桥梁下部结构在必要时应考虑波浪力； 波浪力大小宜通过专题研究确定。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - formula_policy_without_internal_formula_ref
+  applicability:
+    trigger_condition: 桥梁位于外海、海湾、海峡等波浪作用明显区域时
+    stage:
+    - 可变作用计算
+    - 专项设计
+    object:
+    - 跨海桥梁
+    - 海湾桥梁
+    - 海峡桥梁
+    - 下部结构
+    - 基础
+  logic:
+    inputs:
+    - marine_environment
+    - wave_condition
+    - lower_structure_exposure
+    outputs:
+    - wave_force_check_required
+    - wave_force_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 marine_environment 和 wave_condition 判断是否触发波浪力专项计算； 若触发，则调用波浪力专题分析或外部规范。
+    note: 波浪力通常需要专项研究或专门水动力模型。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_027
+  meta:
+    name: 冰压力计算规则
+    source: JTG D60-2015, 4.3.11条
+    original_text: 摘要：对具有竖向前缘的桥墩，应按冰厚、迎冰面形状、冰温系数和冰强度计算冰压力。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 冰对桩或墩产生的冰压力应根据迎冰面形状系数、冰温系数、投影宽度、计算冰厚和冰强度确定； 当桥墩有倾斜表面时，冰压力应分解为水平分力和竖向分力； 强流冰区域宜采用实体结构和抗冰防护措施。
+    related_refs:
+      formulas:
+      - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+      - F_D60_L2_ICE_PRESSURE_ON_PIER
+      - F_D60_L2_ICE_PRESSURE_VERTICAL_COMPONENT
+      tables:
+      - T_D60_4_3_11_1_ICE_FRONT_SHAPE_FACTOR
+      - T_D60_4_3_11_2_ICE_TEMPERATURE_FACTOR
+      variables:
+      - VAR_C_t
+      - VAR_F_ci
+      - VAR_F_i
+      - VAR_F_xi
+      - VAR_R_bk
+      - VAR_R_ik
+      - VAR_b
+      - VAR_beta
+      - VAR_m
+      - VAR_m_0
+      - VAR_t
+      rules: []
+  applicability:
+    trigger_condition: 桥梁位于结冰河流、海冰区域或流冰作用明显区域时
+    stage:
+    - 可变作用计算
+    - 冰压力验算
+    object:
+    - 桥墩
+    - 桩基
+    - 水中结构
+  logic:
+    inputs:
+    - ice_thickness
+    - ice_temperature
+    - ice_compressive_strength
+    - pier_ice_front_width
+    - pier_shape_factor
+    - ice_temperature_factor
+    - pier_inclination_angle
+    outputs:
+    - ice_pressure_standard_value
+    - ice_horizontal_component
+    - ice_vertical_component
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据桥墩迎冰面形状和冰温查取系数； 调用冰压力公式计算标准值； 对倾斜表面进一步计算水平和竖向分力。
+    note: 适用于寒区和高纬度桥梁设计。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_028
+  meta:
+    name: 温度作用计算规则
+    source: JTG D60-2015, 4.3.12条
+    original_text: 摘要：温度作用应根据材料线膨胀系数、均匀温度、竖向温度梯度、横向温度梯度及施工温度影响计算。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 桥梁结构应根据当地条件、材料和施工条件计算温度作用效应； 均匀温度作用应考虑最高和最低有效温度； 竖向温度梯度应按规定温度梯度曲线和温度基数计算； 宽幅箱梁宜考虑横向温度梯度； 采用沥青混凝土铺装的混凝土桥面板桥梁必要时应考虑施工阶段摊铺温度影响。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_4_3_12_1_LINEAR_EXPANSION_COEFFICIENT
+      - T_D60_4_3_12_2_EFFECTIVE_TEMPERATURE
+      - T_D60_4_3_12_3_VERTICAL_TEMPERATURE_BASE
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 桥梁结构需要考虑温度作用时
+    stage:
+    - 可变作用计算
+    - 正常使用验算
+    - 结构分析
+    object:
+    - 混凝土梁
+    - 钢梁
+    - 钢混组合梁
+    - 箱梁
+    - 宽幅箱梁
+    - 桥面板
+  logic:
+    inputs:
+    - material_type
+    - linear_expansion_coefficient
+    - maximum_effective_temperature
+    - minimum_effective_temperature
+    - closure_temperature
+    - vertical_temperature_gradient
+    - transverse_temperature_gradient
+    - pavement_type
+    outputs:
+    - uniform_temperature_effect
+    - vertical_temperature_gradient_effect
+    - transverse_temperature_gradient_effect
+    - construction_temperature_effect
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据材料类型查线膨胀系数； 调用均匀温度、竖向温度梯度和横向温度梯度公式； 根据施工条件判断是否触发施工温度效应计算。
+    note: 温度作用通常需要与结构约束条件和施工阶段信息结合。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_029
+  meta:
+    name: 支座摩阻力计算规则
+    source: JTG D60-2015, 4.3.13条
+    original_text: 摘要：支座摩阻力标准值可按支座反力和摩擦系数计算，摩擦系数按支座类型取用。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 支座摩阻力标准值可按竖向反力与支座摩擦系数计算； 摩擦系数应根据支座类型和润滑条件按表取用。
+    related_refs:
+      formulas:
+      - F_D60_L2_SUPPORT_FRICTION_FORCE
+      tables:
+      - T_D60_4_3_13_BEARING_FRICTION_COEFFICIENT
+      variables:
+      - VAR_F_friction
+      - VAR_W
+      - VAR_mu_friction
+      rules: []
+  applicability:
+    trigger_condition: 计算支座摩阻力、水平力传递或滑动支座效应时
+    stage:
+    - 可变作用计算
+    - 支座验算
+    - 水平力计算
+    object:
+    - 支座
+    - 梁桥
+    - 桥墩
+    - 桥台
+  logic:
+    inputs:
+    - bearing_reaction
+    - bearing_type
+    - friction_coefficient
+    outputs:
+    - bearing_friction_force_standard_value
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 bearing_type 查取 friction_coefficient； 调用公式 F = mu * W 计算支座摩阻力标准值。
+    note: 与制动力、温度变形和支座水平力分配有关。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_030
+  meta:
+    name: 船舶撞击作用规则
+    source: JTG D60-2015, 4.4.1条
+    original_text: 摘要：通航水域中的桥梁墩台设计时应考虑船舶撞击作用，撞击作用设计值宜按专题研究确定。
+    mandatory_level: 应
+    rule_type: table_lookup
+    description: 通航水域中的桥梁墩台应考虑船舶撞击作用； 船舶撞击作用设计值宜按专题研究确定； 缺乏资料时，内河航道和海轮撞击作用可按规范表取值； 设置独立防撞结构时，可根据防撞设施承担撞击作用的能力调整桥墩撞击作用。
+    related_refs:
+      formulas: []
+      tables:
+      - T_D60_4_4_1_1_INLAND_SHIP_COLLISION
+      - T_D60_4_4_1_2_SEAGOING_SHIP_COLLISION
+      variables: []
+      rules: []
+  applicability:
+    trigger_condition: 桥梁位于通航水域且墩台存在船舶撞击风险时
+    stage:
+    - 偶然作用计算
+    - 防撞设计
+    object:
+    - 通航桥梁
+    - 桥墩
+    - 桥台
+    - 防撞设施
+  logic:
+    inputs:
+    - navigation_class
+    - vessel_type
+    - pier_collision_risk
+    - anti_collision_facility
+    - navigation_water_level
+    outputs:
+    - ship_collision_design_value
+    - ship_collision_action_point
+    - anti_collision_design_required
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 navigation_class 和 vessel_type 判断采用专题研究值或查表值； 判断是否设置防撞设施； 输出撞击作用设计值和作用点。
+    note: 船撞作用是偶然作用，不应与地震作用同时组合。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_031
+  meta:
+    name: 漂流物撞击作用规则
+    source: JTG D60-2015, 4.4.2条
+    original_text: 摘要：有漂流物水域中的桥梁墩台设计时应考虑漂流物撞击作用，横桥向撞击力设计值可按公式计算。
+    mandatory_level: 应
+    rule_type: calculation
+    description: 有漂流物的水域中，桥梁墩台应考虑漂流物撞击作用； 横桥向撞击力设计值可按漂流物重力、撞击速度和撞击时间等参数计算； 撞击作用点可假定在计算通航水位线处桥墩宽度中心。
+    related_refs:
+      formulas:
+      - F_D60_L2_DRIFT_IMPACT_FORCE
+      tables: []
+      variables:
+      - VAR_F_drift
+      - VAR_T
+      - VAR_W
+      - VAR_g
+      - VAR_D60_v
+      rules: []
+  applicability:
+    trigger_condition: 桥梁位于存在漂流物撞击风险的水域时
+    stage:
+    - 偶然作用计算
+    - 防撞设计
+    object:
+    - 桥墩
+    - 桥台
+    - 水中结构
+  logic:
+    inputs:
+    - floating_object_weight
+    - impact_velocity
+    - impact_time
+    - navigation_water_level
+    - pier_width
+    outputs:
+    - floating_object_collision_design_value
+    - floating_object_collision_action_point
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据漂流物调查资料确定漂流物重力和速度； 无资料时按规范建议取撞击时间； 调用漂流物撞击力公式计算设计值。
+    note: 属于偶然作用，应与偶然组合规则联动。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_032
+  meta:
+    name: 汽车撞击作用规则
+    source: JTG D60-2015, 4.4.3条
+    original_text: 摘要：桥梁结构必要时可考虑汽车撞击作用，车辆行驶方向取1000kN，垂直方向取500kN，两方向不同时考虑。
+    mandatory_level: 可
+    rule_type: calculation
+    description: 必要时桥梁结构可考虑汽车撞击作用； 车辆行驶方向撞击力设计值取1000kN，垂直方向取500kN，两方向不同时考虑； 撞击力作用于行车道以上1.2m处； 设置防撞设施时，可根据防撞设施能力折减，但折减后不应低于规定值的1/6。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 桥梁构件存在车辆撞击风险时
+    stage:
+    - 偶然作用计算
+    - 防撞设计
+    object:
+    - 桥墩
+    - 桥台
+    - 防撞构件
+    - 跨线桥
+    - 临路构件
+  logic:
+    inputs:
+    - vehicle_collision_risk
+    - collision_direction
+    - anti_collision_facility
+    - anti_collision_capacity
+    outputs:
+    - vehicle_collision_design_value
+    - collision_action_height
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 判断 collision_direction； 选取对应撞击力设计值； 若设置防撞设施，则按防撞能力折减并校核下限。
+    note: 属于偶然作用，主要用于桥墩和临路构件防撞验算。 含“宜、可、必要时、应根据”等人工判断语义；自动化系统可生成审查项或触发任务，但不得仅凭本规则直接输出刚性合格/不合格结论。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_033
+  meta:
+    name: 桥梁护栏碰撞作用规则
+    source: JTG D60-2015, 4.4.4条
+    original_text: 摘要：公路桥梁护栏应按现行《公路交通安全设施设计规范》有关规定设计。
+    mandatory_level: 应
+    rule_type: standard_dispatch
+    description: 公路桥梁护栏的碰撞作用和防护等级应按现行公路交通安全设施设计规范确定。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥梁护栏、防撞护栏或交通安全设施设计时
+    stage:
+    - 偶然作用计算
+    - 交通安全设施设计
+    object:
+    - 桥梁护栏
+    - 防撞护栏
+    - 桥面附属设施
+  logic:
+    inputs:
+    - guardrail_type
+    - protection_level
+    - traffic_safety_requirement
+    outputs:
+    - guardrail_collision_design_requirement
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 根据 guardrail_type 和 protection_level 调用 JTG D81 相关规则库和表格库。
+    note: 该条为外部规范调度规则。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'
+- id: R_D60_CH04_034
+  meta:
+    name: 地震作用规范协调规则
+    source: JTG D60-2015, 4.5.1条
+    original_text: 摘要：公路桥梁地震作用应符合现行《公路工程抗震规范》和《公路桥梁抗震设计细则》的规定。
+    mandatory_level: 应
+    rule_type: standard_dispatch
+    description: 公路桥梁地震作用应按现行公路工程抗震规范和公路桥梁抗震设计细则确定。
+    related_refs:
+      formulas: []
+      tables: []
+      variables: []
+      rules: []
+    review_flags:
+    - table_policy_without_internal_table_ref
+  applicability:
+    trigger_condition: 进行桥梁抗震设计或地震状况验算时
+    stage:
+    - 地震状况验算
+    - 抗震设计
+    object:
+    - 公路桥梁
+    - 上部结构
+    - 下部结构
+    - 基础
+    - 支座
+  logic:
+    inputs:
+    - seismic_check_required
+    - site_seismic_parameters
+    - bridge_importance
+    - structural_system
+    outputs:
+    - seismic_action_standard_value
+    - seismic_design_requirement
+    - required_seismic_standard_list
+    expression: ''
+  action:
+    executable: true
+    execution_logic: 当 seismic_check_required 为 true 时，调用抗震规范规则库； 输出地震作用标准值、抗震设计要求及所需规范清单。
+    note: D60只给出地震作用调用关系，具体抗震计算应由抗震规范完成。 审查报告提示该规则具有公式/查表策略但未能关联内部对象；本次未强行制造伪关联，调用端应按外部规范、上下文触发或人工复核处理。
+    execution_mode: hybrid
+    manual_review_required: true
+  _source_file: 04作用.yaml
+  _source_chapter: '04'

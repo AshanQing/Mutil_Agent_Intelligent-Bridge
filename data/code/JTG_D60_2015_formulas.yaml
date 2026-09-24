@@ -1,0 +1,1437 @@
+metadata:
+  library_name: JTG_D60_2015_formula_registry
+  standard: JTG D60-2015
+  standard_code: JTG D60-2015
+  architecture: six_layer_DAG
+  formula_schema: compact_four_module
+  file_version: v0.1
+  standard_name: 公路桥涵设计通用规范
+  library_type: formula_registry
+  version: reasonableness_fixed_v0.1
+  generation_note: 根据 JTG_D60_2015_reasonableness_review.md 修正：补充 formula_status，回写表格/公式/变量关联，对人工判断语义规则标记 hybrid/manual_review，保留需人工复核的泛化变量。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+layers:
+  layer0_global_context_materials:
+    description: 全局上下文、工程分类、环境与材料基础参数
+    formulas: []
+  layer1_parameters_coefficients:
+    description: 参数、系数和中间量计算
+    formulas:
+    - F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+    - F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+    - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+    - F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+    - F_D60_L1_SOIL_PRESSURE_WIDTH_SMALL_COLUMN
+    - F_D60_L1_SOIL_PRESSURE_WIDTH_LARGE_COLUMN
+    - F_D60_L1_LATERAL_PRESSURE_COEFFICIENT
+    - F_D60_L1_VEHICLE_IMPACT_COEFFICIENT
+    - F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+    - F_D60_L1_BREAKING_FORCE_EQUIVALENT_WIDTH
+    - F_D60_L1_RETAINING_WALL_DISTRIBUTION_LENGTH
+    - F_D60_L1_VEHICLE_CONCENTRATED_LOAD_INTERPOLATION
+    - F_D60_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  layer2_standard_actions:
+    description: 单项作用标准值计算
+    formulas:
+    - F_D60_L2_STRUCTURE_SELF_WEIGHT
+    - F_D60_L2_PRESTRESS_FORCE
+    - F_D60_L2_EFFECTIVE_PRESTRESS
+    - F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+    - F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+    - F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+    - F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+    - F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+    - F_D60_L2_VERTICAL_FILL_PRESSURE
+    - F_D60_L2_HORIZONTAL_FILL_PRESSURE
+    - F_D60_L2_WATER_BUOYANCY
+    - F_D60_L2_VEHICLE_IMPACT_ACTION
+    - F_D60_L2_CENTRIFUGAL_FORCE
+    - F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+    - F_D60_L2_FLOWING_WATER_PRESSURE
+    - F_D60_L2_ICE_PRESSURE_ON_PIER
+    - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+    - F_D60_L2_ICE_PRESSURE_VERTICAL_COMPONENT
+    - F_D60_L2_SUPPORT_FRICTION_FORCE
+    - F_D60_L2_DRIFT_IMPACT_FORCE
+  layer3_action_combinations:
+    description: 作用效应组合计算
+    formulas:
+    - F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+    - F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+    - F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+    - F_D60_L3_SLS_FREQUENT_COMBINATION
+    - F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+  layer4_section_resistance_properties:
+    description: 截面抗力与几何特性
+    formulas: []
+  layer5_limit_state_verification:
+    description: 极限状态验算与合规判定
+    formulas: []
+formulas:
+- id: F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  meta:
+    name: 主动土压力系数
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-5)
+    applicability: 主动土压力计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_D60_alpha
+    - VAR_beta
+    - VAR_delta
+    - VAR_mu_active
+    - VAR_D60_phi
+  math:
+    expression: mu = cos(phi - alpha)^2 / (cos(alpha)^2 * cos(alpha + delta) * (1 + sqrt(sin(phi + delta) * sin(phi - beta)
+      / (cos(alpha + delta) * cos(alpha - beta))))^2)
+    variables:
+    - VAR_D60_phi
+    - VAR_D60_alpha
+    - VAR_delta
+    - VAR_beta
+    output: VAR_mu_active
+    dependencies: []
+  constraints:
+    pre:
+    - angle variables use degree
+    post:
+    - VAR_mu_active > 0
+  execution:
+    type: python
+    logic: 'phi, alpha, delta, beta = map(radians, [VAR_D60_phi, VAR_D60_alpha, VAR_delta, VAR_beta])
+
+      VAR_mu_active = cos(phi - alpha)**2 / (cos(alpha)**2 * cos(alpha + delta) * (1 + sqrt((sin(phi + delta) * sin(phi -
+      beta)) / (cos(alpha + delta) * cos(alpha - beta))))**2)
+
+      return VAR_mu_active
+
+      '
+  formula_status: normative
+- id: F_D60_L1_BREAKING_FORCE_EQUIVALENT_WIDTH
+  meta:
+    name: 汽车制动力等效车道系数
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.3.5
+    applicability: 多车道汽车荷载制动力标准值折算
+    related_rules:
+    - R_D60_CH04_021
+    related_variables:
+    - VAR_eta_brake
+    - VAR_D60_lane_count
+  math:
+    expression: eta_brake = 1.0, 2.0, 2.34, or 2.68 by lane count
+    variables:
+    - VAR_D60_lane_count
+    output: VAR_eta_brake
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_D60_lane_count >= 1
+    post:
+    - VAR_eta_brake > 0
+  execution:
+    type: python
+    logic: 'mapping = {1: 1.0, 2: 2.0, 3: 2.34, 4: 2.68}
+
+      VAR_eta_brake = mapping.get(VAR_D60_lane_count)
+
+      return VAR_eta_brake
+
+      '
+  formula_status: normative
+- id: F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+  meta:
+    name: 汽车荷载离心力系数
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.3.3, 式(4.3.3)
+    applicability: 曲线桥汽车荷载离心力计算
+    related_rules:
+    - R_D60_CH04_019
+    related_variables:
+    - VAR_C
+    - VAR_R
+    - VAR_D60_v
+  math:
+    expression: C = v^2 / (127 * R)
+    variables:
+    - VAR_D60_v
+    - VAR_R
+    output: VAR_C
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_D60_v >= 0
+    - VAR_R > 0
+    post:
+    - VAR_C >= 0
+  execution:
+    type: python
+    logic: 'VAR_C = VAR_D60_v**2 / (127 * VAR_R)
+
+      return VAR_C
+
+      '
+  formula_status: normative
+- id: F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+  meta:
+    name: 静止土压力系数
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-2)
+    applicability: 静止土压力计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_D60_phi
+    - VAR_xi
+  math:
+    expression: xi = 1 - sin(phi)
+    variables:
+    - VAR_D60_phi
+    output: VAR_xi
+    dependencies: []
+  constraints:
+    pre:
+    - 0 <= VAR_D60_phi < 90
+    post:
+    - VAR_xi >= 0
+  execution:
+    type: python
+    logic: 'phi = radians(VAR_D60_phi)
+
+      VAR_xi = 1 - sin(phi)
+
+      return VAR_xi
+
+      '
+  formula_status: normative
+- id: F_D60_L1_LATERAL_PRESSURE_COEFFICIENT
+  meta:
+    name: 侧压系数
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-13)
+    applicability: 压实填土水平压力计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_lambda
+    - VAR_D60_phi
+  math:
+    expression: lambda = tan(45 - phi / 2)^2
+    variables:
+    - VAR_D60_phi
+    output: VAR_lambda
+    dependencies: []
+  constraints:
+    pre:
+    - 0 <= VAR_D60_phi < 90
+    post:
+    - VAR_lambda >= 0
+  execution:
+    type: python
+    logic: 'phi = radians(VAR_D60_phi)
+
+      VAR_lambda = tan(radians(45) - phi / 2)**2
+
+      return VAR_lambda
+
+      '
+  formula_status: normative
+- id: F_D60_L1_NAVIGATION_CLEARANCE_CORRECTION
+  meta:
+    name: 墩（台）边缘净距几何修正
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 3.2.3, 式(3.2.3)
+    applicability: 通航河流上的斜交桥
+    related_rules:
+    - R_D60_CH03_012
+    related_variables:
+    - VAR_D60_alpha
+    - VAR_b
+    - VAR_l
+    - VAR_l_a
+  math:
+    expression: l_a = (l + b * sin(alpha)) / cos(alpha)
+    variables:
+    - VAR_l
+    - VAR_b
+    - VAR_D60_alpha
+    output: VAR_l_a
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_l > 0
+    - VAR_b > 0
+    - 0 <= VAR_D60_alpha < 90
+    post:
+    - VAR_l_a > 0
+  execution:
+    type: python
+    logic: 'alpha = radians(VAR_D60_alpha)
+
+      VAR_l_a = (VAR_l + VAR_b * sin(alpha)) / cos(alpha)
+
+      return VAR_l_a
+
+      '
+  formula_status: normative
+- id: F_D60_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  meta:
+    name: 人群荷载标准值插值
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.3.6, 表4.3.6
+    applicability: 50m < L0 < 150m 时人群荷载标准值
+    related_rules:
+    - R_D60_CH04_022
+    related_variables:
+    - VAR_D60_L_0
+    - VAR_D60_q_p
+  math:
+    expression: q_p = 3.25 - 0.005 * L_0
+    variables:
+    - VAR_D60_L_0
+    output: VAR_D60_q_p
+    dependencies: []
+  constraints:
+    pre:
+    - 50 < VAR_D60_L_0 < 150
+    post:
+    - VAR_D60_q_p > 0
+  execution:
+    type: python
+    logic: 'VAR_D60_q_p = 3.25 - 0.005 * VAR_D60_L_0
+
+      return VAR_D60_q_p
+
+      '
+  formula_status: derived
+- id: F_D60_L1_RETAINING_WALL_DISTRIBUTION_LENGTH
+  meta:
+    name: 挡土墙计算长度
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.3.4, 式(4.3.4-2)
+    applicability: 车辆荷载引起挡土墙土压力计算长度
+    related_rules:
+    - R_D60_CH04_020
+    related_variables:
+    - VAR_B
+    - VAR_H
+  math:
+    expression: B = 13 + H * tan(30)
+    variables:
+    - VAR_H
+    output: VAR_B
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_H >= 0
+    post:
+    - VAR_B > 0
+  execution:
+    type: python
+    logic: 'VAR_B = 13 + VAR_H * tan(radians(30))
+
+      return VAR_B
+
+      '
+  formula_status: normative
+- id: F_D60_L1_SOIL_PRESSURE_WIDTH_GROUP_PILE
+  meta:
+    name: 柱式墩台土压力计算宽度
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-8)
+    applicability: 当 l_i <= D 时，多柱式墩台土压力计算宽度
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_D
+    - VAR_b
+    - VAR_D60_l_i
+    - VAR_n
+  math:
+    expression: b = (n * D + sum(l_i)) / n
+    variables:
+    - VAR_n
+    - VAR_D
+    - VAR_D60_l_i
+    output: VAR_b
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_n > 0
+    - VAR_D > 0
+    - all(VAR_D60_l_i >= 0)
+    post:
+    - VAR_b > 0
+  execution:
+    type: python
+    logic: 'VAR_b = (VAR_n * VAR_D + sum(VAR_D60_l_i)) / VAR_n
+
+      return VAR_b
+
+      '
+  formula_status: normative
+- id: F_D60_L1_SOIL_PRESSURE_WIDTH_LARGE_COLUMN
+  meta:
+    name: 大直径柱土压力计算宽度
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-10)
+    applicability: 当 D > 1.0m 时，单柱土压力计算宽度
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_D
+    - VAR_b
+    - VAR_n
+  math:
+    expression: b = (n * (D + 1) - 1) / n
+    variables:
+    - VAR_D
+    - VAR_n
+    output: VAR_b
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_D > 1.0
+    - VAR_n > 0
+    post:
+    - VAR_b > 0
+  execution:
+    type: python
+    logic: 'VAR_b = (VAR_n * (VAR_D + 1) - 1) / VAR_n
+
+      return VAR_b
+
+      '
+  formula_status: normative
+- id: F_D60_L1_SOIL_PRESSURE_WIDTH_SMALL_COLUMN
+  meta:
+    name: 小直径柱土压力计算宽度
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-9)
+    applicability: 当 D <= 1.0m 时，单柱土压力计算宽度
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_D
+    - VAR_b
+    - VAR_n
+  math:
+    expression: b = D * (2n - 1) / n
+    variables:
+    - VAR_D
+    - VAR_n
+    output: VAR_b
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_D > 0
+    - VAR_D <= 1.0
+    - VAR_n > 0
+    post:
+    - VAR_b > 0
+  execution:
+    type: python
+    logic: 'VAR_b = VAR_D * (2 * VAR_n - 1) / VAR_n
+
+      return VAR_b
+
+      '
+  formula_status: normative
+- id: F_D60_L1_VEHICLE_CONCENTRATED_LOAD_INTERPOLATION
+  meta:
+    name: 车道荷载集中荷载标准值插值
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.3.1, 表4.3.1-2
+    applicability: 公路-I级车道荷载集中荷载标准值，5m < L0 < 50m
+    related_rules:
+    - R_D60_CH04_017
+    related_variables:
+    - VAR_D60_L_0
+    - VAR_D60_P_k
+  math:
+    expression: P_k = 2 * (L_0 + 130)
+    variables:
+    - VAR_D60_L_0
+    output: VAR_D60_P_k
+    dependencies: []
+  constraints:
+    pre:
+    - 5 < VAR_D60_L_0 < 50
+    post:
+    - VAR_D60_P_k > 0
+  execution:
+    type: python
+    logic: 'VAR_D60_P_k = 2 * (VAR_D60_L_0 + 130)
+
+      return VAR_D60_P_k
+
+      '
+  formula_status: derived
+- id: F_D60_L1_VEHICLE_IMPACT_COEFFICIENT
+  meta:
+    name: 汽车荷载冲击系数
+    layer: layer1_parameters_coefficients
+    source: JTG D60-2015, 4.3.2, 式(4.3.2)
+    applicability: 汽车荷载冲击作用计算
+    related_rules:
+    - R_D60_CH04_018
+    related_variables:
+    - VAR_f
+    - VAR_mu
+  math:
+    expression: mu = 0.05 if f < 1.5; mu = 0.1767 * ln(f) - 0.0157 if 1.5 <= f <= 14; mu = 0.45 if f > 14
+    variables:
+    - VAR_f
+    output: VAR_mu
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_f > 0
+    post:
+    - VAR_mu >= 0
+  execution:
+    type: python
+    logic: "if VAR_f < 1.5:\n    VAR_mu = 0.05\nelif VAR_f <= 14:\n    VAR_mu = 0.1767 * log(VAR_f) - 0.0157\nelse:\n    VAR_mu\
+      \ = 0.45\nreturn VAR_mu\n"
+  formula_status: normative
+- id: F_D60_L2_ACTIVE_EARTH_PRESSURE_NO_VEHICLE
+  meta:
+    name: 无汽车荷载时主动土压力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-4)
+    applicability: 土层特性无变化且无汽车荷载作用时
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_B
+    - VAR_E
+    - VAR_H
+    - VAR_gamma
+    - VAR_mu_active
+  math:
+    expression: E = 0.5 * B * mu * gamma * H^2
+    variables:
+    - VAR_B
+    - VAR_mu_active
+    - VAR_gamma
+    - VAR_H
+    output: VAR_E
+    dependencies:
+    - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  constraints:
+    pre:
+    - VAR_B > 0
+    - VAR_mu_active > 0
+    - VAR_gamma > 0
+    - VAR_H > 0
+    post:
+    - VAR_E > 0
+  execution:
+    type: python
+    logic: 'VAR_E = 0.5 * VAR_B * VAR_mu_active * VAR_gamma * VAR_H**2
+
+      return VAR_E
+
+      '
+  formula_status: normative
+- id: F_D60_L2_ACTIVE_EARTH_PRESSURE_WITH_VEHICLE
+  meta:
+    name: 有汽车荷载时主动土压力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-6)
+    applicability: 土层特性无变化但有汽车荷载作用，且 beta=0
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_B
+    - VAR_E
+    - VAR_H
+    - VAR_gamma
+    - VAR_h
+    - VAR_mu_active
+  math:
+    expression: E = 0.5 * B * mu * gamma * H * (H + 2h)
+    variables:
+    - VAR_B
+    - VAR_mu_active
+    - VAR_gamma
+    - VAR_H
+    - VAR_h
+    output: VAR_E
+    dependencies:
+    - F_D60_L1_ACTIVE_EARTH_PRESSURE_COEFFICIENT
+  constraints:
+    pre:
+    - VAR_B > 0
+    - VAR_mu_active > 0
+    - VAR_gamma > 0
+    - VAR_H > 0
+    - VAR_h >= 0
+    post:
+    - VAR_E > 0
+  execution:
+    type: python
+    logic: 'VAR_E = 0.5 * VAR_B * VAR_mu_active * VAR_gamma * VAR_H * (VAR_H + 2 * VAR_h)
+
+      return VAR_E
+
+      '
+  formula_status: normative
+- id: F_D60_L2_CENTRIFUGAL_FORCE
+  meta:
+    name: 汽车荷载离心力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.3
+    applicability: 曲线桥车辆荷载离心力计算
+    related_rules:
+    - R_D60_CH04_019
+    related_variables:
+    - VAR_C
+    - VAR_Q_centrifugal
+    - VAR_Q_vehicle
+  math:
+    expression: Q_centrifugal = C * Q_vehicle
+    variables:
+    - VAR_C
+    - VAR_Q_vehicle
+    output: VAR_Q_centrifugal
+    dependencies:
+    - F_D60_L1_CENTRIFUGAL_FORCE_COEFFICIENT
+  constraints:
+    pre:
+    - VAR_C >= 0
+    - VAR_Q_vehicle >= 0
+    post:
+    - VAR_Q_centrifugal >= 0
+  execution:
+    type: python
+    logic: 'VAR_Q_centrifugal = VAR_C * VAR_Q_vehicle
+
+      return VAR_Q_centrifugal
+
+      '
+  formula_status: normative
+- id: F_D60_L2_DRIFT_IMPACT_FORCE
+  meta:
+    name: 漂流物横桥向撞击力设计值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.4.2, 式(4.4.2)
+    applicability: 有漂流物水域中的桥梁墩台
+    related_rules:
+    - R_D60_CH04_031
+    related_variables:
+    - VAR_F_drift
+    - VAR_T
+    - VAR_W
+    - VAR_g
+    - VAR_D60_v
+  math:
+    expression: F = W * v / (g * T)
+    variables:
+    - VAR_W
+    - VAR_D60_v
+    - VAR_g
+    - VAR_T
+    output: VAR_F_drift
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_W > 0
+    - VAR_D60_v >= 0
+    - VAR_g > 0
+    - VAR_T > 0
+    post:
+    - VAR_F_drift >= 0
+  execution:
+    type: python
+    logic: 'VAR_F_drift = VAR_W * VAR_D60_v / (VAR_g * VAR_T)
+
+      return VAR_F_drift'
+  formula_status: normative
+- id: F_D60_L2_EFFECTIVE_PRESTRESS
+  meta:
+    name: 有效预应力
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.2, 式(4.2.2-2)
+    applicability: 扣除相应阶段预应力损失后的有效预应力
+    related_rules:
+    - R_D60_CH04_012
+    related_variables:
+    - VAR_sigma_con
+    - VAR_sigma_l
+    - VAR_D60_sigma_pe
+  math:
+    expression: sigma_pe = sigma_con - sigma_l
+    variables:
+    - VAR_sigma_con
+    - VAR_sigma_l
+    output: VAR_D60_sigma_pe
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_sigma_con >= 0
+    - VAR_sigma_l >= 0
+    post:
+    - VAR_D60_sigma_pe >= 0
+  execution:
+    type: python
+    logic: 'VAR_D60_sigma_pe = VAR_sigma_con - VAR_sigma_l
+
+      return VAR_D60_sigma_pe
+
+      '
+  formula_status: normative
+- id: F_D60_L2_FAILURE_ANGLE_ACTIVE_EARTH_PRESSURE
+  meta:
+    name: 破坏棱体破裂面夹角正切值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-7)
+    applicability: beta=0时主动土压力破裂面角度计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_D60_alpha
+    - VAR_omega
+    - VAR_D60_phi
+    - VAR_tan_theta
+    - VAR_theta
+  math:
+    expression: tan(theta) = -tan(omega) + sqrt((cot(phi) + tan(omega)) * (tan(omega) - tan(alpha)))
+    variables:
+    - VAR_theta
+    - VAR_omega
+    - VAR_D60_phi
+    - VAR_D60_alpha
+    output: VAR_tan_theta
+    dependencies: []
+  constraints:
+    pre:
+    - angle variables use degree
+    post:
+    - VAR_tan_theta is not None
+  execution:
+    type: python
+    logic: 'omega, phi, alpha = map(radians, [VAR_omega, VAR_D60_phi, VAR_D60_alpha])
+
+      VAR_tan_theta = -tan(omega) + sqrt((1 / tan(phi) + tan(omega)) * (tan(omega) - tan(alpha)))
+
+      return VAR_tan_theta
+
+      '
+  formula_status: normative
+- id: F_D60_L2_FLOWING_WATER_PRESSURE
+  meta:
+    name: 流水压力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.9, 式(4.3.9)
+    applicability: 作用在桥墩上的流水压力计算
+    related_rules:
+    - R_D60_CH04_025
+    related_variables:
+    - VAR_A
+    - VAR_F_w
+    - VAR_D60_K
+    - VAR_g
+    - VAR_gamma_water
+    - VAR_D60_v
+  math:
+    expression: F_w = K * A * gamma * v^2 / (2 * g)
+    variables:
+    - VAR_D60_K
+    - VAR_A
+    - VAR_gamma_water
+    - VAR_D60_v
+    - VAR_g
+    output: VAR_F_w
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_D60_K > 0
+    - VAR_A > 0
+    - VAR_gamma_water > 0
+    - VAR_D60_v >= 0
+    - VAR_g > 0
+    post:
+    - VAR_F_w >= 0
+  execution:
+    type: python
+    logic: 'VAR_F_w = VAR_D60_K * VAR_A * VAR_gamma_water * VAR_D60_v**2 / (2 * VAR_g)
+
+      return VAR_F_w
+
+      '
+  formula_status: normative
+- id: F_D60_L2_HORIZONTAL_FILL_PRESSURE
+  meta:
+    name: 压实填土水平压力强度
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-12)
+    applicability: 压实填土水平压力强度计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_gamma
+    - VAR_h
+    - VAR_lambda
+    - VAR_q_H
+  math:
+    expression: q_H = lambda * gamma * h
+    variables:
+    - VAR_lambda
+    - VAR_gamma
+    - VAR_h
+    output: VAR_q_H
+    dependencies:
+    - F_D60_L1_LATERAL_PRESSURE_COEFFICIENT
+  constraints:
+    pre:
+    - VAR_lambda >= 0
+    - VAR_gamma > 0
+    - VAR_h >= 0
+    post:
+    - VAR_q_H >= 0
+  execution:
+    type: python
+    logic: 'VAR_q_H = VAR_lambda * VAR_gamma * VAR_h
+
+      return VAR_q_H
+
+      '
+  formula_status: normative
+- id: F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  meta:
+    name: 倾斜表面冰压力水平分力
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.11, 式(4.3.11-2)
+    applicability: 流冰范围内桥墩具有倾斜表面
+    related_rules:
+    - R_D60_CH04_027
+    related_variables:
+    - VAR_C_t
+    - VAR_F_xi
+    - VAR_R_bk
+    - VAR_beta
+    - VAR_m_0
+    - VAR_t
+  math:
+    expression: F_xi = m_0 * C_t * R_bk * t^2 * tan(beta)
+    variables:
+    - VAR_m_0
+    - VAR_C_t
+    - VAR_R_bk
+    - VAR_t
+    - VAR_beta
+    output: VAR_F_xi
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_m_0 > 0
+    - VAR_C_t > 0
+    - VAR_R_bk > 0
+    - VAR_t > 0
+    - VAR_beta > 0
+    post:
+    - VAR_F_xi > 0
+  execution:
+    type: python
+    logic: 'beta = radians(VAR_beta)
+
+      VAR_F_xi = VAR_m_0 * VAR_C_t * VAR_R_bk * VAR_t**2 * tan(beta)
+
+      return VAR_F_xi
+
+      '
+  formula_status: derived
+- id: F_D60_L2_ICE_PRESSURE_ON_PIER
+  meta:
+    name: 冰对桩或墩产生的冰压力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.11, 式(4.3.11-1)
+    applicability: 具有竖向前棱的桥墩、桩或墩迎冰面
+    related_rules:
+    - R_D60_CH04_027
+    related_variables:
+    - VAR_C_t
+    - VAR_F_i
+    - VAR_R_ik
+    - VAR_b
+    - VAR_m
+    - VAR_t
+  math:
+    expression: F_i = m * C_t * b * t * R_ik
+    variables:
+    - VAR_m
+    - VAR_C_t
+    - VAR_b
+    - VAR_t
+    - VAR_R_ik
+    output: VAR_F_i
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_m > 0
+    - VAR_C_t > 0
+    - VAR_b > 0
+    - VAR_t > 0
+    - VAR_R_ik > 0
+    post:
+    - VAR_F_i > 0
+  execution:
+    type: python
+    logic: 'VAR_F_i = VAR_m * VAR_C_t * VAR_b * VAR_t * VAR_R_ik
+
+      return VAR_F_i
+
+      '
+  formula_status: normative
+- id: F_D60_L2_ICE_PRESSURE_VERTICAL_COMPONENT
+  meta:
+    name: 倾斜表面冰压力竖向分力
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.11, 式(4.3.11-3)
+    applicability: 流冰范围内桥墩具有倾斜表面
+    related_rules:
+    - R_D60_CH04_027
+    related_variables:
+    - VAR_F_ci
+    - VAR_F_xi
+    - VAR_beta
+  math:
+    expression: F_ci = F_xi / tan(beta)
+    variables:
+    - VAR_F_xi
+    - VAR_beta
+    output: VAR_F_ci
+    dependencies:
+    - F_D60_L2_ICE_PRESSURE_HORIZONTAL_COMPONENT
+  constraints:
+    pre:
+    - VAR_F_xi > 0
+    - VAR_beta > 0
+    post:
+    - VAR_F_ci > 0
+  execution:
+    type: python
+    logic: 'beta = radians(VAR_beta)
+
+      VAR_F_ci = VAR_F_xi / tan(beta)
+
+      return VAR_F_ci
+
+      '
+  formula_status: derived
+- id: F_D60_L2_PRESTRESS_FORCE
+  meta:
+    name: 预加力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.2, 式(4.2.2-1)
+    applicability: 预应力钢筋有效预加力计算
+    related_rules:
+    - R_D60_CH04_012
+    related_variables:
+    - VAR_A_p
+    - VAR_F_pe
+    - VAR_D60_sigma_pe
+  math:
+    expression: F_pe = sigma_pe * A_p
+    variables:
+    - VAR_D60_sigma_pe
+    - VAR_A_p
+    output: VAR_F_pe
+    dependencies:
+    - F_D60_L2_EFFECTIVE_PRESTRESS
+  constraints:
+    pre:
+    - VAR_D60_sigma_pe >= 0
+    - VAR_A_p > 0
+    post:
+    - VAR_F_pe >= 0
+  execution:
+    type: python
+    logic: 'VAR_F_pe = VAR_D60_sigma_pe * VAR_A_p
+
+      return VAR_F_pe
+
+      '
+  formula_status: normative
+- id: F_D60_L2_STATIC_EARTH_PRESSURE_AT_DEPTH
+  meta:
+    name: 任一高度处静止土压力
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-1)
+    applicability: 填土高度范围内静止土压力强度计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_e_j
+    - VAR_gamma
+    - VAR_h
+    - VAR_xi
+  math:
+    expression: e_j = xi * gamma * h
+    variables:
+    - VAR_xi
+    - VAR_gamma
+    - VAR_h
+    output: VAR_e_j
+    dependencies:
+    - F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+  constraints:
+    pre:
+    - VAR_xi >= 0
+    - VAR_gamma > 0
+    - VAR_h >= 0
+    post:
+    - VAR_e_j >= 0
+  execution:
+    type: python
+    logic: 'VAR_e_j = VAR_xi * VAR_gamma * VAR_h
+
+      return VAR_e_j
+
+      '
+  formula_status: normative
+- id: F_D60_L2_STATIC_EARTH_PRESSURE_RESULTANT
+  meta:
+    name: 单位宽度静止土压力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-3)
+    applicability: 填土高度范围内单位宽度静止土压力合力计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_E_j
+    - VAR_H
+    - VAR_gamma
+    - VAR_xi
+  math:
+    expression: E_j = 0.5 * xi * gamma * H^2
+    variables:
+    - VAR_xi
+    - VAR_gamma
+    - VAR_H
+    output: VAR_E_j
+    dependencies:
+    - F_D60_L1_EARTH_PRESSURE_COEFFICIENT_STATIC
+  constraints:
+    pre:
+    - VAR_xi >= 0
+    - VAR_gamma > 0
+    - VAR_H > 0
+    post:
+    - VAR_E_j > 0
+  execution:
+    type: python
+    logic: 'VAR_E_j = 0.5 * VAR_xi * VAR_gamma * VAR_H**2
+
+      return VAR_E_j
+
+      '
+  formula_status: normative
+- id: F_D60_L2_STRUCTURE_SELF_WEIGHT
+  meta:
+    name: 结构重力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.1, 式(4.2.1)
+    applicability: 结构自重及附加重力标准值计算
+    related_rules:
+    - R_D60_CH04_011
+    related_variables:
+    - VAR_G_k
+    - VAR_V
+    - VAR_gamma
+  math:
+    expression: G_k = gamma * V
+    variables:
+    - VAR_gamma
+    - VAR_V
+    output: VAR_G_k
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_gamma > 0
+    - VAR_V > 0
+    post:
+    - VAR_G_k > 0
+  execution:
+    type: python
+    logic: 'VAR_G_k = VAR_gamma * VAR_V
+
+      return VAR_G_k
+
+      '
+  formula_status: normative
+- id: F_D60_L2_SUPPORT_FRICTION_FORCE
+  meta:
+    name: 支座摩阻力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.13, 式(4.3.13)
+    applicability: 活动支座上部结构重力产生的摩阻力
+    related_rules:
+    - R_D60_CH04_029
+    related_variables:
+    - VAR_F_friction
+    - VAR_W
+    - VAR_mu_friction
+  math:
+    expression: F = mu * W
+    variables:
+    - VAR_mu_friction
+    - VAR_W
+    output: VAR_F_friction
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_mu_friction >= 0
+    - VAR_W >= 0
+    post:
+    - VAR_F_friction >= 0
+  execution:
+    type: python
+    logic: 'VAR_F_friction = VAR_mu_friction * VAR_W
+
+      return VAR_F_friction
+
+      '
+  formula_status: normative
+- id: F_D60_L2_VEHICLE_IMPACT_ACTION
+  meta:
+    name: 汽车荷载冲击力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.2
+    applicability: 由汽车荷载标准值乘以冲击系数得到冲击力标准值
+    related_rules:
+    - R_D60_CH04_018
+    related_variables:
+    - VAR_Q_impact
+    - VAR_Q_vehicle
+    - VAR_mu
+  math:
+    expression: Q_impact = mu * Q_vehicle
+    variables:
+    - VAR_mu
+    - VAR_Q_vehicle
+    output: VAR_Q_impact
+    dependencies:
+    - F_D60_L1_VEHICLE_IMPACT_COEFFICIENT
+  constraints:
+    pre:
+    - VAR_mu >= 0
+    - VAR_Q_vehicle >= 0
+    post:
+    - VAR_Q_impact >= 0
+  execution:
+    type: python
+    logic: 'VAR_Q_impact = VAR_mu * VAR_Q_vehicle
+
+      return VAR_Q_impact
+
+      '
+  formula_status: normative
+- id: F_D60_L2_VEHICLE_INDUCED_SOIL_EQUIVALENT_HEIGHT
+  meta:
+    name: 车辆荷载换算等代均布土层厚度
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.3.4, 式(4.3.4-1)
+    applicability: 车辆荷载引起的土压力换算
+    related_rules:
+    - R_D60_CH04_020
+    related_variables:
+    - VAR_B
+    - VAR_gamma
+    - VAR_h
+    - VAR_l_0
+    - VAR_sum_G
+  math:
+    expression: h = sum(G) / (B * l_0 * gamma)
+    variables:
+    - VAR_sum_G
+    - VAR_B
+    - VAR_l_0
+    - VAR_gamma
+    output: VAR_h
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_sum_G >= 0
+    - VAR_B > 0
+    - VAR_l_0 > 0
+    - VAR_gamma > 0
+    post:
+    - VAR_h >= 0
+  execution:
+    type: python
+    logic: 'VAR_h = VAR_sum_G / (VAR_B * VAR_l_0 * VAR_gamma)
+
+      return VAR_h
+
+      '
+  formula_status: normative
+- id: F_D60_L2_VERTICAL_FILL_PRESSURE
+  meta:
+    name: 压实填土竖向压力强度
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.3, 式(4.2.3-11)
+    applicability: 压实填土重力压力强度计算
+    related_rules:
+    - R_D60_CH04_013
+    related_variables:
+    - VAR_gamma
+    - VAR_h
+    - VAR_q_v
+  math:
+    expression: q_v = gamma * h
+    variables:
+    - VAR_gamma
+    - VAR_h
+    output: VAR_q_v
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_gamma > 0
+    - VAR_h >= 0
+    post:
+    - VAR_q_v >= 0
+  execution:
+    type: python
+    logic: 'VAR_q_v = VAR_gamma * VAR_h
+
+      return VAR_q_v
+
+      '
+  formula_status: normative
+- id: F_D60_L2_WATER_BUOYANCY
+  meta:
+    name: 水的浮力标准值
+    layer: layer2_standard_actions
+    source: JTG D60-2015, 4.2.5, 式(4.2.5)
+    applicability: 桥梁墩台或基础受水浮力作用
+    related_rules:
+    - R_D60_CH04_015
+    related_variables:
+    - VAR_F_buoyancy
+    - VAR_V_w
+    - VAR_gamma_water
+  math:
+    expression: F = gamma * V_w
+    variables:
+    - VAR_gamma_water
+    - VAR_V_w
+    output: VAR_F_buoyancy
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_gamma_water > 0
+    - VAR_V_w >= 0
+    post:
+    - VAR_F_buoyancy >= 0
+  execution:
+    type: python
+    logic: 'VAR_F_buoyancy = VAR_gamma_water * VAR_V_w
+
+      return VAR_F_buoyancy
+
+      '
+  formula_status: normative
+- id: F_D60_L3_SLS_FREQUENT_COMBINATION
+  meta:
+    name: 正常使用极限状态作用频遇组合效应设计值
+    layer: layer3_action_combinations
+    source: JTG D60-2015, 4.1.6, 式(4.1.6-1)
+    applicability: 永久作用标准值与汽车荷载频遇值、其他可变作用准永久值组合
+    related_rules:
+    - R_D60_CH04_006
+    related_variables:
+    - VAR_G_ik
+    - VAR_Q_1k
+    - VAR_Q_jk
+    - VAR_S_fd
+    - VAR_psi_f1
+    - VAR_psi_qj
+  math:
+    expression: S_fd = S(sum(G_ik) + psi_f1 * Q_1k + sum(psi_qj * Q_jk))
+    variables:
+    - VAR_G_ik
+    - VAR_psi_f1
+    - VAR_Q_1k
+    - VAR_psi_qj
+    - VAR_Q_jk
+    output: VAR_S_fd
+    dependencies: []
+  constraints:
+    pre: []
+    post:
+    - VAR_S_fd is not None
+  execution:
+    type: python
+    logic: 'VAR_S_fd = S(sum_G_ik + psi_f1 * Q_1k + sum_psi_qj_Q_jk)
+
+      return VAR_S_fd
+
+      '
+  formula_status: normative
+- id: F_D60_L3_SLS_QUASI_PERMANENT_COMBINATION
+  meta:
+    name: 正常使用极限状态作用准永久组合效应设计值
+    layer: layer3_action_combinations
+    source: JTG D60-2015, 4.1.6, 式(4.1.6-2)
+    applicability: 永久作用标准值与可变作用准永久值组合
+    related_rules:
+    - R_D60_CH04_006
+    related_variables:
+    - VAR_G_ik
+    - VAR_Q_jk
+    - VAR_S_qd
+    - VAR_psi_qj
+  math:
+    expression: S_qd = S(sum(G_ik) + sum(psi_qj * Q_jk))
+    variables:
+    - VAR_G_ik
+    - VAR_psi_qj
+    - VAR_Q_jk
+    output: VAR_S_qd
+    dependencies: []
+  constraints:
+    pre: []
+    post:
+    - VAR_S_qd is not None
+  execution:
+    type: python
+    logic: 'VAR_S_qd = S(sum_G_ik + sum_psi_qj_Q_jk)
+
+      return VAR_S_qd
+
+      '
+  formula_status: normative
+- id: F_D60_L3_ULS_ACCIDENTAL_COMBINATION
+  meta:
+    name: 承载能力极限状态作用偶然组合效应设计值
+    layer: layer3_action_combinations
+    source: JTG D60-2015, 4.1.5, 式(4.1.5-3)
+    applicability: 永久作用、偶然作用和可变作用代表值组合
+    related_rules:
+    - R_D60_CH04_005
+    related_variables:
+    - VAR_A_d
+    - VAR_G_ik
+    - VAR_Q_1k
+    - VAR_Q_jk
+    - VAR_S_ad
+    - VAR_psi_f1
+    - VAR_psi_q1
+    - VAR_psi_qj
+  math:
+    expression: S_ad = S(sum(G_ik) + A_d + (psi_f1 or psi_q1) * Q_1k + sum(psi_qj * Q_jk))
+    variables:
+    - VAR_G_ik
+    - VAR_A_d
+    - VAR_psi_f1
+    - VAR_psi_q1
+    - VAR_Q_1k
+    - VAR_psi_qj
+    - VAR_Q_jk
+    output: VAR_S_ad
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_A_d is not None
+    post:
+    - VAR_S_ad is not None
+  execution:
+    type: python
+    logic: 'VAR_S_ad = S(sum_G_ik + A_d + psi_1 * Q_1k + sum_psi_qj_Q_jk)
+
+      return VAR_S_ad
+
+      '
+  formula_status: derived
+- id: F_D60_L3_ULS_BASIC_COMBINATION_DESIGN
+  meta:
+    name: 承载能力极限状态作用基本组合效应设计值简化式
+    layer: layer3_action_combinations
+    source: JTG D60-2015, 4.1.5, 式(4.1.5-2)
+    applicability: 采用各作用设计值直接组合
+    related_rules:
+    - R_D60_CH04_005
+    related_variables:
+    - VAR_G_id
+    - VAR_Q_1d
+    - VAR_Q_jd
+    - VAR_S_ud
+    - VAR_gamma_0
+  math:
+    expression: S_ud = gamma_0 * S(sum(G_id) + Q_1d + sum(Q_jd))
+    variables:
+    - VAR_gamma_0
+    - VAR_G_id
+    - VAR_Q_1d
+    - VAR_Q_jd
+    output: VAR_S_ud
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_gamma_0 > 0
+    post:
+    - VAR_S_ud is not None
+  execution:
+    type: python
+    logic: 'VAR_S_ud = VAR_gamma_0 * S(sum_G_id + Q_1d + sum_Q_jd)
+
+      return VAR_S_ud
+
+      '
+  formula_status: normative
+- id: F_D60_L3_ULS_BASIC_COMBINATION_STANDARD
+  meta:
+    name: 承载能力极限状态作用基本组合效应设计值
+    layer: layer3_action_combinations
+    source: JTG D60-2015, 4.1.5, 式(4.1.5-1)
+    applicability: 永久作用设计值与可变作用设计值组合
+    related_rules:
+    - R_D60_CH04_005
+    related_variables:
+    - VAR_G_ik
+    - VAR_Q_1k
+    - VAR_Q_jk
+    - VAR_S_ud
+    - VAR_gamma_0
+    - VAR_gamma_Gi
+    - VAR_gamma_L1
+    - VAR_gamma_Lj
+    - VAR_gamma_Q1
+    - VAR_gamma_Qj
+    - VAR_psi_c
+  math:
+    expression: S_ud = gamma_0 * S(sum(gamma_Gi * G_ik) + gamma_Q1 * gamma_L1 * Q_1k + psi_c * sum(gamma_Qj * gamma_Lj * Q_jk))
+    variables:
+    - VAR_gamma_0
+    - VAR_gamma_Gi
+    - VAR_G_ik
+    - VAR_gamma_Q1
+    - VAR_gamma_L1
+    - VAR_Q_1k
+    - VAR_psi_c
+    - VAR_gamma_Qj
+    - VAR_gamma_Lj
+    - VAR_Q_jk
+    output: VAR_S_ud
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_gamma_0 > 0
+    post:
+    - VAR_S_ud is not None
+  execution:
+    type: python
+    logic: 'VAR_S_ud = VAR_gamma_0 * S(sum_gamma_G_Gk + gamma_Q1 * gamma_L1 * Q_1k + psi_c * sum_gamma_Q_gamma_L_Qk)
+
+      return VAR_S_ud
+
+      '
+  formula_status: normative

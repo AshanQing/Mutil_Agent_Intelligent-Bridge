@@ -1,0 +1,258 @@
+schema_version: code_rag_eval_v0.2
+description: 内容级关键词检索基线，验证提示词证据及明确的数据缺口。
+default_top_k: 10
+queries:
+  - id: B01_CLEARANCE_GENERAL
+    design_stage: initial_layout
+    query: 公路建筑限界的净高要求
+    standard_codes: [JTG B01-2014]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_B01_3_6_1_CLEARANCE
+        must_contain: [高速公路、一级公路、二级公路, "5.0"]
+  - id: B01_BRIDGE_CLEARANCE
+    design_stage: initial_layout
+    query: 桥面净空应满足什么要求
+    standard_codes: [JTG B01-2014]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_B01_6_0_6_BRIDGE_CLEARANCE
+        must_contain: [不得侵入建筑限界]
+  - id: B01_VEHICLE_LOAD_GRADE_RULE
+    design_stage: initial_layout
+    query: 高速公路桥梁采用什么汽车荷载等级
+    standard_codes: [JTG B01-2014]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_B01_7_0_2_VEHICLE_LOAD_GRADE
+        must_contain: [高速公路, 公路-I级]
+  - id: B01_CLEARANCE_HEIGHT_TABLE
+    design_stage: initial_layout
+    query: 公路建筑限界净高查表
+    standard_codes: [JTG B01-2014]
+    library_types: [table]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: T_B01_3_6_1_CLEARANCE_HEIGHT
+        must_contain: [clearance_height, "4.5"]
+  - id: B01_VEHICLE_LOAD_GRADE_TABLE
+    design_stage: modeling
+    query: 汽车荷载等级对应关系表
+    standard_codes: [JTG B01-2014]
+    library_types: [table]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: T_B01_7_0_2_VEHICLE_LOAD_GRADE
+        must_contain: [四级公路, 公路-II级]
+  - id: B01_BRIDGE_WIDTH_VARIABLE_GAP
+    design_stage: dimension_design
+    query: 桥面总宽度参数如何定义
+    standard_codes: [JTG B01-2014]
+    library_types: [variable]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: D60_BRIDGE_CLEARANCE_WIDTH_GAP
+    design_stage: initial_layout
+    query: 桥涵建筑限界与桥面净宽
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: D60_NAVIGATION_LAYOUT_GAP
+    design_stage: initial_layout
+    query: 通航水域桥梁布置要求
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: D60_NAVIGATION_PIER_GAP
+    design_stage: layout_revision
+    query: 通航水域桥墩布置和防撞要求
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: D60_UNDER_BRIDGE_CLEARANCE
+    design_stage: layout_revision
+    query: 非通航河流桥下净空怎样确定
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH03_027
+        must_contain: [min_underbridge_clearance_m, "1.5"]
+  - id: D60_ACTION_COMBINATION_PRINCIPLE
+    design_stage: modeling
+    query: 汽车荷载与其他作用如何组合
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_004
+        must_contain: [汽车制动力, excluded_simultaneous_actions]
+  - id: D60_ULS_COMBINATION
+    design_stage: modeling
+    query: 承载能力极限状态作用基本组合
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_005
+        must_contain: [S_ud, gamma_0]
+  - id: D60_SLS_COMBINATION
+    design_stage: modeling
+    query: 正常使用极限状态频遇和准永久组合
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_006
+        must_contain: [S_fd, S_qd]
+  - id: D60_VEHICLE_LOAD
+    design_stage: modeling
+    query: 公路汽车荷载等级和车道荷载怎样取值
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_017
+        must_contain: [公路-I级, concentrated_load_Pk_kN]
+  - id: D60_VEHICLE_IMPACT
+    design_stage: modeling
+    query: 车辆动载冲击效应如何考虑
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_018
+        must_contain: [Q_impact, "0.1767"]
+  - id: D60_BRAKING_FORCE
+    design_stage: modeling
+    query: 汽车制动力计算与分配
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_021
+        must_contain: [eta_brake, 制动力分配规则表]
+  - id: D60_WIND_LOAD_GAP
+    design_stage: modeling
+    query: 桥梁风荷载标准值
+    standard_codes: [JTG D60-2015]
+    library_types: [rule, formula, table]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: D60_TEMPERATURE_ACTION
+    design_stage: modeling
+    query: 混凝土桥温度变化产生的作用如何计算
+    standard_codes: [JTG D60-2015]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_D60_CH04_028
+        must_contain: [材料线膨胀系数表, maximum_effective_temperature_C]
+  - id: CODE_CONCRETE_DESIGN_STRENGTH
+    design_stage: dimension_design
+    query: 混凝土强度设计值表
+    standard_codes: [JTG 3362-2018]
+    library_types: [table]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: T_3362_3_1_4_CONCRETE_STRENGTH_DESIGN
+        must_contain: [C40, "18.4"]
+  - id: CODE_REBAR_DESIGN_STRENGTH
+    design_stage: reinforcement_design
+    query: 普通钢筋抗拉强度设计值表
+    standard_codes: [JTG 3362-2018]
+    library_types: [table]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: T_3362_3_2_3_STEEL_STRENGTH_DESIGN_PLACEHOLDER
+        must_contain: [HRB400, "330"]
+  - id: CODE_STANDARD_SPAN
+    design_stage: initial_layout
+    query: 混凝土桥标准化跨径推荐
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH04_003
+        must_contain: [不大于50m, 标准化跨径]
+  - id: CODE_CONCRETE_COVER
+    design_stage: reinforcement_design
+    query: 普通钢筋最小混凝土保护层厚度
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH09_9_1_1
+        must_contain: [min_cover_mm, III类及以上]
+  - id: CODE_ANCHORAGE_LENGTH
+    design_stage: reinforcement_design
+    query: 受拉钢筋最小锚固长度
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH09_9_1_4
+        must_contain: [HRB400, 35d]
+  - id: CODE_CAP_BEAM_DIMENSION_GAP
+    design_stage: dimension_design
+    query: 盖梁尺寸
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule, formula, table]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: CODE_CAP_BEAM_BENDING_GAP
+    design_stage: verification
+    query: 盖梁正截面受弯承载力验算
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule, formula]
+    expected_status: no_valid_evidence
+    required_evidence: []
+  - id: CODE_CAP_BEAM_SHEAR
+    design_stage: verification
+    query: 盖梁斜截面抗剪承载力验算
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH08_8_4_5
+        must_contain: [gamma0 * Vd, rho_sv]
+  - id: CODE_PILE_REACTION
+    design_stage: verification
+    query: 桩基承台单桩反力如何计算
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH08_8_5_1
+        must_contain: [Ni = N / n, xi]
+  - id: CODE_PILE_CAP_SHEAR
+    design_stage: verification
+    query: 承台斜截面抗剪承载力验算
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH08_8_5_3
+        must_contain: ["0.9e-4", fcu_k]
+  - id: CODE_CRACK_WIDTH
+    design_stage: verification
+    query: 钢筋混凝土构件最大裂缝宽度计算
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule]
+    expected_status: ok
+    required_evidence:
+      - primary_entity_id: R_3362_CH06_6_4_3
+        must_contain: [W_fk, rho_te]
+  - id: CODE_DEFLECTION_LIMIT_GAP
+    design_stage: verification
+    query: 受弯构件使用阶段挠度限值
+    standard_codes: [JTG 3362-2018]
+    library_types: [rule, formula, table]
+    expected_status: no_valid_evidence
+    required_evidence: []

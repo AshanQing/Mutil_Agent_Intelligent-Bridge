@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "END-DIAPHRAGM": {
+      "topology": "solid_diaphragm_with_manhole",
+      "height": "H_end",
+      "manhole": {
+        "width": "B_hole_end",
+        "height": "H_hole_end",
+        "chamfer": "ch_hole_end",
+        "bottom_offset": "Z_hole_end"
+      }
+    },
+    "CONSTANT-SECTION": {
+      "topology": "box_girder",
+      "height": "H_end",
+      "top_thickness": "t_t_std",
+      "bottom_thickness": "t_b_std",
+      "web_thickness": "t_w_std",
+      "box_haunch": {
+        "top": "ch_haunch_top",
+        "bottom": "ch_haunch_bottom"
+      }
+    },
+    "MID-DIAPHRAGM": {
+      "topology": "solid_diaphragm_with_manhole",
+      "height": "H_pier",
+      "manhole": {
+        "width": "B_hole_0",
+        "height": "H_hole_0",
+        "chamfer": "ch_hole_0",
+        "bottom_offset": "Z_hole_0"
+      }
+    },
+    "PIER-SECTION": {
+      "topology": "box_girder",
+      "height": "H_pier",
+      "top_thickness": "t_t_box_0",
+      "bottom_thickness": "t_b_box_0",
+      "web_thickness": "t_w_box_0",
+      "box_haunch": {
+        "top": "ch_t_box_0_xs",
+        "bottom": "ch_b_box_0_xs"
+      }
+    }
+  }
+}

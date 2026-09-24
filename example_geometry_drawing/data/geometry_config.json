@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+
+  "_comment": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+  "_comment_": "修改此文件即可自定义图层、线型、配色、坐标等所有绘图参数。",
+  "_comment_": "删除此文件后程序将使用内置默认值（与当前行为完全一致）。",
+  "_comment_": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+
+  "layers": {
+    "XS-OUTLINE":    { "linetype": "Continuous",  "color": "#f41212", "lineweight": "0.5", "description": "横断面外轮廓" },
+    "XS-VOID":       { "linetype": "Continuous",      "color": "#f41212", "lineweight": "0.35", "description": "横断面箱室孔洞" },
+    "XS-MANHOLE":    { "linetype": "Continuous",      "color": "#f41212", "lineweight": "0.35", "description": "横断面人洞" },
+    "XS-MANHOLE-REF":{ "linetype": "Continuous",      "color": "#f41212", "lineweight": "0.35", "description": "横断面人洞参考线" },
+    "XS-CONCRETE":   { "linetype": "Continuous",  "color": "#f41212", "lineweight": "0.25", "description": "横断面混凝土面域" },
+    "EL-OUTLINE":    { "linetype": "Continuous",  "color": "#f41212", "lineweight": "0.50", "description": "立面外轮廓" },
+    "EL-VOID":       { "linetype": "Continuous",      "color": "#f41212", "lineweight": "0.35", "description": "立面箱室及人洞空腔" },
+    "EL-CUT":        { "linetype": "Dashed",      "color": "#f41212", "lineweight": "0.30", "description": "立面截断线" },
+    "EL-CONCRETE":   { "linetype": "Continuous",  "color": "#f41212", "lineweight": "0.25", "description": "立面混凝土面域" },
+    "PL-OUTLINE":    { "linetype": "Continuous",  "color": "#f41212", "lineweight": "0.50", "description": "平面外轮廓" },
+    "PL-VOID":       { "linetype": "Continuous",      "color": "#f41212", "lineweight": "0.35", "description": "平面箱室空腔" },
+    "PL-CUT":        { "linetype": "Dashed",      "color": "#f41212", "lineweight": "0.30", "description": "平面截断线" },
+    "PL-CONCRETE":   { "linetype": "Continuous",  "color": "#f41212", "lineweight": "0.25", "description": "平面混凝土面域" }
+  },
+
+  "cad": {
+    "layout_gap_mm": 10000,
+    "layout_origin_x": 0.0,
+    "layout_origin_y": 0.0,
+    "combined_view_name": "cad_layout",
+    "combined_section_id": "COMPLETE-GIRDER-LAYOUT",
+    "format_precision": ".12g",
+    "fallback_layer": "0",
+    "default_linetype": "BYLAYER",
+    "output_linetype_commands": true
+  },
+
+  "reader": {
+    "sheets": {
+      "纵向参数":   { "section": "longitudinal", "symbol_column": "E", "value_column": "G" },
+      "横断面参数": { "section": "cross_section", "symbol_column": "E", "value_column": "G" }
+    },
+    "global_sheet": { "sheet_name": "增补全局参数-主要的QA(Q PART)", "symbol_column": "C", "value_column": "D" }
+  }
+}

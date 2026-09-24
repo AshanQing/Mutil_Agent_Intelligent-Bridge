@@ -1,0 +1,1603 @@
+metadata:
+  library_name: JTG_B01_2014_rule_registry
+  standard: JTG B01-2014
+  standard_code: JTG B01-2014
+  rule_schema: compact_rule_registry
+  file_version: v0.1
+  standard_name: 公路工程技术标准
+  library_type: rule_registry
+  item_count: 56
+  version: reasonableness_fixed_v0.1
+  generation_note: 根据 library_reasonableness_review.md 修正：补充 formula_status、显式化规则调用表格/公式ID、标记人工复核规则、修正表9.1.5查表口径、标注变量误报风险。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+rules:
+- id: R_B01_1_0_2_SCOPE
+  meta:
+    title: 标准适用范围
+    source: JTG B01-2014, 1.0.2
+    clause: 1.0.2
+    chapter: 第1章 总则
+    rule_type: definition
+    applicability: 新建和改扩建公路
+  condition:
+    description: project_type in [新建, 改扩建]
+    logic: project_type in [新建, 改扩建]
+  requirement:
+    description: 本标准适用于新建和改扩建公路
+    expression: 本标准适用于新建和改扩建公路
+  action:
+    check_type: direct_check
+    execution_logic: 检查项目类型是否属于新建或改扩建公路
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_project_type
+- id: R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+  meta:
+    title: 公路功能与技术等级选用
+    source: JTG B01-2014, 1.0.3
+    clause: 1.0.3
+    chapter: 第1章 总则
+    rule_type: mandatory
+    applicability: 公路建设项目
+  condition:
+    description: 需要确定公路功能、技术等级和主要技术指标
+    logic: 需要确定公路功能、技术等级和主要技术指标
+  requirement:
+    description: 应根据地区特点、交通特性、路网结构综合分析确定公路功能，并结合交通量、地形条件选用技术等级和主要技术指标
+    expression: 应根据地区特点、交通特性、路网结构综合分析确定公路功能，并结合交通量、地形条件选用技术等级和主要技术指标
+  action:
+    check_type: manual_review
+    execution_logic: 结合规则库、表格库和项目资料进行综合判断
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_function
+    - VAR_AADT
+    - VAR_terrain_condition
+- id: R_B01_1_0_5_LAND_USE_SCOPE
+  meta:
+    title: 公路用地范围
+    source: JTG B01-2014, 1.0.5
+    clause: 1.0.5
+    chapter: 第1章 总则
+    rule_type: check
+    applicability: 公路用地范围确定
+  condition:
+    description: 确定路堤、路堑及特殊设施用地范围
+    logic: 确定路堤、路堑及特殊设施用地范围
+  requirement:
+    description: 用地范围应满足排水沟外边缘、坡脚或坡顶外不小于1m；有条件时高速/一级不小于3m、二级不小于2m
+    expression: 用地范围应满足排水沟外边缘、坡脚或坡顶外不小于1m；有条件时高速/一级不小于3m、二级不小于2m
+  action:
+    check_type: hybrid
+    execution_logic: 检查用地控制宽度是否满足最低要求
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_land_width
+- id: R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+  meta:
+    title: 公路改扩建方案要求
+    source: JTG B01-2014, 1.0.8
+    clause: 1.0.8
+    chapter: 第1章 总则
+    rule_type: check
+    applicability: 公路改扩建项目
+  condition:
+    description: project_type == 改扩建
+    logic: project_type == 改扩建
+  requirement:
+    description: 应对改扩建方案和新建方案进行论证比选，并按服务水平、设计速度、保通设计等要求执行
+    expression: 应对改扩建方案和新建方案进行论证比选，并按服务水平、设计速度、保通设计等要求执行
+  action:
+    check_type: manual_review
+    execution_logic: 检查是否完成方案比选、交通组织、保通设计和设计速度控制
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_project_type
+    - VAR_service_level
+    - VAR_B01_v
+- id: R_B01_3_1_1_HIGHWAY_CLASSIFICATION
+  meta:
+    title: 公路技术等级分类
+    source: JTG B01-2014, 3.1.1
+    clause: 3.1.1
+    chapter: 第3章 基本规定
+    rule_type: classification
+    applicability: 公路技术等级划分
+  condition:
+    description: 需要确定公路等级
+    logic: 需要确定公路等级
+  requirement:
+    description: 公路分为高速公路、一级公路、二级公路、三级公路及四级公路五个技术等级
+    expression: 公路分为高速公路、一级公路、二级公路、三级公路及四级公路五个技术等级
+  action:
+    check_type: direct_check
+    execution_logic: 根据公路功能、交通量和通行特征分类
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_AADT
+- id: R_B01_3_1_2_TECHNICAL_GRADE_SELECTION
+  meta:
+    title: 公路技术等级选用原则
+    source: JTG B01-2014, 3.1.2
+    clause: 3.1.2
+    chapter: 第3章 基本规定
+    rule_type: recommended
+    applicability: 公路技术等级选用
+  condition:
+    description: 需要根据功能确定等级
+    logic: 需要根据功能确定等级
+  requirement:
+    description: 主要干线宜选高速公路；次要干线宜选二级及以上；主要集散宜选一、二级；次要集散宜选二、三级；支线宜选三、四级
+    expression: 主要干线宜选高速公路；次要干线宜选二级及以上；主要集散宜选一、二级；次要集散宜选二、三级；支线宜选三、四级
+  action:
+    check_type: hybrid
+    execution_logic: 根据公路功能输出推荐技术等级
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_function
+    - VAR_highway_class
+- id: R_B01_3_2_1_DESIGN_VEHICLE
+  meta:
+    title: 设计车辆外廓尺寸
+    source: JTG B01-2014, 3.2.1
+    clause: 3.2.1
+    chapter: 第3章 基本规定
+    rule_type: table_lookup
+    applicability: 公路几何设计
+    related_refs:
+      tables:
+      - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+  condition:
+    description: 需要确定设计车辆外廓尺寸
+    logic: 需要确定设计车辆外廓尺寸
+  requirement:
+    description: 设计车辆外廓尺寸应按表3.2.1取值
+    expression: 设计车辆外廓尺寸应按表3.2.1取值
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+    formulas: []
+    variables:
+    - VAR_vehicle_type
+    - VAR_vehicle_length
+    - VAR_vehicle_width
+    - VAR_vehicle_height
+- id: R_B01_3_3_1_TRAFFIC_FORECAST_PERIOD
+  meta:
+    title: 设计交通量预测年限
+    source: JTG B01-2014, 3.3.1
+    clause: 3.3.1
+    chapter: 第3章 基本规定
+    rule_type: check
+    applicability: 新建和改扩建公路交通量预测
+  condition:
+    description: 需要确定设计交通量预测年限
+    logic: 需要确定设计交通量预测年限
+  requirement:
+    description: 高速公路和一级公路预测年限为20年；二、三级为15年；四级按实际情况确定
+    expression: 高速公路和一级公路预测年限为20年；二、三级为15年；四级按实际情况确定
+  action:
+    check_type: direct_check
+    execution_logic: 检查交通量预测年限是否符合公路等级要求
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_highway_class
+    - VAR_forecast_period
+- id: R_B01_3_3_2_TRAFFIC_CONVERSION
+  meta:
+    title: 车辆折算系数
+    source: JTG B01-2014, 3.3.2
+    clause: 3.3.2
+    chapter: 第3章 基本规定
+    rule_type: table_lookup
+    applicability: 交通量换算
+    related_refs:
+      tables:
+      - T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+  condition:
+    description: 需要将不同车型换算为小客车
+    logic: 需要将不同车型换算为小客车
+  requirement:
+    description: 交通量换算采用小客车为标准车型，代表车型折算系数按表3.3.2取值
+    expression: 交通量换算采用小客车为标准车型，代表车型折算系数按表3.3.2取值
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+    formulas: []
+    variables:
+    - VAR_vehicle_class
+    - VAR_conversion_factor
+- id: R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  meta:
+    title: 设计服务水平
+    source: JTG B01-2014, 3.4.2
+    clause: 3.4.2
+    chapter: 第3章 基本规定
+    rule_type: table_lookup
+    applicability: 公路服务水平设计
+    related_refs:
+      tables:
+      - T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  condition:
+    description: 需要确定最低设计服务水平
+    logic: 需要确定最低设计服务水平
+  requirement:
+    description: 各级公路设计服务水平应不低于表3.4.2规定
+    expression: 各级公路设计服务水平应不低于表3.4.2规定
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+    formulas: []
+    variables:
+    - VAR_service_level
+    - VAR_highway_class
+    - VAR_design_service_level
+- id: R_B01_3_5_1_DESIGN_SPEED
+  meta:
+    title: 设计速度
+    source: JTG B01-2014, 3.5.1
+    clause: 3.5.1
+    chapter: 第3章 基本规定
+    rule_type: table_lookup
+    applicability: 路线及总体设计
+    related_refs:
+      tables:
+      - T_B01_3_5_1_DESIGN_SPEED
+  condition:
+    description: 需要确定设计速度
+    logic: 需要确定设计速度
+  requirement:
+    description: 各级公路设计速度应符合表3.5.1规定，并根据功能、等级、地形和运行速度综合确定
+    expression: 各级公路设计速度应符合表3.5.1规定，并根据功能、等级、地形和运行速度综合确定
+  action:
+    check_type: hybrid
+    execution_logic: 调用 T_B01_3_5_1_DESIGN_SPEED
+    original_check_type: table_lookup
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_5_1_DESIGN_SPEED
+    formulas: []
+    variables:
+    - VAR_B01_v
+    - VAR_highway_class
+- id: R_B01_3_5_2_OPERATING_SPEED_CHECK
+  meta:
+    title: 运行速度协调检验
+    source: JTG B01-2014, 3.5.2
+    clause: 3.5.2
+    chapter: 第3章 基本规定
+    rule_type: check
+    applicability: 公路线形设计
+  condition:
+    description: 需要进行运行速度检验
+    logic: 需要进行运行速度检验
+  requirement:
+    description: 相邻路段运行速度之差应小于20km/h，同一路段运行速度与设计速度之差宜小于20km/h
+    expression: 相邻路段运行速度之差应小于20km/h，同一路段运行速度与设计速度之差宜小于20km/h
+  action:
+    check_type: hybrid
+    execution_logic: 计算速度差并判断是否满足限值
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_v_operating
+    - VAR_B01_v
+- id: R_B01_3_6_1_CLEARANCE
+  meta:
+    title: 建筑限界与净高
+    source: JTG B01-2014, 3.6.1
+    clause: 3.6.1
+    chapter: 第3章 基本规定
+    rule_type: check
+    applicability: 公路、桥梁、隧道建筑限界
+    related_refs:
+      tables:
+      - T_B01_3_6_1_CLEARANCE_HEIGHT
+  condition:
+    description: 需要检查建筑限界或净高
+    logic: 需要检查建筑限界或净高
+  requirement:
+    description: 建筑限界应符合图3.6.1；高速、一级、二级净高5.00m，三、四级净高4.50m，人行/自行车/检修道净高2.50m
+    expression: 建筑限界应符合图3.6.1；高速、一级、二级净高5.00m，三、四级净高4.50m，人行/自行车/检修道净高2.50m
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_3_6_1_CLEARANCE_HEIGHT 并检查设施不得侵入建筑限界
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_6_1_CLEARANCE_HEIGHT
+    formulas: []
+    variables:
+    - VAR_H_clearance
+    - VAR_facility_type
+- id: R_B01_3_7_1_SEISMIC_DESIGN
+  meta:
+    title: 抗震设计要求
+    source: JTG B01-2014, 3.7.1
+    clause: 3.7.1
+    chapter: 第3章 基本规定
+    rule_type: check
+    applicability: 公路工程抗震设计
+  condition:
+    description: 需要根据地震动峰值加速度确定抗震措施
+    logic: 需要根据地震动峰值加速度确定抗震措施
+  requirement:
+    description: a≤0.05可简易设防；0.05<a<0.40应抗震设计；a≥0.40应专门抗震研究和设计
+    expression: a≤0.05可简易设防；0.05<a<0.40应抗震设计；a≥0.40应专门抗震研究和设计
+  action:
+    check_type: hybrid
+    execution_logic: 根据地震动峰值加速度输出抗震设计等级
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_seismic_peak_acceleration
+- id: R_B01_4_0_2_LANE_WIDTH
+  meta:
+    title: 车道宽度
+    source: JTG B01-2014, 4.0.2
+    clause: 4.0.2
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 路线横断面设计
+    related_refs:
+      tables:
+      - T_B01_4_0_2_LANE_WIDTH
+  condition:
+    description: 需要确定车道宽度
+    logic: 需要确定车道宽度
+  requirement:
+    description: 车道宽度应符合表4.0.2规定
+    expression: 车道宽度应符合表4.0.2规定
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_4_0_2_LANE_WIDTH
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_2_LANE_WIDTH
+    formulas: []
+    variables:
+    - VAR_lane_width
+    - VAR_B01_v
+- id: R_B01_4_0_3_LANE_COUNT
+  meta:
+    title: 车道数
+    source: JTG B01-2014, 4.0.3
+    clause: 4.0.3
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 路线横断面设计
+    related_refs:
+      tables:
+      - T_B01_4_0_3_LANE_COUNT
+  condition:
+    description: 需要确定车道数
+    logic: 需要确定车道数
+  requirement:
+    description: 各级公路车道数应符合表4.0.3，高速和一级车道数按设计交通量和通行能力确定且双车道以上按双数增加
+    expression: 各级公路车道数应符合表4.0.3，高速和一级车道数按设计交通量和通行能力确定且双车道以上按双数增加
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_4_0_3_LANE_COUNT
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_3_LANE_COUNT
+    formulas: []
+    variables:
+    - VAR_B01_lane_count
+    - VAR_AADT
+    - VAR_highway_class
+- id: R_B01_4_0_4_MEDIAN
+  meta:
+    title: 中间带设置
+    source: JTG B01-2014, 4.0.4
+    clause: 4.0.4
+    chapter: 第4章 路线
+    rule_type: check
+    applicability: 高速公路和一级公路整体式断面
+    related_refs:
+      tables:
+      - T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+  condition:
+    description: 整体式断面
+    logic: 整体式断面
+  requirement:
+    description: 必须设置中间带，左侧路缘带宽度不应小于表4.0.4
+    expression: 必须设置中间带，左侧路缘带宽度不应小于表4.0.4
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH 并检查中间带设置
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+    formulas: []
+    variables:
+    - VAR_left_edge_strip_width
+    - VAR_B01_v
+- id: R_B01_4_0_5_SHOULDER_WIDTH
+  meta:
+    title: 路肩宽度
+    source: JTG B01-2014, 4.0.5
+    clause: 4.0.5
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 路肩设计
+    related_refs:
+      tables:
+      - T_B01_4_0_5_1_SHOULDER_WIDTH
+      - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+  condition:
+    description: 需要确定路肩宽度
+    logic: 需要确定路肩宽度
+  requirement:
+    description: 路肩宽度应符合表4.0.5-1和表4.0.5-2
+    expression: 路肩宽度应符合表4.0.5-1和表4.0.5-2
+  action:
+    check_type: table_lookup
+    execution_logic: 调用路肩宽度表并检查最小值；查表调用 T_B01_4_0_5_1_SHOULDER_WIDTH；查表调用 T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_5_1_SHOULDER_WIDTH
+    - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+    formulas: []
+    variables:
+    - VAR_shoulder_width
+    - VAR_highway_class
+    - VAR_B01_v
+    - VAR_left_hard_shoulder_width
+- id: R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+  meta:
+    title: 紧急停车带设置
+    source: JTG B01-2014, 4.0.6
+    clause: 4.0.6
+    chapter: 第4章 路线
+    rule_type: check
+    applicability: 高速公路和作为干线的一级公路
+  condition:
+    description: 右侧硬路肩宽度小于2.50m
+    logic: 右侧硬路肩宽度小于2.50m
+  requirement:
+    description: 应设置紧急停车带，宽度3.50m，有效长度不小于40m，间距不宜大于500m
+    expression: 应设置紧急停车带，宽度3.50m，有效长度不小于40m，间距不宜大于500m
+  action:
+    check_type: hybrid
+    execution_logic: 检查右侧硬路肩宽度及紧急停车带参数
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_right_hard_shoulder_width
+    - VAR_emergency_stop_width
+    - VAR_emergency_stop_length
+    - VAR_emergency_stop_spacing
+- id: R_B01_4_0_8_CLIMBING_LANE
+  meta:
+    title: 爬坡车道设置
+    source: JTG B01-2014, 4.0.8
+    clause: 4.0.8
+    chapter: 第4章 路线
+    rule_type: check
+    applicability: 连续上坡路段
+  condition:
+    description: 通行能力、运行安全受到影响
+    logic: 通行能力、运行安全受到影响
+  requirement:
+    description: 高速、一级、二级公路连续上坡受影响时应设置爬坡车道，宽度不应小于3.50m
+    expression: 高速、一级、二级公路连续上坡受影响时应设置爬坡车道，宽度不应小于3.50m
+  action:
+    check_type: direct_check
+    execution_logic: 结合通行能力和运行安全判断是否设置，并检查宽度
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_climbing_lane_width
+- id: R_B01_4_0_12_PASSING_BAY
+  meta:
+    title: 四级单车道错车道
+    source: JTG B01-2014, 4.0.12
+    clause: 4.0.12
+    chapter: 第4章 路线
+    rule_type: check
+    applicability: 四级公路采用单车道
+  condition:
+    description: highway_class==四级公路 and lane_count==1
+    logic: highway_class==四级公路 and lane_count==1
+  requirement:
+    description: 应设置错车道，设置错车道路段路基宽度不应小于双车道路基宽度
+    expression: 应设置错车道，设置错车道路段路基宽度不应小于双车道路基宽度
+  action:
+    check_type: direct_check
+    execution_logic: 检查错车道设置和路基宽度
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_B01_lane_count
+    - VAR_subgrade_width
+- id: R_B01_4_0_14_SUBGRADE_WIDTH
+  meta:
+    title: 路基宽度组成
+    source: JTG B01-2014, 4.0.14
+    clause: 4.0.14
+    chapter: 第4章 路线
+    rule_type: check
+    applicability: 路基横断面设计
+  condition:
+    description: 需要计算路基宽度
+    logic: 需要计算路基宽度
+  requirement:
+    description: 路基宽度为车道宽度与路肩宽度之和，设有其他功能带时应计入相应宽度
+    expression: 路基宽度为车道宽度与路肩宽度之和，设有其他功能带时应计入相应宽度
+  action:
+    check_type: manual_review
+    execution_logic: 按横断面组成汇总宽度并检查是否包含全部组成部分
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_subgrade_width
+    - VAR_lane_width
+    - VAR_shoulder_width
+- id: R_B01_4_0_15_SIGHT_DISTANCE
+  meta:
+    title: 视距要求
+    source: JTG B01-2014, 4.0.15
+    clause: 4.0.15
+    chapter: 第4章 路线
+    rule_type: check
+    applicability: 视距检验
+    related_refs:
+      formulas:
+      - F_B01_L5_SIGHT_DISTANCE_CHECK
+      tables:
+      - T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+      - T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+  condition:
+    description: 需要检查停车、会车、超车或识别视距
+    logic: 需要检查停车、会车、超车或识别视距
+  requirement:
+    description: 视距应不小于表4.0.15-1、表4.0.15-2及附录B规定
+    expression: 视距应不小于表4.0.15-1、表4.0.15-2及附录B规定
+  action:
+    check_type: table_lookup
+    execution_logic: 查表得到要求视距并调用视距验算公式；查表调用 T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY；查表调用 T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL；公式调用
+      F_B01_L5_SIGHT_DISTANCE_CHECK。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+    - T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+    variables:
+    - VAR_D_actual
+    - VAR_D_required
+    - VAR_B01_v
+- id: R_B01_4_0_17_CURVE_RADIUS
+  meta:
+    title: 圆曲线最小半径
+    source: JTG B01-2014, 4.0.17
+    clause: 4.0.17
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 平曲线设计
+    related_refs:
+      formulas:
+      - F_B01_L1_CIRCULAR_CURVE_RADIUS
+      tables:
+      - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+  condition:
+    description: 需要确定圆曲线半径
+    logic: 需要确定圆曲线半径
+  requirement:
+    description: 圆曲线最小半径应符合表4.0.17
+    expression: 圆曲线最小半径应符合表4.0.17
+  action:
+    check_type: table_lookup
+    execution_logic: 查表确定最小半径并与实际半径比较；查表调用 T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS；公式调用 F_B01_L1_CIRCULAR_CURVE_RADIUS。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+    formulas:
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+    variables:
+    - VAR_R_curve
+    - VAR_R_curve_min
+    - VAR_B01_v
+- id: R_B01_4_0_20_MAX_GRADE
+  meta:
+    title: 最大纵坡
+    source: JTG B01-2014, 4.0.20
+    clause: 4.0.20
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 纵断面设计
+    related_refs:
+      tables:
+      - T_B01_4_0_20_MAX_GRADE
+  condition:
+    description: 需要确定最大纵坡
+    logic: 需要确定最大纵坡
+  requirement:
+    description: 最大纵坡应符合表4.0.20
+    expression: 最大纵坡应符合表4.0.20
+  action:
+    check_type: table_lookup
+    execution_logic: 查表确定最大纵坡并进行限值检查；查表调用 T_B01_4_0_20_MAX_GRADE。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_20_MAX_GRADE
+    formulas: []
+    variables:
+    - VAR_i_grade
+    - VAR_i_grade_max
+    - VAR_B01_v
+- id: R_B01_4_0_21_MAX_GRADE_LENGTH
+  meta:
+    title: 不同纵坡最大坡长
+    source: JTG B01-2014, 4.0.21
+    clause: 4.0.21
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 纵断面设计
+    related_refs:
+      tables:
+      - T_B01_4_0_21_MAX_GRADE_LENGTH
+  condition:
+    description: 存在不同纵坡坡段
+    logic: 存在不同纵坡坡段
+  requirement:
+    description: 不同纵坡的最大坡长应符合表4.0.21
+    expression: 不同纵坡的最大坡长应符合表4.0.21
+  action:
+    check_type: table_lookup
+    execution_logic: 查表确定最大坡长并与实际坡长比较；查表调用 T_B01_4_0_21_MAX_GRADE_LENGTH。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_21_MAX_GRADE_LENGTH
+    formulas: []
+    variables:
+    - VAR_i_grade
+    - VAR_L_grade
+    - VAR_L_grade_max
+    - VAR_B01_v
+- id: R_B01_4_0_22_VERTICAL_CURVE
+  meta:
+    title: 竖曲线设置与指标
+    source: JTG B01-2014, 4.0.22
+    clause: 4.0.22
+    chapter: 第4章 路线
+    rule_type: table_lookup
+    applicability: 纵坡变更处
+    related_refs:
+      tables:
+      - T_B01_4_0_22_VERTICAL_CURVE
+  condition:
+    description: 存在纵坡变更
+    logic: 存在纵坡变更
+  requirement:
+    description: 应设置竖曲线，竖曲线最小半径和最小长度不应小于表4.0.22规定值
+    expression: 应设置竖曲线，竖曲线最小半径和最小长度不应小于表4.0.22规定值
+  action:
+    check_type: table_lookup
+    execution_logic: 查表并检查竖曲线半径、长度；查表调用 T_B01_4_0_22_VERTICAL_CURVE。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_22_VERTICAL_CURVE
+    formulas: []
+    variables:
+    - VAR_R_vertical
+    - VAR_R_vertical_min
+    - VAR_L_vertical
+    - VAR_L_vertical_min
+    - VAR_B01_v
+- id: R_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  meta:
+    title: 路基设计洪水频率
+    source: JTG B01-2014, 5.0.2
+    clause: 5.0.2
+    chapter: 第5章 路基路面
+    rule_type: table_lookup
+    applicability: 路基设计
+    related_refs:
+      tables:
+      - T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  condition:
+    description: 需要确定路基设计洪水频率
+    logic: 需要确定路基设计洪水频率
+  requirement:
+    description: 路基设计洪水频率应符合表5.0.2
+    expression: 路基设计洪水频率应符合表5.0.2
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+    formulas: []
+    variables:
+    - VAR_design_flood_frequency
+    - VAR_highway_class
+- id: R_B01_5_0_4_SUBGRADE_COMPACTION
+  meta:
+    title: 路基压实度
+    source: JTG B01-2014, 5.0.4
+    clause: 5.0.4
+    chapter: 第5章 路基路面
+    rule_type: table_lookup
+    applicability: 路基设计与施工控制
+    related_refs:
+      tables:
+      - T_B01_5_0_4_SUBGRADE_COMPACTION
+  condition:
+    description: 需要确定压实度指标
+    logic: 需要确定压实度指标
+  requirement:
+    description: 路基压实度应符合表5.0.4
+    expression: 路基压实度应符合表5.0.4
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_5_0_4_SUBGRADE_COMPACTION
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_5_0_4_SUBGRADE_COMPACTION
+    formulas: []
+    variables:
+    - VAR_compaction_degree
+- id: R_B01_5_0_6_PAVEMENT_STANDARD_AXLE_LOAD
+  meta:
+    title: 路面结构设计标准轴载
+    source: JTG B01-2014, 5.0.6
+    clause: 5.0.6
+    chapter: 第5章 路基路面
+    rule_type: check
+    applicability: 路面结构设计
+  condition:
+    description: 需要确定标准轴载
+    logic: 需要确定标准轴载
+  requirement:
+    description: 路面结构设计标准轴载为双轮组单轴100kN，轮胎压力0.7MPa
+    expression: 路面结构设计标准轴载为双轮组单轴100kN，轮胎压力0.7MPa
+  action:
+    check_type: direct_check
+    execution_logic: 检查标准轴载和轮胎压力取值
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_standard_axle_load
+    - VAR_tire_pressure
+- id: R_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+  meta:
+    title: 路面结构设计使用年限
+    source: JTG B01-2014, 5.0.8
+    clause: 5.0.8
+    chapter: 第5章 路基路面
+    rule_type: table_lookup
+    applicability: 路面结构设计
+    related_refs:
+      tables:
+      - T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+  condition:
+    description: 需要确定设计使用年限
+    logic: 需要确定设计使用年限
+  requirement:
+    description: 公路路面结构设计使用年限应不小于表5.0.8规定
+    expression: 公路路面结构设计使用年限应不小于表5.0.8规定
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+    formulas: []
+    variables:
+    - VAR_design_life
+- id: R_B01_6_0_2_BRIDGE_CLASSIFICATION
+  meta:
+    title: 桥涵分类
+    source: JTG B01-2014, 6.0.2
+    clause: 6.0.2
+    chapter: 第6章 桥涵
+    rule_type: classification
+    applicability: 桥涵分类
+    related_refs:
+      tables:
+      - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+  condition:
+    description: 需要根据跨径或长度分类
+    logic: 需要根据跨径或长度分类
+  requirement:
+    description: 桥涵分类应按表6.0.2确定
+    expression: 桥涵分类应按表6.0.2确定
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+    formulas: []
+    variables:
+    - VAR_bridge_class
+    - VAR_bridge_total_length
+    - VAR_single_span_length
+- id: R_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  meta:
+    title: 桥涵设计洪水频率
+    source: JTG B01-2014, 6.0.5
+    clause: 6.0.5
+    chapter: 第6章 桥涵
+    rule_type: table_lookup
+    applicability: 桥涵水文设计
+    related_refs:
+      tables:
+      - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  condition:
+    description: 需要确定桥涵设计洪水频率
+    logic: 需要确定桥涵设计洪水频率
+  requirement:
+    description: 桥涵设计洪水频率应符合表6.0.5
+    expression: 桥涵设计洪水频率应符合表6.0.5
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+    formulas: []
+    variables:
+    - VAR_design_flood_frequency
+    - VAR_highway_class
+    - VAR_bridge_class
+- id: R_B01_6_0_6_BRIDGE_CLEARANCE
+  meta:
+    title: 桥面净空
+    source: JTG B01-2014, 6.0.6
+    clause: 6.0.6
+    chapter: 第6章 桥涵
+    rule_type: check
+    applicability: 桥梁桥面净空设计
+  condition:
+    description: 需要检查桥面净空
+    logic: 需要检查桥面净空
+  requirement:
+    description: 桥面净空应符合第3.6.1条建筑限界，管线、安全设施及标志不得侵入建筑限界
+    expression: 桥面净空应符合第3.6.1条建筑限界，管线、安全设施及标志不得侵入建筑限界
+  action:
+    check_type: direct_check
+    execution_logic: 调用建筑限界规则并检查侵限情况
+  related_refs:
+    rules:
+    - R_B01_3_6_1_CLEARANCE
+    tables: []
+    formulas: []
+    variables:
+    - VAR_H_clearance
+- id: R_B01_6_0_8_BRIDGE_APPROACH_ALIGNMENT
+  meta:
+    title: 桥梁及引道平纵横指标
+    source: JTG B01-2014, 6.0.8
+    clause: 6.0.8
+    chapter: 第6章 桥涵
+    rule_type: check
+    applicability: 桥梁及桥头引道设计
+  condition:
+    description: 桥梁及引道平纵横指标确定
+    logic: 桥梁及引道平纵横指标确定
+  requirement:
+    description: 桥上纵坡不宜大于4%，桥头引道纵坡不宜大于5%；城镇混合交通繁忙处均不得大于3%
+    expression: 桥上纵坡不宜大于4%，桥头引道纵坡不宜大于5%；城镇混合交通繁忙处均不得大于3%
+  action:
+    check_type: hybrid
+    execution_logic: 检查桥上和桥头引道纵坡
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_bridge_grade
+    - VAR_approach_grade
+- id: R_B01_6_0_11_BRIDGE_DESIGN_LIFE
+  meta:
+    title: 桥涵设计使用年限
+    source: JTG B01-2014, 6.0.11
+    clause: 6.0.11
+    chapter: 第6章 桥涵
+    rule_type: table_lookup
+    applicability: 桥涵耐久性设计
+    related_refs:
+      tables:
+      - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+  condition:
+    description: 需要确定主体结构或可更换部件设计使用年限
+    logic: 需要确定主体结构或可更换部件设计使用年限
+  requirement:
+    description: 桥涵主体结构和可更换部件设计使用年限应符合表6.0.11
+    expression: 桥涵主体结构和可更换部件设计使用年限应符合表6.0.11
+  action:
+    check_type: hybrid
+    execution_logic: 调用 T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    original_check_type: table_lookup
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    formulas: []
+    variables:
+    - VAR_design_life
+- id: R_B01_7_0_2_VEHICLE_LOAD_GRADE
+  meta:
+    title: 汽车荷载等级
+    source: JTG B01-2014, 7.0.2
+    clause: 7.0.2
+    chapter: 第7章 汽车及人群荷载
+    rule_type: table_lookup
+    applicability: 桥涵设计汽车荷载
+    related_refs:
+      tables:
+      - T_B01_7_0_2_VEHICLE_LOAD_GRADE
+  condition:
+    description: 需要确定汽车荷载等级
+    logic: 需要确定汽车荷载等级
+  requirement:
+    description: 各级公路桥涵设计的汽车荷载等级应符合表7.0.2
+    expression: 各级公路桥涵设计的汽车荷载等级应符合表7.0.2
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_7_0_2_VEHICLE_LOAD_GRADE
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_2_VEHICLE_LOAD_GRADE
+    formulas: []
+    variables:
+    - VAR_vehicle_load_grade
+    - VAR_highway_class
+- id: R_B01_7_0_3_LANE_LOAD
+  meta:
+    title: 车道荷载标准值
+    source: JTG B01-2014, 7.0.3
+    clause: 7.0.3
+    chapter: 第7章 汽车及人群荷载
+    rule_type: calculation
+    applicability: 桥梁整体分析计算
+    related_refs:
+      formulas:
+      - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+      - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+      - F_B01_L2_LANE_LOAD_SHEAR_PK
+  condition:
+    description: 采用车道荷载
+    logic: 采用车道荷载
+  requirement:
+    description: 公路-I级均布荷载标准值qk=10.5kN/m，Pk按跨径取值；公路-II级按0.75倍取值；剪力效应Pk乘1.2
+    expression: 公路-I级均布荷载标准值qk=10.5kN/m，Pk按跨径取值；公路-II级按0.75倍取值；剪力效应Pk乘1.2
+  action:
+    check_type: formula_calculation
+    execution_logic: 按跨径调用集中荷载插值和折减公式；公式调用 F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION；公式调用 F_B01_L1_HIGHWAY_II_LOAD_FACTOR；公式调用
+      F_B01_L2_LANE_LOAD_SHEAR_PK。
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+    - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+    - F_B01_L2_LANE_LOAD_SHEAR_PK
+    variables:
+    - VAR_q_k
+    - VAR_B01_P_k
+    - VAR_B01_L_0
+- id: R_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+  meta:
+    title: 车辆荷载主要技术指标
+    source: JTG B01-2014, 7.0.4
+    clause: 7.0.4
+    chapter: 第7章 汽车及人群荷载
+    rule_type: table_lookup
+    applicability: 桥梁局部分析、涵洞、桥台、挡土墙土压力分析
+    related_refs:
+      tables:
+      - T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+  condition:
+    description: 采用车辆荷载
+    logic: 采用车辆荷载
+  requirement:
+    description: 车辆荷载布置和主要技术指标应符合图7.0.4和表7.0.4
+    expression: 车辆荷载布置和主要技术指标应符合图7.0.4和表7.0.4
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+    formulas: []
+    variables:
+    - VAR_vehicle_load_value
+- id: R_B01_7_0_6_BRIDGE_DESIGN_LANE_COUNT
+  meta:
+    title: 桥涵设计车道数
+    source: JTG B01-2014, 7.0.6
+    clause: 7.0.6
+    chapter: 第7章 汽车及人群荷载
+    rule_type: table_lookup
+    applicability: 桥涵汽车荷载横向布置
+    related_refs:
+      tables:
+      - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+  condition:
+    description: 需要确定设计车道数
+    logic: 需要确定设计车道数
+  requirement:
+    description: 桥涵设计车道数应符合表7.0.6-1
+    expression: 桥涵设计车道数应符合表7.0.6-1
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+    formulas: []
+    variables:
+    - VAR_bridge_width
+    - VAR_bridge_design_lane_count
+- id: R_B01_7_0_6_TRANSVERSE_LANE_FACTOR
+  meta:
+    title: 横向车道布载系数
+    source: JTG B01-2014, 7.0.6
+    clause: 7.0.6
+    chapter: 第7章 汽车及人群荷载
+    rule_type: table_lookup
+    applicability: 横桥向布置多车道汽车荷载
+    related_refs:
+      formulas:
+      - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+      tables:
+      - T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+  condition:
+    description: 需要考虑横向车道折减或单车道提高
+    logic: 需要考虑横向车道折减或单车道提高
+  requirement:
+    description: 横向车道布载系数应符合表7.0.6-2，多车道效应不得小于两车道或一车道效应
+    expression: 横向车道布载系数应符合表7.0.6-2，多车道效应不得小于两车道或一车道效应
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR 并进行效应包络；公式调用 F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+    formulas:
+    - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+    variables:
+    - VAR_eta_n
+    - VAR_loaded_lane_count
+- id: R_B01_7_0_7_LONGITUDINAL_REDUCTION
+  meta:
+    title: 大跨径桥梁纵向折减
+    source: JTG B01-2014, 7.0.7
+    clause: 7.0.7
+    chapter: 第7章 汽车及人群荷载
+    rule_type: table_lookup
+    applicability: 桥梁计算跨径大于150m
+    related_refs:
+      formulas:
+      - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+      tables:
+      - T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+  condition:
+    description: L_0 > 150
+    logic: L_0 > 150
+  requirement:
+    description: 应按表7.0.7规定的纵向折减系数进行折减
+    expression: 应按表7.0.7规定的纵向折减系数进行折减
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR；公式调用 F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+    formulas:
+    - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+    variables:
+    - VAR_eta_L
+    - VAR_B01_L_0
+- id: R_B01_7_0_8_PEDESTRIAN_LOAD
+  meta:
+    title: 人群荷载
+    source: JTG B01-2014, 7.0.8
+    clause: 7.0.8
+    chapter: 第7章 汽车及人群荷载
+    rule_type: calculation
+    applicability: 桥涵设置人行道或专用人行桥
+    related_refs:
+      formulas:
+      - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+      - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+  condition:
+    description: 需要计入人群荷载
+    logic: 需要计入人群荷载
+  requirement:
+    description: 计算跨径≤50m取3.0kN/m2，≥150m取2.5kN/m2，中间线性内插；密集路段乘1.15；专用人行桥取3.5kN/m2
+    expression: 计算跨径≤50m取3.0kN/m2，≥150m取2.5kN/m2，中间线性内插；密集路段乘1.15；专用人行桥取3.5kN/m2
+  action:
+    check_type: formula_calculation
+    execution_logic: 调用人群荷载插值和密集提高公式；公式调用 F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION；公式调用 F_B01_L1_PEDESTRIAN_DENSE_FACTOR。
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+    - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+    variables:
+    - VAR_B01_q_p
+    - VAR_B01_L_0
+- id: R_B01_8_0_2_TUNNEL_CLASSIFICATION
+  meta:
+    title: 隧道分类
+    source: JTG B01-2014, 8.0.2
+    clause: 8.0.2
+    chapter: 第8章 隧道
+    rule_type: classification
+    applicability: 隧道分类
+    related_refs:
+      tables:
+      - T_B01_8_0_2_TUNNEL_CLASSIFICATION
+  condition:
+    description: 需要根据隧道长度分类
+    logic: 需要根据隧道长度分类
+  requirement:
+    description: 隧道分类应符合表8.0.2
+    expression: 隧道分类应符合表8.0.2
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_8_0_2_TUNNEL_CLASSIFICATION
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_8_0_2_TUNNEL_CLASSIFICATION
+    formulas: []
+    variables:
+    - VAR_tunnel_length
+    - VAR_tunnel_class
+- id: R_B01_8_0_3_TUNNEL_CLEARANCE
+  meta:
+    title: 隧道净空与侧向宽度
+    source: JTG B01-2014, 8.0.3
+    clause: 8.0.3
+    chapter: 第8章 隧道
+    rule_type: table_lookup
+    applicability: 隧道横断面设计
+    related_refs:
+      tables:
+      - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+  condition:
+    description: 需要检查隧道建筑限界和侧向宽度
+    logic: 需要检查隧道建筑限界和侧向宽度
+  requirement:
+    description: 隧道净空应符合3.6.1，隧道内最小侧向宽度应符合表8.0.3
+    expression: 隧道净空应符合3.6.1，隧道内最小侧向宽度应符合表8.0.3
+  action:
+    check_type: table_lookup
+    execution_logic: 调用隧道侧向宽度表和建筑限界规则；查表调用 T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH。
+  related_refs:
+    rules:
+    - R_B01_3_6_1_CLEARANCE
+    tables:
+    - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+    formulas: []
+    variables:
+    - VAR_left_side_width
+    - VAR_right_side_width
+- id: R_B01_8_0_4_TUNNEL_PORTAL_TRANSITION
+  meta:
+    title: 隧道洞口线形与过渡段
+    source: JTG B01-2014, 8.0.4
+    clause: 8.0.4
+    chapter: 第8章 隧道
+    rule_type: calculation
+    applicability: 隧道洞口路线设计
+    related_refs:
+      formulas:
+      - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  condition:
+    description: 需要确定洞口过渡段长度
+    logic: 需要确定洞口过渡段长度
+  requirement:
+    description: 洞口外相接路段应设置距洞口不小于3s设计速度行程长度且不小于50m的过渡段
+    expression: 洞口外相接路段应设置距洞口不小于3s设计速度行程长度且不小于50m的过渡段
+  action:
+    check_type: formula_calculation
+    execution_logic: 调用 F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+    variables:
+    - VAR_B01_v
+    - VAR_L_transition
+- id: R_B01_8_0_9_TUNNEL_DESIGN_LIFE
+  meta:
+    title: 隧道设计使用年限
+    source: JTG B01-2014, 8.0.9
+    clause: 8.0.9
+    chapter: 第8章 隧道
+    rule_type: table_lookup
+    applicability: 隧道耐久性设计
+    related_refs:
+      tables:
+      - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+  condition:
+    description: 需要确定隧道设计使用年限
+    logic: 需要确定隧道设计使用年限
+  requirement:
+    description: 隧道设计使用年限应符合表8.0.9
+    expression: 隧道设计使用年限应符合表8.0.9
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    formulas: []
+    variables:
+    - VAR_design_life
+- id: R_B01_9_1_3_AT_GRADE_INTERSECTION_ANGLE
+  meta:
+    title: 平面交叉角度
+    source: JTG B01-2014, 9.1.3
+    clause: 9.1.3
+    chapter: 第9章 路线交叉
+    rule_type: check
+    applicability: 公路与公路平面交叉
+  condition:
+    description: 存在平面交叉
+    logic: 存在平面交叉
+  requirement:
+    description: 交叉角宜为直角，必须斜交时交叉角应大于45°；同一位置平面交叉岔数不宜多于5条
+    expression: 交叉角宜为直角，必须斜交时交叉角应大于45°；同一位置平面交叉岔数不宜多于5条
+  action:
+    check_type: hybrid
+    execution_logic: 检查交叉角度和岔数
+    original_check_type: direct_check
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_intersection_angle
+    - VAR_intersection_branch_count
+- id: R_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+  meta:
+    title: 平面交叉最小间距
+    source: JTG B01-2014, 9.1.5
+    clause: 9.1.5
+    chapter: 第9章 路线交叉
+    rule_type: table_lookup
+    applicability: 一、二级公路平面交叉
+    related_refs:
+      tables:
+      - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+  condition:
+    description: 需要确定平交口间距
+    logic: 需要确定平交口间距
+  requirement:
+    description: 一、二级公路平面交叉最小间距应不小于表9.1.5规定
+    expression: 一、二级公路平面交叉最小间距应不小于表9.1.5规定
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    formulas: []
+    variables:
+    - VAR_intersection_spacing_min
+    - VAR_value_type
+- id: R_B01_9_2_4_INTERCHANGE_SPACING_AND_RAMP_SPEED
+  meta:
+    title: 互通式立体交叉间距与匝道设计速度
+    source: JTG B01-2014, 9.2.4
+    clause: 9.2.4
+    chapter: 第9章 路线交叉
+    rule_type: check
+    applicability: 互通式立体交叉设计
+    related_refs:
+      tables:
+      - T_B01_9_2_4_RAMP_DESIGN_SPEED
+  condition:
+    description: 需要确定互通间距或匝道设计速度
+    logic: 需要确定互通间距或匝道设计速度
+  requirement:
+    description: 相邻互通间距不宜小于4km，特殊情况上一加速车道终点至下一减速车道起点不得小于1000m；匝道设计速度应符合表9.2.4
+    expression: 相邻互通间距不宜小于4km，特殊情况上一加速车道终点至下一减速车道起点不得小于1000m；匝道设计速度应符合表9.2.4
+  action:
+    check_type: hybrid
+    execution_logic: 检查互通间距并调用匝道设计速度表；查表调用 T_B01_9_2_4_RAMP_DESIGN_SPEED。
+    original_check_type: table_lookup
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_9_2_4_RAMP_DESIGN_SPEED
+    formulas: []
+    variables:
+    - VAR_interchange_spacing
+    - VAR_ramp_design_speed
+- id: R_B01_9_4_3_PASSAGE_CLEARANCE
+  meta:
+    title: 车行通道净空
+    source: JTG B01-2014, 9.4.3
+    clause: 9.4.3
+    chapter: 第9章 路线交叉
+    rule_type: check
+    applicability: 公路与乡村道路交叉通道
+  condition:
+    description: 需要设置车行通道
+    logic: 需要设置车行通道
+  requirement:
+    description: 通行拖拉机、畜力车净高不小于2.70m，通行农用汽车净高不小于3.20m；净宽一般不小于4.00m
+    expression: 通行拖拉机、畜力车净高不小于2.70m，通行农用汽车净高不小于3.20m；净宽一般不小于4.00m
+  action:
+    check_type: direct_check
+    execution_logic: 检查通道净高和净宽
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_passage_clear_height
+    - VAR_passage_clear_width
+- id: R_B01_9_5_2_POWER_LINE_CROSSING
+  meta:
+    title: 架空送电线路与公路交叉
+    source: JTG B01-2014, 9.5.2
+    clause: 9.5.2
+    chapter: 第9章 路线交叉
+    rule_type: check
+    applicability: 架空送电线路跨越公路
+  condition:
+    description: 存在架空送电线路与公路交叉
+    logic: 存在架空送电线路与公路交叉
+  requirement:
+    description: 宜为正交；必须斜交时交叉角度应大于45°；导线距路面最小垂直距离应符合相应电压要求
+    expression: 宜为正交；必须斜交时交叉角度应大于45°；导线距路面最小垂直距离应符合相应电压要求
+  action:
+    check_type: manual_review
+    execution_logic: 检查交叉角度和净空是否符合外部电力规范
+  related_refs:
+    rules: []
+    tables: []
+    formulas: []
+    variables:
+    - VAR_intersection_angle
+    - VAR_wire_clearance
+- id: R_B01_10_4_2_MONITORING_LEVEL
+  meta:
+    title: 监控设施等级
+    source: JTG B01-2014, 10.4.2
+    clause: 10.4.2
+    chapter: 第10章 交通工程及沿线设施
+    rule_type: table_lookup
+    applicability: 交通工程及沿线设施设计
+    related_refs:
+      tables:
+      - T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+  condition:
+    description: 需要确定监控设施等级
+    logic: 需要确定监控设施等级
+  requirement:
+    description: 各等级监控设施适用范围可依据表10.4.2确定
+    expression: 各等级监控设施适用范围可依据表10.4.2确定
+  action:
+    check_type: hybrid
+    execution_logic: 调用 T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+    original_check_type: table_lookup
+    manual_review_required: true
+    execution_mode: hybrid
+    note: 本条含宜、可、综合确定、有条件时等人工判断语义；自动系统可生成检查项或查表建议，但最终结论需人工复核。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+    formulas: []
+    variables:
+    - VAR_monitoring_level
+- id: R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+  meta:
+    title: 服务水平分级
+    source: JTG B01-2014, 附录A
+    clause: A.0.1
+    chapter: 附录A 公路服务水平分级
+    rule_type: classification
+    applicability: 服务水平评价
+    related_refs:
+      formulas:
+      - F_B01_L0_VC_RATIO
+      tables:
+      - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+      - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+  condition:
+    description: 需要根据v/C或交通运行指标确定服务水平
+    logic: 需要根据v/C或交通运行指标确定服务水平
+  requirement:
+    description: 公路服务水平分为六级，采用v/C作为主要指标
+    expression: 公路服务水平分为六级，采用v/C作为主要指标
+  action:
+    check_type: formula_calculation
+    execution_logic: 调用 v/C 公式并按附录A表格分级；查表调用 T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL；查表调用 T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL；公式调用
+      F_B01_L0_VC_RATIO。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+    - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+    formulas:
+    - F_B01_L0_VC_RATIO
+    variables:
+    - VAR_v_C
+    - VAR_service_level
+- id: R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  meta:
+    title: 货车停车视距
+    source: JTG B01-2014, 附录B.0.1
+    clause: B.0.1
+    chapter: 附录B 货车停车视距、识别视距
+    rule_type: table_lookup
+    applicability: 大型车比例较高路段视距检验
+    related_refs:
+      formulas:
+      - F_B01_L5_SIGHT_DISTANCE_CHECK
+      tables:
+      - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  condition:
+    description: 需要采用货车停车视距
+    logic: 需要采用货车停车视距
+  requirement:
+    description: 货车停车视距应按附录B.0.1取值，下坡路段应按坡度修正
+    expression: 货车停车视距应按附录B.0.1取值，下坡路段应按坡度修正
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE 并进行视距验算；公式调用 F_B01_L5_SIGHT_DISTANCE_CHECK。
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+    variables:
+    - VAR_D_actual
+    - VAR_D_required
+    - VAR_B01_v
+    - VAR_i_grade
+- id: R_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+  meta:
+    title: 识别视距
+    source: JTG B01-2014, 附录B.0.2
+    clause: B.0.2
+    chapter: 附录B 货车停车视距、识别视距
+    rule_type: table_lookup
+    applicability: 出入口、分流、合流、交叉、渠化、交织等路段
+    related_refs:
+      tables:
+      - T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+  condition:
+    description: 需要采用识别视距
+    logic: 需要采用识别视距
+  requirement:
+    description: 不同设计速度对应的识别视距应符合表B.0.2
+    expression: 不同设计速度对应的识别视距应符合表B.0.2
+  action:
+    check_type: table_lookup
+    execution_logic: 调用 T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+    formulas: []
+    variables:
+    - VAR_identifying_sight_distance
+    - VAR_B01_v

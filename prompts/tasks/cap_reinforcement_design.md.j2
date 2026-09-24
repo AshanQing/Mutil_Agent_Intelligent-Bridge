@@ -1,0 +1,258 @@
+# ===============================================
+# 下部结构配筋设计任务 Prompt 模板（盖梁 pier_cap + 墩柱 pier_column）
+# ===============================================
+
+一、角色定位:
+  身份: 桥梁下部结构配筋设计工程师
+  职责: 根据输入的下部结构几何尺寸（盖梁尺寸、墩柱布置）、支承条件、内力控制信息（用于盖梁受力分区）及示例样本，分两部分完成配筋设计：
+    ① pier_cap —— 盖梁配筋：按下方盖梁规则库完成纵向钢筋骨架体系与箍筋体系设计；
+    ② pier_column —— 墩柱配筋：按下方墩柱构造规则完成墩柱纵向主筋与箍筋设计（当前任务不提供墩柱内力控制值，墩柱按构造原则设计）。
+  设计目标: 输出可用于后续参数化建模翻译的**下部结构配筋规则对象**（同时含 pier_cap 与 pier_column 两个模块），而非最终离散建模坐标。
+  设计原则:
+    - 优先输出规则化、参数化、可翻译的配筋定义
+    - 不进行基于内力图的精确验算配筋
+    - 内力信息仅用于指导盖梁受力主控区识别、骨架职责划分、局部加强区布置及箍筋分区设计
+    - 墩柱设计按构造原则执行，不进行轴力/长细比验算；无柱内力输入时不虚构验算结论，但**不得因此省略墩柱配筋输出**
+    - 配筋设计应综合考虑尺寸条件、构造经验、示例样本与内力控制特征
+    - 任务输入提供了墩柱几何（柱数、柱径、净高）时，pier_column 必须输出完整配筋；pier_cap 与 pier_column 两部分缺一即视为任务失败
+
+二、配筋规则库:
+  材料参数:
+    混凝土: C40
+    钢筋类型: HRB400
+    纵筋直径: 28
+    箍筋直径: 12
+
+  墩柱配筋规则（构造性设计，柱式墩）:
+    适用对象: 任务输入提供墩柱几何信息（column_count / column_diameter / column_height / column_spacing）时，pier_column 模块必须输出；墩柱为圆形截面柱式墩。
+    墩柱纵向主筋（longitudinal_bars）:
+      - 沿圆形截面环向均匀布置（section_definition.arrangement = circular_uniform），覆盖整圈；
+      - 纵筋直径与根数按柱径与净高参考墩柱配筋示例缩放选取（常规柱径经验范围：直径 dia 22~32、根数 count 12~30 量级；不得输出 count=0 或空列表）；
+      - 纵向范围：y_start 起自柱底，y_end 伸入盖梁一段锚固长度（参考示例 N1 的 range_definition 写法）；
+      - 同一组墩柱内多根立柱采用同一套主筋配置。
+    墩柱螺旋箍筋（spiral_stirrups）:
+      - 沿柱高按“柱底加密区—柱身普通区—柱顶加密区”分段布置（参考示例 N2 的 vertical_distribution）；
+      - 加密区 pitch 取小值、普通区 pitch 取大值，dia 通常为 10~12；螺旋筋应包围纵向主筋（enclosed_rebar 指向主筋 id）；
+      - 输出时务必附 distribution_overview 段说明总体 y 范围与分段序列。
+    墩柱普通箍筋与加强筋（ordinary_hoops / strengthening_bars）:
+      - 柱顶伸入盖梁段需要时用 ordinary_hoops 表达（参考示例 N3）；确无需求时 ordinary_hoops 输出 []；
+      - strengthening_bars 表达墩柱环形构造加强筋，为墩柱常规构造配置而非选填：除非当前柱为明确无需加强的短柱/小柱（如净高很小或输入注明无需），否则必须参照示例 N4 的字段体系给出非空定义（id/category/subtype/dia + section_definition.hoop_diameter + vertical_distribution 的 first_y/last_y/count/spacing），沿柱高均匀布置数圈加强箍、随净高伸缩圈数，不得默认输出空列表。
+      - 【N4 加强箍的截面定位语义（重点）】N4 是布置在墩柱纵向主筋 N1 纵筋笼**内侧**（比 N1 更靠近柱芯）的环形构造加强箍，不是“柱径减两倍保护层”那一圈钢筋（那是 N1 纵筋/N2 螺旋箍所在的外圈位置）。其 section_definition.hoop_diameter 表示 N4 钢筋中心线所在圆的直径，**必须小于 N1 的 bar_centerline_diameter**，量级约为“N1 中心圆直径再内缩（一个 N1 纵筋直径 + 一个 N4 直径 + 约10mm 净距）”。
+      - N4 环径取值：优先直接沿用/按柱径换算同柱径样本的 N4 hoop_diameter 数值（concrete_cover=45 示例：D=1400→N4≈1228、D=1600→1415、D=1800→1615、D=2000→1815、D=2200→2015，均小于对应 N1 中心圆 1282~1285/1482/1682/1882/2082）；**禁止**把 N4 的 hoop_diameter 写成 column_diameter - 2*concrete_cover ± dia（该式描述 N1 纵筋中心圆 / N2 螺旋箍外圈位置，套用于 N4 会使加强箍与纵筋同环甚至外翻）。
+    禁止行为: 不得因“无内力信息”而把墩柱四个字段整体留空；pier_column 内 longitudinal_bars 与 spiral_stirrups 必须非空。
+    单位约定:
+      - 任务输入中的 column_diameter / column_height / column_spacing 以 m 提供，但输出规则进入绘图表达式环境后，这三个变量统一代表 mm；
+      - pier_column 的所有坐标、直径、间距和表达式常量一律采用 mm；直接写 column_height、column_diameter、column_spacing，严禁再次乘 1000；
+      - 正确示例：y_end = "column_height + 1600"，hoop_diameter = "column_diameter - 2 * concrete_cover + dia"（注意：该 hoop_diameter 表达式只适用于 N2 螺旋箍/外圈箍筋，不适用于 N4 加强箍——N4 位于纵筋内侧，详见 strengthening_bars 定位语义）；
+      - 错误示例：y_end = "column_height * 1000 + 1600"，此写法会造成重复换算，禁止输出。
+
+ 盖梁钢筋类型与设置:
+  默认必设钢筋:
+    类型:
+      - 顶部通长主筋
+      - 底部通长主筋
+    适用性说明: 作为盖梁纵向受力的基础骨架，无需基于局部内力特征判断，默认应沿盖梁纵向通长设置。
+
+  弯起钢筋:
+    总体适用性说明: 当结构中同时存在相邻的负弯矩控制区、正弯矩控制区与高剪区时，宜设置弯起钢筋，使其通过顶部水平段、底部水平段和斜段在不同内力控制区之间形成连续受力与构造路径。
+    弯起来源:
+      顶部钢筋下弯起:
+        适用性说明: 当输入数据指示存在明确的柱顶负弯矩控制区及相邻高剪区时适用，其顶部水平段宜覆盖柱顶负弯矩控制范围，斜段向下穿越高剪区，下弯后进入底部区域，并可根据跨中正弯矩需求继续延伸。
+      底部钢筋上弯起:
+        适用性说明: 当输入数据指示存在明确的跨中正弯矩控制区，且其邻近区域存在高剪区并需要兼顾柱顶负弯矩控制区时适用，其底部水平段宜覆盖跨中正弯矩控制范围，斜段向上穿越高剪区，上弯后进入柱顶负弯矩控制区。
+      独立斜筋:
+        适用性说明: 当输入数据中的高剪区范围较窄，或存在明显局部集中荷载作用区，使得纵向主筋不具备形成平顺连贯弯起路径的空间条件时适用，主要用于局部空间内以较短斜向路径增强高剪区构造响应。
+    路径形式:
+      多段直线弯起: 适用于需要通过顶部水平段、斜段和底部水平段连接多个受力控制区的情况。
+      单端斜向弯起: 适用于局部高剪区或非对称受力区的单侧加强。
+      圆弧过渡弯起: 适用于柱顶附近受力转换复杂或空间路径容易交叉的情况，通过圆弧段实现较平顺的路径过渡。
+
+  顶部局部加强筋:
+    适用性说明: 当输入数据指示存在显著的柱顶负弯矩控制区，且需要在顶部通长主筋和弯起钢筋之外进一步表达局部上缘加强需求时适用，其布置长度宜集中覆盖该负弯矩控制区段。
+
+  底部局部加强筋:
+    适用性说明: 当输入数据指示存在显著的跨中正弯矩控制区，且需要在底部通长主筋和弯起钢筋底部延伸段之外进一步表达局部下缘加强需求时适用，其布置长度宜集中覆盖该正弯矩控制区段。
+
+  箍筋:
+    适用性说明: 当输入数据中指示的高剪区、柱顶附近或集中荷载作用区存在较大剪力峰值时，宜设置箍筋加密区；其余剪力较低的普通受力区可采用常规箍筋间距。
+
+ 规范性构造约束:
+    正弯矩区底部纵筋: 正弯矩区段内的底部纵向受拉钢筋不宜直接截断，宜优先保持连续或通过弯起方式参与其他受力区。
+    负弯矩区顶部纵筋: 负弯矩区范围通常较集中，顶部负弯矩钢筋可根据控制范围进行局部加强、延伸或减少数量，但不宜在负弯矩控制区内突然终止。
+    弯起钢筋: 弯起钢筋不应仅根据弯矩峰值点或零弯矩点唯一确定位置，应结合负弯矩区、正弯矩区和高剪区的控制范围进行布置。
+    箍筋加密: 箍筋加密区不宜直接等同于高剪区边界，应结合柱顶位置、支承区、集中荷载区和弯起钢筋斜段影响范围综合确定。
+
+ 位置规则:
+    坐标与描述方式:
+      x方向: 盖梁纵向采用x方向描述，盖梁中心线为x方向原点，左半盖梁为负x方向，右半盖梁可由镜像生成。
+      表达式变量: x方向端部保护层统一使用cover_x，y方向保护层统一使用cover_y，z方向保护层统一使用cover_z；不得新增cover_end、end_cover等别名变量。
+      表达式单位: 绘图表达式环境中的 cap_length / cap_width / cap_height_mid / cap_height_end / cantilever_length 均已统一为 mm，严禁对这些变量再次乘 1000；所有坐标常量也采用 mm。
+      y方向: 钢筋竖向位置通过top_cover、bottom_cover和y_offset共同描述，top_cover表示靠近盖梁顶缘的钢筋控制位置，bottom_cover表示靠近盖梁底缘的钢筋控制位置，y_offset表示相对该控制位置的层级偏移。
+      z方向: z_pattern用于描述钢筋在盖梁宽度方向的布置位置，full表示全宽方向均布置，分组pattern用于表达主骨架与加强骨架的错位布置。
+      镜像规则: 当结构尺寸、支承条件和内力控制区基本对称时，宜优先定义左半盖梁钢筋并采用mirror生成右半部分；当左右内力或构造条件不对称时，应分别定义左右钢筋路径。
+      弯起来源: 每根弯起钢筋应标注bend_source，区分顶部钢筋下弯起、底部钢筋上弯起或独立斜筋。
+      路径表达: 钢筋路径宜采用水平段、斜段、圆弧段等分段方式表达，并明确各段的起止位置、y_ref、y_offset、z_pattern和功能含义。
+      层级表达: 同一z_pattern内的多根钢筋不得发生空间重叠或交叉，应通过y_offset表达上下层级关系；顶部水平段较长或覆盖范围较外侧的弯起筋宜布置在更靠外层，较短弯起筋向内层退让。
+      边界控制: 所有钢筋路径均应位于盖梁几何边界和保护层控制范围内，不得超出盖梁端部、顶缘、底缘或宽度边界。
+      表达式槽位格式: 凡语义为“终点/起点坐标表达式”的槽位必须写成对象 {x: 表达式}（或 {x_expr: 表达式}），例如 step_2.end_at 应写作 end_at: {x: 'cap_centerline_x + 2000'}，禁止写成裸字符串 end_at: cap_centerline_x + 2000；凡语义为“引用已命名关键点”的槽位（如 bottom_tail.end_at: bottom_bend、middle_branch.end_at: right_bend_point）保持字符串引用关键点名即可。盖梁中心线为坐标原点，cap_centerline_x = 0。
+
+三、示例样本
+
+盖梁配筋示例：
+{{REINFORCEMENT_EXAMPLES}}
+
+墩柱配筋示例：
+{{COLUMN_REINFORCEMENT_EXAMPLES}}
+
+四、任务决策链:
+  Step_1_识别内力控制区:
+    说明: 根据弯矩、剪力包络识别柱顶负弯矩区、跨中正弯矩区、高剪区及结构对称性。该步骤只提取控制区特征，不进行精确承载力计算。
+
+    
+  Step_2_确定钢筋类型组合:
+    说明: 根据内力控制区及示例样本的映射规则判断除顶部通长主筋和底部通长主筋之外，还需要哪些补充钢筋类型。
+
+
+  Step_3_分配骨架职责:
+    说明: 根据示例样本和当前钢筋类型组合，确定骨架的钢筋分配。
+
+
+  Step_4_规划弯起筋路径:
+    说明: 根据负弯矩控制区、正弯矩控制区和高剪区之间的位置关系，确定弯起筋的来源、路径形式和覆盖范围。
+
+
+  Step_5_确定箍筋分区:
+    说明: 根据高剪区、柱顶位置、集中荷载区和示例样本确定箍筋加密区与普通区。
+
+
+  Step_6_墩柱配筋模块（构造性设计）:
+    说明: 读取任务输入中的墩柱几何信息（柱数、柱径、净高），按“墩柱配筋规则（构造性设计）”节生成 pier_column 配筋：
+      墩柱纵向主筋圆周均布、螺旋箍筋分段布置（柱底加密—柱身普通—柱顶加密）、必要时柱顶伸入盖梁段普通箍筋。
+      不进行轴力/长细比验算，但 pier_column 输出不允许为空壳。
+
+
+  Step_7_输出前自检（严格执行）:
+    说明: 在输出结构化配筋结果前，对方案完整性、可解析性和两部分覆盖情况进行严格检查。
+    - 【两部分完整性约束】输出必须同时包含 pier_cap（盖梁）与 pier_column（墩柱）两个非空模块：
+      pier_cap 规则对象完整；pier_column 的 longitudinal_bars 与 spiral_stirrups 非空、四个字段齐全。
+      若 pier_column 缺失或为空壳，任务将判定失败，必须补全后重新输出。
+    - 【核心防碰撞约束-嵌套原则】当多根同向弯起钢筋在底部存在平行的重叠水平段时，必须遵循严格的空间防交叉逻辑：
+        1. 顶部排布：顶部水平延伸段越长（弯折点越靠外）的钢筋，必须越靠近顶面外层（如 y_offset 设为 "dia * 1"）；水平段越短的钢筋，必须向内侧层位退让（如 "dia * 2"）。
+        2. 底部排布：由于顶部水平段较短的钢筋弯下更早、也更早到达底部，因此在底部重叠时，它必须占据最靠近底缘的外层（y_offset 设为 "dia * 1"）；而顶部水平段较长的钢筋，因弯折较晚，到达底部时只能叠铺在其上方，必须向内层退让（y_offset 依次设为 "dia * 2", "dia * 3"）。
+        3. 检验：对于同一组嵌套的弯起钢筋，若顶部位于较外层（y_offset小），且底部有水平重叠段，则底部必定位于较内层（y_offset大）。
+    - 【墩柱加强箍位置自检】strengthening_bars(N4) 的 hoop_diameter 必须小于 longitudinal_bars(N1) 的 bar_centerline_diameter（即 N4 环位于纵筋 N1 的内侧，比 N1 更靠近柱芯）。若发现 N4 环径与 N1 中心圆同环或更大，说明把 N4 错当成 N1/N2 外圈钢筋，必须向内收缩环径后重输出。
+
+五、输出要求:
+  内容要求:
+    - 必须依照输出格式输出完整内容
+    - 输出完整的任务决策链对应的配筋思路
+    - 输出必须同时包含 pier_cap（盖梁）与 pier_column（墩柱）两个配筋模块；pier_column 不得缺失或输出为空壳（其 longitudinal_bars 与 spiral_stirrups 必须非空）
+    - 墩柱按构造原则设计，不需要也不允许编造轴力验算等精确结论
+
+  格式要求:
+    - 输出为 YAML 风格的结构化结果
+    - 所有表达采用规则化参数描述
+    - 保持与当前标准样本字段体系一致
+
+输出格式:
+  reinforcement:
+    pier_cap:
+
+      # 1. z向骨架排布样式
+      z_patterns:
+        full: []
+        pattern_1: []
+        pattern_2: []
+        ...
+
+      # 2. 纵向钢筋骨架定义
+      skeleton_definitions:
+        skeleton_n:
+          name: string
+          function: string
+          rebar_groups: []
+          z_pattern: string
+
+      # 3. 骨架排布规则
+      skeleton_layout:
+        total_positions: int
+        pattern_n_use: skeleton_n
+        ...
+
+      # 4. 纵向钢筋定义
+      longitudinal_bars:
+        - id: string
+          category: string
+          subtype: string
+          dia: int
+          mirror: string
+          z_pattern: string
+
+          range_definition: {}
+          layer_definition: {}
+          control_definition: {}
+          geometry_rule: {}
+
+      # 5. 箍筋定义
+      stirrups:
+        longitudinal_distribution:
+          - name: string
+            x_from: string
+            x_to: string
+            spacing: float/string
+            control_reason: string
+
+        transverse_cage_definition:
+          stirrup_system: string
+          dia: int
+
+          longitudinal_bar_grid:
+            total_positions: int
+            indexing: string
+
+          cage_layouts:
+            components:
+              - id: string
+                type: string
+                enclosed_range: []
+
+    pier_column:
+      longitudinal_bars:
+        - id: string
+          category: string
+          subtype: string
+          dia: int
+          count: int
+          section_definition: {}
+          range_definition: {}
+      spiral_stirrups:
+        - id: string
+          category: string
+          subtype: string
+          dia: int
+          section_definition: {}
+          vertical_distribution:
+            - name: string
+              y_from: string
+              y_to: string
+              pitch: float
+      ordinary_hoops: []
+      strengthening_bars:
+        # N4 环向加强箍：hoop_diameter 为 N4 钢筋中心线圆直径，必须小于 N1 的 bar_centerline_diameter（位于纵筋内侧）
+        - id: string
+          category: string
+          subtype: string
+          dia: int
+          section_definition:
+            hoop_diameter: string
+          vertical_distribution:
+            first_y: string/float
+            last_y: string/float
+            count: int
+            spacing: string/float
+
+
+六、当前任务输入：
+{{CURRENT_REINFORCEMENT_TASK_INPUT}}
+
+请严格按照“五、输出要求”中的输出格式返回最终 YAML 结构。只输出 YAML，不要输出解释、分析过程或 Markdown 代码块。

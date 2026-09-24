@@ -1,0 +1,2471 @@
+- cantilever_length: 1.2
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.4
+  cap_slope: 0.05
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 6.9
+  column_tie_beam（width*height）: null
+  deck_slope: 0.05
+  deck_width: 12.66
+  drawing_id: 1
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.525
+  lower_tie_beam（width*height）: null
+  next_deck_width: 12.66
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.525
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.65
+    right: 0.65
+  rear_support_edge_distance:
+    left: 0.65
+    right: 0.65
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 标准12.5m
+
+- cantilever_length: 1.2
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.4
+  cap_slope: -0.05
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 6.9
+  column_tie_beam（width*height）: null
+  deck_slope: -0.05
+  deck_width: 12.5
+  drawing_id: 2
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.525
+  lower_tie_beam（width*height）: 1.2*1.4
+  next_deck_width: 12.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.525
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.65
+    right: 0.65
+  rear_support_edge_distance:
+    left: 0.65
+    right: 0.65
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 标准12.5m
+
+- cantilever_length: 1.2
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.05
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.675
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: -0.02
+  deck_width: 17.1
+  drawing_id: 3
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.425
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.1
+  foundation_type: 桩基础  
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 0
+  rear_span_t_beam_spacing: 0.0
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 水白洞大桥
+
+- cantilever_length: 1.2
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.05
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 5.675
+  column_tie_beam（width*height）: null 
+  deck_slope: -0.02
+  deck_width: 17.1
+  drawing_id: 4
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.425
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.1
+  foundation_type: 桩基础  
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 0
+  rear_span_t_beam_spacing: 0.0
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 水白洞大桥
+  
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 18.82
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 7.06
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: -0.02
+  deck_width: 19.83
+  drawing_id: 5
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.469
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 21.02
+  foundation_type: 桩基础 
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.469
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.787
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.787
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 水白洞大桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 20.01
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 7.655
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: -0.02
+  deck_width: 21.02
+  drawing_id: 6
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.309
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 22.22
+  foundation_type: 桩基础 
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.639
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.788
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.787
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 水白洞大桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 21.21
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 8.255
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 22.22
+  drawing_id: 7
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.458
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 23.41
+  foundation_type: 桩基础   
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 9
+  rear_span_t_beam_spacing: 2.458
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.796
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.796
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 水白洞大桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 22.4
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 8.85
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 23.41
+  drawing_id: 8
+  front_span_t_beam_count: 10
+  front_span_t_beam_spacing: 2.318
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 24.6
+  foundation_type: 桩基础 
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 9
+  rear_span_t_beam_spacing: 2.607
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.788
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.794
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 水白洞大桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 15.45
+  cap_slope(left): 0.02
+  cap_slope(right): -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 9
+  column_tie_beam（width*height）: null
+  deck_slope(left): 0.02
+  deck_slope(right): -0.02
+  deck_width: 16.5
+  drawing_id: 9
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.325
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 16.5
+  foundation_type: 桩基础 
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 新田A匝道2
+
+- cantilever_length: 1.2
+  cap_height_end: 0.8
+  cap_height_mid: 1.5
+  cap_length: 10.8
+  cap_slope: 0.05
+  cap_width: 1.9
+  column_count: 2
+  column_diameter: 1.7
+  column_spacing: 6.5
+  column_tie_beam（width*height）: null
+  deck_slope: 0.05
+  deck_width: 12.0
+  drawing_id: 10
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.4
+  lower_tie_beam（width*height）: 1.4*1.6
+  next_deck_width: 12.0
+  foundation_type: 桩基础
+  pile_diameter: 1.9
+  rear_span_t_beam_count: 0
+  rear_span_t_beam_spacing: 0.0
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.95
+  support_center_distance_rear: 0.95
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.6
+    right: 0.6
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 标准12m
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.95
+  cap_slope: 0.04
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 7.25
+  column_tie_beam（width*height）: null
+  deck_slope: 0.04
+  deck_width: 13.0
+  drawing_id: 11
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 标准13m
+
+- cantilever_length: 1.15
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 11.7
+  cap_slope: 0.0288
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 1.8
+  column_spacing: 7.0
+  column_tie_beam（width*height）: 1.2*1.6
+  deck_slope: 0.0288
+  deck_width: 12.75
+  drawing_id: 12
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.55
+  lower_tie_beam（width*height）: 1.5*1.8
+  next_deck_width: 12.75
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 1.1
+  support_center_distance_rear: 1.1
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.749
+    right: 0.735
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 标准12.75m
+
+- cantilever_length: 1.25
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 11.95
+  cap_slope: -0.0259
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 1.8
+  column_spacing: 7.25
+  column_tie_beam（width*height）: 1.2*1.6
+  deck_slope: -0.0259
+  deck_width: 13.0
+  drawing_id: 13
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.5*1.8
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 2.0
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 1.1
+  support_center_distance_rear: 1.1
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 40mT标准13m
+
+- cantilever_length: 1.25
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 11.95
+  cap_slope: -0.0136
+  cap_width: 2.3
+  column_count: 2
+  column_diameter: 1.8
+  column_spacing: 7.25
+  column_tie_beam（width*height）: null
+  deck_slope: -0.0136
+  deck_width: 13.0
+  drawing_id: 14
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.5*1.8
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 2.0
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.6125
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 0.44
+  support_center_distance_rear: 0.44
+  support_symmetry: 对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 40mT标准13m
+
+- cantilever_length: 1.25
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 11.95
+  cap_slope: -0.02
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 2.0
+  column_spacing: 7.25
+  column_tie_beam（width*height）: 1.4*1.6*2
+  deck_slope: -0.02
+  deck_width: 13.0
+  drawing_id: 15
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.5*1.8
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 2.2
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 1.1
+  support_center_distance_rear: 1.1
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 40mT标准13m
+
+- cantilever_length: 1.25
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 11.95
+  cap_slope: -0.02
+  cap_width: 2.5
+  column_count: 2
+  column_diameter: 2.0
+  column_spacing: 7.25
+  column_tie_beam（width*height）: 1.4*1.6*2
+  deck_slope: -0.02
+  deck_width: 13.0
+  drawing_id: 16
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.5*1.8
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 2.2
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.6125
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 0.54
+  support_center_distance_rear: 0.54
+  support_symmetry: true
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 40mT标准13m
+
+- cantilever_length: 1.25
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 11.95
+  cap_slope: -0.02
+  cap_width: 2.4
+  column_count: 2
+  column_diameter: 2.2
+  column_spacing: 7.25
+  column_tie_beam（width*height）: 1.6*1.8*3
+  deck_slope: -0.02
+  deck_width: 13.0
+  drawing_id: 17
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.8*2.0
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 2.5
+  rear_span_t_beam_count: 0
+  rear_span_t_beam_spacing: 0.0
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 1.2
+  support_center_distance_rear: 1.2
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 40mT标准13m
+
+- cantilever_length: 2.0
+  cap_height_end: 1.05
+  cap_height_mid: 2.0
+  cap_length: 15.9
+  cap_slope: -0.02
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 9.3
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 16.75
+  drawing_id: 18
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.4
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 16.75
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 1.1
+  support_center_distance_rear: 1.1
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 标准16.75m
+
+- cantilever_length: 2.0
+  cap_height_end: 1.05
+  cap_height_mid: 2.0
+  cap_length: 15.9
+  cap_slope: -0.02
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 1.8
+  column_spacing: 9.3
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 16.75
+  drawing_id: 19
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.4
+  lower_tie_beam（width*height）: null
+  next_deck_width: 16.75
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 40
+  support_center_distance_front: 1.1
+  support_center_distance_rear: 1.1
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 桩柱一体墩
+  design drawing: 标准16.75m
+
+- cantilever_length: 0.0
+  cap_height_end: 1.6
+  cap_height_mid: 1.6
+  cap_length: 8.16
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 4.66
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 9.15
+  drawing_id: 20
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.2
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 9.793
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.793
+    right: 0.767
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江B匝道
+
+- cantilever_length: 0.0
+  cap_height_end: 1.6
+  cap_height_mid: 1.6
+  cap_length: 8.83
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.33
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 9.793
+  drawing_id: 21
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.414
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 10.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.795
+    right: 0.792
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江B匝道
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.5
+  cap_slope: 0.0416
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.4
+  column_tie_beam（width*height）: null
+  deck_slope: 0.0416
+  deck_width: 10.5
+  drawing_id: 22
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.629
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 10.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.787
+    right: 0.827
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江B匝道
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.5
+  cap_slope: 0.05
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.4
+  column_tie_beam（width*height）: null
+  deck_slope: 0.05
+  deck_width: 10.5
+  drawing_id: 23
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.65
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 10.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 4
+  rear_span_t_beam_spacing: 2.65
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: 对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.771
+    right: 0.779
+  rear_support_edge_distance:
+    left: 0.774
+    right: 0.777
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 春陵江B匝道
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.5
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.4
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 10.5
+  drawing_id: 24
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.65
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 10.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.775
+    right: 0.775
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江G匝道
+  
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.5
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.4
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 10.5
+  drawing_id: 25
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.649
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 10.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 4
+  rear_span_t_beam_spacing: 2.649
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.781
+    right: 0.771
+  rear_support_edge_distance:
+    left: 0.776
+    right: 0.774
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 春陵江G匝道
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.3
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.3
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 10.3
+  drawing_id: 26
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.597
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 9.65
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.755
+    right: 0.755
+  rear_support_edge_distance:
+    left: null
+    right: null
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江G匝道
+
+- cantilever_length: 0.0
+  cap_height_end: 1.6
+  cap_height_mid: 1.6
+  cap_length: 8.65
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.0
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 9.65
+  drawing_id: 27
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.347
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 9.0
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.805
+    right: 0.805
+  rear_support_edge_distance:
+    left: null
+    right: null
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江G匝道
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.95
+  cap_slope: 0.03
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 7.25
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 13.0
+  drawing_id: 28
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.6125
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.5
+  support_center_distance_rear: 0.5
+  support_symmetry: 对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: 0.75
+    right: 0.75
+    pier role: 边墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.95
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 7.25
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 13.0
+  drawing_id: 29
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false 
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.95
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 7.25
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: 0.03
+  deck_width: 13.0
+  drawing_id: 30
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false 
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.95
+  cap_slope: 0.03
+  cap_width: 2.2
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 7.25
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: 0.03
+  deck_width: 13.0
+  drawing_id: 31
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.6125
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.5
+  support_center_distance_rear: 0.5
+  support_symmetry: 对称
+  system_type: 先简支后连续
+  is_double_support: true  
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+    pier role: 边墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.95
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 7.25
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 13.0
+  drawing_id: 32
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.6125
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.0
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false  
+  front_support_edge_distance:
+    left: 0.75
+    right: 0.75
+  rear_support_edge_distance:
+    left: null
+    right: null
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 21.693
+  cap_slope: 0.015
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 8.497
+  column_tie_beam（width*height）: null
+  deck_slope: 0.015
+  deck_width: 22.662
+  drawing_id: 33
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.504
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 20.158
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 10
+  rear_span_t_beam_spacing: 2.235
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.44
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.757
+    right: 0.901
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.824
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 19.19
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 7.245
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: 0.02
+  deck_width: 20.158
+  drawing_id: 34
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.512
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 18.598
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 9
+  rear_span_t_beam_spacing: 2.205
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.42
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.755
+    right: 0.848
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.814
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 17.63
+  cap_slope: 0.025
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 6.465
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: 0.025
+  deck_width: 18.598
+  drawing_id: 35
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.296
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.694
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.3
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.42
+  support_center_distance_rear: 0.42
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.754
+    right: 0.808
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.797
+    pier role: 中间墩
+    pier type: 柱式墩
+    design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.727
+  cap_slope: 0.03
+  cap_width: 2.2
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 6.013
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: 0.03
+  deck_width: 17.694
+  drawing_id: 36
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.532
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.208
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.173
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.36
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.754
+    right: 0.782
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.763
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.24
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.77
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: 0.03
+  deck_width: 17.208
+  drawing_id: 37
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.454
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 16.984
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.455
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.754
+    right: 0.765
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.756
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.015
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 5.658
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 16.984
+  drawing_id: 38
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.418
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 16.928
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.418
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.754
+    right: 0.754
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.754
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 15.96
+  cap_slope: 0.03
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 5.63
+  column_tie_beam（width*height）: null
+  deck_slope: 0.03
+  deck_width: 16.928
+  foundation_type: 桩基础
+  drawing_id: 39
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.409
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.0
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.409
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.754
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.754
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 春陵江互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.36
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 5.83
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 17.404
+  drawing_id: 40
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.476
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.404
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.476
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.36
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.83
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: 0.02
+  deck_width: 17.404
+  drawing_id: 41
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.476
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.404
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.476
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.752
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.38
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.83
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: 0.02
+  deck_width: 17.424
+  drawing_id: 42
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.476
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.63
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.476
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.772
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.772
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.95
+  cap_height_mid: 1.8
+  cap_length: 13.32
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 8.62
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 14.362
+  drawing_id: 43
+  front_span_t_beam_count: 6
+  front_span_t_beam_spacing: 2.362
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 14.362
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 6
+  rear_span_t_beam_spacing: 2.362
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 14.57
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 4.935
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: -0.02
+  deck_width: 15.612
+  drawing_id: 44
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.172
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 16.218
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 6
+  rear_span_t_beam_spacing: 2.606
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.786
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.788
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 15.175
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.238
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: -0.02
+  deck_width: 16.218
+  drawing_id: 45
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.274
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 16.833
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.274
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.779
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.779
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 15.79
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.545
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: -0.02
+  deck_width: 16.833
+  drawing_id: 46
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.375
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 17.598
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.375
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.788
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.788
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.585
+  cap_slope: 0.02
+  cap_width: 2.2
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 5.943
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: 0.02
+  deck_width: 17.630
+  drawing_id: 47
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 2.508
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 18.324
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.508
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.48
+  support_center_distance_rear: 0.48
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.785
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.785
+    right: 0.752
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 16.79
+  cap_slope: -0.02
+  cap_width: 2.2
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 6.045
+  column_tie_beam（width*height）: 1.1*1.4
+  deck_slope: -0.02
+  deck_width: 17.606
+  drawing_id: 48
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.178
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 18.692
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.541
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.50
+  support_center_distance_rear: 0.50
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.792
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.792
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 17.28
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 6.29
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 18.324
+  drawing_id: 49
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.247
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 19.294
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 2.621
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.799
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.802
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 17.99
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 6.645
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 19.006
+  drawing_id: 50
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.349
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 20.106
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.349
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.795
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.795
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 18.25
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 6.775
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 19.294
+  drawing_id: 51
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 2.385
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 20.559
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.385
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.803
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.803
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 19.19
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 7.245
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 20.106
+  drawing_id: 52
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.204
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 21.291
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.519
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.806
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.805
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 19.515
+  cap_slope: 0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 7.408
+  column_tie_beam（width*height）: null
+  deck_slope: 0.02
+  deck_width: 20.559
+  drawing_id: 53
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.244
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 22.047
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 2.565
+  remarks: 双幅桥，左幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.811
+    right: 0.752
+  rear_support_edge_distance:
+    left: 0.808
+    right: 0.752
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 20.375
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 7.838
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 21.291
+  drawing_id: 54
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.353
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 22.564
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 9
+  rear_span_t_beam_spacing: 2.353
+  remarks: 双幅桥，右幅
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 简支
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.752
+    right: 0.799
+  rear_support_edge_distance:
+    left: 0.752
+    right: 0.799
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 大坪塘互通主线桥
+
+- cantilever_length: 1.3
+  cap_height_end: 1.05
+  cap_height_mid: 1.8
+  cap_length: 22.5
+  cap_slope: -0.03
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 8.9
+  column_tie_beam（width*height）: null
+  deck_slope: -0.03
+  deck_width: 23.5
+  drawing_id: 55
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.619
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 23.5
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.775
+    right: 0.775
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 新田A匝道1
+
+- cantilever_length: 1.3
+  cap_height_end: 1.05
+  cap_height_mid: 1.8
+  cap_length: 22.5
+  cap_slope: -0.03
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.6
+  column_spacing: 8.9
+  column_tie_beam（width*height）: 1.2*1.5
+  deck_slope: -0.03
+  deck_width: 23.5
+  drawing_id: 56
+  front_span_t_beam_count: 9
+  front_span_t_beam_spacing: 2.619
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 23.5
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.775
+    right: 0.775
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 新田A匝道1
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.0
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 6.6
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 12.0
+  drawing_id: 57
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.363
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 12.0
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: null
+  rear_span_t_beam_spacing: null
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 1.0
+  support_center_distance_rear: 1.0
+  support_symmetry: null
+  system_type: 先简支后连续
+  is_double_support: false
+  front_support_edge_distance:
+    left: 0.775
+    right: 0.775
+  rear_support_edge_distance:
+    left: null
+    right: null
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.0
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 6.6
+  column_tie_beam（width*height）: false
+  deck_slope: -0.02
+  deck_width: 12.0
+  drawing_id: 58
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.3625
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 12.0
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.3625
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.775
+    right: 0.775
+  rear_support_edge_distance:
+    left: 0.775
+    right: 0.775
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.0
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 6.6
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 11.985
+  drawing_id: 59
+  front_span_t_beam_count: 6
+  front_span_t_beam_spacing: 1.887
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 10.9852
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 2.359
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.782
+    right: 0.783
+  rear_support_edge_distance:
+    left: 0.782
+    right: 0.782
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 10.0
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 5.9
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 10.9852
+  drawing_id: 60
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 2.109
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 9.9852
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 6
+  rear_span_t_beam_spacing: 1.687
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.46
+  support_center_distance_rear: 0.46
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.782
+    right: 0.782
+  rear_support_edge_distance:
+    left: 0.782
+    right: 0.782
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.0
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 5.1
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 9.9852
+  drawing_id: 61
+  front_span_t_beam_count: 4
+  front_span_t_beam_spacing: 2.479
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 9.0
+  foundation_type: 桩基础
+  pile_diameter: 1.8
+  rear_span_t_beam_count: 5
+  rear_span_t_beam_spacing: 1.859
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.46
+  support_center_distance_rear: 0.46
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.782
+    right: 0.782
+  rear_support_edge_distance:
+    left: 0.782
+    right: 0.782
+  pier role: 边墩
+  pier type: 柱式墩
+  design drawing: 孟塘A
+  
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 15.15
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 3
+  column_diameter: 1.4
+  column_spacing: 5.625
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 16.0652
+  drawing_id: 62
+  front_span_t_beam_count: 8
+  front_span_t_beam_spacing: 1.931
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 13.736
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 9
+  rear_span_t_beam_spacing: 1.69
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.46
+  support_center_distance_rear: 0.46
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.817
+    right: 0.817
+  rear_support_edge_distance:
+    left: 0.817
+    right: 0.817
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.65
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 12.8
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 7.7
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 13.736
+  drawing_id: 63
+  front_span_t_beam_count: 7
+  front_span_t_beam_spacing: 1.862
+  lower_tie_beam（width*height）: false
+  next_deck_width: 11.856
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 8
+  rear_span_t_beam_spacing: 1.596
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.4
+  support_center_distance_rear: 0.4
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.813
+    right: 0.813
+  rear_support_edge_distance:
+    left: 0.813
+    right: 0.813
+  pier role: 边墩
+  pier type: 桩柱一体墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.3
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 11.0
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.6
+  column_spacing: 6.6
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 11.856
+  drawing_id: 64
+  front_span_t_beam_count: 6
+  front_span_t_beam_spacing: 1.861
+  lower_tie_beam（width*height）: false
+  next_deck_width: 10.456
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 7
+  rear_span_t_beam_spacing: 1.551
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.46
+  support_center_distance_rear: 0.46
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.847
+    right: 0.847
+  rear_support_edge_distance:
+    left: 0.847
+    right: 0.847
+  pier role: 中间墩  
+  pier type: 桩柱一体墩
+  design drawing: 孟塘A
+
+- cantilever_length: 1.05
+  cap_height_end: 0.85
+  cap_height_mid: 1.6
+  cap_length: 9.5
+  cap_slope: -0.02
+  cap_width: 2.0
+  column_count: 2
+  column_diameter: 1.4
+  column_spacing: 5.6
+  column_tie_beam（width*height）: null
+  deck_slope: -0.02
+  deck_width: 10.456
+  drawing_id: 65
+  front_span_t_beam_count: 5
+  front_span_t_beam_spacing: 1.977
+  lower_tie_beam（width*height）: 1.2*1.5
+  next_deck_width: 9.0
+  foundation_type: 桩基础
+  pile_diameter: 1.6
+  rear_span_t_beam_count: 6
+  rear_span_t_beam_spacing: 1.581
+  remarks: 单幅桥
+  span_length: 30
+  support_center_distance_front: 0.46
+  support_center_distance_rear: 0.46
+  support_symmetry: 不对称
+  system_type: 先简支后连续
+  is_double_support: true
+  front_support_edge_distance:
+    left: 0.797
+    right: 0.797
+  rear_support_edge_distance:
+    left: 0.797
+    right: 0.797
+  pier role: 中间墩
+  pier type: 柱式墩
+  design drawing: 孟塘A

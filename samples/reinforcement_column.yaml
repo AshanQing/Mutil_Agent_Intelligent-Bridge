@@ -1,0 +1,935 @@
+示例1:
+
+  输入:
+
+    基本信息:
+      drawing_id: 14                   # 图纸或案例编号
+      pier_role: 边墩                     # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 1800            # 墩柱直径，单位：mm
+      column_height: 11769              # 墩柱高度，单位：mm
+      column_spacing: 7250              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 28                   # N1钢筋直径，单位：mm
+            count: 44                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1600"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 柱底加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 27"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱身普通区
+                y_from: "100 * 27"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 27 + 150 * 42"    # 普通区终点坐标，单位：mm
+                pitch: 150                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 27 + 150 * 42"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 27 + 150 * 42 + 69"    # 普通区终点坐标，单位：mm
+                pitch: 69                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱顶加密区
+                y_from: "100 * 27 + 150 * 42 + 69"                       # 柱顶加密区起点坐标，单位：mm
+                y_to: "100 * 27 + 150 * 42 + 69 + 100 * 27 = column_height"                        # 柱顶加密区终点坐标，通常为柱顶，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 柱底加密区, pitch: 100 }
+                - { name: 柱身普通区, pitch: 150 }
+                - { name: 过渡调整区, pitch: 69 }
+                - { name: 柱顶加密区, pitch: 100 }
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 7"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 7                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 28                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 1615        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 884             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 6               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm
+
+示例2:
+
+  输入:
+
+    基本信息:
+      drawing_id: 13                   # 图纸或案例编号
+      pier_role: 中间墩                    # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 1800            # 墩柱直径，单位：mm
+      column_height: 3420              # 墩柱高度，单位：mm
+      column_spacing: 7250              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 28                   # N1钢筋直径，单位：mm
+            count: 44                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1600"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 34"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 34"                      # 柱底加密区起点坐标，单位：mm
+                y_to: column_height               # 柱底加密区终点坐标，单位：mm
+                pitch: 20                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 加密区, pitch: 100 }
+                - { name: 过渡调整区, pitch: 20 }
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 7"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 7                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 28                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 1615        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 710             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 2               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm
+
+示例3:
+
+  输入:
+
+    基本信息:
+      drawing_id: 15                   # 图纸或案例编号
+      pier_role: 中间墩                   # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 2000            # 墩柱直径，单位：mm
+      column_height: 29040              # 墩柱高度，单位：mm
+      column_spacing: 7250              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 28                   # N1钢筋直径，单位：mm
+            count: 50                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1600"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 柱底加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 30"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱身普通区
+                y_from: "100 * 30"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 30 + 150 * 153"    # 普通区终点坐标，单位：mm
+                pitch: 150                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 30 + 150 * 153"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 30 + 150 * 153 + 90"    # 普通区终点坐标，单位：mm
+                pitch: 90                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱顶加密区
+                y_from: "100 * 30 + 150 * 153 + 90"                       # 柱顶加密区起点坐标，单位：mm
+                y_to: "100 * 30 + 150 * 153 + 90 + 100 * 30 = column_height"                        # 柱顶加密区终点坐标，通常为柱顶，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 柱底加密区, pitch: 100 }
+                - { name: 柱身普通区, pitch: 150 }
+                - { name: 过渡调整区, pitch: 90 }
+                - { name: 柱顶加密区, pitch: 100 }
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 7"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 7                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 28                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 1815        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 520             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 15               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm
+
+示例4:
+
+  输入:
+
+    基本信息:
+      drawing_id: 17                   # 图纸或案例编号
+      pier_role: 中间墩                    # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 2200            # 墩柱直径，单位：mm
+      column_height: 42200              # 墩柱高度，单位：mm
+      column_spacing: 7250              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 28                   # N1钢筋直径，单位：mm
+            count: 60                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1600"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 柱底加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 33"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱身普通区
+                y_from: "100 * 33"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 33 + 150 * 237"    # 普通区终点坐标，单位：mm
+                pitch: 150                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 33 + 150 * 237"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 33 + 150 * 237 + 50"    # 普通区终点坐标，单位：mm
+                pitch: 50                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱顶加密区
+                y_from: "100 * 33 + 150 * 237 + 50"                       # 柱顶加密区起点坐标，单位：mm
+                y_to: "100 * 33 + 150 * 237 + 50 + 100 * 33 = column_height"                        # 柱顶加密区终点坐标，通常为柱顶，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 柱底加密区, pitch: 100 }
+                - { name: 柱身普通区, pitch: 150 }
+                - { name: 过渡调整区, pitch: 50 }
+                - { name: 柱顶加密区, pitch: 100 }
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 7"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 7                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 28                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 2015        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 1100             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 21               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm
+
+示例5:
+
+  输入:
+
+    基本信息:
+      drawing_id: 9                   # 图纸或案例编号
+      pier_role: 中间墩                    # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 1600            # 墩柱直径，单位：mm
+      column_height: 5001              # 墩柱高度，单位：mm
+      column_spacing: 9000              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 28                   # N1钢筋直径，单位：mm
+            count: 32                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1400"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 柱底加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 24"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱身普通区
+                y_from: "100 * 24"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 24 + 150 * 1"    # 普通区终点坐标，单位：mm
+                pitch: 150                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 24 + 150 * 1"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 24 + 150 * 1 + 51"    # 普通区终点坐标，单位：mm
+                pitch: 51                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱顶加密区
+                y_from: "100 * 24 + 150 * 1 + 51"                       # 柱顶加密区起点坐标，单位：mm
+                y_to: "100 * 24 + 150 * 1 + 51 + 100 * 24 = column_height"                        # 柱顶加密区终点坐标，通常为柱顶，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 柱底加密区, pitch: 100 }
+                - { name: 柱身普通区, pitch: 150 }
+                - { name: 过渡调整区, pitch: 51 }
+                - { name: 柱顶加密区, pitch: 100 }
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 6"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 6                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 28                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 1415        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 500             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 3               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm
+
+示例6:
+
+  输入:
+
+    基本信息:
+      drawing_id: 22                   # 图纸或案例编号
+      pier_role: 中间墩                    # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 1400            # 墩柱直径，单位：mm
+      column_height: 7512              # 墩柱高度，单位：mm
+      column_spacing: 5400              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 28                   # N1钢筋直径，单位：mm
+            count: 32                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1400"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 柱底加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 21"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱身普通区
+                y_from: "100 * 21"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 21 + 150 * 22"    # 普通区终点坐标，单位：mm
+                pitch: 150                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 21 + 150 * 22"                       # 普通区起点坐标，单位：mm
+                y_to: "100 * 21 + 150 * 22 + 12"    # 普通区终点坐标，单位：mm
+                pitch: 12                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 柱顶加密区
+                y_from: "100 * 21 + 150 * 22 + 12"                       # 柱顶加密区起点坐标，单位：mm
+                y_to: "100 * 21 + 150 * 22 + 12 + 100 * 21 = column_height"                        # 柱顶加密区终点坐标，通常为柱顶，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 柱底加密区, pitch: 100 }
+                - { name: 柱身普通区, pitch: 150 }
+                - { name: 过渡调整区, pitch: 12 }
+                - { name: 柱顶加密区, pitch: 100 }
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 6"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 6                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 28                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 1228        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 756             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 4               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm
+
+示例7:
+
+  输入:
+
+    基本信息:
+      drawing_id: 20                   # 图纸或案例编号
+      pier_role: 中间墩                    # 墩位角色，如中间墩
+      pier_type: 柱式墩              # 墩柱结构形式
+
+    墩柱几何信息:
+      column_count: 2                  # 墩柱数量
+      column_diameter: 1400            # 墩柱直径，单位：mm
+      column_height: 3470              # 墩柱高度，单位：mm
+      column_spacing: 4660              # 多柱式桥墩墩柱中心间距，单位：mm
+
+    保护层与控制参数:
+      concrete_cover: 45             # 墩柱纵向主筋N1外缘至混凝土表面的距离，单位：mm
+
+      # 墩柱局部竖向坐标系：
+      # y = 0：柱底
+      # y = column_height：柱顶，即盖梁底
+      # y > column_height：伸入盖梁内部
+      # y轴竖直向上为正
+
+
+  输出:
+
+    reinforcement:
+
+      pier_column:
+
+        # ============================================================
+        # N1 墩柱纵向主筋
+        # ============================================================
+        longitudinal_bars:
+
+          - id: N1
+            category: 主筋
+            subtype: 墩柱纵向主筋
+            dia: 25                   # N1钢筋直径，单位：mm
+            count: 32                  # 单根墩柱截面内N1纵筋总根数
+
+            section_definition:
+              arrangement: circular_uniform    # 沿圆形截面环向均匀布置
+              bar_centerline_diameter: "column_diameter - 2 * concrete_cover - dia"        # N1圆心所在圆的直径，单位：mm
+
+            range_definition:
+              y_start: 0                       # N1起点位于柱底
+              y_end: "column_height + 1400"      # N1终点竖向坐标，包含伸入盖梁部分，单位：mm
+
+
+        # ============================================================
+        # N2 墩柱螺旋箍筋
+        # ============================================================
+        spiral_stirrups:
+
+          - id: N2
+            category: 箍筋
+            subtype: 墩柱螺旋箍筋
+            dia: 10                     # N2螺旋箍筋钢筋直径，单位：mm
+
+            section_definition:
+              hoop_diameter: "column_diameter - 2 * concrete_cover + dia"        # N2钢筋中心线形成的圆直径，单位：mm
+              enclosed_rebar: N1               # N2包围N1纵向主筋
+
+            vertical_distribution:
+
+              - name: 加密区
+                y_from: 0                      # 柱底加密区起点坐标，单位：mm
+                y_to: "100 * 34"               # 柱底加密区终点坐标，单位：mm
+                pitch: 100                     # 本案例螺旋箍筋螺距，单位：mm
+
+              - name: 过渡调整区
+                y_from: "100 * 34"                      # 柱底加密区起点坐标，单位：mm
+                y_to: column_height               # 柱底加密区终点坐标，单位：mm
+                pitch: 70                     # 本案例螺旋箍筋螺距，单位：mm
+
+            distribution_overview:
+              y_start: 0                       # N2总体布置起点
+              y_end: column_height                          # N2总体布置终点，即柱顶
+              segment_sequence:
+                - { name: 加密区, pitch: 100 }
+                - { name: 过渡调整区, pitch: 70 }
+
+
+
+        # ============================================================
+        # N3 柱顶伸入盖梁段普通箍筋
+        # ============================================================
+        ordinary_hoops:
+
+          - id: N3
+            category: 箍筋
+            subtype: 柱顶伸入盖梁段普通箍筋
+            dia: 10                     # N3普通箍筋钢筋直径，单位：mm
+
+            section_definition:
+              same_circle_as: N2                # N3与N2采用相同的箍筋圈位置
+
+            distribution_overview:
+              y_start: "column_height + 200"                        # N3第一道箍筋竖向坐标
+              y_end:  "column_height + 200 * 6"                         # N3最后一道箍筋竖向坐标
+              spacing: 200                      # 本案例普通箍筋竖向间距，单位：mm
+              count: 6                           # N3普通箍筋总圈数
+
+
+        # ============================================================
+        # N4 墩柱
+        # ============================================================
+        strengthening_bars:
+
+          - id: N4
+            category: 加强筋
+            subtype: 墩柱
+            dia: 22                    # N4直径，单位：mm
+
+
+            section_definition:
+              hoop_diameter: 1228        # N4钢筋中心线形成的圆直径，单位：mm
+
+            vertical_distribution:
+              first_y: 735             # 第一圈N4距柱底的竖向坐标，单位：mm
+              last_y: "column_height - first_y"              # 最后一圈N4的竖向坐标，单位：mm
+              count: 2               # N4总圈数
+              spacing: "(last_y - first_y)/(count - 1)"             # N4竖向间距，单位：mm

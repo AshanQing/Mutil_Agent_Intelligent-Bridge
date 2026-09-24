@@ -1,0 +1,41 @@
+__pycache__/
+*.pyc
+.venv/
+tmp/
+.env
+.env.*
+!.env.example
+.claude/
+# Runtime outputs and generated previews
+output/
+outputs/
+show/
+_beginner_render/
+_docx_render/
+实验/
+
+# Local editor/runtime noise
+.pytest_cache/
+.pytest_tmp/
+.pytest_tmp_*/
+.pytest_tmp_root/
+pytest-of-*/
+*.pytest_tmp_root/
+*.tmp_pytest/
+.agent_tmp/
+.agent_tmp*/
+.agent_tmp*.txt
+.codex_tmp/
+.tmp_*
+tempCodeRunnerFile.py
+pipeline_merge_*/
+tmp[0-9a-z]*/
+tests/**/test_tmp_*.py
+doc_dump.xml
+_resume_extract.txt
+resume_text.txt
+seg_model/
+
+# Unrelated external apps / tests
+apps/
+tests/test_ai_study_tracker.py

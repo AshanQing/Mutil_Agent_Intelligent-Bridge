@@ -1,0 +1,2016 @@
+metadata:
+  library_name: JTG_D60_2015_Tables_Library
+  standard: JTG D60-2015
+  version: reasonableness_fixed_v0.1
+  architecture: Four-Module Nested (meta, schema, constraints, data)
+  standard_name: 公路桥涵设计通用规范
+  library_type: table_registry
+  generation_note: 根据 JTG_D60_2015_reasonableness_review.md 修正：补充 formula_status，回写表格/公式/变量关联，对人工判断语义规则标记 hybrid/manual_review，保留需人工复核的泛化变量。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+tables:
+- id: T_D60_1_0_4_DESIGN_WORKING_LIFE
+  meta:
+    name: 桥涵设计使用年限表
+    source: JTG D60-2015, 表1.0.4
+    description: 根据公路等级、桥涵类别和构件类型查询设计使用年限。 主体结构和可更换部件应分开查询。
+    remarks: 表中“高速公路、一级公路”为同一组取值； “二级公路、三级公路”为同一组取值； 四级公路单独列出，但其主体结构取值与二级、三级公路相同。
+    related_rules:
+    - R_D60_CH01_004
+  schema:
+    inputs:
+    - road_grade
+    - bridge_class
+    - component_type
+    - replaceable_component_flag
+    outputs:
+    - design_working_life_years
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - road_grade: 高速公路
+    component_category: 主体结构
+    component_type: 特大桥/大桥
+    design_working_life_years: 100
+  - road_grade: 高速公路
+    component_category: 主体结构
+    component_type: 中桥
+    design_working_life_years: 100
+  - road_grade: 高速公路
+    component_category: 主体结构
+    component_type: 小桥/涵洞
+    design_working_life_years: 50
+  - road_grade: 高速公路
+    component_category: 可更换部件
+    component_type: 斜拉索/吊索/系杆等
+    design_working_life_years: 20
+  - road_grade: 高速公路
+    component_category: 可更换部件
+    component_type: 栏杆/伸缩装置/支座等
+    design_working_life_years: 15
+  - road_grade: 一级公路
+    component_category: 主体结构
+    component_type: 特大桥/大桥
+    design_working_life_years: 100
+  - road_grade: 一级公路
+    component_category: 主体结构
+    component_type: 中桥
+    design_working_life_years: 100
+  - road_grade: 一级公路
+    component_category: 主体结构
+    component_type: 小桥/涵洞
+    design_working_life_years: 50
+  - road_grade: 一级公路
+    component_category: 可更换部件
+    component_type: 斜拉索/吊索/系杆等
+    design_working_life_years: 20
+  - road_grade: 一级公路
+    component_category: 可更换部件
+    component_type: 栏杆/伸缩装置/支座等
+    design_working_life_years: 15
+  - road_grade: 二级公路
+    component_category: 主体结构
+    component_type: 特大桥/大桥
+    design_working_life_years: 100
+  - road_grade: 二级公路
+    component_category: 主体结构
+    component_type: 中桥
+    design_working_life_years: 50
+  - road_grade: 二级公路
+    component_category: 主体结构
+    component_type: 小桥/涵洞
+    design_working_life_years: 30
+  - road_grade: 二级公路
+    component_category: 可更换部件
+    component_type: 斜拉索/吊索/系杆等
+    design_working_life_years: 20
+  - road_grade: 二级公路
+    component_category: 可更换部件
+    component_type: 栏杆/伸缩装置/支座等
+    design_working_life_years: 15
+  - road_grade: 三级公路
+    component_category: 主体结构
+    component_type: 特大桥/大桥
+    design_working_life_years: 100
+  - road_grade: 三级公路
+    component_category: 主体结构
+    component_type: 中桥
+    design_working_life_years: 50
+  - road_grade: 三级公路
+    component_category: 主体结构
+    component_type: 小桥/涵洞
+    design_working_life_years: 30
+  - road_grade: 三级公路
+    component_category: 可更换部件
+    component_type: 斜拉索/吊索/系杆等
+    design_working_life_years: 20
+  - road_grade: 三级公路
+    component_category: 可更换部件
+    component_type: 栏杆/伸缩装置/支座等
+    design_working_life_years: 15
+  - road_grade: 四级公路
+    component_category: 主体结构
+    component_type: 特大桥/大桥
+    design_working_life_years: 100
+  - road_grade: 四级公路
+    component_category: 主体结构
+    component_type: 中桥
+    design_working_life_years: 50
+  - road_grade: 四级公路
+    component_category: 主体结构
+    component_type: 小桥/涵洞
+    design_working_life_years: 30
+  - road_grade: 四级公路
+    component_category: 可更换部件
+    component_type: 斜拉索/吊索/系杆等
+    design_working_life_years: 20
+  - road_grade: 四级公路
+    component_category: 可更换部件
+    component_type: 栏杆/伸缩装置/支座等
+    design_working_life_years: 15
+- id: T_D60_1_0_5_BRIDGE_CLASSIFICATION
+  meta:
+    name: 桥梁涵洞分类表
+    source: JTG D60-2015, 表1.0.5
+    description: 分别按多孔跨径总长和单孔跨径查询类别； 当两者对应类别不一致时，取较高类别。
+    related_rules:
+    - R_D60_CH01_005
+    - R_D60_CH03_023
+  schema:
+    inputs:
+    - bridge_total_length
+    - single_span_length
+    outputs:
+    - bridge_class
+  constraints:
+    matching_method: range
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - bridge_class: 特大桥
+    bridge_total_length_condition: L > 1000
+    single_span_length_condition: Lk > 150
+  - bridge_class: 大桥
+    bridge_total_length_condition: 100 <= L <= 1000
+    single_span_length_condition: 40 <= Lk <= 150
+  - bridge_class: 中桥
+    bridge_total_length_condition: 30 < L < 100
+    single_span_length_condition: 20 <= Lk < 40
+  - bridge_class: 小桥
+    bridge_total_length_condition: 8 <= L <= 30
+    single_span_length_condition: 5 <= Lk < 20
+  - bridge_class: 涵洞
+    bridge_total_length_condition: L < 8
+    single_span_length_condition: Lk < 5
+- id: T_D60_3_2_9_DESIGN_FLOOD_FREQUENCY
+  meta:
+    name: 桥涵设计洪水频率表
+    source: JTG D60-2015, 表3.2.9
+    description: 根据公路等级、桥涵类别和特殊结构类型查询设计洪水频率。 漫水桥、过水路面等应按特殊条文另行处理。
+    remarks: 表中设计洪水频率以“1/n”形式存储，表示n年一遇设计洪水频率。 四级公路涵洞及小型排水构造物为“不作规定”，执行引擎应将其识别为非数值型结果， 后续可进入人工确认或地方标准补充判断。
+    related_rules:
+    - R_D60_CH03_018
+  schema:
+    inputs:
+    - road_grade
+    - bridge_class
+    outputs:
+    - design_flood_frequency
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - road_grade: 高速公路
+    bridge_class: 特大桥
+    design_flood_frequency: 1/300
+  - road_grade: 高速公路
+    bridge_class: 大桥
+    design_flood_frequency: 1/100
+  - road_grade: 高速公路
+    bridge_class: 中桥
+    design_flood_frequency: 1/100
+  - road_grade: 高速公路
+    bridge_class: 小桥
+    design_flood_frequency: 1/100
+  - road_grade: 高速公路
+    bridge_class: 涵洞及小型排水构造物
+    design_flood_frequency: 1/100
+  - road_grade: 一级公路
+    bridge_class: 特大桥
+    design_flood_frequency: 1/300
+  - road_grade: 一级公路
+    bridge_class: 大桥
+    design_flood_frequency: 1/100
+  - road_grade: 一级公路
+    bridge_class: 中桥
+    design_flood_frequency: 1/100
+  - road_grade: 一级公路
+    bridge_class: 小桥
+    design_flood_frequency: 1/100
+  - road_grade: 一级公路
+    bridge_class: 涵洞及小型排水构造物
+    design_flood_frequency: 1/100
+  - road_grade: 二级公路
+    bridge_class: 特大桥
+    design_flood_frequency: 1/100
+  - road_grade: 二级公路
+    bridge_class: 大桥
+    design_flood_frequency: 1/100
+  - road_grade: 二级公路
+    bridge_class: 中桥
+    design_flood_frequency: 1/100
+  - road_grade: 二级公路
+    bridge_class: 小桥
+    design_flood_frequency: 1/50
+  - road_grade: 二级公路
+    bridge_class: 涵洞及小型排水构造物
+    design_flood_frequency: 1/50
+  - road_grade: 三级公路
+    bridge_class: 特大桥
+    design_flood_frequency: 1/100
+  - road_grade: 三级公路
+    bridge_class: 大桥
+    design_flood_frequency: 1/50
+  - road_grade: 三级公路
+    bridge_class: 中桥
+    design_flood_frequency: 1/50
+  - road_grade: 三级公路
+    bridge_class: 小桥
+    design_flood_frequency: 1/25
+  - road_grade: 三级公路
+    bridge_class: 涵洞及小型排水构造物
+    design_flood_frequency: 1/25
+  - road_grade: 四级公路
+    bridge_class: 特大桥
+    design_flood_frequency: 1/100
+  - road_grade: 四级公路
+    bridge_class: 大桥
+    design_flood_frequency: 1/50
+  - road_grade: 四级公路
+    bridge_class: 中桥
+    design_flood_frequency: 1/50
+  - road_grade: 四级公路
+    bridge_class: 小桥
+    design_flood_frequency: 1/25
+  - road_grade: 四级公路
+    bridge_class: 涵洞及小型排水构造物
+    design_flood_frequency: 不作规定
+- id: T_D60_3_3_6_STANDARD_SPAN_LIST
+  meta:
+    name: 桥涵标准化跨径表
+    source: JTG D60-2015, 3.3.6条
+    description: 当桥涵跨径在50m及以下时，宜采用标准化跨径。 输入 span_length_m 后，判断其是否属于 standard_span_list_m。 若属于，则 is_standard_span = true；否则为
+      false，并可输出邻近标准跨径建议。
+    remarks: 本条为条文列举型参数表，并非原规范表格。 适用于桥涵跨径50m及以下时的标准化跨径判断。 条文同时提出，采用标准化跨径的桥涵宜采用装配式结构及机械化、工厂化施工。 已将标准跨径列表改写为逐行记录结构，便于自动查表按 schema.outputs
+      读取。
+    related_rules:
+    - R_D60_CH03_024
+  schema:
+    inputs:
+    - span_length_m
+    outputs:
+    - is_standard_span
+    - standard_span_list_m
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - span_length_m: 0.75
+    standard_span_list_m: 0.75
+    is_standard_span: true
+  - span_length_m: 1.0
+    standard_span_list_m: 1.0
+    is_standard_span: true
+  - span_length_m: 1.25
+    standard_span_list_m: 1.25
+    is_standard_span: true
+  - span_length_m: 1.5
+    standard_span_list_m: 1.5
+    is_standard_span: true
+  - span_length_m: 2.0
+    standard_span_list_m: 2.0
+    is_standard_span: true
+  - span_length_m: 2.5
+    standard_span_list_m: 2.5
+    is_standard_span: true
+  - span_length_m: 3.0
+    standard_span_list_m: 3.0
+    is_standard_span: true
+  - span_length_m: 4.0
+    standard_span_list_m: 4.0
+    is_standard_span: true
+  - span_length_m: 5.0
+    standard_span_list_m: 5.0
+    is_standard_span: true
+  - span_length_m: 6.0
+    standard_span_list_m: 6.0
+    is_standard_span: true
+  - span_length_m: 8.0
+    standard_span_list_m: 8.0
+    is_standard_span: true
+  - span_length_m: 10.0
+    standard_span_list_m: 10.0
+    is_standard_span: true
+  - span_length_m: 13.0
+    standard_span_list_m: 13.0
+    is_standard_span: true
+  - span_length_m: 16.0
+    standard_span_list_m: 16.0
+    is_standard_span: true
+  - span_length_m: 20.0
+    standard_span_list_m: 20.0
+    is_standard_span: true
+  - span_length_m: 25.0
+    standard_span_list_m: 25.0
+    is_standard_span: true
+  - span_length_m: 30.0
+    standard_span_list_m: 30.0
+    is_standard_span: true
+  - span_length_m: 35.0
+    standard_span_list_m: 35.0
+    is_standard_span: true
+  - span_length_m: 40.0
+    standard_span_list_m: 40.0
+    is_standard_span: true
+  - span_length_m: 45.0
+    standard_span_list_m: 45.0
+    is_standard_span: true
+  - span_length_m: 50.0
+    standard_span_list_m: 50.0
+    is_standard_span: true
+- id: T_D60_3_4_3_MIN_UNDERBRIDGE_CLEARANCE
+  meta:
+    name: 非通航河流桥下最小净空表
+    source: JTG D60-2015, 表3.4.3
+    description: 用于非通航河流桥梁桥下净空控制。
+    related_rules:
+    - R_D60_CH03_027
+  schema:
+    inputs:
+    - bridge_part
+    - debris_condition
+    - water_level_type
+    outputs:
+    - min_underbridge_clearance_m
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - bridge_part: 梁底
+    hydraulic_condition: 洪水期无大漂流物
+    water_level_type: 高出计算水位
+    min_underbridge_clearance_m: 0.5
+  - bridge_part: 梁底
+    hydraulic_condition: 洪水期无大漂流物
+    water_level_type: 高出最高流冰水面
+    min_underbridge_clearance_m: 0.75
+  - bridge_part: 梁底
+    hydraulic_condition: 洪水期有大漂流物
+    water_level_type: 高出计算水位
+    min_underbridge_clearance_m: 1.5
+  - bridge_part: 梁底
+    hydraulic_condition: 洪水期有大漂流物
+    water_level_type: 高出最高流冰水面
+    min_underbridge_clearance_m: null
+    status: not_specified
+  - bridge_part: 梁底
+    hydraulic_condition: 有泥石流
+    water_level_type: 高出计算水位
+    min_underbridge_clearance_m: 1.0
+  - bridge_part: 梁底
+    hydraulic_condition: 有泥石流
+    water_level_type: 高出最高流冰水面
+    min_underbridge_clearance_m: null
+    status: not_specified
+  - bridge_part: 支承垫石顶面
+    hydraulic_condition: 通用
+    water_level_type: 高出计算水位
+    min_underbridge_clearance_m: 0.25
+  - bridge_part: 支承垫石顶面
+    hydraulic_condition: 通用
+    water_level_type: 高出最高流冰水面
+    min_underbridge_clearance_m: 0.5
+  - bridge_part: 有铰拱拱脚
+    hydraulic_condition: 通用
+    water_level_type: 高出计算水位
+    min_underbridge_clearance_m: 0.25
+  - bridge_part: 有铰拱拱脚
+    hydraulic_condition: 通用
+    water_level_type: 高出最高流冰水面
+    min_underbridge_clearance_m: 0.25
+- id: T_D60_3_4_4_CULVERT_FREEBOARD
+  meta:
+    name: 无压力式涵洞净高表
+    source: JTG D60-2015, 表3.4.4
+    description: 用于无压力式涵洞内顶点至设计洪水位之间净高控制。
+    related_rules:
+    - R_D60_CH03_028
+    remarks: ' data 行中补充 min_freeboard_m 字段，并保留原 min_freeboard_requirement 结构。'
+  schema:
+    inputs:
+    - culvert_type
+    - inlet_height
+    - design_water_level
+    outputs:
+    - min_freeboard_m
+  constraints:
+    matching_method: range
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - culvert_type: 管涵
+    inlet_clear_height_condition: h <= 3
+    min_freeboard_requirement:
+      expression: h / 4
+      comparison: '>='
+      unit: m
+    min_freeboard_m:
+      expression: h / 4
+      comparison: '>='
+      unit: m
+  - culvert_type: 拱涵
+    inlet_clear_height_condition: h <= 3
+    min_freeboard_requirement:
+      expression: h / 4
+      comparison: '>='
+      unit: m
+    min_freeboard_m:
+      expression: h / 4
+      comparison: '>='
+      unit: m
+  - culvert_type: 矩形涵
+    inlet_clear_height_condition: h <= 3
+    min_freeboard_requirement:
+      expression: h / 6
+      comparison: '>='
+      unit: m
+    min_freeboard_m:
+      expression: h / 6
+      comparison: '>='
+      unit: m
+  - culvert_type: 管涵
+    inlet_clear_height_condition: h > 3
+    min_freeboard_requirement:
+      value: 0.75
+      comparison: '>='
+      unit: m
+    min_freeboard_m:
+      value: 0.75
+      comparison: '>='
+      unit: m
+  - culvert_type: 拱涵
+    inlet_clear_height_condition: h > 3
+    min_freeboard_requirement:
+      value: 0.75
+      comparison: '>='
+      unit: m
+    min_freeboard_m:
+      value: 0.75
+      comparison: '>='
+      unit: m
+  - culvert_type: 矩形涵
+    inlet_clear_height_condition: h > 3
+    min_freeboard_requirement:
+      value: 0.5
+      comparison: '>='
+      unit: m
+    min_freeboard_m:
+      value: 0.5
+      comparison: '>='
+      unit: m
+- id: T_D60_3_7_3_ASPHALT_PAVEMENT_THICKNESS
+  meta:
+    name: 沥青混凝土桥面铺装厚度表
+    source: JTG D60-2015, 3.7.3条
+    description: "用于不同公路等级桥梁沥青混凝土桥面铺装厚度控制。\n 高速公路和一级公路桥梁不宜小于70mm；\n二级及以下公路桥梁不宜小于50mm。"
+    related_rules:
+    - R_D60_CH03_048
+  schema:
+    inputs:
+    - road_grade
+    - pavement_type
+    outputs:
+    - min_pavement_thickness_mm
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - road_grade: 高速公路
+    pavement_type: 沥青混凝土桥面铺装
+    min_pavement_thickness_mm: 70
+  - road_grade: 一级公路
+    pavement_type: 沥青混凝土桥面铺装
+    min_pavement_thickness_mm: 70
+  - road_grade: 二级公路
+    pavement_type: 沥青混凝土桥面铺装
+    min_pavement_thickness_mm: 50
+  - road_grade: 三级公路
+    pavement_type: 沥青混凝土桥面铺装
+    min_pavement_thickness_mm: 50
+  - road_grade: 四级公路
+    pavement_type: 沥青混凝土桥面铺装
+    min_pavement_thickness_mm: 50
+- id: T_D60_3_7_4_CONCRETE_PAVEMENT_REQUIREMENT
+  meta:
+    name: 水泥混凝土桥面铺装构造要求表
+    source: JTG D60-2015, 3.7.4条
+    description: 本条用于水泥混凝土桥面铺装构造合规性检查。 铺装面层厚度不包含整平层和垫层； 混凝土强度等级不应低于C40； 铺装层内应配置钢筋焊网，钢筋直径不宜小于8mm，间距不宜大于100mm。
+    related_rules:
+    - R_D60_CH03_049
+    remarks: ' data 行中补充 steel_mesh_requirement 字段，与 schema.outputs 保持一致。'
+  schema:
+    inputs:
+    - pavement_type
+    - road_grade
+    outputs:
+    - min_pavement_thickness_m
+    - min_concrete_strength_grade
+    - steel_mesh_requirement
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - pavement_type: 水泥混凝土桥面铺装
+    min_pavement_thickness_mm: 80
+    min_pavement_thickness_m: 0.08
+    pavement_thickness_excluded_layers:
+    - 整平层
+    - 垫层
+    min_concrete_strength_grade: C40
+    steel_mesh_required: true
+    min_steel_mesh_diameter_mm: 8
+    max_steel_mesh_spacing_mm: 100
+    steel_mesh_requirement: 应设置钢筋网；钢筋直径不宜小于8mm，间距不宜大于100mm。
+- id: T_D60_4_1_1_ACTION_CLASSIFICATION
+  meta:
+    name: 作用分类表
+    source: JTG D60-2015, 表4.1.1
+    description: 由4.1.1条作用分类语义整理而成，用于自动识别作用类别。
+    related_rules:
+    - R_D60_CH04_001
+  schema:
+    inputs:
+    - action_name
+    outputs:
+    - action_category
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - action_category: permanent_action
+    action_category_cn: 永久作用
+    actions:
+    - 结构重力
+    - 预加力
+    - 土重
+    - 土侧压力
+    - 混凝土收缩作用
+    - 混凝土徐变作用
+    - 水浮力
+    - 基础变位作用
+  - action_category: variable_action
+    action_category_cn: 可变作用
+    actions:
+    - 汽车荷载
+    - 汽车冲击力
+    - 汽车离心力
+    - 汽车制动力
+    - 汽车引起的土侧压力
+    - 人群荷载
+    - 风荷载
+    - 流水压力
+    - 冰压力
+    - 温度作用
+    - 支座摩阻力
+  - action_category: accidental_action
+    action_category_cn: 偶然作用
+    actions:
+    - 船舶撞击作用
+    - 漂流物撞击作用
+    - 汽车撞击作用
+  - action_category: seismic_action
+    action_category_cn: 地震作用
+    actions:
+    - 地震作用
+- id: T_D60_4_1_2_REPRESENTATIVE_VALUE_TYPE
+  meta:
+    name: 作用代表值类型表
+    source: JTG D60-2015, 4.1.2条
+    description: 用于根据作用类别和组合类型选择标准值、组合值、频遇值、准永久值或设计值。
+    related_rules:
+    - R_D60_CH04_002
+  schema:
+    inputs:
+    - action_category
+    - combination_type
+    outputs:
+    - representative_value_type
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - action_category: permanent_action
+    representative_value_type: standard_value
+  - action_category: variable_action
+    representative_value_type:
+    - standard_value
+    - combination_value
+    - frequent_value
+    - quasi_permanent_value
+  - action_category: accidental_action
+    representative_value_type: design_value
+  - action_category: seismic_action
+    representative_value_type: standard_value
+- id: T_D60_4_1_4_ACTION_SIMULTANEITY
+  meta:
+    name: 不同时参与组合的作用表
+    source: JTG D60-2015, 表4.1.4
+    description: 用于自动剔除实际不同时出现的作用组合。
+    related_rules:
+    - R_D60_CH04_004
+  schema:
+    inputs:
+    - action_name
+    outputs:
+    - excluded_simultaneous_actions
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - action_name: 汽车制动力
+    excluded_simultaneous_actions:
+    - 流水压力
+    - 冰压力
+    - 波浪力
+    - 支座摩阻力
+  - action_name: 流水压力
+    excluded_simultaneous_actions:
+    - 汽车制动力
+    - 冰压力
+    - 波浪力
+  - action_name: 波浪力
+    excluded_simultaneous_actions:
+    - 汽车制动力
+    - 流水压力
+    - 冰压力
+  - action_name: 冰压力
+    excluded_simultaneous_actions:
+    - 汽车制动力
+    - 流水压力
+    - 波浪力
+  - action_name: 支座摩阻力
+    excluded_simultaneous_actions:
+    - 汽车制动力
+- id: T_D60_4_1_5_1_STRUCTURE_SAFETY_LEVEL
+  meta:
+    name: 桥梁结构设计安全等级表
+    source: JTG D60-2015, 表4.1.5-1
+    description: 根据公路等级、桥涵类别及交通重要性确定公路桥涵结构设计安全等级。 对多跨不等跨桥梁，应按其中最大单孔跨径确定桥梁类别。 若同一结构同时满足多个安全等级条件，应取较高安全等级。
+    remarks: 本表用于承载能力极限状态作用组合及结构重要性相关规则的前置分类。 表中列举的特大桥、大桥、中桥等桥梁类别应按表1.0.5中的单孔跨径确定； 对多跨不等跨桥梁，以其中最大跨径为准。 执行引擎应优先匹配高等级安全等级，即当同一对象满足多个条件时，取priority_level较高者。
+    related_rules:
+    - R_D60_CH04_005
+  schema:
+    inputs:
+    - bridge_class
+    - component_importance
+    outputs:
+    - design_safety_level
+    - failure_consequence
+  constraints:
+    matching_method: condition
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - design_safety_level: 一级
+    priority_level: 1.1
+    failure_consequence: 很严重
+    applicable_conditions:
+    - condition_id: L1_01
+      object_type: 桥梁
+      road_grade: 各等级公路
+      bridge_class:
+      - 特大桥
+      - 大桥
+      - 中桥
+      description: 各等级公路上的特大桥、大桥、中桥
+    - condition_id: L1_02
+      object_type: 小桥
+      road_grade:
+      - 高速公路
+      - 一级公路
+      - 二级公路
+      - 国防公路
+      - 城市附近交通繁忙公路
+      bridge_class:
+      - 小桥
+      description: 高速公路、一级公路、二级公路、国防公路及城市附近交通繁忙公路上的小桥
+  - design_safety_level: 二级
+    priority_level: 1.0
+    failure_consequence: 严重
+    applicable_conditions:
+    - condition_id: L2_01
+      object_type: 小桥
+      road_grade:
+      - 三级公路
+      - 四级公路
+      bridge_class:
+      - 小桥
+      description: 三、四级公路上的小桥
+    - condition_id: L2_02
+      object_type: 涵洞
+      road_grade:
+      - 高速公路
+      - 一级公路
+      - 二级公路
+      - 国防公路
+      - 城市附近交通繁忙公路
+      bridge_class:
+      - 涵洞
+      description: 高速公路、一级公路、二级公路、国防公路及城市附近交通繁忙公路上的涵洞
+  - design_safety_level: 三级
+    priority_level: 0.9
+    failure_consequence: 不严重
+    applicable_conditions:
+    - condition_id: L3_01
+      object_type: 涵洞
+      road_grade:
+      - 三级公路
+      - 四级公路
+      bridge_class:
+      - 涵洞
+      description: 三、四级公路上的涵洞
+- id: T_D60_4_1_5_2_PERMANENT_ACTION_PARTIAL_FACTOR
+  meta:
+    name: 永久作用分项系数表
+    source: JTG D60-2015, 表4.1.5-2
+    description: 根据永久作用类别、结构类型以及该作用对结构承载能力是否有利， 查询永久作用分项系数。 effect_direction 取值包括 unfavorable 和 favorable。 对结构承载能力不利时，采用不利分项系数；
+      对结构承载能力有利时，采用有利分项系数。
+    related_rules:
+    - R_D60_CH04_003
+    - R_D60_CH04_005
+  schema:
+    inputs:
+    - action_category
+    - action_name
+    - structure_type
+    - effect_direction
+    outputs:
+    - partial_factor
+  constraints:
+    matching_method: condition
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - serial_no: 1
+    action_category: permanent_action
+    action_name: 混凝土和圬工结构重力
+    description: 包括结构附加重力
+    structure_type:
+    - 混凝土结构
+    - 圬工结构
+    partial_factor:
+      unfavorable: 1.2
+      favorable: 1.0
+  - serial_no: 1
+    action_category: permanent_action
+    action_name: 钢结构重力
+    description: 包括结构附加重力
+    structure_type:
+    - 钢结构
+    partial_factor:
+      unfavorable:
+        default: 1.1
+        conditional_values:
+        - condition: 采用钢桥面板
+          value: 1.1
+        - condition: 采用混凝土桥面板
+          value: 1.2
+      favorable: 1.0
+  - serial_no: 2
+    action_category: permanent_action
+    action_name: 预加力
+    structure_type:
+    - 预应力混凝土结构
+    - 预应力构件
+    partial_factor:
+      unfavorable: 1.2
+      favorable: 1.0
+  - serial_no: 3
+    action_category: permanent_action
+    action_name: 土的重力
+    structure_type:
+    - 桥台
+    - 挡土结构
+    - 涵洞
+    - 基础结构
+    partial_factor:
+      unfavorable: 1.2
+      favorable: 1.0
+  - serial_no: 4
+    action_category: permanent_action
+    action_name: 混凝土的收缩及徐变作用
+    structure_type:
+    - 混凝土结构
+    - 预应力混凝土结构
+    - 钢混组合结构
+    partial_factor:
+      unfavorable: 1.0
+      favorable: 1.0
+  - serial_no: 5
+    action_category: permanent_action
+    action_name: 土侧压力
+    structure_type:
+    - 桥台
+    - 挡土结构
+    - 涵洞
+    - 基础结构
+    partial_factor:
+      unfavorable: 1.4
+      favorable: 1.0
+  - serial_no: 6
+    action_category: permanent_action
+    action_name: 水的浮力
+    structure_type:
+    - 桥墩
+    - 桥台
+    - 承台
+    - 基础结构
+    partial_factor:
+      unfavorable: 1.0
+      favorable: 1.0
+  - serial_no: 7
+    action_category: permanent_action
+    action_name: 基础变位作用
+    structure_type:
+    - 混凝土结构
+    - 圬工结构
+    partial_factor:
+      unfavorable: 0.5
+      favorable: 0.5
+  - serial_no: 7
+    action_category: permanent_action
+    action_name: 基础变位作用
+    structure_type:
+    - 钢结构
+    partial_factor:
+      unfavorable: 1.0
+      favorable: 1.0
+- id: T_D60_4_2_1_MATERIAL_UNIT_WEIGHT
+  meta:
+    name: 常用材料重度表
+    source: JTG D60-2015, 表4.2.1
+    description: 用于结构重力标准值计算。       当表中为单一数值时，直接返回 unit_weight_kN_m3； 当表中为范围值时，返回 unit_weight_min_kN_m3 和 unit_weight_max_kN_m3，
+      后续计算可根据工程取值原则选用代表值。
+    related_rules:
+    - R_D60_CH04_011
+  schema:
+    inputs:
+    - material_type
+    outputs:
+    - unit_weight_kN_m3
+    - unit_weight_min_kN_m3
+    - unit_weight_max_kN_m3
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - material_type: 钢
+    alias:
+    - 铸钢
+    unit_weight_kN_m3: 78.5
+    value_type: exact
+  - material_type: 铸铁
+    unit_weight_kN_m3: 72.5
+    value_type: exact
+  - material_type: 锌
+    unit_weight_kN_m3: 70.5
+    value_type: exact
+  - material_type: 铅
+    unit_weight_kN_m3: 114.0
+    value_type: exact
+  - material_type: 黄铜
+    unit_weight_kN_m3: 81.1
+    value_type: exact
+  - material_type: 青铜
+    unit_weight_kN_m3: 87.4
+    value_type: exact
+  - material_type: 钢筋混凝土
+    alias:
+    - 预应力混凝土
+    unit_weight_min_kN_m3: 25.0
+    unit_weight_max_kN_m3: 26.0
+    value_type: range
+  - material_type: 混凝土
+    alias:
+    - 片石混凝土
+    unit_weight_kN_m3: 24.0
+    value_type: exact
+  - material_type: 浆砌块石
+    alias:
+    - 浆砌料石
+    unit_weight_min_kN_m3: 24.0
+    unit_weight_max_kN_m3: 25.0
+    value_type: range
+  - material_type: 浆砌片石
+    unit_weight_kN_m3: 23.0
+    value_type: exact
+  - material_type: 干砌块石
+    alias:
+    - 干砌片石
+    unit_weight_kN_m3: 21.0
+    value_type: exact
+  - material_type: 沥青混凝土
+    unit_weight_min_kN_m3: 23.0
+    unit_weight_max_kN_m3: 24.0
+    value_type: range
+  - material_type: 沥青碎石
+    unit_weight_kN_m3: 22.0
+    value_type: exact
+  - material_type: 碎石
+    alias:
+    - 砾石
+    unit_weight_kN_m3: 21.0
+    value_type: exact
+  - material_type: 填土
+    unit_weight_min_kN_m3: 17.0
+    unit_weight_max_kN_m3: 18.0
+    value_type: range
+  - material_type: 填石
+    unit_weight_min_kN_m3: 19.0
+    unit_weight_max_kN_m3: 20.0
+    value_type: range
+  - material_type: 石灰三合土
+    alias:
+    - 石灰土
+    unit_weight_kN_m3: 17.5
+    value_type: exact
+- id: T_D60_4_2_3_SOIL_PARAMETER
+  meta:
+    name: 土重度与内摩擦角参数表
+    source: JTG D60-2015, 表4-1
+    description: 根据填土类型查询土的重度、内摩擦角φ以及墙背与填土之间外摩擦角δ。 当表中为范围值时，执行引擎应返回上下限； 若工程设计需要单一取值，应由设计输入指定，或按不利原则选取。
+    related_rules:
+    - R_D60_CH04_013
+  schema:
+    inputs:
+    - soil_type
+    outputs:
+    - soil_unit_weight_kN_m3
+    - internal_friction_angle_deg
+    - wall_soil_friction_angle_deg
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - soil_type: 湿黏土
+    soil_unit_weight_min_kN_m3: 17.0
+    soil_unit_weight_max_kN_m3: 19.0
+    internal_friction_angle_min_deg: 25
+    internal_friction_angle_max_deg: 35
+    wall_soil_friction_angle_min_deg: 17
+    wall_soil_friction_angle_max_deg: 18
+    value_type: range
+  - soil_type: 干黏土
+    soil_unit_weight_min_kN_m3: 16.0
+    soil_unit_weight_max_kN_m3: 18.0
+    internal_friction_angle_min_deg: 40
+    internal_friction_angle_max_deg: 45
+    wall_soil_friction_angle_min_deg: 27
+    wall_soil_friction_angle_max_deg: 33
+    value_type: range
+  - soil_type: 湿砂砾
+    soil_unit_weight_min_kN_m3: 19.0
+    soil_unit_weight_max_kN_m3: 20.0
+    internal_friction_angle_min_deg: 25
+    internal_friction_angle_max_deg: 35
+    wall_soil_friction_angle_deg: 22
+    value_type: mixed
+  - soil_type: 干砂砾
+    soil_unit_weight_kN_m3: 18.0
+    internal_friction_angle_min_deg: 35
+    internal_friction_angle_max_deg: 45
+    wall_soil_friction_angle_min_deg: 24
+    wall_soil_friction_angle_max_deg: 31
+    value_type: mixed
+  - soil_type: 湿砂
+    soil_unit_weight_min_kN_m3: 17.0
+    soil_unit_weight_max_kN_m3: 18.0
+    internal_friction_angle_deg: 40
+    wall_soil_friction_angle_deg: 25
+    value_type: mixed
+  - soil_type: 干砂
+    soil_unit_weight_min_kN_m3: 15.0
+    soil_unit_weight_max_kN_m3: 17.0
+    internal_friction_angle_min_deg: 30
+    internal_friction_angle_max_deg: 35
+    wall_soil_friction_angle_min_deg: 29
+    wall_soil_friction_angle_max_deg: 30
+    value_type: range
+- id: T_D60_4_3_11_1_ICE_FRONT_SHAPE_FACTOR
+  meta:
+    name: 迎冰面形状系数表
+    source: JTG D60-2015, 表4.3.11-1
+    description: 根据桩或墩迎冰面形状查询迎冰面形状系数m。 当迎冰面为尖角形时，还应根据尖角形迎冰面角度查询对应系数。 对表中未列角度，可进入人工复核，或在后续执行引擎中按工程规则设置插值策略。
+    related_rules:
+    - R_D60_CH04_027
+  schema:
+    inputs:
+    - ice_front_shape
+    - ice_front_angle_deg
+    outputs:
+    - ice_front_shape_factor_m
+  constraints:
+    matching_method: condition
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - ice_front_shape: 平面
+    ice_front_angle_deg: null
+    ice_front_shape_factor_m: 1.0
+  - ice_front_shape: 圆弧形
+    ice_front_angle_deg: null
+    ice_front_shape_factor_m: 0.9
+  - ice_front_shape: 尖角形
+    ice_front_angle_deg: 45
+    ice_front_shape_factor_m: 0.54
+  - ice_front_shape: 尖角形
+    ice_front_angle_deg: 60
+    ice_front_shape_factor_m: 0.59
+  - ice_front_shape: 尖角形
+    ice_front_angle_deg: 75
+    ice_front_shape_factor_m: 0.64
+  - ice_front_shape: 尖角形
+    ice_front_angle_deg: 90
+    ice_front_shape_factor_m: 0.69
+  - ice_front_shape: 尖角形
+    ice_front_angle_deg: 120
+    ice_front_shape_factor_m: 0.77
+- id: T_D60_4_3_11_2_ICE_TEMPERATURE_FACTOR
+  meta:
+    name: 冰温系数表
+    source: JTG D60-2015, 表4.3.11-2
+    description: 根据冰温查询冰温系数Ct。 表列冰温系数可直线内插。 当冰温为0℃时，Ct取1.0； 当冰温为-10℃及以下时，Ct取2.0； 当冰温介于0℃与-10℃之间时，可按线性插值计算。
+    related_rules:
+    - R_D60_CH04_027
+  schema:
+    inputs:
+    - ice_temperature_C
+    outputs:
+    - ice_temperature_factor_Ct
+  constraints:
+    matching_method: range
+    interpolation: linear
+    out_of_bounds: error
+  data:
+  - ice_temperature_condition: T = 0
+    ice_temperature_factor_Ct: 1.0
+  - ice_temperature_condition: T <= -10
+    ice_temperature_factor_Ct: 2.0
+- id: T_D60_4_3_12_1_LINEAR_EXPANSION_COEFFICIENT
+  meta:
+    name: 材料线膨胀系数表
+    source: JTG D60-2015, 表4.3.12-1
+    description: 用于温度作用计算。
+    related_rules:
+    - R_D60_CH04_028
+  schema:
+    inputs:
+    - structure_category
+    outputs:
+    - linear_expansion_coefficient_1_per_C
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - structure_category: 钢结构
+    linear_expansion_coefficient_1_per_C: 1.2e-05
+  - structure_category: 混凝土和钢筋混凝土及预应力混凝土结构
+    linear_expansion_coefficient_1_per_C: 1.0e-05
+  - structure_category: 混凝土预制块砌体
+    linear_expansion_coefficient_1_per_C: 9.0e-06
+  - structure_category: 石砌体
+    linear_expansion_coefficient_1_per_C: 8.0e-06
+- id: T_D60_4_3_12_2_EFFECTIVE_TEMPERATURE
+  meta:
+    name: 桥梁有效温度取值表
+    source: JTG D60-2015, 表4.3.12-2
+    description: 根据气候分区、桥梁类型和材料类型查询公路桥梁结构的最高、最低有效温度标准值。 表中括号内数值适用于昆明、南宁、广州、福州地区。 当工程位于上述特殊地区时，应优先采用 minimum_effective_temperature_special_region_C；
+      否则采用 minimum_effective_temperature_C。
+    related_rules:
+    - R_D60_CH04_028
+  schema:
+    inputs:
+    - climate_zone
+    - bridge_type
+    - material_type
+    outputs:
+    - maximum_effective_temperature_C
+    - minimum_effective_temperature_C
+    - minimum_effective_temperature_special_region_C
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - climate_zone: 严寒地区
+    bridge_type: 钢桥
+    material_type: 钢桥面板
+    maximum_effective_temperature_C: 46
+    minimum_effective_temperature_C: -43
+    minimum_effective_temperature_special_region_C: null
+  - climate_zone: 严寒地区
+    bridge_type: 钢桥
+    material_type: 混凝土桥面板
+    maximum_effective_temperature_C: 39
+    minimum_effective_temperature_C: -32
+    minimum_effective_temperature_special_region_C: null
+  - climate_zone: 严寒地区
+    bridge_type: 混凝土、石桥
+    material_type: 混凝土、石
+    maximum_effective_temperature_C: 34
+    minimum_effective_temperature_C: -23
+    minimum_effective_temperature_special_region_C: null
+  - climate_zone: 寒冷地区
+    bridge_type: 钢桥
+    material_type: 钢桥面板
+    maximum_effective_temperature_C: 46
+    minimum_effective_temperature_C: -21
+    minimum_effective_temperature_special_region_C: null
+  - climate_zone: 寒冷地区
+    bridge_type: 钢桥
+    material_type: 混凝土桥面板
+    maximum_effective_temperature_C: 39
+    minimum_effective_temperature_C: -15
+    minimum_effective_temperature_special_region_C: null
+  - climate_zone: 寒冷地区
+    bridge_type: 混凝土、石桥
+    material_type: 混凝土、石
+    maximum_effective_temperature_C: 34
+    minimum_effective_temperature_C: -10
+    minimum_effective_temperature_special_region_C: null
+  - climate_zone: 温热地区
+    bridge_type: 钢桥
+    material_type: 钢桥面板
+    maximum_effective_temperature_C: 46
+    minimum_effective_temperature_C: -9
+    minimum_effective_temperature_special_region_C: -3
+  - climate_zone: 温热地区
+    bridge_type: 钢桥
+    material_type: 混凝土桥面板
+    maximum_effective_temperature_C: 39
+    minimum_effective_temperature_C: -6
+    minimum_effective_temperature_special_region_C: -1
+  - climate_zone: 温热地区
+    bridge_type: 混凝土、石桥
+    material_type: 混凝土、石
+    maximum_effective_temperature_C: 34
+    minimum_effective_temperature_C: -3
+    minimum_effective_temperature_special_region_C: 0
+- id: T_D60_4_3_12_3_VERTICAL_TEMPERATURE_BASE
+  meta:
+    name: 竖向温度梯度基数表
+    source: JTG D60-2015, 表4.3.12-3
+    description: 根据结构类型、桥面铺装类型和铺装厚度查询竖向日照正温差计算所需的温度基数T1、T2。 当采用沥青混凝土铺装时，应区分50mm和100mm铺装厚度。 若实际铺装厚度介于表列厚度之间，可由执行引擎设置线性插值或进入人工复核。
+    related_rules:
+    - R_D60_CH04_028
+    remarks: ' 已补充 pavement_thickness_min_mm / pavement_thickness_max_mm / pavement_thickness_range_mm，明确 range 匹配边界。'
+  schema:
+    inputs:
+    - structure_type
+    - pavement_type
+    - pavement_thickness
+    outputs:
+    - T1_C
+    - T2_C
+  constraints:
+    matching_method: range
+    interpolation: linear
+    out_of_bounds: error
+    range_field: pavement_thickness_mm
+    range_note: 沥青混凝土铺装厚度在50mm与100mm之间时，T1_C、T2_C按线性插值取值；水泥混凝土铺装按固定值匹配。
+  data:
+  - structure_type: 通用桥梁结构
+    pavement_type: 水泥混凝土铺装
+    pavement_thickness: null
+    T1_C: 25
+    T2_C: 6.7
+    pavement_thickness_min_mm: null
+    pavement_thickness_max_mm: null
+    pavement_thickness_range_mm: not_applicable
+  - structure_type: 通用桥梁结构
+    pavement_type: 沥青混凝土铺装
+    pavement_thickness: 50mm
+    pavement_thickness_mm: 50
+    T1_C: 20
+    T2_C: 6.7
+    pavement_thickness_min_mm: 50
+    pavement_thickness_max_mm: 100
+    pavement_thickness_range_mm: 50 <= pavement_thickness_mm <= 100
+  - structure_type: 通用桥梁结构
+    pavement_type: 沥青混凝土铺装
+    pavement_thickness: 100mm
+    pavement_thickness_mm: 100
+    T1_C: 14
+    T2_C: 5.5
+    pavement_thickness_min_mm: 50
+    pavement_thickness_max_mm: 100
+    pavement_thickness_range_mm: 50 <= pavement_thickness_mm <= 100
+- id: T_D60_4_3_13_BEARING_FRICTION_COEFFICIENT
+  meta:
+    name: 支座摩擦系数表
+    source: JTG D60-2015, 表4.3.13
+    description: 根据支座种类、接触面条件、润滑条件和温度条件查询支座摩擦系数μ。 对板式橡胶支座、盆式支座、球型支座等，表中部分取值与是否采用5201硅脂润滑剂、 支座适用温度范围有关。执行引擎应优先匹配更具体的条件。
+    related_rules:
+    - R_D60_CH04_009
+    - R_D60_CH04_029
+  schema:
+    inputs:
+    - bearing_type
+    - contact_condition
+    - lubricant_condition
+    - temperature_condition
+    outputs:
+    - bearing_friction_coefficient_mu
+  constraints:
+    matching_method: condition
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - bearing_type: 滚动支座
+    contact_condition: 滚动接触
+    lubricant_condition: 通用
+    temperature_condition: 通用
+    bearing_friction_coefficient_mu: 0.05
+  - bearing_type: 板式橡胶支座
+    contact_condition: 支座与混凝土面接触
+    lubricant_condition: 通用
+    temperature_condition: 通用
+    bearing_friction_coefficient_mu: 0.3
+  - bearing_type: 板式橡胶支座
+    contact_condition: 支座与钢板接触
+    lubricant_condition: 通用
+    temperature_condition: 通用
+    bearing_friction_coefficient_mu: 0.2
+  - bearing_type: 板式橡胶支座
+    contact_condition: 聚四氟乙烯板与不锈钢板接触
+    lubricant_condition: 加5201硅脂润滑剂
+    temperature_condition: 支座适用温度为-25℃时
+    bearing_friction_coefficient_mu: 0.06
+    adjusted_value:
+      condition: 温度低于-25℃时
+      bearing_friction_coefficient_mu: 0.078
+  - bearing_type: 板式橡胶支座
+    contact_condition: 聚四氟乙烯板与不锈钢板接触
+    lubricant_condition: 不加5201硅脂润滑剂
+    temperature_condition: 支座适用温度为-25℃时
+    bearing_friction_coefficient_mu: 0.12
+    adjusted_value:
+      condition: 温度低于-25℃时
+      bearing_friction_coefficient_mu: 0.156
+  - bearing_type: 盆式支座
+    contact_condition: 聚四氟乙烯板与不锈钢板接触
+    lubricant_condition: 加5201硅脂润滑剂
+    temperature_condition: 支座适用温度为-25℃~+60℃时
+    bearing_friction_coefficient_mu: 0.03
+    limit_type: 不大于
+  - bearing_type: 盆式支座
+    contact_condition: 聚四氟乙烯板与不锈钢板接触
+    lubricant_condition: 加5201硅脂润滑剂
+    temperature_condition: 支座适用温度为-40℃~+60℃时
+    bearing_friction_coefficient_mu: 0.06
+    limit_type: 不大于
+  - bearing_type: 球型支座
+    contact_condition: 聚四氟乙烯板与不锈钢板接触
+    lubricant_condition: 加5201硅脂润滑剂
+    temperature_condition: 支座适用温度为-25℃~+60℃时
+    bearing_friction_coefficient_mu: 0.03
+    limit_type: 不大于
+  - bearing_type: 球型支座
+    contact_condition: 聚四氟乙烯板与不锈钢板接触
+    lubricant_condition: 加5201硅脂润滑剂
+    temperature_condition: 支座适用温度为-40℃~+60℃时
+    bearing_friction_coefficient_mu: 0.05
+    limit_type: 不大于
+- id: T_D60_4_3_1_1_HIGHWAY_LOAD_GRADE
+  meta:
+    name: 公路汽车荷载等级表
+    source: JTG D60-2015, 表4.3.1-1
+    description: 用于根据公路等级确定汽车荷载等级。
+    remarks: 本表用于车辆荷载建模前的荷载等级识别。 执行引擎应根据 road_grade 自动返回 highway_load_grade， 并进一步调用车道荷载、车辆荷载、设计车道数及横向布载系数等表格。
+    related_rules:
+    - R_D60_CH04_017
+  schema:
+    inputs:
+    - road_grade
+    outputs:
+    - highway_load_grade
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - road_grade: 高速公路
+    highway_load_grade: 公路-I级
+  - road_grade: 一级公路
+    highway_load_grade: 公路-I级
+  - road_grade: 二级公路
+    highway_load_grade: 公路-II级
+  - road_grade: 三级公路
+    highway_load_grade: 公路-II级
+  - road_grade: 四级公路
+    highway_load_grade: 公路-II级
+- id: T_D60_4_3_1_2_CONCENTRATED_LOAD
+  meta:
+    name: 车道荷载集中荷载标准值表
+    source: JTG D60-2015, 表4.3.1-2
+    description: 用于车道荷载集中荷载Pk取值。       根据计算跨径L0确定集中荷载Pk。 当L0位于5m和50m之间时，按表达式Pk = 2 * (L0 + 130)计算。 表中L0为计算跨径，单位为m；Pk单位为kN。
+    related_rules:
+    - R_D60_CH04_017
+  schema:
+    inputs:
+    - calculation_span_L0_m
+    outputs:
+    - concentrated_load_Pk_kN
+  constraints:
+    matching_method: range
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - calculation_span_condition: L0 <= 5
+    concentrated_load_Pk_kN:
+      value: 270
+      unit: kN
+  - calculation_span_condition: 5 < L0 < 50
+    concentrated_load_Pk_kN:
+      expression: 2 * (L0 + 130)
+      unit: kN
+  - calculation_span_condition: L0 >= 50
+    concentrated_load_Pk_kN:
+      value: 360
+      unit: kN
+- id: T_D60_4_3_1_3_VEHICLE_LOAD_DIMENSION
+  meta:
+    name: 车辆荷载主要技术指标表
+    source: JTG D60-2015, 4.3.1条
+    description: 公路-I级和公路-II级汽车荷载采用相同的车辆荷载标准值。 本表用于车辆荷载模型建立，包括车辆总重、轴重、轴距、轮距、 车轮着地尺寸和车辆外形尺寸。
+    remarks: 本表用于车辆荷载布置和局部效应计算。 图4.3.1-2给出了车辆荷载的立面和平面布置； 尺寸单位为m，荷载单位为kN。 车辆荷载用于桥梁结构整体或局部验算时，应按最不利位置布置。
+    related_rules:
+    - R_D60_CH04_017
+  schema:
+    inputs:
+    - vehicle_load_grade
+    outputs:
+    - vehicle_total_weight_kN
+    - axle_loads_kN
+    - axle_spacing_m
+    - wheel_spacing_m
+    - wheel_contact_size_m
+    - vehicle_dimension_m
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - vehicle_load_grade:
+    - 公路-I级
+    - 公路-II级
+    vehicle_total_weight_kN: 550
+    axle_loads_kN:
+      front_axle:
+        axle_count: 1
+        load_per_axle_kN: 30
+        total_load_kN: 30
+      middle_axles:
+        axle_count: 2
+        load_per_axle_kN: 120
+        total_load_kN: 240
+      rear_axles:
+        axle_count: 2
+        load_per_axle_kN: 140
+        total_load_kN: 280
+    axle_spacing_m:
+      expression: 3 + 1.4 + 7 + 1.4
+      values:
+      - 3.0
+      - 1.4
+      - 7.0
+      - 1.4
+      total_vehicle_axle_layout_length_m: 12.8
+    wheel_spacing_m: 1.8
+    wheel_contact_size_m:
+      front_wheel:
+        width_m: 0.3
+        length_m: 0.2
+        expression: 0.3 × 0.2
+      middle_and_rear_wheel:
+        width_m: 0.6
+        length_m: 0.2
+        expression: 0.6 × 0.2
+    vehicle_dimension_m:
+      length_m: 15.0
+      width_m: 2.5
+      expression: 15 × 2.5
+- id: T_D60_4_3_1_4_DESIGN_LANE_NUMBER
+  meta:
+    name: 设计车道数表
+    source: JTG D60-2015, 表4.3.1-4
+    description: 根据桥面宽度W和车辆行驶方向类型确定桥涵设计车道数。 traffic_direction_type 可取 single_direction 或 two_direction。 当为单向行驶时，按单向行驶宽度区间查取；
+      当为双向行驶时，按双向行驶宽度区间查取。 W为桥面宽度，单位为m。
+    related_rules:
+    - R_D60_CH04_017
+  schema:
+    inputs:
+    - traffic_direction_type
+    - bridge_deck_width_W_m
+    outputs:
+    - design_lane_number
+  constraints:
+    matching_method: range
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: W < 7.0
+    design_lane_number: 1
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 7.0 <= W < 10.5
+    design_lane_number: 2
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 10.5 <= W < 14.0
+    design_lane_number: 3
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 14.0 <= W < 17.5
+    design_lane_number: 4
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 17.5 <= W < 21.0
+    design_lane_number: 5
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 21.0 <= W < 24.5
+    design_lane_number: 6
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 24.5 <= W < 28.0
+    design_lane_number: 7
+  - traffic_direction_type: single_direction
+    traffic_direction_type_cn: 车辆单向行驶
+    bridge_deck_width_condition: 28.0 <= W < 31.5
+    design_lane_number: 8
+  - traffic_direction_type: two_direction
+    traffic_direction_type_cn: 车辆双向行驶
+    bridge_deck_width_condition: 6.0 <= W < 14.0
+    design_lane_number: 2
+  - traffic_direction_type: two_direction
+    traffic_direction_type_cn: 车辆双向行驶
+    bridge_deck_width_condition: 14.0 <= W < 21.0
+    design_lane_number: 4
+  - traffic_direction_type: two_direction
+    traffic_direction_type_cn: 车辆双向行驶
+    bridge_deck_width_condition: 21.0 <= W < 28.0
+    design_lane_number: 6
+  - traffic_direction_type: two_direction
+    traffic_direction_type_cn: 车辆双向行驶
+    bridge_deck_width_condition: 28.0 <= W < 35.0
+    design_lane_number: 8
+- id: T_D60_4_3_1_5_TRANSVERSE_LANE_FACTOR
+  meta:
+    name: 横向车道布载系数表
+    source: JTG D60-2015, 表4.3.1-5
+    description: 用于多车道横向同时布载时汽车荷载效应折减。
+    related_rules:
+    - R_D60_CH04_017
+    - R_D60_CH04_019
+  schema:
+    inputs:
+    - loaded_lane_number
+    outputs:
+    - transverse_lane_factor
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - loaded_lane_number: 1
+    transverse_lane_factor: 1.2
+  - loaded_lane_number: 2
+    transverse_lane_factor: 1.0
+  - loaded_lane_number: 3
+    transverse_lane_factor: 0.78
+  - loaded_lane_number: 4
+    transverse_lane_factor: 0.67
+  - loaded_lane_number: 5
+    transverse_lane_factor: 0.6
+  - loaded_lane_number: 6
+    transverse_lane_factor: 0.55
+  - loaded_lane_number: 7
+    transverse_lane_factor: 0.52
+  - loaded_lane_number: 8
+    transverse_lane_factor: 0.5
+- id: T_D60_4_3_1_6_LONGITUDINAL_REDUCTION_FACTOR
+  meta:
+    name: 汽车荷载纵向折减系数表
+    source: JTG D60-2015, 表4.3.1-6
+    description: 用于大跨径或长加载长度下汽车荷载纵向折减。
+    related_rules:
+    - R_D60_CH04_017
+    - R_D60_CH04_021
+  schema:
+    inputs:
+    - calculation_span_L0_m
+    outputs:
+    - longitudinal_reduction_factor
+  constraints:
+    matching_method: range
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - calculation_span_condition: 150 < L0 < 400
+    longitudinal_reduction_factor: 0.97
+  - calculation_span_condition: 400 <= L0 < 600
+    longitudinal_reduction_factor: 0.96
+  - calculation_span_condition: 600 <= L0 < 800
+    longitudinal_reduction_factor: 0.95
+  - calculation_span_condition: 800 <= L0 < 1000
+    longitudinal_reduction_factor: 0.94
+  - calculation_span_condition: L0 >= 1000
+    longitudinal_reduction_factor: 0.93
+- id: T_D60_4_3_5_BRAKING_FORCE_DISTRIBUTION
+  meta:
+    name: 制动力分配规则表
+    source: JTG D60-2015, 表4.3.5
+    description: 根据桥梁结构体系、支座布置及支座类型确定刚性墩台上传递的制动力。 T1、T2、T3分别代表不同加载长度范围对应的制动力。 若同一墩台承受相邻两跨支座传递的制动力，应按注释要求组合相邻跨传来的制动力。
+    related_rules:
+    - R_D60_CH04_021
+  schema:
+    inputs:
+    - bridge_type
+    - bearing_arrangement
+    - bearing_type
+    outputs:
+    - transmitted_braking_force
+    - braking_force_symbol
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - bridge_type: 简支梁桥台
+    bearing_arrangement: 固定支座
+    bearing_type: 固定支座
+    transmitted_braking_force:
+      expression: T1
+    braking_force_symbol: T1
+  - bridge_type: 简支梁桥台
+    bearing_arrangement: 聚四氟乙烯板支座
+    bearing_type: 聚四氟乙烯板支座
+    transmitted_braking_force:
+      expression: 0.30 * T1
+    braking_force_symbol: T1
+  - bridge_type: 简支梁桥台
+    bearing_arrangement: 滚动或摆动支座
+    bearing_type: 滚动或摆动支座
+    transmitted_braking_force:
+      expression: 0.25 * T1
+    braking_force_symbol: T1
+  - bridge_type: 简支梁桥墩
+    bearing_arrangement: 一个固定支座、一个活动支座
+    bearing_type: 组合支座
+    transmitted_braking_force:
+      expression: 按注释计算
+    braking_force_symbol: null
+    note: '固定支座按T4计算，活动支座按0.30T5或0.25T5计算， 墩顶应承受活动支座传递的单跨跨径制动力， 桥墩承受的制动力为上注固定支座与活动支座传递的制动力之和。
+
+      '
+  - bridge_type: 简支梁桥墩
+    bearing_arrangement: 两个固定支座
+    bearing_type: 固定支座
+    transmitted_braking_force:
+      expression: 0.30 * T2
+    braking_force_symbol: T2
+  - bridge_type: 简支梁桥墩
+    bearing_arrangement: 两个聚四氟乙烯板支座
+    bearing_type: 聚四氟乙烯板支座
+    transmitted_braking_force:
+      expression: 0.25 * T2
+    braking_force_symbol: T2
+  - bridge_type: 简支梁桥墩
+    bearing_arrangement: 两个滚动或摆动支座
+    bearing_type: 滚动或摆动支座
+    transmitted_braking_force:
+      expression: 0.25 * T2
+    braking_force_symbol: T2
+  - bridge_type: 连续梁桥墩
+    bearing_arrangement: 固定支座
+    bearing_type: 固定支座
+    transmitted_braking_force:
+      expression: T3
+    braking_force_symbol: T3
+  - bridge_type: 连续梁桥墩
+    bearing_arrangement: 聚四氟乙烯板支座
+    bearing_type: 聚四氟乙烯板支座
+    transmitted_braking_force:
+      expression: 0.30 * T3
+    braking_force_symbol: T3
+  - bridge_type: 连续梁桥墩
+    bearing_arrangement: 滚动或摆动支座
+    bearing_type: 滚动或摆动支座
+    transmitted_braking_force:
+      expression: 0.25 * T3
+    braking_force_symbol: T3
+- id: T_D60_4_3_6_CROWD_LOAD
+  meta:
+    name: 人群荷载标准值表
+    source: JTG D60-2015, 表4.3.6
+    description: 根据计算跨径L0查询普通公路桥梁人群荷载标准值。 当50m < L0 < 150m时，按表达式3.25 - 0.005L0计算。 对非机动车、行人密集的公路桥梁，人群荷载标准值应取表列标准值的1.15倍。 对专用人行桥梁，人群荷载标准值取3.5kN/m²。
+    related_rules:
+    - R_D60_CH04_022
+  schema:
+    inputs:
+    - calculation_span_L0_m
+    - bridge_usage_type
+    - crowd_density_condition
+    outputs:
+    - crowd_load_standard_value_kN_m2
+  constraints:
+    matching_method: range
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - bridge_usage_type: 普通公路桥梁
+    crowd_density_condition: 一般
+    calculation_span_condition: L0 <= 50
+    crowd_load_standard_value_kN_m2:
+      value: 3.0
+      unit: kN/m2
+  - bridge_usage_type: 普通公路桥梁
+    crowd_density_condition: 一般
+    calculation_span_condition: 50 < L0 < 150
+    crowd_load_standard_value_kN_m2:
+      expression: 3.25 - 0.005 * L0
+      unit: kN/m2
+  - bridge_usage_type: 普通公路桥梁
+    crowd_density_condition: 一般
+    calculation_span_condition: L0 >= 150
+    crowd_load_standard_value_kN_m2:
+      value: 2.5
+      unit: kN/m2
+  - bridge_usage_type: 普通公路桥梁
+    crowd_density_condition: 非机动车与行人密集
+    calculation_span_condition: L0 <= 50
+    crowd_load_standard_value_kN_m2:
+      expression: 1.15 * 3.0
+      unit: kN/m2
+  - bridge_usage_type: 普通公路桥梁
+    crowd_density_condition: 非机动车与行人密集
+    calculation_span_condition: 50 < L0 < 150
+    crowd_load_standard_value_kN_m2:
+      expression: 1.15 * (3.25 - 0.005 * L0)
+      unit: kN/m2
+  - bridge_usage_type: 普通公路桥梁
+    crowd_density_condition: 非机动车与行人密集
+    calculation_span_condition: L0 >= 150
+    crowd_load_standard_value_kN_m2:
+      expression: 1.15 * 2.5
+      unit: kN/m2
+  - bridge_usage_type: 专用人行桥梁
+    crowd_density_condition: 通用
+    calculation_span_condition: all
+    crowd_load_standard_value_kN_m2:
+      value: 3.5
+      unit: kN/m2
+- id: T_D60_4_3_7_FATIGUE_LOAD_MODEL
+  meta:
+    name: 汽车疲劳荷载模型表
+    source: JTG D60-2015, 4.3.7条
+    description: 根据疲劳验算对象和构件连接是否满足疲劳荷载计算模型I的要求， 选择疲劳荷载计算模型I、模型II或模型III。 模型I为等效车道荷载模型； 模型II为双车模型； 模型III为单车模型。 当构件和连接不满足模型I验算要求时，应按模型II验算。
+      桥面系构件的疲劳验算应采用模型III。
+    related_rules:
+    - R_D60_CH04_023
+    remarks: ' data 行中补充 fatigue_load_model、axle_loads_kN、axle_spacing_m、lane_load_factor 顶层字段，与 schema.outputs 保持一致。'
+  schema:
+    inputs:
+    - fatigue_load_model_type
+    - component_type
+    outputs:
+    - fatigue_load_model
+    - axle_loads_kN
+    - axle_spacing_m
+    - lane_load_factor
+    - applicable_condition
+  constraints:
+    matching_method: condition
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - fatigue_load_model_type: 模型I
+    model_name: 等效车道荷载疲劳模型
+    applicable_condition: '一般桥梁结构疲劳验算采用模型I。
+
+      '
+    load_form: 等效车道荷载
+    lane_load:
+      concentrated_load:
+        expression: 0.7 * Pk
+        base_variable: Pk
+        description: 集中荷载标准值Pk按第4.3.1条相关规定取值
+      uniform_load:
+        components:
+        - expression: 0.3 * qk
+          base_variable: qk
+        - expression: qk
+          base_variable: qk
+        description: 均布荷载标准值qk按第4.3.1条相关规定取值
+    multi_lane_effect:
+      consider_multiple_lanes: true
+      transverse_lane_factor_table: T_D60_4_3_1_5_TRANSVERSE_LANE_FACTOR
+    related_tables:
+    - T_D60_4_3_1_2_CONCENTRATED_LOAD
+    - T_D60_4_3_1_5_TRANSVERSE_LANE_FACTOR
+    remarks: '模型I采用等效车道荷载。 集中荷载取0.7Pk，均布荷载按0.3qk和qk取值。 应考虑多车道影响，横向车道布载系数按表4.3.1-5采用。
+
+      '
+    fatigue_load_model: 等效车道荷载疲劳模型
+    axle_loads_kN: []
+    axle_spacing_m: []
+    lane_load_factor: 按 T_D60_4_3_1_5_TRANSVERSE_LANE_FACTOR 查取
+  - fatigue_load_model_type: 模型II
+    model_name: 双车疲劳荷载模型
+    applicable_condition: '当构件和连接不满足疲劳荷载计算模型I验算要求时，应按模型II验算。
+
+      '
+    load_form: 双车模型
+    vehicle_count: 2
+    vehicle_center_spacing_requirement:
+      condition: center_spacing >= 40
+      unit: m
+      description: 计算加载时，两辆模型车的中心距离不得小于40m
+    axle_layout:
+      note: '两辆模型车轴距与轴重相同。 以下为单辆模型车的轴重和轴距布置。
+
+        '
+      single_vehicle:
+        axle_loads_kN:
+        - 40
+        - 60
+        - 105
+        - 80
+        - 80
+        - 80
+        axle_spacing_m:
+        - 2.0
+        - 2.5
+        - 7.0
+        - 1.4
+        - 1.4
+        total_axle_layout_length_m: 14.3
+    figure_reference: 图4.3.7-1
+    remarks: '图4.3.7-1给出了模型II的轴重和轴距布置。 图中尺寸单位为m，荷载单位为kN。 两辆模型车轴距与轴重相同，加载时两车中心距离不得小于40m。
+
+      '
+    fatigue_load_model: 双车疲劳荷载模型
+    axle_loads_kN:
+    - 40
+    - 60
+    - 105
+    - 80
+    - 80
+    - 80
+    axle_spacing_m:
+    - 2.0
+    - 2.5
+    - 7.0
+    - 1.4
+    - 1.4
+    lane_load_factor: null
+  - fatigue_load_model_type: 模型III
+    model_name: 单车疲劳荷载模型
+    applicable_condition: '桥面系构件的疲劳验算应采用模型III。
+
+      '
+    load_form: 单车模型
+    vehicle_count: 1
+    axle_layout:
+      note: '模型III为单车模型，图4.3.7-2给出了其立面和平面布置。 图中尺寸单位为m，荷载单位为kN。
+
+        '
+      axle_loads_kN:
+      - 120
+      - 120
+      - 120
+      - 120
+      axle_spacing_m:
+      - 1.2
+      - 6.0
+      - 1.2
+      total_axle_layout_length_m: 8.4
+    wheel_layout:
+      transverse_wheel_spacing_m: 2.0
+      wheel_contact_size_m:
+        width_m: 0.2
+        length_m: 0.6
+        expression: 0.2 × 0.6
+    figure_reference: 图4.3.7-2
+    fatigue_load_model: 单车疲劳荷载模型
+    axle_loads_kN:
+    - 120
+    - 120
+    - 120
+    - 120
+    axle_spacing_m:
+    - 1.2
+    - 6.0
+    - 1.2
+    lane_load_factor: null
+- id: T_D60_4_3_9_PIER_SHAPE_FACTOR
+  meta:
+    name: 桥墩形状系数表
+    source: JTG D60-2015, 表4.3.9
+    description: 根据桥墩迎水面或平面形状查询桥墩形状系数K。 该系数用于流水压力标准值计算。
+    related_rules:
+    - R_D60_CH04_025
+  schema:
+    inputs:
+    - pier_shape
+    outputs:
+    - pier_shape_factor_K
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - pier_shape: 方形桥墩
+    pier_shape_factor_K: 1.5
+  - pier_shape: 矩形桥墩
+    description: 长边与水流平行
+    pier_shape_factor_K: 1.3
+  - pier_shape: 圆形桥墩
+    pier_shape_factor_K: 0.8
+  - pier_shape: 尖端形桥墩
+    pier_shape_factor_K: 0.7
+  - pier_shape: 圆端形桥墩
+    pier_shape_factor_K: 0.6
+- id: T_D60_4_4_1_1_INLAND_SHIP_COLLISION
+  meta:
+    name: 内河船舶撞击作用设计值表
+    source: JTG D60-2015, 表4.4.1-1
+    description: 根据内河航道等级和撞击方向查询船舶撞击作用设计值。 collision_direction 可取 transverse_bridge_direction 或 longitudinal_bridge_direction。
+      transverse_bridge_direction 表示横桥向撞击作用； longitudinal_bridge_direction 表示顺桥向撞击作用。
+    related_rules:
+    - R_D60_CH04_030
+  schema:
+    inputs:
+    - inland_waterway_class
+    - collision_direction
+    outputs:
+    - vessel_tonnage_DWT_t
+    - ship_collision_design_value_kN
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - inland_waterway_class: 四
+    vessel_tonnage_DWT_t: 500
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 550
+  - inland_waterway_class: 四
+    vessel_tonnage_DWT_t: 500
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 450
+  - inland_waterway_class: 五
+    vessel_tonnage_DWT_t: 300
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 400
+  - inland_waterway_class: 五
+    vessel_tonnage_DWT_t: 300
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 350
+  - inland_waterway_class: 六
+    vessel_tonnage_DWT_t: 100
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 250
+  - inland_waterway_class: 六
+    vessel_tonnage_DWT_t: 100
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 200
+  - inland_waterway_class: 七
+    vessel_tonnage_DWT_t: 50
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 150
+  - inland_waterway_class: 七
+    vessel_tonnage_DWT_t: 50
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 125
+- id: T_D60_4_4_1_2_SEAGOING_SHIP_COLLISION
+  meta:
+    name: 海轮船舶撞击作用设计值表
+    source: JTG D60-2015, 表4.4.1-2
+    description: 根据海轮船舶吨级DWT和撞击方向查询船舶撞击作用设计值。 collision_direction 可取 transverse_bridge_direction 或 longitudinal_bridge_direction。
+      transverse_bridge_direction 表示横桥向撞击作用； longitudinal_bridge_direction 表示顺桥向撞击作用。
+    related_rules:
+    - R_D60_CH04_030
+  schema:
+    inputs:
+    - vessel_tonnage_DWT_t
+    - collision_direction
+    outputs:
+    - ship_collision_design_value_kN
+  constraints:
+    matching_method: exact
+    interpolation: none
+    out_of_bounds: error
+  data:
+  - vessel_tonnage_DWT_t: 3000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 19600
+  - vessel_tonnage_DWT_t: 3000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 9800
+  - vessel_tonnage_DWT_t: 5000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 25400
+  - vessel_tonnage_DWT_t: 5000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 12700
+  - vessel_tonnage_DWT_t: 7500
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 31000
+  - vessel_tonnage_DWT_t: 7500
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 15500
+  - vessel_tonnage_DWT_t: 10000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 35800
+  - vessel_tonnage_DWT_t: 10000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 17900
+  - vessel_tonnage_DWT_t: 20000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 50700
+  - vessel_tonnage_DWT_t: 20000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 25350
+  - vessel_tonnage_DWT_t: 30000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 62100
+  - vessel_tonnage_DWT_t: 30000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 31050
+  - vessel_tonnage_DWT_t: 40000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 71700
+  - vessel_tonnage_DWT_t: 40000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 35850
+  - vessel_tonnage_DWT_t: 50000
+    collision_direction: transverse_bridge_direction
+    collision_direction_cn: 横桥向
+    ship_collision_design_value_kN: 80200
+  - vessel_tonnage_DWT_t: 50000
+    collision_direction: longitudinal_bridge_direction
+    collision_direction_cn: 顺桥向
+    ship_collision_design_value_kN: 40100

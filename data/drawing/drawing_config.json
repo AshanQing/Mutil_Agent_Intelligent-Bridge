@@ -1,0 +1,11 @@
+{
+  "schema_version": "drawing-config-v1",
+  "units": "mm",
+  "view_rows": [
+    ["cap-elevation", "cap-section"],
+    ["column-elevation", "column-section"]
+  ],
+  "column_gap_mm": 1500.0,
+  "row_gap_mm": 1800.0,
+  "preview_margin_mm": 500.0
+}

@@ -1,0 +1,4954 @@
+metadata:
+  standard: JTG 3362-2018
+  standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+  version: reasonableness_fixed_v0.2
+  generated_from: chapter-level four libraries uploaded in conversation
+  merge_policy: Rules/tables/formulas are de-duplicated by id with first occurrence kept. Variables are merged by id, preserving
+    first semantic fields and unioning roles/relations.
+  library_type: table_registry
+  item_count: 34
+  generation_note: 根据审查报告进一步修正：清除blocking问题，补齐meta、execution、roles，规范表格schema，原则性无关联规则转context_only/manual_review。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+tables:
+- id: T_3362_3_1_3_CONCRETE_STRENGTH_STANDARD
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.1.3
+    name: 混凝土强度标准值
+    source: JTG 3362-2018, 表3.1.3
+    description: 混凝土轴心抗压强度标准值fck和轴心抗拉强度标准值ftk。
+    related_rules:
+    - R_3362_CH03_003
+    - R_3362_CH03_3_1_3
+    related_formulas: []
+    related_variables:
+    - VAR_concrete_strength_grade
+    - VAR_concrete_strength_type
+    - VAR_fck_concrete_compressive_strength_standard
+    - VAR_ftk_concrete_tensile_strength_standard
+  schema:
+    inputs:
+    - strength_grade
+    - strength_type
+    outputs:
+    - value_MPa
+  constraints:
+    matching_method: exact_match
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 根据用户补充的第3章表格截图录入。
+  data:
+  - strength_grade: C25
+    strength_type: fck
+    value_MPa: 16.7
+  - strength_grade: C30
+    strength_type: fck
+    value_MPa: 20.1
+  - strength_grade: C35
+    strength_type: fck
+    value_MPa: 23.4
+  - strength_grade: C40
+    strength_type: fck
+    value_MPa: 26.8
+  - strength_grade: C45
+    strength_type: fck
+    value_MPa: 29.6
+  - strength_grade: C50
+    strength_type: fck
+    value_MPa: 32.4
+  - strength_grade: C55
+    strength_type: fck
+    value_MPa: 35.5
+  - strength_grade: C60
+    strength_type: fck
+    value_MPa: 38.5
+  - strength_grade: C65
+    strength_type: fck
+    value_MPa: 41.5
+  - strength_grade: C70
+    strength_type: fck
+    value_MPa: 44.5
+  - strength_grade: C75
+    strength_type: fck
+    value_MPa: 47.4
+  - strength_grade: C80
+    strength_type: fck
+    value_MPa: 50.2
+  - strength_grade: C25
+    strength_type: ftk
+    value_MPa: 1.78
+  - strength_grade: C30
+    strength_type: ftk
+    value_MPa: 2.01
+  - strength_grade: C35
+    strength_type: ftk
+    value_MPa: 2.2
+  - strength_grade: C40
+    strength_type: ftk
+    value_MPa: 2.4
+  - strength_grade: C45
+    strength_type: ftk
+    value_MPa: 2.51
+  - strength_grade: C50
+    strength_type: ftk
+    value_MPa: 2.65
+  - strength_grade: C55
+    strength_type: ftk
+    value_MPa: 2.74
+  - strength_grade: C60
+    strength_type: ftk
+    value_MPa: 2.85
+  - strength_grade: C65
+    strength_type: ftk
+    value_MPa: 2.93
+  - strength_grade: C70
+    strength_type: ftk
+    value_MPa: 3.0
+  - strength_grade: C75
+    strength_type: ftk
+    value_MPa: 3.05
+  - strength_grade: C80
+    strength_type: ftk
+    value_MPa: 3.1
+- id: T_3362_3_1_4_CONCRETE_STRENGTH_DESIGN
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.1.4
+    name: 混凝土强度设计值
+    source: JTG 3362-2018, 表3.1.4
+    description: 混凝土轴心抗压强度设计值fcd和轴心抗拉强度设计值ftd。
+    related_rules:
+    - R_3362_CH03_004
+    - R_3362_CH03_3_1_4
+    related_formulas: []
+    related_variables:
+    - VAR_concrete_strength_grade
+    - VAR_concrete_strength_type
+    - VAR_fcd_concrete_compressive_strength_design
+    - VAR_ftd_concrete_tensile_strength_design
+  schema:
+    inputs:
+    - strength_grade
+    - strength_type
+    outputs:
+    - value_MPa
+  constraints:
+    matching_method: exact_match
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 根据用户补充的第3章表格截图录入。
+  data:
+  - strength_grade: C25
+    strength_type: fcd
+    value_MPa: 11.5
+  - strength_grade: C30
+    strength_type: fcd
+    value_MPa: 13.8
+  - strength_grade: C35
+    strength_type: fcd
+    value_MPa: 16.1
+  - strength_grade: C40
+    strength_type: fcd
+    value_MPa: 18.4
+  - strength_grade: C45
+    strength_type: fcd
+    value_MPa: 20.5
+  - strength_grade: C50
+    strength_type: fcd
+    value_MPa: 22.4
+  - strength_grade: C55
+    strength_type: fcd
+    value_MPa: 24.4
+  - strength_grade: C60
+    strength_type: fcd
+    value_MPa: 26.5
+  - strength_grade: C65
+    strength_type: fcd
+    value_MPa: 28.5
+  - strength_grade: C70
+    strength_type: fcd
+    value_MPa: 30.5
+  - strength_grade: C75
+    strength_type: fcd
+    value_MPa: 32.4
+  - strength_grade: C80
+    strength_type: fcd
+    value_MPa: 34.6
+  - strength_grade: C25
+    strength_type: ftd
+    value_MPa: 1.23
+  - strength_grade: C30
+    strength_type: ftd
+    value_MPa: 1.39
+  - strength_grade: C35
+    strength_type: ftd
+    value_MPa: 1.52
+  - strength_grade: C40
+    strength_type: ftd
+    value_MPa: 1.65
+  - strength_grade: C45
+    strength_type: ftd
+    value_MPa: 1.74
+  - strength_grade: C50
+    strength_type: ftd
+    value_MPa: 1.83
+  - strength_grade: C55
+    strength_type: ftd
+    value_MPa: 1.89
+  - strength_grade: C60
+    strength_type: ftd
+    value_MPa: 1.96
+  - strength_grade: C65
+    strength_type: ftd
+    value_MPa: 2.02
+  - strength_grade: C70
+    strength_type: ftd
+    value_MPa: 2.07
+  - strength_grade: C75
+    strength_type: ftd
+    value_MPa: 2.1
+  - strength_grade: C80
+    strength_type: ftd
+    value_MPa: 2.14
+- id: T_3362_3_1_5_CONCRETE_ELASTIC_MODULUS
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.1.5
+    name: 混凝土弹性模量
+    source: JTG 3362-2018, 表3.1.5
+    description: 混凝土受压或受拉时的弹性模量Ec。
+    related_rules:
+    - R_3362_CH03_005
+    - R_3362_CH03_3_1_5
+    related_formulas:
+    - F_3362_L1_CONCRETE_SHEAR_MODULUS
+    related_variables:
+    - VAR_concrete_strength_grade
+    - VAR_Ec_concrete_modulus
+  schema:
+    inputs:
+    - strength_grade
+    outputs:
+    - Ec_1e4_MPa
+    - Ec_MPa
+  constraints:
+    matching_method: exact_match
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表中Ec单位为10^4 MPa，另同步给出换算后的Ec_MPa。采用用引气剂及较高砂率的泵送混凝土且无实测数据时，C50～C80的Ec宜乘以折减系数0.95。
+  data:
+  - strength_grade: C25
+    Ec_1e4_MPa: 2.8
+    Ec_MPa: 28000.0
+  - strength_grade: C30
+    Ec_1e4_MPa: 3.0
+    Ec_MPa: 30000.0
+  - strength_grade: C35
+    Ec_1e4_MPa: 3.15
+    Ec_MPa: 31500.0
+  - strength_grade: C40
+    Ec_1e4_MPa: 3.25
+    Ec_MPa: 32500.0
+  - strength_grade: C45
+    Ec_1e4_MPa: 3.35
+    Ec_MPa: 33500.0
+  - strength_grade: C50
+    Ec_1e4_MPa: 3.45
+    Ec_MPa: 34500.0
+  - strength_grade: C55
+    Ec_1e4_MPa: 3.55
+    Ec_MPa: 35500.0
+  - strength_grade: C60
+    Ec_1e4_MPa: 3.6
+    Ec_MPa: 36000.0
+  - strength_grade: C65
+    Ec_1e4_MPa: 3.65
+    Ec_MPa: 36500.0
+  - strength_grade: C70
+    Ec_1e4_MPa: 3.7
+    Ec_MPa: 37000.0
+  - strength_grade: C75
+    Ec_1e4_MPa: 3.75
+    Ec_MPa: 37500.0
+  - strength_grade: C80
+    Ec_1e4_MPa: 3.8
+    Ec_MPa: 38000.0
+- id: T_3362_3_2_2_1_REBAR_TENSILE_STRENGTH_STANDARD
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.2.2
+    name: 普通钢筋抗拉强度标准值
+    source: JTG 3362-2018, 表3.2.2-1
+    description: 普通钢筋抗拉强度标准值fsk。
+    related_rules:
+    - R_3362_CH03_008
+    - R_3362_CH03_3_2_2
+    related_formulas: []
+    related_variables:
+    - VAR_rebar_type
+    - VAR_rebar_nominal_diameter
+    - VAR_fsk_rebar_tensile_strength_standard
+  schema:
+    inputs:
+    - steel_type
+    - nominal_diameter_mm
+    outputs:
+    - fsk_MPa
+  constraints:
+    matching_method: exact_match
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 根据用户补充的第3章表格截图录入。
+  data:
+  - steel_type: HPB300
+    symbol: Φ
+    nominal_diameter_mm: 6~22
+    fsk_MPa: 300
+  - steel_type: HRB400
+    symbol: Φ
+    nominal_diameter_mm: 6~50
+    fsk_MPa: 400
+  - steel_type: HRBF400
+    symbol: ΦF
+    nominal_diameter_mm: 6~50
+    fsk_MPa: 400
+  - steel_type: RRB400
+    symbol: ΦR
+    nominal_diameter_mm: 6~50
+    fsk_MPa: 400
+  - steel_type: HRB500
+    symbol: Φ
+    nominal_diameter_mm: 6~50
+    fsk_MPa: 500
+- id: T_3362_3_2_2_2_PRESTRESSING_STEEL_TENSILE_STRENGTH_STANDARD
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.2.2
+    name: 预应力钢筋抗拉强度标准值
+    source: JTG 3362-2018, 表3.2.2-2
+    description: 预应力钢筋抗拉强度标准值fpk。
+    related_rules:
+    - R_3362_CH03_009
+    - R_3362_CH03_3_2_2
+    related_formulas: []
+    related_variables:
+    - VAR_prestressing_steel_type
+    - VAR_rebar_nominal_diameter
+    - VAR_fpk_prestress_tensile_strength_standard
+  schema:
+    inputs:
+    - steel_type
+    - subcategory
+    - nominal_diameter_mm
+    outputs:
+    - fpk_MPa
+  constraints:
+    matching_method: condition_lookup
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 同一行存在多个可选强度值时以逗号字符串保存，后续调用时需结合产品等级或设计输入选择。
+  data:
+  - steel_type: 钢绞线
+    subcategory: 1x7
+    symbol: ΦS
+    nominal_diameter_mm: 9.5,12.7,15.2,17.8
+    fpk_MPa: 1720,1860,1960
+  - steel_type: 钢绞线
+    subcategory: 1x7
+    symbol: ΦS
+    nominal_diameter_mm: '21.6'
+    fpk_MPa: '1860'
+  - steel_type: 消除应力钢丝
+    subcategory: 光面螺旋肋
+    symbol: ΦP/ΦH
+    nominal_diameter_mm: '5'
+    fpk_MPa: 1570,1770,1860
+  - steel_type: 消除应力钢丝
+    subcategory: 光面螺旋肋
+    symbol: ΦP/ΦH
+    nominal_diameter_mm: '7'
+    fpk_MPa: '1570'
+  - steel_type: 消除应力钢丝
+    subcategory: 光面螺旋肋
+    symbol: ΦP/ΦH
+    nominal_diameter_mm: '9'
+    fpk_MPa: 1470,1570
+  - steel_type: 预应力螺纹钢筋
+    subcategory: '-'
+    symbol: ΦT
+    nominal_diameter_mm: 18,25,32,40,50
+    fpk_MPa: 785,930,1080
+- id: T_3362_3_2_3_STEEL_STRENGTH_DESIGN_PLACEHOLDER
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.2.3
+    name: 钢筋强度设计值
+    source: JTG 3362-2018, 表3.2.3-1、表3.2.3-2
+    description: 普通钢筋和预应力钢筋抗拉、抗压强度设计值。
+    related_rules:
+    - R_3362_CH03_010
+    - R_3362_CH03_3_2_3
+    related_formulas: []
+    related_variables:
+    - VAR_rebar_type
+    - VAR_prestressing_steel_type
+    - VAR_fsd_rebar_tensile_strength_design
+    - VAR_fsd_prime_compression_rebar_strength_design
+    - VAR_fpd_prestress_tensile_strength_design
+    - VAR_fpd_prime_prestress_compression_strength
+  schema:
+    inputs:
+    - steel_category
+    - steel_type
+    - fpk_MPa
+    outputs:
+    - fsd_MPa
+    - fsd_prime_MPa
+    - fpd_MPa
+    - fpd_prime_MPa
+  constraints:
+    matching_method: condition_lookup
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 本表合并表3.2.3-1和表3.2.3-2。普通钢筋行使用fsd_MPa/fsd_prime_MPa；预应力钢筋行使用fpd_MPa/fpd_prime_MPa。
+  data:
+  - steel_category: 普通钢筋
+    steel_type: HPB300
+    fsd_MPa: 250
+    fsd_prime_MPa: 250
+  - steel_category: 普通钢筋
+    steel_type: HRB400
+    fsd_MPa: 330
+    fsd_prime_MPa: 330
+  - steel_category: 普通钢筋
+    steel_type: HRBF400
+    fsd_MPa: 330
+    fsd_prime_MPa: 330
+  - steel_category: 普通钢筋
+    steel_type: RRB400
+    fsd_MPa: 330
+    fsd_prime_MPa: 330
+  - steel_category: 普通钢筋
+    steel_type: HRB500
+    fsd_MPa: 415
+    fsd_prime_MPa: 400
+  - steel_category: 预应力钢筋
+    steel_type: 钢绞线1x7七股
+    fpk_MPa: 1720
+    fpd_MPa: 1170
+    fpd_prime_MPa: 390
+  - steel_category: 预应力钢筋
+    steel_type: 钢绞线1x7七股
+    fpk_MPa: 1860
+    fpd_MPa: 1260
+    fpd_prime_MPa: 390
+  - steel_category: 预应力钢筋
+    steel_type: 钢绞线1x7七股
+    fpk_MPa: 1960
+    fpd_MPa: 1330
+    fpd_prime_MPa: 390
+  - steel_category: 预应力钢筋
+    steel_type: 消除应力钢丝
+    fpk_MPa: 1470
+    fpd_MPa: 1000
+    fpd_prime_MPa: 410
+  - steel_category: 预应力钢筋
+    steel_type: 消除应力钢丝
+    fpk_MPa: 1570
+    fpd_MPa: 1070
+    fpd_prime_MPa: 410
+  - steel_category: 预应力钢筋
+    steel_type: 消除应力钢丝
+    fpk_MPa: 1770
+    fpd_MPa: 1200
+    fpd_prime_MPa: 410
+  - steel_category: 预应力钢筋
+    steel_type: 消除应力钢丝
+    fpk_MPa: 1860
+    fpd_MPa: 1260
+    fpd_prime_MPa: 410
+  - steel_category: 预应力钢筋
+    steel_type: 预应力螺纹钢筋
+    fpk_MPa: 785
+    fpd_MPa: 650
+    fpd_prime_MPa: 400
+  - steel_category: 预应力钢筋
+    steel_type: 预应力螺纹钢筋
+    fpk_MPa: 930
+    fpd_MPa: 770
+    fpd_prime_MPa: 400
+  - steel_category: 预应力钢筋
+    steel_type: 预应力螺纹钢筋
+    fpk_MPa: 1080
+    fpd_MPa: 900
+    fpd_prime_MPa: 400
+- id: T_3362_3_2_4_STEEL_ELASTIC_MODULUS
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第3章 材料
+    clause: 3.2.4
+    name: 钢筋弹性模量
+    source: JTG 3362-2018, 表3.2.4
+    description: 普通钢筋弹性模量Es和预应力钢筋弹性模量Ep。
+    related_rules:
+    - R_3362_CH03_3_2_4
+    related_formulas: []
+    related_variables:
+    - VAR_rebar_type
+    - VAR_prestressing_steel_type
+    - VAR_Es_rebar_modulus
+    - VAR_Ep_prestress_steel_modulus
+  schema:
+    inputs:
+    - steel_category
+    - steel_type
+    outputs:
+    - Es_1e5_MPa
+    - Es_MPa
+    - Ep_1e5_MPa
+    - Ep_MPa
+  constraints:
+    matching_method: condition_lookup
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 根据用户补充的第3章表格截图录入。
+  data:
+  - steel_category: 普通钢筋
+    steel_type: HPB300
+    Es_1e5_MPa: 2.1
+    Es_MPa: 210000
+  - steel_category: 普通钢筋
+    steel_type: HRB400,HRB500,HRBF400,RRB400
+    Es_1e5_MPa: 2.0
+    Es_MPa: 200000
+  - steel_category: 预应力钢筋
+    steel_type: 钢绞线
+    Ep_1e5_MPa: 1.95
+    Ep_MPa: 195000
+  - steel_category: 预应力钢筋
+    steel_type: 消除应力钢丝
+    Ep_1e5_MPa: 2.05
+    Ep_MPa: 205000
+  - steel_category: 预应力钢筋
+    steel_type: 预应力螺纹钢筋
+    Ep_1e5_MPa: 2.0
+    Ep_MPa: 200000
+- id: T_3362_APPB_B_3_4_NODE_STRENGTH_FACTOR
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 附录B
+    clause: B.3.4
+    name: 三类典型节点的界面混凝土强度软化系数
+    source: JTG 3362-2018, 表B.3.4
+    description: 拉压杆模型中节点界面的混凝土强度软化系数βn。
+    related_rules:
+    - R_3362_APPB_B_3_4
+    related_formulas:
+    - F_3362_APPB_B_3_4_NODE_RESISTANCE
+    related_variables:
+    - VAR_node_type
+    - VAR_beta_n_node_strength_factor
+  schema:
+    inputs:
+    - node_type
+    outputs:
+    - beta_n
+  constraints:
+    matching_method: exact_match
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 节点类型需按附录B图示和受力模式识别。
+  data:
+  - node_type: CCC
+    meaning: 杆件和支承面包围的节点区域
+    beta_n: 0.85 * beta_c
+  - node_type: CCT
+    meaning: 单向拉杆锚固的节点区域
+    beta_n: 0.75 * beta_c
+  - node_type: CTT
+    meaning: 双向拉杆锚固的节点区域
+    beta_n: 0.65 * beta_c
+  _source_file: 附录_表格库.yaml
+  _source_chapter: APP
+- id: T_3362_APPC_C_1_2_NOMINAL_SHRINKAGE_COEFFICIENT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 附录C
+    clause: C.1.2
+    name: 混凝土名义收缩系数εcs0
+    source: JTG 3362-2018, 表C.1.2
+    description: 强度等级C25～C50混凝土名义收缩系数。
+    related_rules:
+    - R_3362_APPC_C_1_2
+    related_formulas:
+    - F_3362_APPC_C_1_1_2_NOMINAL_SHRINKAGE
+    related_variables:
+    - VAR_RH_relative_humidity_range
+    - VAR_epsilon_cs0_nominal_shrinkage_coefficient
+  schema:
+    inputs:
+    - RH_range
+    outputs:
+    - epsilon_cs0_x_1e_minus3
+  constraints:
+    matching_method: range_match
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 适用于一般硅酸盐类水泥或快硬水泥配制的混凝土。
+  data:
+  - RH_range: 40%<=RH<70%
+    epsilon_cs0_x_1e_minus3: 0.529
+  - RH_range: 70%<=RH<99%
+    epsilon_cs0_x_1e_minus3: 0.31
+  _source_file: 附录_表格库.yaml
+  _source_chapter: APP
+- id: T_3362_APPC_C_2_2_NOMINAL_CREEP_COEFFICIENT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 附录C
+    clause: C.2.2
+    name: 混凝土名义徐变系数φ0
+    source: JTG 3362-2018, 表C.2.2
+    description: 按加载龄期、相对湿度范围和理论厚度查取名义徐变系数。
+    related_rules:
+    - R_3362_APPC_C_2_2
+    related_formulas:
+    - F_3362_APPC_C_2_1_2_NOMINAL_CREEP
+    related_variables:
+    - VAR_t0_loading_age
+    - VAR_RH_relative_humidity_range
+    - VAR_h_theoretical_thickness
+    - VAR_phi0_nominal_creep_coefficient
+  schema:
+    inputs:
+    - loading_age_d
+    - RH_range
+    - h_mm
+    outputs:
+    - phi0
+  constraints:
+    matching_method: multi_key_range_lookup
+    interpolation: true
+    out_of_bounds: manual_review
+    note: 已根据用户补充的表C.2.2截图录入全部可读数值。h=600表示表中≥600列；中间值可线性内插。对于强度等级C50及以上混凝土，表列数值应乘以sqrt(32.4/fck)。
+  data:
+  - loading_age_d: 3
+    RH_range: 40%<=RH<70%
+    h_mm: 100
+    phi0: 3.9
+  - loading_age_d: 3
+    RH_range: 40%<=RH<70%
+    h_mm: 200
+    phi0: 3.5
+  - loading_age_d: 3
+    RH_range: 40%<=RH<70%
+    h_mm: 300
+    phi0: 3.31
+  - loading_age_d: 3
+    RH_range: 40%<=RH<70%
+    h_mm: 600
+    phi0: 3.03
+  - loading_age_d: 3
+    RH_range: 70%<=RH<99%
+    h_mm: 100
+    phi0: 2.83
+  - loading_age_d: 3
+    RH_range: 70%<=RH<99%
+    h_mm: 200
+    phi0: 2.65
+  - loading_age_d: 3
+    RH_range: 70%<=RH<99%
+    h_mm: 300
+    phi0: 2.56
+  - loading_age_d: 3
+    RH_range: 70%<=RH<99%
+    h_mm: 600
+    phi0: 2.44
+  - loading_age_d: 7
+    RH_range: 40%<=RH<70%
+    h_mm: 100
+    phi0: 3.33
+  - loading_age_d: 7
+    RH_range: 40%<=RH<70%
+    h_mm: 200
+    phi0: 3.0
+  - loading_age_d: 7
+    RH_range: 40%<=RH<70%
+    h_mm: 300
+    phi0: 2.82
+  - loading_age_d: 7
+    RH_range: 40%<=RH<70%
+    h_mm: 600
+    phi0: 2.59
+  - loading_age_d: 7
+    RH_range: 70%<=RH<99%
+    h_mm: 100
+    phi0: 2.41
+  - loading_age_d: 7
+    RH_range: 70%<=RH<99%
+    h_mm: 200
+    phi0: 2.26
+  - loading_age_d: 7
+    RH_range: 70%<=RH<99%
+    h_mm: 300
+    phi0: 2.19
+  - loading_age_d: 7
+    RH_range: 70%<=RH<99%
+    h_mm: 600
+    phi0: 2.08
+  - loading_age_d: 14
+    RH_range: 40%<=RH<70%
+    h_mm: 100
+    phi0: 2.92
+  - loading_age_d: 14
+    RH_range: 40%<=RH<70%
+    h_mm: 200
+    phi0: 2.62
+  - loading_age_d: 14
+    RH_range: 40%<=RH<70%
+    h_mm: 300
+    phi0: 2.48
+  - loading_age_d: 14
+    RH_range: 40%<=RH<70%
+    h_mm: 600
+    phi0: 2.27
+  - loading_age_d: 14
+    RH_range: 70%<=RH<99%
+    h_mm: 100
+    phi0: 2.12
+  - loading_age_d: 14
+    RH_range: 70%<=RH<99%
+    h_mm: 200
+    phi0: 1.99
+  - loading_age_d: 14
+    RH_range: 70%<=RH<99%
+    h_mm: 300
+    phi0: 1.92
+  - loading_age_d: 14
+    RH_range: 70%<=RH<99%
+    h_mm: 600
+    phi0: 1.83
+  - loading_age_d: 28
+    RH_range: 40%<=RH<70%
+    h_mm: 100
+    phi0: 2.56
+  - loading_age_d: 28
+    RH_range: 40%<=RH<70%
+    h_mm: 200
+    phi0: 2.3
+  - loading_age_d: 28
+    RH_range: 40%<=RH<70%
+    h_mm: 300
+    phi0: 2.17
+  - loading_age_d: 28
+    RH_range: 40%<=RH<70%
+    h_mm: 600
+    phi0: 1.99
+  - loading_age_d: 28
+    RH_range: 70%<=RH<99%
+    h_mm: 100
+    phi0: 1.86
+  - loading_age_d: 28
+    RH_range: 70%<=RH<99%
+    h_mm: 200
+    phi0: 1.74
+  - loading_age_d: 28
+    RH_range: 70%<=RH<99%
+    h_mm: 300
+    phi0: 1.69
+  - loading_age_d: 28
+    RH_range: 70%<=RH<99%
+    h_mm: 600
+    phi0: 1.6
+  - loading_age_d: 60
+    RH_range: 40%<=RH<70%
+    h_mm: 100
+    phi0: 2.21
+  - loading_age_d: 60
+    RH_range: 40%<=RH<70%
+    h_mm: 200
+    phi0: 1.99
+  - loading_age_d: 60
+    RH_range: 40%<=RH<70%
+    h_mm: 300
+    phi0: 1.88
+  - loading_age_d: 60
+    RH_range: 40%<=RH<70%
+    h_mm: 600
+    phi0: 1.72
+  - loading_age_d: 60
+    RH_range: 70%<=RH<99%
+    h_mm: 100
+    phi0: 1.61
+  - loading_age_d: 60
+    RH_range: 70%<=RH<99%
+    h_mm: 200
+    phi0: 1.51
+  - loading_age_d: 60
+    RH_range: 70%<=RH<99%
+    h_mm: 300
+    phi0: 1.46
+  - loading_age_d: 60
+    RH_range: 70%<=RH<99%
+    h_mm: 600
+    phi0: 1.39
+  - loading_age_d: 90
+    RH_range: 40%<=RH<70%
+    h_mm: 100
+    phi0: 2.05
+  - loading_age_d: 90
+    RH_range: 40%<=RH<70%
+    h_mm: 200
+    phi0: 1.84
+  - loading_age_d: 90
+    RH_range: 40%<=RH<70%
+    h_mm: 300
+    phi0: 1.74
+  - loading_age_d: 90
+    RH_range: 40%<=RH<70%
+    h_mm: 600
+    phi0: 1.59
+  - loading_age_d: 90
+    RH_range: 70%<=RH<99%
+    h_mm: 100
+    phi0: 1.49
+  - loading_age_d: 90
+    RH_range: 70%<=RH<99%
+    h_mm: 200
+    phi0: 1.39
+  - loading_age_d: 90
+    RH_range: 70%<=RH<99%
+    h_mm: 300
+    phi0: 1.35
+  - loading_age_d: 90
+    RH_range: 70%<=RH<99%
+    h_mm: 600
+    phi0: 1.28
+  _source_file: 附录_表格库.yaml
+  _source_chapter: APP
+- id: T_3362_APPC_C_2_4_FLYASH_CREEP_CORRECTION
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 附录C
+    clause: C.2.4
+    name: 粉煤灰混凝土名义徐变修正系数φ(α,t0)
+    source: JTG 3362-2018, 表C.2.4
+    description: 按加载龄期和粉煤灰掺量查取名义徐变修正系数。
+    related_rules:
+    - R_3362_APPC_C_2_4
+    related_formulas:
+    - F_3362_APPC_C_2_4_FLYASH_CREEP_CORRECTION
+    related_variables:
+    - VAR_t0_loading_age
+    - VAR_alpha_flyash_content
+    - VAR_phi_alpha_t0_flyash_creep_correction
+  schema:
+    inputs:
+    - loading_age_d
+    - flyash_content_percent
+    outputs:
+    - phi_alpha_t0
+  constraints:
+    matching_method: multi_key_lookup
+    interpolation: true
+    out_of_bounds: manual_review
+    note: 按图片表C.2.4录入。
+  data:
+  - loading_age_d: 7
+    flyash_content_percent: 10
+    phi_alpha_t0: 0.8
+  - loading_age_d: 7
+    flyash_content_percent: 20
+    phi_alpha_t0: 0.65
+  - loading_age_d: 7
+    flyash_content_percent: 30
+    phi_alpha_t0: 0.53
+  - loading_age_d: 14
+    flyash_content_percent: 10
+    phi_alpha_t0: 0.7
+  - loading_age_d: 14
+    flyash_content_percent: 20
+    phi_alpha_t0: 0.55
+  - loading_age_d: 14
+    flyash_content_percent: 30
+    phi_alpha_t0: 0.45
+  - loading_age_d: 28
+    flyash_content_percent: 10
+    phi_alpha_t0: 0.64
+  - loading_age_d: 28
+    flyash_content_percent: 20
+    phi_alpha_t0: 0.5
+  - loading_age_d: 28
+    flyash_content_percent: 30
+    phi_alpha_t0: 0.41
+  - loading_age_d: 60
+    flyash_content_percent: 10
+    phi_alpha_t0: 0.6
+  - loading_age_d: 60
+    flyash_content_percent: 20
+    phi_alpha_t0: 0.47
+  - loading_age_d: 60
+    flyash_content_percent: 30
+    phi_alpha_t0: 0.38
+  - loading_age_d: 90
+    flyash_content_percent: 10
+    phi_alpha_t0: 0.58
+  - loading_age_d: 90
+    flyash_content_percent: 20
+    phi_alpha_t0: 0.46
+  - loading_age_d: 90
+    flyash_content_percent: 30
+    phi_alpha_t0: 0.37
+  _source_file: 附录_表格库.yaml
+  _source_chapter: APP
+- id: T_3362_APPC_C_3_1_RELAXATION_LOSS_RATIO
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 附录C
+    clause: C.3.1
+    name: 钢筋松弛损失中间值与终极值的比值
+    source: JTG 3362-2018, 表C.3.1
+    description: 按时间查取钢筋松弛损失中间值与终极值的比值。
+    related_rules:
+    - R_3362_APPC_C_3_1
+    related_formulas: []
+    related_variables:
+    - VAR_time_day
+    - VAR_relaxation_loss_ratio
+  schema:
+    inputs:
+    - time_d
+    outputs:
+    - ratio
+  constraints:
+    matching_method: interpolation_lookup
+    interpolation: true
+    out_of_bounds: manual_review
+    note: 表C.3.1。
+  data:
+  - time_d: 1
+    ratio: 0.5
+  - time_d: 10
+    ratio: 0.61
+  - time_d: 20
+    ratio: 0.74
+  - time_d: 30
+    ratio: 0.87
+  - time_d: 40
+    ratio: 1.0
+  _source_file: 附录_表格库.yaml
+  _source_chapter: APP
+- id: T_3362_APPF_F_0_1_ROUND_SECTION_CAPACITY_COEFFICIENT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 附录F
+    clause: F.0.1
+    name: 圆形截面偏心受压构件正截面相对承载力nu_m
+    source: JTG 3362-2018, 表F.0.1
+    description: 按相对偏心距和配筋参数查取圆形截面相对承载力nu_m。
+    related_rules:
+    - R_3362_APPF_F_0_1
+    related_formulas:
+    - F_3362_APPF_F_0_1_ROUND_SECTION_ECC_COMPRESSIVE_CAPACITY
+    related_variables:
+    - VAR_relative_eccentricity_e0_over_r
+    - VAR_reinforcement_parameter
+    - VAR_nu_m_round_section_capacity_coefficient
+  schema:
+    inputs:
+    - eta_e0_over_r
+    - rho_fsd_over_fcd
+    outputs:
+    - nu_m
+  constraints:
+    matching_method: bilinear_interpolation_lookup
+    interpolation: true
+    out_of_bounds: manual_review
+    note: 已根据用户补充的表F.0.1三张截图录入可读网格数据；部分数值由旋转截图人工转录，建议正式用于计算前抽样复核。
+  data:
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.06
+    nu_m: 1.4201
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.09
+    nu_m: 1.3312
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.12
+    nu_m: 1.2645
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.15
+    nu_m: 1.2079
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.18
+    nu_m: 1.1565
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.21
+    nu_m: 1.1073
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.24
+    nu_m: 1.0584
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.27
+    nu_m: 1.008
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.9534
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.8438
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.7308
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.6163
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.5016
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.3876
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.2754
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1664
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.0617
+  - eta_e0_over_r: 0.01
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.0
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.06
+    nu_m: 1.0031
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.09
+    nu_m: 1.0361
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.12
+    nu_m: 1.0601
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.15
+    nu_m: 1.0885
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.18
+    nu_m: 1.1169
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.21
+    nu_m: 1.1454
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.24
+    nu_m: 1.1738
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.27
+    nu_m: 1.2022
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.3
+    nu_m: 1.2306
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.4
+    nu_m: 1.3254
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.5
+    nu_m: 1.4201
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.5148
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.6095
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.7042
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.7989
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.8937
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.9884
+  - eta_e0_over_r: 0.05
+    rho_fsd_over_fcd: 1.2
+    nu_m: 2.0831
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.9438
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.9711
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.9984
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.15
+    nu_m: 1.0257
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.18
+    nu_m: 1.0529
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.21
+    nu_m: 1.0802
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.24
+    nu_m: 1.1075
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.27
+    nu_m: 1.1345
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.3
+    nu_m: 1.1671
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.4
+    nu_m: 1.2221
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.5
+    nu_m: 1.3423
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.4325
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.5226
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.6127
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.7027
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.7927
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.8826
+  - eta_e0_over_r: 0.1
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.9726
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.8827
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.909
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.9352
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.9614
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.9875
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.21
+    nu_m: 1.0136
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.24
+    nu_m: 1.0396
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.27
+    nu_m: 1.0656
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.3
+    nu_m: 1.0916
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.4
+    nu_m: 1.1951
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.5
+    nu_m: 1.2464
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.3503
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.4362
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.5228
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.6077
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.6934
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.779
+  - eta_e0_over_r: 0.15
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.8646
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.8268
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.852
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.8778
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.9021
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.9277
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.9534
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.9789
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.27
+    nu_m: 1.0044
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.3
+    nu_m: 1.03
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.4
+    nu_m: 1.1033
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.5
+    nu_m: 1.2457
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.2676
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.3459
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.4239
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.5013
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.579
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.6564
+  - eta_e0_over_r: 0.2
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.7343
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.7589
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.7829
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.8067
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.8302
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.854
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.8778
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.9016
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.9254
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.9491
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.4
+    nu_m: 1.0279
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.5
+    nu_m: 1.1063
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.1845
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.2625
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.3404
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.418
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.4956
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.5731
+  - eta_e0_over_r: 0.25
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.6504
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.7003
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.7247
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.7486
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.7721
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.7956
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.8181
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.8408
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.8632
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.8855
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.959
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.5
+    nu_m: 1.0316
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.1036
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.1753
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.2464
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.3228
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.3904
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.4699
+  - eta_e0_over_r: 0.3
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.5433
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.6423
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.6644
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.6928
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.7169
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.7407
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.7625
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.7822
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.754
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.7757
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.8406
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.9147
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.6
+    nu_m: 1.0408
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.0997
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.1733
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.2465
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.3194
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.3824
+  - eta_e0_over_r: 0.35
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.45
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.5835
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.6064
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.6393
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.6616
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.6836
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.7027
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.724
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.7474
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.7904
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.8484
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.9108
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.9822
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.7
+    nu_m: 1.0387
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.0991
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.1607
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.2253
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.3195
+  - eta_e0_over_r: 0.4
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.3622
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.5346
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.5624
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.5884
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.6134
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.6372
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.6597
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.6822
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.7041
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.7255
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.794
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.8619
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.9275
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.9921
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.0561
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.1195
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.1825
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.2452
+  - eta_e0_over_r: 0.45
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.3077
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.4839
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.5133
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.5403
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.5652
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.5888
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.613
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.6354
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.6573
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.6786
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.747
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.8126
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.8765
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.9393
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 1.0012
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.0625
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.1233
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.1838
+  - eta_e0_over_r: 0.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.2441
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.4359
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.463
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.4951
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.5212
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.5472
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.5692
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.5911
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.6153
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.6347
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.7022
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.766
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.828
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.8887
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.9503
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 0.9
+    nu_m: 1.0094
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.0682
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.1266
+  - eta_e0_over_r: 0.55
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.1848
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.3919
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.4204
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.4543
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.4779
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.5035
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.5246
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.5462
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.5712
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.5962
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.6566
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.7176
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.7766
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.834
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.8905
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.946
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 1.0
+    nu_m: 1.0008
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.0553
+  - eta_e0_over_r: 0.6
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.1085
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.3495
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.384
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.4141
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.4414
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.4664
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.4909
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.5131
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.5348
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.5556
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.6217
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.6847
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.7433
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.8011
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.8578
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.9136
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.9689
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 1.1
+    nu_m: 1.0236
+  - eta_e0_over_r: 0.65
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.0779
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.3116
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.3475
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.3784
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.4062
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.4317
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.4562
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.4782
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.4998
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.523
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.5857
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.6466
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.7047
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.7611
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.8163
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.8705
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.9241
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.9771
+  - eta_e0_over_r: 0.7
+    rho_fsd_over_fcd: 1.2
+    nu_m: 1.0297
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.2773
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.3143
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.3459
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.3743
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.3996
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.4235
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.4452
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.4669
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.4851
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.5484
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.6102
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.6689
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.7239
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.7776
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.8303
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.8823
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.9337
+  - eta_e0_over_r: 0.75
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.9847
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.2443
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.2852
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.3143
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.3473
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.371
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.3939
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.4212
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.4377
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.4567
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.5214
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.5795
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.6363
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.6905
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.7437
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.7907
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.8421
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.8935
+  - eta_e0_over_r: 0.8
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.945
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.2199
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.2579
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.2899
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.318
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.3436
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.3672
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.3893
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.4104
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.4305
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.4928
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.5502
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.6045
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.6569
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.7078
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.7577
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.8067
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.8552
+  - eta_e0_over_r: 0.85
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.9032
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.1963
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.2343
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.2661
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.294
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.3193
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.3427
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.3646
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.3853
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.4051
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.4663
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.5225
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.5757
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.6267
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.6763
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.7249
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.7726
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.8197
+  - eta_e0_over_r: 0.9
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.8663
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.1759
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.2146
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.2448
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.2724
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.2974
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.3204
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.342
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.3624
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.3818
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.4419
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.496
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.5486
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.5986
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.647
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.6942
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.7407
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.7864
+  - eta_e0_over_r: 0.95
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.8317
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.1582
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.195
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.2259
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.253
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.2775
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.3001
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.3213
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.3413
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.3604
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.4193
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.4731
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.5238
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.5724
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.6195
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.6655
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.7107
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.7553
+  - eta_e0_over_r: 1.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.7993
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.1299
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.1469
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.1939
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.2198
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.2433
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.2469
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.2852
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.3044
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.3227
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.3791
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.4305
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.4789
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.5251
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.5699
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.6135
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.6564
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.6986
+  - eta_e0_over_r: 1.1
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.7402
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.1087
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.144
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.1685
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.1929
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.2152
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.2358
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.2551
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.2734
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.2909
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.3446
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.3937
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.4398
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.4836
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.5264
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.5673
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.6063
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.6486
+  - eta_e0_over_r: 1.2
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.6881
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0927
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.1241
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.1481
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.1701
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1909
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.21
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.2286
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.2464
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.2633
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.315
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.3626
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.4076
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.4504
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.4913
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.5301
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.5702
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.607
+  - eta_e0_over_r: 1.3
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.6418
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0804
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.1077
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.1316
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.1531
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1728
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.1912
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.2086
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.225
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.2408
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.2885
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.334
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.3759
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.4158
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.4544
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.492
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.5288
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.5649
+  - eta_e0_over_r: 1.4
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.6006
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0708
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0959
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.118
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.1381
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1567
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.174
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.1905
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.2061
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.221
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.2673
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.3097
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.349
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.3877
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.4245
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.4605
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.4954
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.5298
+  - eta_e0_over_r: 1.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.5638
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.063
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0822
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.1068
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.1256
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1431
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.1595
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.175
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.1897
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.2039
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.2479
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.2886
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.3266
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.363
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.3979
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.4321
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.4653
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.4984
+  - eta_e0_over_r: 1.6
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.5309
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0567
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0787
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0974
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.1148
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1315
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.1466
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.1616
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.1756
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.1891
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.2313
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.2701
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.3068
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.3413
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.3747
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.4074
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.4394
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.4704
+  - eta_e0_over_r: 1.7
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.5012
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0515
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0714
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0894
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.106
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1215
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.1361
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.15
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.1633
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.1761
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.216
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.2528
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.2875
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.3207
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.3528
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.384
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.4146
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.4447
+  - eta_e0_over_r: 1.8
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.4743
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0472
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0657
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0826
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0982
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1128
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.1266
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.1398
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.1525
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.1646
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.2027
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.2378
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.271
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.3028
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.3335
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.3635
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.3928
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.4216
+  - eta_e0_over_r: 1.9
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.45
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0435
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0604
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0767
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0942
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.1052
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.1185
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.1307
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.1426
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.1541
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.1906
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.2244
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.2562
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.2865
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.3162
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.3449
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.373
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.4007
+  - eta_e0_over_r: 2.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.4279
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0301
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0468
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0636
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0761
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0876
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0986
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.1091
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.1191
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.1288
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.1597
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.1881
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.2155
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.2412
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.2659
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.29
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.313
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.3361
+  - eta_e0_over_r: 2.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.3592
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0241
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0435
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0442
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0533
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0613
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.077
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0789
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0869
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0946
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.1191
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.1421
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.164
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.1857
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.2057
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.2255
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.2456
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.265
+  - eta_e0_over_r: 3.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.2841
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0197
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0283
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0364
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0441
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0516
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0587
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0657
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0724
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.079
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0999
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.1196
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.1385
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.1568
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.1746
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.1919
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.209
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.2258
+  - eta_e0_over_r: 3.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.2425
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0166
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.024
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0309
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0374
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0438
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0502
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0562
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.062
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0677
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0859
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.1032
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.1199
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.1362
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.1514
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.1667
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1818
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1966
+  - eta_e0_over_r: 4.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.2112
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.014
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.02
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.026
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.032
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0383
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0437
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0494
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0539
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0598
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0745
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0913
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.107
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.1217
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.1358
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.1493
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1625
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1757
+  - eta_e0_over_r: 4.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.1887
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0127
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0183
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0237
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0289
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0339
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0388
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0435
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0481
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0526
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0671
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0809
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0941
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.107
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.1195
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.1319
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.144
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1559
+  - eta_e0_over_r: 5.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.1677
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0113
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0164
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0213
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0259
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0304
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0348
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0391
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0433
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0474
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0605
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0729
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.085
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0967
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.1081
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.1193
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1304
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1412
+  - eta_e0_over_r: 5.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.152
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0102
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0149
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0193
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0235
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0276
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0316
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0355
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0393
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.043
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.055
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0664
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0775
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0882
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.0987
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.1089
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1191
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1291
+  - eta_e0_over_r: 6.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.139
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0093
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0136
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0176
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0216
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0254
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.029
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0325
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.036
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0394
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0503
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0608
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.071
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0808
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.0904
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0999
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1092
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1185
+  - eta_e0_over_r: 6.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.1276
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0086
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0125
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0162
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0198
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0233
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0266
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.03
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0332
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0364
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0466
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0563
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0658
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.075
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.084
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0928
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.1015
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1101
+  - eta_e0_over_r: 7.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.1186
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.008
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0116
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.015
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0183
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0216
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0247
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0278
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0308
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0338
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0433
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0524
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0612
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0697
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.0781
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0864
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.0945
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.1025
+  - eta_e0_over_r: 7.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.1104
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0074
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0108
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.014
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0171
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0201
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.023
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0259
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0287
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0315
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0404
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0489
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0572
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0652
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.073
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0808
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.0884
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.0959
+  - eta_e0_over_r: 8.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.1034
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0069
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0101
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0131
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.016
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0188
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0216
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0243
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0269
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0295
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0379
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0459
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0536
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0612
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.0686
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0759
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.083
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.0901
+  - eta_e0_over_r: 8.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.0971
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0065
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0094
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0124
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.015
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0177
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0203
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0228
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0253
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0277
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0355
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0432
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0505
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0577
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.0647
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0716
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.0783
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.085
+  - eta_e0_over_r: 9.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.0916
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0061
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0089
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.0116
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0142
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0167
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0191
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0215
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0239
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0262
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0337
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0408
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0477
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0545
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.0611
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0676
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.074
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.0804
+  - eta_e0_over_r: 9.5
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.0867
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.06
+    nu_m: 0.0058
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.09
+    nu_m: 0.0084
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.12
+    nu_m: 0.011
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.15
+    nu_m: 0.0134
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.18
+    nu_m: 0.0158
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.21
+    nu_m: 0.0181
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.24
+    nu_m: 0.0204
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.27
+    nu_m: 0.0226
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.3
+    nu_m: 0.0248
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.4
+    nu_m: 0.0319
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.5
+    nu_m: 0.0387
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.6
+    nu_m: 0.0453
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.7
+    nu_m: 0.0517
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.8
+    nu_m: 0.058
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 0.9
+    nu_m: 0.0641
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 1.0
+    nu_m: 0.0702
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 1.1
+    nu_m: 0.0763
+  - eta_e0_over_r: 10.0
+    rho_fsd_over_fcd: 1.2
+    nu_m: 0.0822
+  _source_file: 附录_表格库.yaml
+  _source_chapter: APP
+- id: T_3362_CH04_4_1_4_RC_SUPERSTRUCTURE_SPAN_LIMIT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第4章 结构设计基本规定
+    clause: 4.1.4
+    name: 钢筋混凝土上部结构跨径限制表
+    source: JTG 3362-2018, 4.1.4条
+    description: 由4.1.4条跨径限值整理，用于钢筋混凝土上部结构跨径推荐性检查。
+    related_rules:
+    - R_3362_CH04_004
+    related_formulas: []
+    related_variables:
+    - VAR_structure_form
+    - VAR_structural_system
+    - VAR_span_limit_m
+  schema:
+    inputs:
+    - structure_form
+    - structural_system
+    outputs:
+    - span_limit_m
+  constraints:
+    matching_method: exact
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 推荐性限值，超出时不直接判定不合格，输出人工复核。
+  data:
+  - material: reinforced_concrete
+    structure_form: 装配式钢筋混凝土板桥
+    structural_system: 简支
+    span_limit_m: 10
+  - material: reinforced_concrete
+    structure_form: 整体现浇钢筋混凝土板桥
+    structural_system: 简支
+    span_limit_m: 10
+  - material: reinforced_concrete
+    structure_form: 整体现浇钢筋混凝土板桥
+    structural_system: 连续
+    span_limit_m: 16
+  - material: reinforced_concrete
+    structure_form: 装配式钢筋混凝土T梁桥
+    structural_system: 简支
+    span_limit_m: 16
+  - material: reinforced_concrete
+    structure_form: 整体现浇箱形截面梁桥
+    structural_system: 简支
+    span_limit_m: 20
+  - material: reinforced_concrete
+    structure_form: 整体现浇箱形截面梁桥
+    structural_system: 连续
+    span_limit_m: 25
+  _source_file: 04结构设计基本规定_表格库.yaml
+  _source_chapter: '04'
+  schema_original:
+    inputs:
+    - variable_id: VAR_structure_form
+      field: structure_form
+      name: 结构形式
+      unit: '-'
+      required: true
+    - variable_id: VAR_structural_system
+      field: structural_system
+      name: 结构体系
+      unit: '-'
+      required: true
+    outputs:
+    - variable_id: VAR_span_limit_m
+      field: span_limit_m
+      name: 推荐最大跨径
+      unit: m
+- id: T_3362_CH04_4_1_5_PC_SUPERSTRUCTURE_SPAN_LIMIT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第4章 结构设计基本规定
+    clause: 4.1.5
+    name: 预应力混凝土上部结构跨径限制表
+    source: JTG 3362-2018, 4.1.5条
+    description: 由4.1.5条跨径限值整理，用于预应力混凝土上部结构跨径推荐性检查。
+    related_rules:
+    - R_3362_CH04_005
+    related_formulas: []
+    related_variables:
+    - VAR_structure_form
+    - VAR_structural_system
+    - VAR_span_limit_m
+  schema:
+    inputs:
+    - structure_form
+    - structural_system
+    outputs:
+    - span_limit_m
+  constraints:
+    matching_method: exact
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 推荐性限值，超出时输出人工复核。
+  data:
+  - material: prestressed_concrete
+    structure_form: 装配式预应力混凝土空心板桥
+    structural_system: 简支
+    span_limit_m: 20
+  - material: prestressed_concrete
+    structure_form: 整体现浇预应力混凝土板桥
+    structural_system: 简支
+    span_limit_m: 20
+  - material: prestressed_concrete
+    structure_form: 整体现浇预应力混凝土板桥
+    structural_system: 连续
+    span_limit_m: 25
+  - material: prestressed_concrete
+    structure_form: 装配式预应力混凝土T梁桥
+    structural_system: 简支
+    span_limit_m: 50
+  - material: prestressed_concrete
+    structure_form: 装配式预应力混凝土组合箱梁桥
+    structural_system: 简支
+    span_limit_m: 40
+  _source_file: 04结构设计基本规定_表格库.yaml
+  _source_chapter: '04'
+  schema_original:
+    inputs:
+    - variable_id: VAR_structure_form
+      field: structure_form
+      name: 结构形式
+      unit: '-'
+      required: true
+    - variable_id: VAR_structural_system
+      field: structural_system
+      name: 结构体系
+      unit: '-'
+      required: true
+    outputs:
+    - variable_id: VAR_span_limit_m
+      field: span_limit_m
+      name: 推荐最大跨径
+      unit: m
+- id: T_3362_CH04_4_3_4_THEORETICAL_SPAN
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第4章 结构设计基本规定
+    clause: 4.3.4
+    name: ρf、ρs的应用位置和理论跨径表
+    source: JTG 3362-2018, 表4.3.4
+    description: 用于箱形截面梁翼缘有效宽度计算中理论跨径li取值。
+    related_rules:
+    - R_3362_CH04_020
+    related_formulas:
+    - F_3362_CH04_4_3_4_1_BOX_GIRDER_FLANGE_EFFECTIVE_WIDTH_MIDSPAN
+    - F_3362_CH04_4_3_4_2_BOX_GIRDER_FLANGE_EFFECTIVE_WIDTH_COEFFICIENT_MIDSPAN
+    - F_3362_CH04_4_3_4_3_BOX_GIRDER_FLANGE_EFFECTIVE_WIDTH_SUPPORT
+    - F_3362_CH04_4_3_4_4_BOX_GIRDER_FLANGE_EFFECTIVE_WIDTH_COEFFICIENT_SUPPORT
+    related_variables:
+    - VAR_box_girder_segment_position
+    - VAR_3362_l_i
+    - VAR_l_span
+    - VAR_li_theoretical_span
+    - VAR_region
+    - VAR_structural_system
+  schema:
+    inputs:
+    - structural_system
+    - region
+    outputs:
+    - theoretical_span_factor
+    - theoretical_span_expression
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表中连续梁边跨和中间跨理论跨径取值涉及结构布置，必要时人工复核。
+  data:
+  - structural_system: 简支梁
+    region: 跨中部分梁段
+    theoretical_span_factor: 1.0
+    theoretical_span_expression: l_i = l
+  - structural_system: 连续梁
+    region: 边支点或跨中部分梁段
+    theoretical_span_factor: 0.8
+    theoretical_span_expression: l_i = 0.8l
+  - structural_system: 连续梁
+    region: 中间跨分梁段
+    theoretical_span_factor: 0.6
+    theoretical_span_expression: l_i = 0.6l，且中间支点li取0.2倍两相邻跨径之和
+  - structural_system: 悬臂梁
+    region: 悬臂段
+    theoretical_span_factor: 1.5
+    theoretical_span_expression: l_i = 1.5l
+  _source_file: 04结构设计基本规定_表格库.yaml
+  _source_chapter: '04'
+  schema_original:
+    inputs:
+    - variable_id: VAR_structural_system
+      field: structural_system
+      name: 结构体系
+      unit: '-'
+      required: true
+    - variable_id: VAR_region
+      field: region
+      name: 计算位置
+      unit: '-'
+      required: true
+    outputs:
+    - variable_id: VAR_li_theoretical_span
+      field: theoretical_span_factor
+      name: 理论跨径系数
+      unit: '-'
+    - variable_id: VAR_li_theoretical_span
+      field: theoretical_span_expression
+      name: 理论跨径表达
+      unit: '-'
+- id: T_3362_CH04_4_4_1_ARCH_POSITIVE_MOMENT_REDUCTION
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第4章 结构设计基本规定
+    clause: 4.4.1
+    name: 拱圈正弯矩折减系数表
+    source: JTG 3362-2018, 表4.4.1
+    description: 用于采用车道荷载计算拱正弯矩时折减系数取值。
+    related_rules:
+    - R_3362_CH04_027
+    related_formulas: []
+    related_variables:
+    - VAR_arch_section_type
+    - VAR_span_length_m
+    - VAR_positive_moment_reduction_factor
+  schema:
+    inputs:
+    - section_type
+    - span_range
+    outputs:
+    - reduction_factor
+  constraints:
+    matching_method: range
+    interpolation: linear_for_given_case
+    out_of_bounds: manual_review
+    note: 部分单元格为直线内插。
+  data:
+  - section_type: 拱圈1/4拱跨
+    span_min_m: null
+    span_max_m: 60
+    span_range: L<=60
+    reduction_factor: 0.7
+  - section_type: 拱圈1/4拱跨
+    span_min_m: 60
+    span_max_m: 100
+    span_range: 60<L<100
+    reduction_factor: linear_interpolation
+  - section_type: 拱圈1/4拱跨
+    span_min_m: 100
+    span_max_m: null
+    span_range: L>=100
+    reduction_factor: 1.0
+  - section_type: 拱脚
+    span_min_m: null
+    span_max_m: 60
+    span_range: L<=60
+    reduction_factor: 0.9
+  - section_type: 拱脚
+    span_min_m: 60
+    span_max_m: 100
+    span_range: 60<L<100
+    reduction_factor: linear_interpolation
+  - section_type: 拱脚
+    span_min_m: 100
+    span_max_m: null
+    span_range: L>=100
+    reduction_factor: 1.0
+  - section_type: 其他截面
+    span_min_m: null
+    span_max_m: 60
+    span_range: L<=60
+    reduction_factor: linear_interpolation
+  - section_type: 其他截面
+    span_min_m: 60
+    span_max_m: 100
+    span_range: 60<L<100
+    reduction_factor: linear_interpolation
+  - section_type: 其他截面
+    span_min_m: 100
+    span_max_m: null
+    span_range: L>=100
+    reduction_factor: 1.0
+  _source_file: 04结构设计基本规定_表格库.yaml
+  _source_chapter: '04'
+  schema_original:
+    inputs:
+    - variable_id: VAR_arch_section_type
+      field: section_type
+      name: 截面类型
+      unit: '-'
+      required: true
+    - variable_id: VAR_span_length_m
+      field: span_range
+      name: 跨径范围
+      unit: m
+      required: true
+    outputs:
+    - variable_id: VAR_positive_moment_reduction_factor
+      field: reduction_factor
+      name: 正弯矩折减系数
+      unit: '-'
+- id: T_3362_CH04_4_5_2_ENVIRONMENT_CATEGORY
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第4章 结构设计基本规定
+    clause: 4.5.2
+    name: 环境类别划分表
+    source: JTG 3362-2018, 表4.5.2
+    description: 根据结构及构件表面直接接触环境确定环境类别。
+    related_rules:
+    - R_3362_CH04_042
+    related_formulas: []
+    related_variables:
+    - VAR_environment_category
+    - VAR_environment_condition
+  schema:
+    inputs:
+    - condition
+    outputs:
+    - environment_category
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 环境条件具有工程判断性，自动识别后应保留人工复核。
+  data:
+  - environment_category: I类-一般环境
+    condition: 仅受混凝土碳化影响的环境
+  - environment_category: II类-冻融环境
+    condition: 受反复冻融影响的环境
+  - environment_category: III类-近海或海洋氯化物环境
+    condition: 受海洋环境下氯盐影响的环境
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    condition: 受除冰盐等氯盐影响的环境
+  - environment_category: V类-盐结晶环境
+    condition: 受混凝土孔隙中硫酸盐结晶膨胀影响的环境
+  - environment_category: VI类-化学腐蚀环境
+    condition: 受酸碱性较强的化学物质侵蚀的环境
+  - environment_category: VII类-磨蚀环境
+    condition: 受风、水流或水中夹杂物的摩擦、切削、冲击等作用的环境
+  _source_file: 04结构设计基本规定_表格库.yaml
+  _source_chapter: '04'
+  schema_original:
+    inputs:
+    - variable_id: VAR_environment_condition
+      field: condition
+      name: 环境条件
+      unit: '-'
+      required: true
+    outputs:
+    - variable_id: VAR_environment_category
+      field: environment_category
+      name: 环境类别
+      unit: '-'
+- id: T_3362_CH04_4_5_3_MIN_CONCRETE_STRENGTH
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第4章 结构设计基本规定
+    clause: 4.5.3
+    name: 混凝土强度等级最低要求表
+    source: JTG 3362-2018, 表4.5.3
+    description: 根据环境类别、构件类别和设计使用年限确定最低混凝土强度等级。
+    related_rules:
+    - R_3362_CH04_043
+    related_formulas: []
+    related_variables:
+    - VAR_environment_category
+    - VAR_component_category
+    - VAR_design_working_life
+    - VAR_min_concrete_strength_grade
+  schema:
+    inputs:
+    - environment_category
+    - component_category
+    - design_working_life_group
+    outputs:
+    - min_concrete_strength_grade
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 按表4.5.3录入，设计使用年限按100年或50/30年分组。 schema中设计使用年限字段已与data列名design_working_life_group对齐。
+  data:
+  - environment_category: I类-一般环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: I类-一般环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: I类-一般环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: I类-一般环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: I类-一般环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C25
+  - environment_category: I类-一般环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: II类-冻融环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C40
+  - environment_category: II类-冻融环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C35
+  - environment_category: II类-冻融环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: II类-冻融环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: II类-冻融环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: II类-冻融环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: III类-近海或海洋氯化物环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C40
+  - environment_category: III类-近海或海洋氯化物环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C35
+  - environment_category: III类-近海或海洋氯化物环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: III类-近海或海洋氯化物环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: III类-近海或海洋氯化物环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: III类-近海或海洋氯化物环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C40
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C35
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: IV类-除冰盐等其他氯化物环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: V类-盐结晶环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C40
+  - environment_category: V类-盐结晶环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C35
+  - environment_category: V类-盐结晶环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: V类-盐结晶环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: V类-盐结晶环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: V类-盐结晶环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: VI类-化学腐蚀环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C40
+  - environment_category: VI类-化学腐蚀环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C35
+  - environment_category: VI类-化学腐蚀环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: VI类-化学腐蚀环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: VI类-化学腐蚀环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: VI类-化学腐蚀环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  - environment_category: VII类-磨蚀环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C40
+  - environment_category: VII类-磨蚀环境
+    component_category: 梁、板、塔、拱圈、涵洞上部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C35
+  - environment_category: VII类-磨蚀环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C35
+  - environment_category: VII类-磨蚀环境
+    component_category: 墩台身、涵洞下部
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C30
+  - environment_category: VII类-磨蚀环境
+    component_category: 承台、基础
+    design_working_life_group: '100'
+    min_concrete_strength_grade: C30
+  - environment_category: VII类-磨蚀环境
+    component_category: 承台、基础
+    design_working_life_group: 50,30
+    min_concrete_strength_grade: C25
+  _source_file: 04结构设计基本规定_表格库.yaml
+  _source_chapter: '04'
+  schema_original:
+    inputs:
+    - variable_id: VAR_environment_category
+      field: environment_category
+      name: 环境类别
+      unit: '-'
+      required: true
+    - variable_id: VAR_component_category
+      field: component_category
+      name: 构件类别
+      unit: '-'
+      required: true
+    - variable_id: VAR_design_working_life
+      field: design_working_life_years
+      name: 设计使用年限
+      unit: year
+      required: true
+    outputs:
+    - variable_id: VAR_min_concrete_strength_grade
+      field: min_concrete_strength_grade
+      name: 最低混凝土强度等级
+      unit: '-'
+  schema_original_after_review:
+    inputs:
+    - environment_category
+    - component_category
+    - design_working_life_years
+    outputs:
+    - min_concrete_strength_grade
+- id: T_3362_CH05_5_1_4_STRESS_COEFFICIENT
+  meta:
+    name: 预应力混凝土构件正截面受压区边缘混凝土应力系数
+    source: JTG 3362-2018, 表5.1.4
+    description: 根据混凝土强度等级取用应力系数。
+    remarks: ''
+    related_rules:
+    - R_3362_CH05_5_1_4_PRESTRESS_CONCRETE_STRESS_COEFFICIENT
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第5章 持久状况承载能力极限状态计算
+    clause: 5.1.4
+  schema:
+    inputs:
+    - concrete_strength_grade
+    outputs:
+    - alpha_stress_coefficient
+  constraints:
+    matching_method: exact
+    interpolation: false
+    out_of_bounds: manual_review
+  data:
+  - concrete_strength_grade: C30
+    alpha_stress_coefficient: 0.79
+  - concrete_strength_grade: C35
+    alpha_stress_coefficient: 0.79
+  - concrete_strength_grade: C40
+    alpha_stress_coefficient: 0.78
+  - concrete_strength_grade: C45
+    alpha_stress_coefficient: 0.77
+  - concrete_strength_grade: C50
+    alpha_stress_coefficient: 0.76
+  - concrete_strength_grade: C55
+    alpha_stress_coefficient: 0.76
+  - concrete_strength_grade: C60
+    alpha_stress_coefficient: 0.75
+  - concrete_strength_grade: C70
+    alpha_stress_coefficient: 0.75
+  - concrete_strength_grade: C80
+    alpha_stress_coefficient: 0.74
+  _source_file: 05持久状况承载能力极限状态计算_表格库.yaml
+  _source_chapter: '05'
+- id: T_3362_CH05_5_1_6_PRETENSION_ANCHORAGE_LENGTH
+  meta:
+    name: 预应力钢筋锚固长度
+    source: JTG 3362-2018, 表5.1.6
+    description: 先张法预应力钢筋锚固长度取值。
+    remarks: ''
+    related_rules:
+    - R_3362_CH05_5_1_6_PRETENSION_ANCHORAGE_LENGTH
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第5章 持久状况承载能力极限状态计算
+    clause: 5.1.6
+  schema:
+    inputs:
+    - prestressing_steel_type
+    - concrete_strength_grade
+    outputs:
+    - anchorage_length_mm
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+  data:
+  - prestressing_steel_type: 1x7钢绞线 fpk=1260MPa
+    concrete_strength_grade: C40
+    anchorage_length_mm: 1300
+  - prestressing_steel_type: 1x7钢绞线 fpk=1260MPa
+    concrete_strength_grade: C45
+    anchorage_length_mm: 1250
+  - prestressing_steel_type: 1x7钢绞线 fpk=1260MPa
+    concrete_strength_grade: C50
+    anchorage_length_mm: 1200
+  - prestressing_steel_type: 螺旋肋钢丝 fpuk=1200MPa
+    concrete_strength_grade: C40
+    anchorage_length_mm: 950
+  - prestressing_steel_type: 螺旋肋钢丝 fpuk=1200MPa
+    concrete_strength_grade: C45
+    anchorage_length_mm: 900
+  - prestressing_steel_type: 螺旋肋钢丝 fpuk=1200MPa
+    concrete_strength_grade: C50
+    anchorage_length_mm: 850
+  _source_file: 05持久状况承载能力极限状态计算_表格库.yaml
+  _source_chapter: '05'
+- id: T_3362_CH05_5_2_1_RELATIVE_LIMIT_COMPRESSION_ZONE_HEIGHT
+  meta:
+    name: 相对界限受压区高度
+    source: JTG 3362-2018, 表5.2.1
+    description: 受弯构件正截面相对界限受压区高度取值。
+    remarks: ''
+    related_rules:
+    - R_3362_CH05_5_2_1
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第5章 持久状况承载能力极限状态计算
+    clause: 5.2.1
+    related_formulas:
+    - F_3362_CH05_5_2_2_1_BENDING_CAPACITY_TENSION_FLANGE
+  schema:
+    inputs:
+    - steel_grade
+    - concrete_strength_grade
+    outputs:
+    - relative_limit_compression_zone_height
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+  data:
+  - steel_grade: HPB300
+    concrete_strength_grade: C50及以下
+    relative_limit_compression_zone_height: 0.58
+  - steel_grade: HRB400/HRBF400/RRB400
+    concrete_strength_grade: C50及以下
+    relative_limit_compression_zone_height: 0.53
+  - steel_grade: HRB500
+    concrete_strength_grade: C50及以下
+    relative_limit_compression_zone_height: 0.49
+  - steel_grade: 预应力钢筋
+    concrete_strength_grade: C50及以下
+    relative_limit_compression_zone_height: 0.4
+  _source_file: 05持久状况承载能力极限状态计算_表格库.yaml
+  _source_chapter: '05'
+- id: T_3362_CH05_5_3_1_STABILITY_COEFFICIENT
+  meta:
+    name: 钢筋混凝土轴心受压构件稳定系数
+    source: JTG 3362-2018, 表5.3.1
+    description: 根据长细比、钢筋类型与截面形状取轴心受压稳定系数；矩形截面查 l0/b 列，圆形截面（墩柱）查 l0/i 列（回转半径口径，圆 i=d/4）。
+    remarks: '同一组稳定系数按截面形状分列登记：rectangular 用 l0/b 口径，circular 用 l0/i 口径，禁止跨列匹配。
+      登记范围：矩形 l0/b<=28（φ>=0.56，后段 30~50 待按原文补录）；圆 l0/i<=174（φ=1.0~0.19 已登记完整）。
+      超出登记范围按 manual_review，不自动外推。'
+    related_rules:
+    - R_3362_CH05_5_3_1
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第5章 持久状况承载能力极限状态计算
+    clause: 5.3.1
+  schema:
+    inputs:
+    - slenderness_ratio
+    - rebar_type
+    - section_shape
+    outputs:
+    - stability_factor_phi
+    - matched_slenderness_ratio
+    - section_shape
+    - slenderness_basis
+  constraints:
+    matching_method: exact
+    interpolation: false
+    out_of_bounds: manual_review
+  data:
+  - slenderness_ratio: 8
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 1.0
+  - slenderness_ratio: 10
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.98
+  - slenderness_ratio: 12
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.95
+  - slenderness_ratio: 14
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.92
+  - slenderness_ratio: 16
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.87
+  - slenderness_ratio: 18
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.81
+  - slenderness_ratio: 20
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.75
+  - slenderness_ratio: 22
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.7
+  - slenderness_ratio: 24
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.65
+  - slenderness_ratio: 26
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.6
+  - slenderness_ratio: 28
+    rebar_type: ordinary
+    section_shape: rectangular
+    slenderness_basis: l0/b
+    stability_factor_phi: 0.56
+  - slenderness_ratio: 28
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 1.0
+  - slenderness_ratio: 35
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.98
+  - slenderness_ratio: 42
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.95
+  - slenderness_ratio: 48
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.92
+  - slenderness_ratio: 55
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.87
+  - slenderness_ratio: 62
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.81
+  - slenderness_ratio: 69
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.75
+  - slenderness_ratio: 76
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.7
+  - slenderness_ratio: 83
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.65
+  - slenderness_ratio: 90
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.6
+  - slenderness_ratio: 97
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.56
+  - slenderness_ratio: 104
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.52
+  - slenderness_ratio: 111
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.48
+  - slenderness_ratio: 118
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.44
+  - slenderness_ratio: 125
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.4
+  - slenderness_ratio: 132
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.36
+  - slenderness_ratio: 139
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.32
+  - slenderness_ratio: 146
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.29
+  - slenderness_ratio: 153
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.26
+  - slenderness_ratio: 160
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.23
+  - slenderness_ratio: 167
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.21
+  - slenderness_ratio: 174
+    rebar_type: ordinary
+    section_shape: circular
+    slenderness_basis: l0/i
+    stability_factor_phi: 0.19
+  _source_file: 05持久状况承载能力极限状态计算_表格库.yaml
+  _source_chapter: '05'
+- id: T_3362_CH06_6_1_3_SECTION_STRESS_CHECK_ITEMS
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.1.3
+    name: 正常使用阶段截面应力验算项目
+    source: JTG 3362-2018, 6.1.3
+    description: 正常使用阶段截面应力验算项目
+    related_rules:
+    - R_3362_CH06_6_1_3
+    related_formulas: []
+    related_variables:
+    - VAR_member_type
+    - VAR_stress_check_stage
+    - VAR_stress_check_item
+  schema:
+    inputs:
+    - member_type
+    - stress_check_stage
+    outputs:
+    - stress_check_item
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - member_type: 预应力混凝土构件
+    stress_check_stage: 使用阶段
+    stress_check_item: 混凝土法向压应力、拉应力及预应力钢筋应力验算
+  - member_type: 钢筋混凝土构件
+    stress_check_stage: 使用阶段
+    stress_check_item: 裂缝宽度和挠度验算
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_member_type
+    - VAR_stress_check_stage
+    outputs:
+    - VAR_stress_check_item
+- id: T_3362_CH06_6_1_8_PRESTRESS_STRESS_AFTER_RELAXATION_LIMIT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.1.8
+    name: 预应力钢筋张拉应力扣除松弛影响限值
+    source: JTG 3362-2018, 6.1.8
+    description: 数值受截图水印影响，先以可读近似值建立查表结构。
+    related_rules:
+    - R_3362_CH06_6_1_8
+    related_formulas: []
+    related_variables:
+    - VAR_concrete_strength_grade
+    - VAR_prestressing_steel_type
+    - VAR_prestress_stress_after_relaxation_limit
+  schema:
+    inputs:
+    - concrete_strength_grade
+    - prestressing_steel_type
+    outputs:
+    - limit_MPa
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - concrete_strength_grade: C40
+    prestressing_steel_type: 1×7钢绞线
+    limit_MPa: 约670
+  - concrete_strength_grade: C45
+    prestressing_steel_type: 1×7钢绞线
+    limit_MPa: 约660
+  - concrete_strength_grade: C50
+    prestressing_steel_type: 1×7钢绞线
+    limit_MPa: 约650
+  - concrete_strength_grade: ≥C55
+    prestressing_steel_type: 1×7钢绞线
+    limit_MPa: 约640
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_concrete_strength_grade
+    - VAR_prestressing_steel_type
+    outputs:
+    - VAR_prestress_stress_after_relaxation_limit
+- id: T_3362_CH06_6_2_2_MU_K_VALUES
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.2.2
+    name: 系数μ和k值
+    source: JTG 3362-2018, 6.2.2
+    description: 系数μ和k值
+    related_rules:
+    - R_3362_CH06_6_2_2
+    related_formulas:
+    - F_3362_CH06_6_2_2_FRICTION_LOSS
+    related_variables:
+    - VAR_prestressing_steel_type
+    - VAR_duct_type
+    - VAR_mu_friction_coefficient
+    - VAR_k_wobble_coefficient
+  schema:
+    inputs:
+    - prestressing_steel_type
+    - duct_type
+    outputs:
+    - mu
+    - k
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - prestressing_steel_type: 体内预应力钢筋
+    duct_type: 预埋金属波纹管
+    mu: 0.20~0.25
+    k: '0.0015'
+  - prestressing_steel_type: 体内预应力钢筋
+    duct_type: 橡胶抽拔管
+    mu: 0.10~0.20
+    k: '0.0015'
+  - prestressing_steel_type: 体外预应力钢筋
+    duct_type: 转向管
+    mu: 0.20~0.30
+    k: '0'
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_prestressing_steel_type
+    - VAR_duct_type
+    outputs:
+    - VAR_mu_friction_coefficient
+    - VAR_k_wobble_coefficient
+- id: T_3362_CH06_6_2_3_ANCHORAGE_DEFORMATION_VALUES
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.2.3
+    name: 锚具变形和钢筋回缩值
+    source: JTG 3362-2018, 6.2.3
+    description: 锚具变形和钢筋回缩值
+    related_rules:
+    - R_3362_CH06_6_2_3
+    related_formulas:
+    - F_3362_CH06_6_2_3_ANCHORAGE_DEFORMATION_LOSS
+    related_variables:
+    - VAR_anchor_type
+    - VAR_prestressing_steel_type
+    - VAR_delta_l_anchorage_deformation
+  schema:
+    inputs:
+    - anchor_type
+    - prestressing_steel_type
+    outputs:
+    - delta_l_mm
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - anchor_type: 夹片式锚具
+    prestressing_steel_type: 钢绞线
+    delta_l_mm: '6'
+  - anchor_type: 镦头锚具
+    prestressing_steel_type: 高强钢丝
+    delta_l_mm: '1'
+  - anchor_type: 螺丝端杆锚具
+    prestressing_steel_type: 精轧螺纹钢筋
+    delta_l_mm: '1'
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_anchor_type
+    - VAR_prestressing_steel_type
+    outputs:
+    - VAR_delta_l_anchorage_deformation
+- id: T_3362_CH06_6_2_8_PRESTRESS_LOSS_COMBINATION
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.2.8
+    name: 预应力损失组合
+    source: JTG 3362-2018, 6.2.8
+    description: 预应力损失组合
+    related_rules:
+    - R_3362_CH06_6_2_8
+    related_formulas: []
+    related_variables:
+    - VAR_prestress_loss_stage
+    - VAR_prestressing_method
+    - VAR_prestress_loss_items
+  schema:
+    inputs:
+    - prestress_loss_stage
+    - prestressing_method
+    outputs:
+    - prestress_loss_items
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - prestress_loss_stage: 传力锚固阶段
+    prestressing_method: 先张法
+    prestress_loss_items: σl2、σl3、σl4、σl5等按表组合
+  - prestress_loss_stage: 使用阶段
+    prestressing_method: 后张法
+    prestress_loss_items: σl1、σl2、σl4、σl5、σl6等按表组合
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_prestress_loss_stage
+    - VAR_prestressing_method
+    outputs:
+    - VAR_prestress_loss_items
+- id: T_3362_CH06_6_4_2_MAX_CRACK_WIDTH_LIMIT
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.4.2
+    name: 最大裂缝宽度限值
+    source: JTG 3362-2018, 6.4.2
+    description: 最大裂缝宽度限值
+    related_rules:
+    - R_3362_CH06_6_4_2
+    related_formulas: []
+    related_variables:
+    - VAR_environment_category
+    - VAR_member_type
+    - VAR_member_crack_width_limit
+  schema:
+    inputs:
+    - environment_category
+    - member_type
+    outputs:
+    - limit_mm
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - environment_category: I类一般环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.2
+  - environment_category: II类冻融环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.2
+  - environment_category: III类近海或海洋氯化物环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.15
+  - environment_category: IV类除冰盐等环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.1
+  - environment_category: V类盐结晶环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.1
+  - environment_category: VI类化学腐蚀环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.15
+  - environment_category: VII类磨蚀环境
+    member_type: 钢筋混凝土受弯构件
+    limit_mm: 0.2
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_environment_category
+    - VAR_member_type
+    outputs:
+    - VAR_member_crack_width_limit
+- id: T_3362_CH06_6_4_3_EFFECTIVE_REINFORCEMENT_RATIO
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.4.3
+    name: 裂缝宽度计算参数
+    source: JTG 3362-2018, 6.4.3
+    description: 裂缝宽度计算参数
+    related_rules:
+    - R_3362_CH06_6_4_3
+    related_formulas:
+    - F_3362_CH06_6_4_3_MAX_CRACK_WIDTH
+    related_variables:
+    - VAR_force_type
+    - VAR_rebar_type
+    - VAR_C1_rebar_surface_coefficient
+    - VAR_C2_load_duration_coefficient
+    - VAR_C3_force_type_coefficient
+  schema:
+    inputs:
+    - force_type
+    - rebar_type
+    outputs:
+    - C1
+    - C2
+    - C3
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - force_type: 受弯
+    rebar_type: 带肋钢筋
+    C1: 1.0
+    C2: 按长期效应确定
+    C3: 1.0
+  - force_type: 偏心受拉
+    rebar_type: 带肋钢筋
+    C1: 1.0
+    C2: 按长期效应确定
+    C3: 按规范取值
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_force_type
+    - VAR_rebar_type
+    outputs:
+    - VAR_C1_rebar_surface_coefficient
+    - VAR_C2_load_duration_coefficient
+    - VAR_C3_force_type_coefficient
+- id: T_3362_CH06_6_5_3_LONG_TERM_DEFLECTION_FACTOR
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第6章 持久状况正常使用极限状态计算
+    clause: 6.5.3
+    name: 长期挠度影响系数
+    source: JTG 3362-2018, 6.5.3
+    description: 长期挠度影响系数
+    related_rules:
+    - R_3362_CH06_6_5_3
+    related_formulas: []
+    related_variables:
+    - VAR_concrete_strength_grade
+    - VAR_eta_theta_long_term_deflection_factor
+  schema:
+    inputs:
+    - concrete_strength_grade
+    outputs:
+    - eta_theta
+  constraints:
+    matching_method: condition
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格数据根据页面可读内容整理，后续可结合清晰原文复核。
+  data:
+  - concrete_strength_grade: C40以下
+    eta_theta: 1.6
+  - concrete_strength_grade: C40~C80
+    eta_theta: 1.45~1.35，中间强度等级可线性插值
+  _source_file: 06持久状况正常使用极限状态计算_表格库.yaml
+  _source_chapter: '06'
+  schema_original:
+    inputs:
+    - VAR_concrete_strength_grade
+    outputs:
+    - VAR_eta_theta_long_term_deflection_factor
+- id: T_3362_CH09_9_1_1_CONCRETE_COVER_THICKNESS
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第9章 构造规定
+    clause: 9.1.1
+    name: 普通钢筋和预应力钢筋最小混凝土保护层厚度
+    source: JTG 3362-2018, 表9.1.1
+    description: 不同构件部位、环境类别和钢筋类型的最小保护层厚度。
+    related_rules:
+    - R_3362_CH09_9_1_1
+    related_formulas: []
+    related_variables:
+    - VAR_environment_category
+    - VAR_member_part
+    - VAR_rebar_type
+    - VAR_min_concrete_cover_thickness
+  schema:
+    inputs:
+    - environment_category
+    - member_part
+    - rebar_type
+    outputs:
+    - min_cover_mm
+  constraints:
+    matching_method: condition_lookup
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格来自页面1，水印遮挡导致个别列值需正式文本复核；本表先作为查表结构入口。
+  data:
+  - environment_category: I类
+    member_part: 梁板塔拱圈盖梁墩台
+    rebar_type: 普通钢筋
+    min_cover_mm: 20
+  - environment_category: I类
+    member_part: 梁板塔拱圈盖梁墩台
+    rebar_type: 预应力钢筋
+    min_cover_mm: 30
+  - environment_category: II类
+    member_part: 梁板塔拱圈盖梁墩台
+    rebar_type: 普通钢筋
+    min_cover_mm: 25
+  - environment_category: II类
+    member_part: 梁板塔拱圈盖梁墩台
+    rebar_type: 预应力钢筋
+    min_cover_mm: 40
+  - environment_category: III类及以上
+    member_part: 梁板塔拱圈盖梁墩台
+    rebar_type: 普通钢筋
+    min_cover_mm: 40
+  - environment_category: III类及以上
+    member_part: 梁板塔拱圈盖梁墩台
+    rebar_type: 预应力钢筋
+    min_cover_mm: 50
+  _source_file: 09构造规定_表格库.yaml
+  _source_chapter: 09
+- id: T_3362_CH09_9_1_4_STIRRUP_ANCHORAGE_LENGTH
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第9章 构造规定
+    clause: 9.1.4
+    name: 钢筋最小锚固长度
+    source: JTG 3362-2018, 表9.1.4
+    description: 不同混凝土强度等级和钢筋类型的最小锚固长度。
+    related_rules:
+    - R_3362_CH09_9_1_4
+    related_formulas: []
+    related_variables:
+    - VAR_concrete_strength_grade
+    - VAR_rebar_type
+    - VAR_min_anchor_length
+  schema:
+    inputs:
+    - concrete_strength_grade
+    - rebar_type
+    outputs:
+    - min_anchor_length_expression
+  constraints:
+    matching_method: condition_lookup
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格水印遮挡明显，保留表达式型查表入口。
+  data:
+  - concrete_strength_grade: C25
+    rebar_type: HPB300
+    min_anchor_length_expression: 45d
+  - concrete_strength_grade: C30
+    rebar_type: HPB300
+    min_anchor_length_expression: 40d
+  - concrete_strength_grade: C25
+    rebar_type: HRB400
+    min_anchor_length_expression: 40d
+  - concrete_strength_grade: C30
+    rebar_type: HRB400
+    min_anchor_length_expression: 35d
+  _source_file: 09构造规定_表格库.yaml
+  _source_chapter: 09
+- id: T_3362_CH09_9_1_9_WELDED_JOINT_LENGTH
+  meta:
+    standard: JTG 3362-2018
+    standard_name: 公路钢筋混凝土及预应力混凝土桥涵设计规范
+    chapter: 第9章 构造规定
+    clause: 9.1.9
+    name: 受拉钢筋绑扎接头搭接长度
+    source: JTG 3362-2018, 表9.1.9
+    description: 受拉钢筋绑扎接头的搭接长度规定。
+    related_rules:
+    - R_3362_CH09_9_1_9
+    related_formulas: []
+    related_variables:
+    - VAR_rebar_type
+    - VAR_concrete_strength_grade
+    - VAR_lap_length
+  schema:
+    inputs:
+    - rebar_type
+    - concrete_strength_grade
+    outputs:
+    - lap_length_expression
+  constraints:
+    matching_method: condition_lookup
+    interpolation: false
+    out_of_bounds: manual_review
+    note: 表格水印遮挡明显，保留查表入口。
+  data:
+  - rebar_type: HPB300
+    concrete_strength_grade: C25
+    lap_length_expression: 40d
+  - rebar_type: HRB400
+    concrete_strength_grade: C25
+    lap_length_expression: 45d
+  - rebar_type: HRB500
+    concrete_strength_grade: C30
+    lap_length_expression: 45d
+  _source_file: 09构造规定_表格库.yaml
+  _source_chapter: 09

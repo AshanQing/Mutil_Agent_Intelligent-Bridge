@@ -1,0 +1,2473 @@
+metadata:
+  library_name: JTG_B01_2014_variable_registry
+  standard: JTG B01-2014
+  standard_code: JTG B01-2014
+  variable_schema: compact_variable_registry
+  file_version: v0.1
+  standard_name: 公路工程技术标准
+  library_type: variable_registry
+  item_count: 118
+  version: reasonableness_fixed_v0.1
+  generation_note: 根据 library_reasonableness_review.md 修正：补充 formula_status、显式化规则调用表格/公式ID、标记人工复核规则、修正表9.1.5查表口径、标注变量误报风险。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+variable_groups:
+  geometry_alignment:
+    description: 路线、桥梁、隧道几何尺寸与线形参数
+    variables:
+    - VAR_A2
+    - VAR_D_actual
+    - VAR_D_required
+    - VAR_H_clearance
+    - VAR_K_i
+    - VAR_B01_L_0
+    - VAR_L_grade
+    - VAR_L_grade_max
+    - VAR_L_transition
+    - VAR_L_vertical
+    - VAR_L_vertical_min
+    - VAR_R_curve
+    - VAR_R_curve_min
+    - VAR_R_vertical
+    - VAR_R_vertical_min
+    - VAR_approach_grade
+    - VAR_bridge_grade
+    - VAR_bridge_total_length
+    - VAR_bridge_width
+    - VAR_climbing_lane_width
+    - VAR_depth
+    - VAR_emergency_stop_length
+    - VAR_emergency_stop_spacing
+    - VAR_emergency_stop_width
+    - VAR_i_grade
+    - VAR_i_grade_max
+    - VAR_i_superelevation
+    - VAR_identifying_sight_distance
+    - VAR_interchange_spacing
+    - VAR_intersection_angle
+    - VAR_intersection_spacing_min
+    - VAR_l_spiral
+    - VAR_land_width
+    - VAR_lane_width
+    - VAR_left_earth_shoulder_width
+    - VAR_left_edge_strip_width
+    - VAR_left_hard_shoulder_width
+    - VAR_left_side_width
+    - VAR_passage_clear_height
+    - VAR_passage_clear_width
+    - VAR_r
+    - VAR_right_hard_shoulder_width
+    - VAR_right_side_width
+    - VAR_shoulder_width
+    - VAR_single_span_length
+    - VAR_subgrade_width
+    - VAR_sum_K
+    - VAR_tunnel_length
+    - VAR_vehicle_height
+    - VAR_vehicle_length
+    - VAR_vehicle_width
+    - VAR_wire_clearance
+  traffic_operation:
+    description: 交通量、通行能力、服务水平及运行参数
+    variables:
+    - VAR_AADT
+    - VAR_C_capacity
+    - VAR_Cp
+    - VAR_R_L_i
+    - VAR_R_VKT_i
+    - VAR_R_i
+    - VAR_VKT_i
+    - VAR_V_traffic
+    - VAR_compaction_degree
+    - VAR_ramp_design_speed
+    - VAR_sum_VKT
+    - VAR_B01_v
+    - VAR_v_C
+    - VAR_v_operating
+  classification_context:
+    description: 公路等级、功能、车型、构件、设施等分类变量
+    variables:
+    - VAR_applicable_scope
+    - VAR_bridge_class
+    - VAR_component_type
+    - VAR_design_service_level
+    - VAR_facility_type
+    - VAR_highway_class
+    - VAR_highway_function
+    - VAR_interchange_type
+    - VAR_monitoring_level
+    - VAR_pavement_type
+    - VAR_project_type
+    - VAR_ramp_type
+    - VAR_service_level
+    - VAR_subgrade_position
+    - VAR_superelevation_condition
+    - VAR_terrain_condition
+    - VAR_traffic_direction
+    - VAR_tunnel_class
+    - VAR_vehicle_class
+    - VAR_vehicle_load_grade
+    - VAR_vehicle_load_parameter
+    - VAR_vehicle_load_value
+    - VAR_vehicle_type
+  load_action_effect:
+    description: 汽车荷载、人群荷载和效应变量
+    variables:
+    - VAR_B01_P_k
+    - VAR_P_k_shear
+    - VAR_Q_I
+    - VAR_Q_II
+    - VAR_S
+    - VAR_S_1
+    - VAR_S_n
+    - VAR_S_red
+    - VAR_q_k
+    - VAR_B01_q_p
+    - VAR_q_p_dense
+    - VAR_standard_axle_load
+    - VAR_tire_pressure
+  coefficients_limits:
+    description: 系数、限值和合规判断变量
+    variables:
+    - VAR_B01_K
+    - VAR_Rp
+    - VAR_bridge_design_lane_count
+    - VAR_check_pass
+    - VAR_conversion_factor
+    - VAR_design_flood_frequency
+    - VAR_design_life
+    - VAR_eta_L
+    - VAR_eta_n
+    - VAR_forecast_period
+    - VAR_intersection_branch_count
+    - VAR_B01_lane_count
+    - VAR_loaded_lane_count
+    - VAR_mu_lateral
+    - VAR_seismic_peak_acceleration
+variables:
+- id: VAR_A2
+  symbol: A2
+  name: 回旋线参数平方
+  unit: m2
+  dimension: area
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L1_CLOTHOID_PARAMETER
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_CLOTHOID_PARAMETER
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_AADT
+  symbol: AADT
+  name: 年平均日设计交通量
+  unit: pcu/d
+  dimension: traffic
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_AADT_SECONDARY_HIGHWAY
+  related_refs:
+    rules:
+    - R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+    - R_B01_3_1_1_HIGHWAY_CLASSIFICATION
+    - R_B01_4_0_3_LANE_COUNT
+    tables: []
+    formulas:
+    - F_B01_L1_AADT_SECONDARY_HIGHWAY
+  related_rules:
+  - R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+  - R_B01_3_1_1_HIGHWAY_CLASSIFICATION
+  - R_B01_4_0_3_LANE_COUNT
+- id: VAR_C_capacity
+  symbol: C
+  name: 通行能力
+  unit: pcu/h
+  dimension: traffic
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L0_VC_RATIO
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L0_VC_RATIO
+- id: VAR_Cp
+  symbol: Cp
+  name: 设计服务水平下通行能力
+  unit: pcu/h
+  dimension: traffic
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_AADT_SECONDARY_HIGHWAY
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_AADT_SECONDARY_HIGHWAY
+- id: VAR_D_actual
+  symbol: D_actual
+  name: 实际可用视距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  - rule_parameter
+  related_formulas:
+  - F_B01_L5_SIGHT_DISTANCE_CHECK
+  related_refs:
+    rules:
+    - R_B01_4_0_15_SIGHT_DISTANCE
+    - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    tables: []
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+  related_rules:
+  - R_B01_4_0_15_SIGHT_DISTANCE
+  - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+- id: VAR_D_required
+  symbol: D_required
+  name: 要求视距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  - table_lookup
+  - rule_parameter
+  related_formulas:
+  - F_B01_L5_SIGHT_DISTANCE_CHECK
+  related_refs:
+    rules:
+    - R_B01_4_0_15_SIGHT_DISTANCE
+    - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    tables:
+    - T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+    - T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+    - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+  related_rules:
+  - R_B01_4_0_15_SIGHT_DISTANCE
+  - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  related_tables:
+  - T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+  - T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+  - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+- id: VAR_H_clearance
+  symbol: H
+  name: 净空高度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_6_1_CLEARANCE
+    - R_B01_6_0_6_BRIDGE_CLEARANCE
+    tables:
+    - T_B01_3_6_1_CLEARANCE_HEIGHT
+    formulas: []
+  related_rules:
+  - R_B01_3_6_1_CLEARANCE
+  - R_B01_6_0_6_BRIDGE_CLEARANCE
+  related_tables:
+  - T_B01_3_6_1_CLEARANCE_HEIGHT
+- id: VAR_B01_K
+  symbol: K
+  name: 设计小时交通量系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_AADT_SECONDARY_HIGHWAY
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_AADT_SECONDARY_HIGHWAY
+- id: VAR_K_i
+  symbol: K_i
+  name: 第i条公路里程
+  unit: km
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_LENGTH_RATIO
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_LENGTH_RATIO
+- id: VAR_B01_L_0
+  symbol: L_0
+  name: 桥涵计算跨径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  - table_lookup
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+  - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  related_refs:
+    rules:
+    - R_B01_7_0_3_LANE_LOAD
+    - R_B01_7_0_8_PEDESTRIAN_LOAD
+    tables:
+    - T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+    formulas:
+    - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+    - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  related_rules:
+  - R_B01_7_0_7_LONGITUDINAL_REDUCTION
+- id: VAR_L_grade
+  symbol: L_grade
+  name: 坡段长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_21_MAX_GRADE_LENGTH
+    tables: []
+    formulas: []
+  percent_unit_review: false_positive_length_variable
+  review_note: 审查脚本因变量ID包含 grade/width 等词触发百分数风险提示；经字段语义看，该变量为长度类变量，unit=m 保留。
+  related_rules:
+  - R_B01_4_0_21_MAX_GRADE_LENGTH
+- id: VAR_L_grade_max
+  symbol: L_grade_max
+  name: 最大坡长
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_21_MAX_GRADE_LENGTH
+    tables:
+    - T_B01_4_0_21_MAX_GRADE_LENGTH
+    formulas: []
+  percent_unit_review: false_positive_length_variable
+  review_note: 审查脚本因变量ID包含 grade/width 等词触发百分数风险提示；经字段语义看，该变量为长度类变量，unit=m 保留。
+  related_rules:
+  - R_B01_4_0_21_MAX_GRADE_LENGTH
+  related_tables:
+  - T_B01_4_0_21_MAX_GRADE_LENGTH
+- id: VAR_L_transition
+  symbol: L_transition
+  name: 隧道洞口过渡段长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  related_refs:
+    rules:
+    - R_B01_8_0_4_TUNNEL_PORTAL_TRANSITION
+    tables: []
+    formulas:
+    - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  related_rules:
+  - R_B01_8_0_4_TUNNEL_PORTAL_TRANSITION
+- id: VAR_L_vertical
+  symbol: L_vertical
+  name: 竖曲线长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_22_VERTICAL_CURVE
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_4_0_22_VERTICAL_CURVE
+- id: VAR_L_vertical_min
+  symbol: L_vertical_min
+  name: 竖曲线最小长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_22_VERTICAL_CURVE
+    tables:
+    - T_B01_4_0_22_VERTICAL_CURVE
+    formulas: []
+  related_rules:
+  - R_B01_4_0_22_VERTICAL_CURVE
+  related_tables:
+  - T_B01_4_0_22_VERTICAL_CURVE
+- id: VAR_B01_P_k
+  symbol: P_k
+  name: 车道荷载集中荷载标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+  - F_B01_L2_LANE_LOAD_SHEAR_PK
+  related_refs:
+    rules:
+    - R_B01_7_0_3_LANE_LOAD
+    tables: []
+    formulas:
+    - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+    - F_B01_L2_LANE_LOAD_SHEAR_PK
+- id: VAR_P_k_shear
+  symbol: P_k_shear
+  name: 剪力效应集中荷载标准值
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L2_LANE_LOAD_SHEAR_PK
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L2_LANE_LOAD_SHEAR_PK
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_Q_I
+  symbol: Q_I
+  name: 公路-I级荷载标准值
+  unit: mixed
+  dimension: action
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+- id: VAR_Q_II
+  symbol: Q_II
+  name: 公路-II级荷载标准值
+  unit: mixed
+  dimension: action
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_R_L_i
+  symbol: R_L_i
+  name: 里程比率
+  unit: '%'
+  dimension: ratio
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_B01_L1_LENGTH_RATIO
+  - F_B01_L1_NETWORK_SERVICE_INDEX
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_LENGTH_RATIO
+    - F_B01_L1_NETWORK_SERVICE_INDEX
+- id: VAR_R_VKT_i
+  symbol: R_VKT_i
+  name: 车公里比率
+  unit: '%'
+  dimension: ratio
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  related_formulas:
+  - F_B01_L1_VKT_RATIO
+  - F_B01_L1_NETWORK_SERVICE_INDEX
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_VKT_RATIO
+    - F_B01_L1_NETWORK_SERVICE_INDEX
+- id: VAR_R_curve
+  symbol: R
+  name: 圆曲线半径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_CIRCULAR_CURVE_RADIUS
+  related_refs:
+    rules:
+    - R_B01_4_0_17_CURVE_RADIUS
+    tables: []
+    formulas:
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+  related_rules:
+  - R_B01_4_0_17_CURVE_RADIUS
+- id: VAR_R_curve_min
+  symbol: R_min
+  name: 圆曲线最小半径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_17_CURVE_RADIUS
+    tables:
+    - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+    formulas: []
+  related_rules:
+  - R_B01_4_0_17_CURVE_RADIUS
+  related_tables:
+  - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+- id: VAR_R_i
+  symbol: R_i
+  name: 路网服务指数
+  unit: '-'
+  dimension: index
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L1_NETWORK_SERVICE_INDEX
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_NETWORK_SERVICE_INDEX
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_R_vertical
+  symbol: R_vertical
+  name: 竖曲线半径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_22_VERTICAL_CURVE
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_4_0_22_VERTICAL_CURVE
+- id: VAR_R_vertical_min
+  symbol: R_vertical_min
+  name: 竖曲线最小半径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_22_VERTICAL_CURVE
+    tables:
+    - T_B01_4_0_22_VERTICAL_CURVE
+    formulas: []
+  related_rules:
+  - R_B01_4_0_22_VERTICAL_CURVE
+  related_tables:
+  - T_B01_4_0_22_VERTICAL_CURVE
+- id: VAR_Rp
+  symbol: Rp
+  name: 方向分布修正系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_AADT_SECONDARY_HIGHWAY
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_AADT_SECONDARY_HIGHWAY
+- id: VAR_S
+  symbol: S
+  name: 未折减荷载效应
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+- id: VAR_S_1
+  symbol: S_1
+  name: 单车道布载效应
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+- id: VAR_S_n
+  symbol: S_n
+  name: 多车道布载效应
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_S_red
+  symbol: S_red
+  name: 折减后荷载效应
+  unit: effect
+  dimension: effect
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_VKT_i
+  symbol: VKT_i
+  name: 第i条公路车公里
+  unit: pcu·km
+  dimension: traffic_work
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_VKT_RATIO
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_VKT_RATIO
+- id: VAR_V_traffic
+  symbol: V
+  name: 交通量
+  unit: pcu/h
+  dimension: traffic
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L0_VC_RATIO
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L0_VC_RATIO
+- id: VAR_applicable_scope
+  symbol: applicable_scope
+  name: 适用范围
+  unit: '-'
+  dimension: text
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+    formulas: []
+- id: VAR_approach_grade
+  symbol: approach_grade
+  name: 桥头引道纵坡
+  unit: '%'
+  dimension: slope
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_6_0_8_BRIDGE_APPROACH_ALIGNMENT
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_6_0_8_BRIDGE_APPROACH_ALIGNMENT
+- id: VAR_bridge_class
+  symbol: bridge_class
+  name: 桥涵分类
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_6_0_2_BRIDGE_CLASSIFICATION
+    tables:
+    - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+    - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+    - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    formulas: []
+  related_rules:
+  - R_B01_6_0_2_BRIDGE_CLASSIFICATION
+  - R_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  related_tables:
+  - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+  - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+- id: VAR_bridge_design_lane_count
+  symbol: n_lane_bridge
+  name: 桥涵设计车道数
+  unit: lane
+  dimension: count
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_7_0_6_BRIDGE_DESIGN_LANE_COUNT
+    tables:
+    - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+    formulas: []
+  related_rules:
+  - R_B01_7_0_6_BRIDGE_DESIGN_LANE_COUNT
+  related_tables:
+  - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+- id: VAR_bridge_grade
+  symbol: bridge_grade
+  name: 桥上纵坡
+  unit: '%'
+  dimension: slope
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_6_0_8_BRIDGE_APPROACH_ALIGNMENT
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_6_0_8_BRIDGE_APPROACH_ALIGNMENT
+- id: VAR_bridge_total_length
+  symbol: L
+  name: 桥梁多孔跨径总长
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+    formulas: []
+  related_rules:
+  - R_B01_6_0_2_BRIDGE_CLASSIFICATION
+  related_tables:
+  - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+- id: VAR_bridge_width
+  symbol: W
+  name: 桥面宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_7_0_6_BRIDGE_DESIGN_LANE_COUNT
+    tables:
+    - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+    formulas: []
+  related_rules:
+  - R_B01_7_0_6_BRIDGE_DESIGN_LANE_COUNT
+  related_tables:
+  - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+- id: VAR_check_pass
+  symbol: check_pass
+  name: 合规性判定结果
+  unit: bool
+  dimension: boolean
+  data_type: bool
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L5_SIGHT_DISTANCE_CHECK
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_climbing_lane_width
+  symbol: climbing_lane_width
+  name: 爬坡车道宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_8_CLIMBING_LANE
+    tables: []
+    formulas: []
+  percent_unit_review: false_positive_length_variable
+  review_note: 审查脚本因变量ID包含 grade/width 等词触发百分数风险提示；经字段语义看，该变量为长度类变量，unit=m 保留。
+  related_rules:
+  - R_B01_4_0_8_CLIMBING_LANE
+- id: VAR_compaction_degree
+  symbol: compaction_degree
+  name: 路基压实度
+  unit: '%'
+  dimension: ratio
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_5_0_4_SUBGRADE_COMPACTION
+    tables:
+    - T_B01_5_0_4_SUBGRADE_COMPACTION
+    formulas: []
+  related_rules:
+  - R_B01_5_0_4_SUBGRADE_COMPACTION
+  related_tables:
+  - T_B01_5_0_4_SUBGRADE_COMPACTION
+- id: VAR_component_type
+  symbol: component_type
+  name: 构件类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    formulas: []
+- id: VAR_conversion_factor
+  symbol: conversion_factor
+  name: 车辆折算系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_3_2_TRAFFIC_CONVERSION
+    tables:
+    - T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+    formulas: []
+  related_rules:
+  - R_B01_3_3_2_TRAFFIC_CONVERSION
+  related_tables:
+  - T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+- id: VAR_depth
+  symbol: depth
+  name: 路床顶面以下深度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_5_0_4_SUBGRADE_COMPACTION
+    formulas: []
+- id: VAR_design_flood_frequency
+  symbol: design_flood_frequency
+  name: 设计洪水频率
+  unit: '-'
+  dimension: frequency
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+    - R_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+    tables:
+    - T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+    - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+    formulas: []
+  related_rules:
+  - R_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  - R_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  related_tables:
+  - T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+- id: VAR_design_life
+  symbol: design_life
+  name: 设计使用年限
+  unit: year
+  dimension: time
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+    - R_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    - R_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    tables:
+    - T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+    - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    formulas: []
+  related_rules:
+  - R_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+  - R_B01_6_0_11_BRIDGE_DESIGN_LIFE
+  - R_B01_8_0_9_TUNNEL_DESIGN_LIFE
+  related_tables:
+  - T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+  - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+  - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+- id: VAR_design_service_level
+  symbol: design_service_level
+  name: 设计服务水平
+  unit: level
+  dimension: classification
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+    formulas: []
+  related_rules:
+  - R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  related_tables:
+  - T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+- id: VAR_emergency_stop_length
+  symbol: emergency_stop_length
+  name: 紧急停车带有效长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+- id: VAR_emergency_stop_spacing
+  symbol: emergency_stop_spacing
+  name: 紧急停车带间距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+- id: VAR_emergency_stop_width
+  symbol: emergency_stop_width
+  name: 紧急停车带宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+- id: VAR_eta_L
+  symbol: eta_L
+  name: 纵向折减系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  - table_lookup
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+  related_refs:
+    rules:
+    - R_B01_7_0_7_LONGITUDINAL_REDUCTION
+    tables:
+    - T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+    formulas:
+    - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+  related_rules:
+  - R_B01_7_0_7_LONGITUDINAL_REDUCTION
+  related_tables:
+  - T_B01_7_0_7_LONGITUDINAL_REDUCTION_FACTOR
+- id: VAR_eta_n
+  symbol: eta_n
+  name: 横向车道布载系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - formula_input
+  - table_lookup
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+  related_refs:
+    rules:
+    - R_B01_7_0_6_TRANSVERSE_LANE_FACTOR
+    tables:
+    - T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+    formulas:
+    - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+  related_rules:
+  - R_B01_7_0_6_TRANSVERSE_LANE_FACTOR
+  related_tables:
+  - T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+- id: VAR_facility_type
+  symbol: facility_type
+  name: 设施类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_6_1_CLEARANCE_HEIGHT
+    formulas: []
+  related_rules:
+  - R_B01_3_6_1_CLEARANCE
+  related_tables:
+  - T_B01_3_6_1_CLEARANCE_HEIGHT
+- id: VAR_forecast_period
+  symbol: forecast_period
+  name: 交通量预测年限
+  unit: year
+  dimension: time
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_3_1_TRAFFIC_FORECAST_PERIOD
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_3_3_1_TRAFFIC_FORECAST_PERIOD
+- id: VAR_highway_class
+  symbol: highway_class
+  name: 公路技术等级
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_1_0_5_LAND_USE_SCOPE
+    - R_B01_3_1_1_HIGHWAY_CLASSIFICATION
+    - R_B01_3_1_2_TECHNICAL_GRADE_SELECTION
+    - R_B01_3_3_1_TRAFFIC_FORECAST_PERIOD
+    - R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+    - R_B01_3_5_1_DESIGN_SPEED
+    tables:
+    - T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+    - T_B01_3_5_1_DESIGN_SPEED
+    - T_B01_4_0_3_LANE_COUNT
+    - T_B01_4_0_5_1_SHOULDER_WIDTH
+    - T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+    - T_B01_5_0_4_SUBGRADE_COMPACTION
+    - T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+    - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+    - T_B01_6_0_11_BRIDGE_DESIGN_LIFE
+    - T_B01_7_0_2_VEHICLE_LOAD_GRADE
+    - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+    - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    formulas: []
+  related_rules:
+  - R_B01_1_0_5_LAND_USE_SCOPE
+  - R_B01_3_1_1_HIGHWAY_CLASSIFICATION
+  - R_B01_3_1_2_TECHNICAL_GRADE_SELECTION
+  - R_B01_3_3_1_TRAFFIC_FORECAST_PERIOD
+  - R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  - R_B01_3_5_1_DESIGN_SPEED
+  - R_B01_4_0_3_LANE_COUNT
+  - R_B01_4_0_5_SHOULDER_WIDTH
+  - R_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  - R_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  - R_B01_7_0_2_VEHICLE_LOAD_GRADE
+  related_tables:
+  - T_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  - T_B01_3_5_1_DESIGN_SPEED
+  - T_B01_4_0_3_LANE_COUNT
+  - T_B01_4_0_5_1_SHOULDER_WIDTH
+  - T_B01_5_0_2_SUBGRADE_FLOOD_FREQUENCY
+  - T_B01_6_0_5_BRIDGE_FLOOD_FREQUENCY
+  - T_B01_7_0_2_VEHICLE_LOAD_GRADE
+- id: VAR_highway_function
+  symbol: highway_function
+  name: 公路功能
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+    - R_B01_3_1_2_TECHNICAL_GRADE_SELECTION
+    tables:
+    - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    formulas: []
+  related_rules:
+  - R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+  - R_B01_3_1_2_TECHNICAL_GRADE_SELECTION
+- id: VAR_i_grade
+  symbol: i_grade
+  name: 纵坡坡度
+  unit: '%'
+  dimension: slope
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_20_MAX_GRADE
+    - R_B01_4_0_21_MAX_GRADE_LENGTH
+    tables:
+    - T_B01_4_0_21_MAX_GRADE_LENGTH
+    - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    formulas: []
+  related_rules:
+  - R_B01_4_0_20_MAX_GRADE
+  - R_B01_4_0_21_MAX_GRADE_LENGTH
+  - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  related_tables:
+  - T_B01_4_0_21_MAX_GRADE_LENGTH
+  - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+- id: VAR_i_grade_max
+  symbol: i_grade_max
+  name: 最大纵坡
+  unit: '%'
+  dimension: slope
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_20_MAX_GRADE
+    tables:
+    - T_B01_4_0_20_MAX_GRADE
+    formulas: []
+  related_rules:
+  - R_B01_4_0_20_MAX_GRADE
+  related_tables:
+  - T_B01_4_0_20_MAX_GRADE
+- id: VAR_i_superelevation
+  symbol: i
+  name: 路面横向坡度或超高横坡
+  unit: '-'
+  dimension: slope
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_CIRCULAR_CURVE_RADIUS
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+- id: VAR_identifying_sight_distance
+  symbol: identifying_sight_distance
+  name: 识别视距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+    tables:
+    - T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+    formulas: []
+  related_rules:
+  - R_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+  related_tables:
+  - T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+- id: VAR_interchange_spacing
+  symbol: interchange_spacing
+  name: 互通式立体交叉间距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_2_4_INTERCHANGE_SPACING_AND_RAMP_SPEED
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_9_2_4_INTERCHANGE_SPACING_AND_RAMP_SPEED
+- id: VAR_interchange_type
+  symbol: interchange_type
+  name: 互通式立体交叉类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_9_2_4_RAMP_DESIGN_SPEED
+    formulas: []
+- id: VAR_intersection_angle
+  symbol: intersection_angle
+  name: 交叉角度
+  unit: deg
+  dimension: angle
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_1_3_AT_GRADE_INTERSECTION_ANGLE
+    - R_B01_9_5_2_POWER_LINE_CROSSING
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_9_1_3_AT_GRADE_INTERSECTION_ANGLE
+  - R_B01_9_5_2_POWER_LINE_CROSSING
+- id: VAR_intersection_branch_count
+  symbol: intersection_branch_count
+  name: 平面交叉岔数
+  unit: count
+  dimension: count
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_1_3_AT_GRADE_INTERSECTION_ANGLE
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_9_1_3_AT_GRADE_INTERSECTION_ANGLE
+- id: VAR_intersection_spacing_min
+  symbol: intersection_spacing_min
+  name: 平面交叉最小间距
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    tables:
+    - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    formulas: []
+  related_rules:
+  - R_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+  related_tables:
+  - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+- id: VAR_l_spiral
+  symbol: l
+  name: 回旋线上某点到原点曲线长
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_CLOTHOID_PARAMETER
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_CLOTHOID_PARAMETER
+- id: VAR_land_width
+  symbol: land_width
+  name: 公路用地控制宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_1_0_5_LAND_USE_SCOPE
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_1_0_5_LAND_USE_SCOPE
+- id: VAR_B01_lane_count
+  symbol: lane_count
+  name: 车道数
+  unit: lane
+  dimension: count
+  data_type: float
+  value_source: computed
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_3_LANE_COUNT
+    - R_B01_4_0_12_PASSING_BAY
+    tables:
+    - T_B01_4_0_3_LANE_COUNT
+    formulas: []
+- id: VAR_lane_width
+  symbol: lane_width
+  name: 车道宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_2_LANE_WIDTH
+    - R_B01_4_0_14_SUBGRADE_WIDTH
+    tables:
+    - T_B01_4_0_2_LANE_WIDTH
+    formulas: []
+  related_rules:
+  - R_B01_4_0_2_LANE_WIDTH
+  - R_B01_4_0_14_SUBGRADE_WIDTH
+  related_tables:
+  - T_B01_4_0_2_LANE_WIDTH
+- id: VAR_left_earth_shoulder_width
+  symbol: left_earth_shoulder_width
+  name: 左侧土路肩宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+    formulas: []
+- id: VAR_left_edge_strip_width
+  symbol: left_edge_strip_width
+  name: 左侧路缘带宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_4_MEDIAN
+    tables:
+    - T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+    formulas: []
+  related_rules:
+  - R_B01_4_0_4_MEDIAN
+  related_tables:
+  - T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+- id: VAR_left_hard_shoulder_width
+  symbol: left_hard_shoulder_width
+  name: 左侧硬路肩宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+    formulas: []
+  related_rules:
+  - R_B01_4_0_5_SHOULDER_WIDTH
+  related_tables:
+  - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+- id: VAR_left_side_width
+  symbol: L_left
+  name: 隧道左侧侧向宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_8_0_3_TUNNEL_CLEARANCE
+    tables:
+    - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+    formulas: []
+  related_rules:
+  - R_B01_8_0_3_TUNNEL_CLEARANCE
+  related_tables:
+  - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+- id: VAR_loaded_lane_count
+  symbol: n_loaded
+  name: 横向布载车道数
+  unit: lane
+  dimension: count
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+    formulas: []
+  related_rules:
+  - R_B01_7_0_6_TRANSVERSE_LANE_FACTOR
+  related_tables:
+  - T_B01_7_0_6_2_TRANSVERSE_LANE_LOAD_FACTOR
+- id: VAR_monitoring_level
+  symbol: monitoring_level
+  name: 监控设施等级
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_10_4_2_MONITORING_LEVEL
+    tables:
+    - T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+    formulas: []
+  related_rules:
+  - R_B01_10_4_2_MONITORING_LEVEL
+  related_tables:
+  - T_B01_10_4_2_MONITORING_FACILITY_LEVEL
+- id: VAR_mu_lateral
+  symbol: mu
+  name: 横向力系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_CIRCULAR_CURVE_RADIUS
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+- id: VAR_passage_clear_height
+  symbol: passage_clear_height
+  name: 通道净高
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_4_3_PASSAGE_CLEARANCE
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_9_4_3_PASSAGE_CLEARANCE
+- id: VAR_passage_clear_width
+  symbol: passage_clear_width
+  name: 通道净宽
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_4_3_PASSAGE_CLEARANCE
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_9_4_3_PASSAGE_CLEARANCE
+- id: VAR_pavement_type
+  symbol: pavement_type
+  name: 路面类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_5_0_8_PAVEMENT_DESIGN_LIFE
+    formulas: []
+- id: VAR_project_type
+  symbol: project_type
+  name: 项目类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_1_0_2_SCOPE
+    - R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_1_0_2_SCOPE
+  - R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+- id: VAR_q_k
+  symbol: q_k
+  name: 车道荷载均布荷载标准值
+  unit: kN/m
+  dimension: line_load
+  data_type: float
+  value_source: constant
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_7_0_3_LANE_LOAD
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_7_0_3_LANE_LOAD
+- id: VAR_B01_q_p
+  symbol: q_p
+  name: 人群荷载标准值
+  unit: kN/m2
+  dimension: surface_load
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  - formula_output
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+  related_refs:
+    rules:
+    - R_B01_7_0_8_PEDESTRIAN_LOAD
+    tables: []
+    formulas:
+    - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+    - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+- id: VAR_q_p_dense
+  symbol: q_p_dense
+  name: 密集路段人群荷载标准值
+  unit: kN/m2
+  dimension: surface_load
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - final_output_or_check_result
+  related_formulas:
+  - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+  review_note: 该变量为公式最终输出或验算结果，允许不被下游公式继续消费。
+- id: VAR_r
+  symbol: r
+  name: 回旋线上某点曲线半径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_CLOTHOID_PARAMETER
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_CLOTHOID_PARAMETER
+- id: VAR_ramp_design_speed
+  symbol: ramp_design_speed
+  name: 匝道设计速度
+  unit: km/h
+  dimension: speed
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_2_4_INTERCHANGE_SPACING_AND_RAMP_SPEED
+    tables:
+    - T_B01_9_2_4_RAMP_DESIGN_SPEED
+    formulas: []
+  related_rules:
+  - R_B01_9_2_4_INTERCHANGE_SPACING_AND_RAMP_SPEED
+  related_tables:
+  - T_B01_9_2_4_RAMP_DESIGN_SPEED
+- id: VAR_ramp_type
+  symbol: ramp_type
+  name: 匝道形式
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_9_2_4_RAMP_DESIGN_SPEED
+    formulas: []
+- id: VAR_right_hard_shoulder_width
+  symbol: right_hard_shoulder_width
+  name: 右侧硬路肩宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_4_0_6_EMERGENCY_STOPPING_AREA
+- id: VAR_right_side_width
+  symbol: L_right
+  name: 隧道右侧侧向宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_8_0_3_TUNNEL_CLEARANCE
+    tables:
+    - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+    formulas: []
+  related_rules:
+  - R_B01_8_0_3_TUNNEL_CLEARANCE
+  related_tables:
+  - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+- id: VAR_seismic_peak_acceleration
+  symbol: a_g
+  name: 地震动峰值加速度系数
+  unit: '-'
+  dimension: coefficient
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_7_1_SEISMIC_DESIGN
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_3_7_1_SEISMIC_DESIGN
+- id: VAR_service_level
+  symbol: service_level
+  name: 服务水平等级
+  unit: level
+  dimension: classification
+  data_type: string
+  value_source: computed
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+    - R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+    - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+    tables:
+    - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+    - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+    formulas: []
+  related_rules:
+  - R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+  - R_B01_3_4_2_DESIGN_SERVICE_LEVEL
+  - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+  related_tables:
+  - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+  - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+- id: VAR_shoulder_width
+  symbol: shoulder_width
+  name: 路肩宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_5_SHOULDER_WIDTH
+    - R_B01_4_0_14_SUBGRADE_WIDTH
+    tables:
+    - T_B01_4_0_5_1_SHOULDER_WIDTH
+    formulas: []
+  related_rules:
+  - R_B01_4_0_5_SHOULDER_WIDTH
+  - R_B01_4_0_14_SUBGRADE_WIDTH
+  related_tables:
+  - T_B01_4_0_5_1_SHOULDER_WIDTH
+- id: VAR_single_span_length
+  symbol: L_k
+  name: 单孔跨径
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+    formulas: []
+  related_rules:
+  - R_B01_6_0_2_BRIDGE_CLASSIFICATION
+  related_tables:
+  - T_B01_6_0_2_BRIDGE_CULVERT_CLASSIFICATION
+- id: VAR_standard_axle_load
+  symbol: standard_axle_load
+  name: 路面结构设计标准轴载
+  unit: kN
+  dimension: force
+  data_type: float
+  value_source: constant
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_5_0_6_PAVEMENT_STANDARD_AXLE_LOAD
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_5_0_6_PAVEMENT_STANDARD_AXLE_LOAD
+- id: VAR_subgrade_position
+  symbol: subgrade_position
+  name: 路基部位
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_5_0_4_SUBGRADE_COMPACTION
+    formulas: []
+- id: VAR_subgrade_width
+  symbol: subgrade_width
+  name: 路基宽度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: computed
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_4_0_12_PASSING_BAY
+    - R_B01_4_0_14_SUBGRADE_WIDTH
+    tables: []
+    formulas: []
+  percent_unit_review: false_positive_length_variable
+  review_note: 审查脚本因变量ID包含 grade/width 等词触发百分数风险提示；经字段语义看，该变量为长度类变量，unit=m 保留。
+  related_rules:
+  - R_B01_4_0_12_PASSING_BAY
+  - R_B01_4_0_14_SUBGRADE_WIDTH
+- id: VAR_sum_K
+  symbol: sum_K
+  name: 区域路网总里程
+  unit: km
+  dimension: length
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_LENGTH_RATIO
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_LENGTH_RATIO
+- id: VAR_sum_VKT
+  symbol: sum_VKT
+  name: 区域路网车公里之和
+  unit: pcu·km
+  dimension: traffic_work
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_input
+  related_formulas:
+  - F_B01_L1_VKT_RATIO
+  related_refs:
+    rules: []
+    tables: []
+    formulas:
+    - F_B01_L1_VKT_RATIO
+- id: VAR_superelevation_condition
+  symbol: superelevation_condition
+  name: 超高条件
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+    formulas: []
+- id: VAR_terrain_condition
+  symbol: terrain_condition
+  name: 地形条件
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_1_0_3_TECHNICAL_GRADE_SELECTION
+- id: VAR_tire_pressure
+  symbol: tire_pressure
+  name: 轮胎压力
+  unit: MPa
+  dimension: pressure
+  data_type: float
+  value_source: constant
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_5_0_6_PAVEMENT_STANDARD_AXLE_LOAD
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_5_0_6_PAVEMENT_STANDARD_AXLE_LOAD
+- id: VAR_traffic_direction
+  symbol: traffic_direction
+  name: 桥梁行驶方向类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_6_1_BRIDGE_DESIGN_LANE_COUNT
+    formulas: []
+- id: VAR_tunnel_class
+  symbol: tunnel_class
+  name: 隧道分类
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_8_0_2_TUNNEL_CLASSIFICATION
+    tables:
+    - T_B01_8_0_2_TUNNEL_CLASSIFICATION
+    - T_B01_8_0_9_TUNNEL_DESIGN_LIFE
+    formulas: []
+  related_rules:
+  - R_B01_8_0_2_TUNNEL_CLASSIFICATION
+  related_tables:
+  - T_B01_8_0_2_TUNNEL_CLASSIFICATION
+- id: VAR_tunnel_length
+  symbol: L_tunnel
+  name: 隧道长度
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_8_0_2_TUNNEL_CLASSIFICATION
+    tables:
+    - T_B01_8_0_2_TUNNEL_CLASSIFICATION
+    formulas: []
+  related_rules:
+  - R_B01_8_0_2_TUNNEL_CLASSIFICATION
+  related_tables:
+  - T_B01_8_0_2_TUNNEL_CLASSIFICATION
+- id: VAR_B01_v
+  symbol: v
+  name: 设计速度或车辆速度
+  unit: km/h
+  dimension: speed
+  data_type: float
+  value_source: design_input
+  roles:
+  - formula_input
+  - table_lookup
+  - rule_parameter
+  related_formulas:
+  - F_B01_L1_CIRCULAR_CURVE_RADIUS
+  - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  related_refs:
+    rules:
+    - R_B01_1_0_8_RECONSTRUCTION_EXTENSION
+    - R_B01_3_5_1_DESIGN_SPEED
+    - R_B01_3_5_2_OPERATING_SPEED_CHECK
+    - R_B01_4_0_2_LANE_WIDTH
+    - R_B01_8_0_4_TUNNEL_PORTAL_TRANSITION
+    tables:
+    - T_B01_3_5_1_DESIGN_SPEED
+    - T_B01_4_0_2_LANE_WIDTH
+    - T_B01_4_0_4_LEFT_EDGE_STRIP_WIDTH
+    - T_B01_4_0_5_1_SHOULDER_WIDTH
+    - T_B01_4_0_5_2_SEPARATED_LEFT_SHOULDER
+    - T_B01_4_0_15_1_STOPPING_SIGHT_DISTANCE_EXPRESSWAY
+    - T_B01_4_0_15_2_SIGHT_DISTANCE_GENERAL
+    - T_B01_4_0_17_MIN_CIRCULAR_CURVE_RADIUS
+    - T_B01_4_0_20_MAX_GRADE
+    - T_B01_4_0_21_MAX_GRADE_LENGTH
+    - T_B01_4_0_22_VERTICAL_CURVE
+    - T_B01_8_0_3_TUNNEL_MIN_SIDE_WIDTH
+    - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+    - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+    - T_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    - T_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+    formulas:
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+    - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  related_rules:
+  - R_B01_4_0_4_MEDIAN
+  - R_B01_4_0_5_SHOULDER_WIDTH
+  - R_B01_4_0_15_SIGHT_DISTANCE
+  - R_B01_4_0_17_CURVE_RADIUS
+  - R_B01_4_0_20_MAX_GRADE
+  - R_B01_4_0_21_MAX_GRADE_LENGTH
+  - R_B01_4_0_22_VERTICAL_CURVE
+  - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+  - R_B01_B_0_2_IDENTIFYING_SIGHT_DISTANCE
+- id: VAR_v_C
+  symbol: v/C
+  name: 饱和度或服务水平评价比值
+  unit: '-'
+  dimension: ratio
+  data_type: float
+  value_source: computed
+  roles:
+  - formula_output
+  - table_lookup
+  - rule_parameter
+  related_formulas:
+  - F_B01_L0_VC_RATIO
+  related_refs:
+    rules:
+    - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+    tables:
+    - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+    - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+    formulas:
+    - F_B01_L0_VC_RATIO
+  related_rules:
+  - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+  related_tables:
+  - T_B01_A_0_1_1_EXPRESSWAY_SERVICE_LEVEL
+  - T_B01_A_0_1_2_FIRST_CLASS_SERVICE_LEVEL
+- id: VAR_v_operating
+  symbol: v_operating
+  name: 运行速度
+  unit: km/h
+  dimension: speed
+  data_type: float
+  value_source: computed
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_5_2_OPERATING_SPEED_CHECK
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_3_5_2_OPERATING_SPEED_CHECK
+- id: VAR_vehicle_class
+  symbol: vehicle_class
+  name: 车辆代表车型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_3_2_TRAFFIC_CONVERSION
+    tables:
+    - T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+    formulas: []
+  related_rules:
+  - R_B01_3_3_2_TRAFFIC_CONVERSION
+  related_tables:
+  - T_B01_3_3_2_VEHICLE_CONVERSION_FACTOR
+- id: VAR_vehicle_height
+  symbol: vehicle_height
+  name: 车辆总高
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+    formulas: []
+  related_rules:
+  - R_B01_3_2_1_DESIGN_VEHICLE
+  related_tables:
+  - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+- id: VAR_vehicle_length
+  symbol: vehicle_length
+  name: 车辆总长
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+    formulas: []
+  related_rules:
+  - R_B01_3_2_1_DESIGN_VEHICLE
+  related_tables:
+  - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+- id: VAR_vehicle_load_grade
+  symbol: vehicle_load_grade
+  name: 汽车荷载等级
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_7_0_2_VEHICLE_LOAD_GRADE
+    tables:
+    - T_B01_7_0_2_VEHICLE_LOAD_GRADE
+    formulas: []
+  related_rules:
+  - R_B01_7_0_2_VEHICLE_LOAD_GRADE
+  related_tables:
+  - T_B01_7_0_2_VEHICLE_LOAD_GRADE
+- id: VAR_vehicle_load_parameter
+  symbol: vehicle_load_parameter
+  name: 车辆荷载参数名称
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+    formulas: []
+- id: VAR_vehicle_load_value
+  symbol: vehicle_load_value
+  name: 车辆荷载参数值
+  unit: mixed
+  dimension: mixed
+  data_type: string
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+    tables:
+    - T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+    formulas: []
+  related_rules:
+  - R_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+  related_tables:
+  - T_B01_7_0_4_VEHICLE_LOAD_PARAMETERS
+- id: VAR_vehicle_type
+  symbol: vehicle_type
+  name: 设计车辆类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_3_2_1_DESIGN_VEHICLE
+    tables:
+    - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+    formulas: []
+  related_rules:
+  - R_B01_3_2_1_DESIGN_VEHICLE
+  related_tables:
+  - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+- id: VAR_vehicle_width
+  symbol: vehicle_width
+  name: 车辆总宽
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: table_lookup
+  roles:
+  - table_lookup
+  related_formulas: []
+  related_refs:
+    rules: []
+    tables:
+    - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+    formulas: []
+  related_rules:
+  - R_B01_3_2_1_DESIGN_VEHICLE
+  related_tables:
+  - T_B01_3_2_1_DESIGN_VEHICLE_DIMENSIONS
+- id: VAR_wire_clearance
+  symbol: wire_clearance
+  name: 导线距路面最小垂直距离
+  unit: m
+  dimension: length
+  data_type: float
+  value_source: design_input
+  roles:
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_5_2_POWER_LINE_CROSSING
+    tables: []
+    formulas: []
+  related_rules:
+  - R_B01_9_5_2_POWER_LINE_CROSSING
+- id: VAR_value_type
+  symbol: value_type
+  name: 取值类型
+  unit: '-'
+  dimension: classification
+  data_type: string
+  value_source: design_input
+  roles:
+  - table_lookup
+  - rule_parameter
+  related_formulas: []
+  related_refs:
+    rules:
+    - R_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    tables:
+    - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+    formulas: []
+  constraints:
+    enum:
+    - 一般值
+    - 最小值
+    note: 用于区分表格中的一般控制值和最小控制值。
+  related_rules:
+  - R_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING
+  related_tables:
+  - T_B01_9_1_5_AT_GRADE_INTERSECTION_SPACING

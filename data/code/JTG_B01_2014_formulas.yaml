@@ -1,0 +1,529 @@
+metadata:
+  library_name: JTG_B01_2014_formula_registry
+  standard: JTG B01-2014
+  standard_code: JTG B01-2014
+  architecture: six_layer_DAG
+  formula_schema: compact_four_module
+  file_version: v0.1
+  standard_name: 公路工程技术标准
+  library_type: formula_registry
+  item_count: 16
+  version: reasonableness_fixed_v0.1
+  generation_note: 根据 library_reasonableness_review.md 修正：补充 formula_status、显式化规则调用表格/公式ID、标记人工复核规则、修正表9.1.5查表口径、标注变量误报风险。
+  cross_standard_consistency_audit:
+    date: '2026-06-28'
+    method: ID uniqueness, cross-library reference integrity, reciprocal relation completion, formula-variable linkage, variable
+      symbol/unit semantic conflict scan
+    safe_modification_policy: 仅补充可由现有ID关系直接推出的反向引用和公式变量关联；未擅自改名、删项或修正规范数值。
+    duplicate_id_scope_fix: 跨规范重复变量ID已按所属规范添加标准域前缀，并同步更新本规范四库内全部引用。
+layers:
+  layer0_global_context_materials:
+    description: 全局上下文、交通量、服务水平及工程分类基础参数
+    formulas:
+    - F_B01_L0_VC_RATIO
+  layer1_parameters_coefficients:
+    description: 参数、系数、几何指标和中间量计算
+    formulas:
+    - F_B01_L1_AADT_SECONDARY_HIGHWAY
+    - F_B01_L1_VKT_RATIO
+    - F_B01_L1_LENGTH_RATIO
+    - F_B01_L1_NETWORK_SERVICE_INDEX
+    - F_B01_L1_CIRCULAR_CURVE_RADIUS
+    - F_B01_L1_CLOTHOID_PARAMETER
+    - F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+    - F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+    - F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+    - F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+    - F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+    - F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+    - F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  layer2_standard_actions:
+    description: 汽车及人群荷载等单项标准作用计算
+    formulas:
+    - F_B01_L2_LANE_LOAD_SHEAR_PK
+  layer3_action_combinations:
+    description: 作用效应组合计算，本标准未给出通用组合公式
+    formulas: []
+  layer4_section_resistance_properties:
+    description: 截面抗力与几何特性，本标准未给出结构构件抗力公式
+    formulas: []
+  layer5_limit_state_verification:
+    description: 限值验算与合规判定
+    formulas:
+    - F_B01_L5_SIGHT_DISTANCE_CHECK
+formulas:
+- id: F_B01_L0_VC_RATIO
+  meta:
+    name: 交通量与通行能力比
+    layer: layer0_global_context_materials
+    source: JTG B01-2014, 附录A, 表A.0.1注
+    applicability: 服务水平分级评价
+    related_rules:
+    - R_B01_A_0_1_SERVICE_LEVEL_CLASSIFICATION
+    related_variables:
+    - VAR_C_capacity
+    - VAR_V_traffic
+    - VAR_v_C
+  math:
+    expression: v_C = V / C
+    variables:
+    - VAR_V_traffic
+    - VAR_C_capacity
+    output: VAR_v_C
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_V_traffic >= 0
+    - VAR_C_capacity > 0
+    post:
+    - VAR_v_C >= 0
+  execution:
+    type: python
+    logic: 'VAR_v_C = VAR_V_traffic / VAR_C_capacity
+
+      return VAR_v_C'
+  formula_status: normative
+- id: F_B01_L1_AADT_SECONDARY_HIGHWAY
+  meta:
+    name: 二、三、四级公路年平均日设计交通量
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 条文说明3.1.1, 式(3-2)
+    applicability: 二、三、四级公路按整个断面交通量估算年平均日设计交通量
+    related_variables:
+    - VAR_AADT
+    - VAR_Cp
+    - VAR_B01_K
+    - VAR_Rp
+  math:
+    expression: AADT = Cp * Rp / K
+    variables:
+    - VAR_Cp
+    - VAR_Rp
+    - VAR_B01_K
+    output: VAR_AADT
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_Cp > 0
+    - VAR_Rp > 0
+    - VAR_B01_K > 0
+    post:
+    - VAR_AADT > 0
+  execution:
+    type: python
+    logic: 'VAR_AADT = VAR_Cp * VAR_Rp / VAR_B01_K
+
+      return VAR_AADT'
+  formula_status: explanatory
+- id: F_B01_L1_VKT_RATIO
+  meta:
+    name: 车公里比率
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 条文说明3.1.2, 式(3-3)
+    applicability: 公路功能分类中路网服务指数计算
+    related_variables:
+    - VAR_R_VKT_i
+    - VAR_VKT_i
+    - VAR_sum_VKT
+  math:
+    expression: R_VKT_i = VKT_i / sum(VKT) * 100
+    variables:
+    - VAR_VKT_i
+    - VAR_sum_VKT
+    output: VAR_R_VKT_i
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_VKT_i >= 0
+    - VAR_sum_VKT > 0
+    post:
+    - VAR_R_VKT_i >= 0
+  execution:
+    type: python
+    logic: 'VAR_R_VKT_i = VAR_VKT_i / VAR_sum_VKT * 100
+
+      return VAR_R_VKT_i'
+  formula_status: explanatory
+- id: F_B01_L1_LENGTH_RATIO
+  meta:
+    name: 里程比率
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 条文说明3.1.2, 式(3-4)
+    applicability: 公路功能分类中路网服务指数计算
+    related_variables:
+    - VAR_K_i
+    - VAR_R_L_i
+    - VAR_sum_K
+  math:
+    expression: R_L_i = K_i / sum(K) * 100
+    variables:
+    - VAR_K_i
+    - VAR_sum_K
+    output: VAR_R_L_i
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_K_i > 0
+    - VAR_sum_K > 0
+    post:
+    - VAR_R_L_i >= 0
+  execution:
+    type: python
+    logic: 'VAR_R_L_i = VAR_K_i / VAR_sum_K * 100
+
+      return VAR_R_L_i'
+  formula_status: explanatory
+- id: F_B01_L1_NETWORK_SERVICE_INDEX
+  meta:
+    name: 路网服务指数
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 条文说明3.1.2, 式(3-5)
+    applicability: 同一区域内主要控制点相近公路的功能类别判断
+    related_variables:
+    - VAR_R_L_i
+    - VAR_R_VKT_i
+    - VAR_R_i
+  math:
+    expression: R_i = R_VKT_i / R_L_i
+    variables:
+    - VAR_R_VKT_i
+    - VAR_R_L_i
+    output: VAR_R_i
+    dependencies:
+    - F_B01_L1_VKT_RATIO
+    - F_B01_L1_LENGTH_RATIO
+  constraints:
+    pre:
+    - VAR_R_L_i > 0
+    post:
+    - VAR_R_i >= 0
+  execution:
+    type: python
+    logic: 'VAR_R_i = VAR_R_VKT_i / VAR_R_L_i
+
+      return VAR_R_i'
+  formula_status: explanatory
+- id: F_B01_L1_CIRCULAR_CURVE_RADIUS
+  meta:
+    name: 圆曲线半径计算
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 条文说明4.0.17, 式(4-1)
+    applicability: 基于设计速度、横向力系数和超高横坡估算圆曲线半径
+    related_rules:
+    - R_B01_4_0_17_CURVE_RADIUS
+    related_variables:
+    - VAR_R_curve
+    - VAR_i_superelevation
+    - VAR_mu_lateral
+    - VAR_B01_v
+  math:
+    expression: R = v^2 / (127 * (mu + i))
+    variables:
+    - VAR_B01_v
+    - VAR_mu_lateral
+    - VAR_i_superelevation
+    output: VAR_R_curve
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_B01_v > 0
+    - VAR_mu_lateral + VAR_i_superelevation > 0
+    post:
+    - VAR_R_curve > 0
+  execution:
+    type: python
+    logic: 'VAR_R_curve = VAR_B01_v**2 / (127 * (VAR_mu_lateral + VAR_i_superelevation))
+
+      return VAR_R_curve'
+  formula_status: explanatory
+- id: F_B01_L1_CLOTHOID_PARAMETER
+  meta:
+    name: 回旋线参数
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 条文说明4.0.19, 式(4-2)
+    applicability: 缓和曲线采用回旋线时参数计算
+    related_variables:
+    - VAR_A2
+    - VAR_l_spiral
+    - VAR_r
+  math:
+    expression: A^2 = r * l
+    variables:
+    - VAR_r
+    - VAR_l_spiral
+    output: VAR_A2
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_r > 0
+    - VAR_l_spiral > 0
+    post:
+    - VAR_A2 > 0
+  execution:
+    type: python
+    logic: 'VAR_A2 = VAR_r * VAR_l_spiral
+
+      return VAR_A2'
+  formula_status: explanatory
+- id: F_B01_L1_BRIDGE_LANE_LOAD_PK_INTERPOLATION
+  meta:
+    name: 公路—I级车道荷载集中荷载标准值插值
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 7.0.3
+    applicability: 桥涵计算跨径大于5m、小于50m时，公路—I级车道荷载集中荷载标准值
+    related_rules:
+    - R_B01_7_0_3_LANE_LOAD
+    related_variables:
+    - VAR_B01_L_0
+    - VAR_B01_P_k
+  math:
+    expression: P_k = 2 * (L_0 + 130)
+    variables:
+    - VAR_B01_L_0
+    output: VAR_B01_P_k
+    dependencies: []
+  constraints:
+    pre:
+    - 5 < VAR_B01_L_0 < 50
+    post:
+    - VAR_B01_P_k > 0
+  execution:
+    type: python
+    logic: 'VAR_B01_P_k = 2 * (VAR_B01_L_0 + 130)
+
+      return VAR_B01_P_k'
+  formula_status: derived
+- id: F_B01_L1_HIGHWAY_II_LOAD_FACTOR
+  meta:
+    name: 公路—Ⅱ级车道荷载折减
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 7.0.3
+    applicability: 公路—Ⅱ级车道荷载标准值按公路—I级0.75倍取值
+    related_rules:
+    - R_B01_7_0_3_LANE_LOAD
+    related_variables:
+    - VAR_Q_I
+    - VAR_Q_II
+  math:
+    expression: Q_II = 0.75 * Q_I
+    variables:
+    - VAR_Q_I
+    output: VAR_Q_II
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_Q_I >= 0
+    post:
+    - VAR_Q_II >= 0
+  execution:
+    type: python
+    logic: 'VAR_Q_II = 0.75 * VAR_Q_I
+
+      return VAR_Q_II'
+  formula_status: derived
+- id: F_B01_L2_LANE_LOAD_SHEAR_PK
+  meta:
+    name: 剪力效应集中荷载标准值
+    layer: layer2_standard_actions
+    source: JTG B01-2014, 7.0.3
+    applicability: 计算剪力效应时集中荷载标准值乘以1.2
+    related_rules:
+    - R_B01_7_0_3_LANE_LOAD
+    related_variables:
+    - VAR_B01_P_k
+    - VAR_P_k_shear
+  math:
+    expression: P_k_shear = 1.2 * P_k
+    variables:
+    - VAR_B01_P_k
+    output: VAR_P_k_shear
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_B01_P_k >= 0
+    post:
+    - VAR_P_k_shear >= 0
+  execution:
+    type: python
+    logic: 'VAR_P_k_shear = 1.2 * VAR_B01_P_k
+
+      return VAR_P_k_shear'
+  formula_status: derived
+- id: F_B01_L1_DESIGN_LANE_LOAD_TRANSVERSE_EFFECT
+  meta:
+    name: 横向多车道布载效应折减/提高
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 7.0.6, 表7.0.6-2
+    applicability: 桥涵横桥向布置多车道汽车荷载时的效应折减或一车道提高
+    related_rules:
+    - R_B01_7_0_6_TRANSVERSE_LANE_FACTOR
+    related_variables:
+    - VAR_S_1
+    - VAR_S_n
+    - VAR_eta_n
+  math:
+    expression: S_n = eta_n * S_1
+    variables:
+    - VAR_eta_n
+    - VAR_S_1
+    output: VAR_S_n
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_eta_n > 0
+    - VAR_S_1 >= 0
+    post:
+    - VAR_S_n >= 0
+  execution:
+    type: python
+    logic: 'VAR_S_n = VAR_eta_n * VAR_S_1
+
+      return VAR_S_n'
+  formula_status: normative
+- id: F_B01_L1_LONGITUDINAL_REDUCTION_EFFECT
+  meta:
+    name: 大跨径桥梁车道荷载纵向折减效应
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 7.0.7, 表7.0.7
+    applicability: 计算跨径大于150m时车道荷载纵向折减
+    related_rules:
+    - R_B01_7_0_7_LONGITUDINAL_REDUCTION
+    related_variables:
+    - VAR_S
+    - VAR_S_red
+    - VAR_eta_L
+  math:
+    expression: S_red = eta_L * S
+    variables:
+    - VAR_eta_L
+    - VAR_S
+    output: VAR_S_red
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_eta_L > 0
+    - VAR_S >= 0
+    post:
+    - VAR_S_red >= 0
+  execution:
+    type: python
+    logic: 'VAR_S_red = VAR_eta_L * VAR_S
+
+      return VAR_S_red'
+  formula_status: derived
+- id: F_B01_L1_PEDESTRIAN_LOAD_INTERPOLATION
+  meta:
+    name: 人群荷载标准值插值
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 7.0.8
+    applicability: 桥梁计算跨径大于50m、小于150m时人群荷载标准值
+    related_rules:
+    - R_B01_7_0_8_PEDESTRIAN_LOAD
+    related_variables:
+    - VAR_B01_L_0
+    - VAR_B01_q_p
+  math:
+    expression: q_p = 3.25 - 0.005 * L_0
+    variables:
+    - VAR_B01_L_0
+    output: VAR_B01_q_p
+    dependencies: []
+  constraints:
+    pre:
+    - 50 < VAR_B01_L_0 < 150
+    post:
+    - VAR_B01_q_p > 0
+  execution:
+    type: python
+    logic: 'VAR_B01_q_p = 3.25 - 0.005 * VAR_B01_L_0
+
+      return VAR_B01_q_p'
+  formula_status: derived
+- id: F_B01_L1_PEDESTRIAN_DENSE_FACTOR
+  meta:
+    name: 非机动车、行人密集桥梁人群荷载提高
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 7.0.8
+    applicability: 非机动车、行人密集公路桥梁人群荷载标准值提高1.15倍
+    related_rules:
+    - R_B01_7_0_8_PEDESTRIAN_LOAD
+    related_variables:
+    - VAR_B01_q_p
+    - VAR_q_p_dense
+  math:
+    expression: q_p_dense = 1.15 * q_p
+    variables:
+    - VAR_B01_q_p
+    output: VAR_q_p_dense
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_B01_q_p > 0
+    post:
+    - VAR_q_p_dense > 0
+  execution:
+    type: python
+    logic: 'VAR_q_p_dense = 1.15 * VAR_B01_q_p
+
+      return VAR_q_p_dense'
+  formula_status: derived
+- id: F_B01_L1_TUNNEL_PORTAL_TRANSITION_LENGTH
+  meta:
+    name: 隧道洞口过渡段最小长度
+    layer: layer1_parameters_coefficients
+    source: JTG B01-2014, 8.0.4
+    applicability: 洞口外相接路段过渡段长度不小于3s设计速度行程长度且不小于50m
+    related_rules:
+    - R_B01_8_0_4_TUNNEL_PORTAL_TRANSITION
+    related_variables:
+    - VAR_L_transition
+    - VAR_B01_v
+  math:
+    expression: L_transition = max(v * 1000 / 3600 * 3, 50)
+    variables:
+    - VAR_B01_v
+    output: VAR_L_transition
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_B01_v > 0
+    post:
+    - VAR_L_transition >= 50
+  execution:
+    type: python
+    logic: 'VAR_L_transition = max(VAR_B01_v * 1000 / 3600 * 3, 50)
+
+      return VAR_L_transition'
+  formula_status: normative
+- id: F_B01_L5_SIGHT_DISTANCE_CHECK
+  meta:
+    name: 视距限值验算
+    layer: layer5_limit_state_verification
+    source: JTG B01-2014, 4.0.15, 附录B
+    applicability: 设计视距或货车停车视距限值验算
+    related_rules:
+    - R_B01_4_0_15_SIGHT_DISTANCE
+    - R_B01_B_0_1_TRUCK_STOPPING_SIGHT_DISTANCE
+    related_variables:
+    - VAR_D_actual
+    - VAR_D_required
+    - VAR_check_pass
+  math:
+    expression: D_actual >= D_required
+    variables:
+    - VAR_D_actual
+    - VAR_D_required
+    output: VAR_check_pass
+    dependencies: []
+  constraints:
+    pre:
+    - VAR_D_actual >= 0
+    - VAR_D_required > 0
+    post:
+    - VAR_check_pass in [true, false]
+  execution:
+    type: python
+    logic: 'VAR_check_pass = VAR_D_actual >= VAR_D_required
+
+      return VAR_check_pass'
+  formula_status: normative

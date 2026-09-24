@@ -1,0 +1,248 @@
+# config/settings.yaml
+# ======================================================
+# 桥梁智能设计基础配置
+# 本文件保存稳定的系统参数，并为 GUI 提供任务字段默认值。
+# GUI 启动时覆盖本次任务字段，并将完整快照写入：
+# <output_dir>/run_configs/<thread_id>.yaml。
+# 中间成果路径不得写入本文件，统一从 output_dir 自动发现。
+# 仓库内相对路径统一相对仓库根目录解析；外部资源使用绝对路径。
+# ======================================================
+
+schema_version: 1
+
+
+# ======================================================
+# 1. LLM 配置
+# ======================================================
+llm:
+  controller:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-flash
+    temperature: 0
+    stream: false
+
+  revision:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-flash
+    temperature: 0.1
+    stream: false
+
+  generation:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-pro
+    temperature: 0.1
+    stream: false
+
+  # 注意：bridge_agents/utils.py 中 get_structural_llm() 读取的是 llm.structural
+  structural:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-flash
+    temperature: 0.1
+    stream: false
+
+  dimension:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-flash
+    temperature: 0.1
+    stream: false
+
+  reinforcement:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-flash
+    temperature: 0.1
+    stream: false
+
+  # 成果问答 / 整体评估（DesignReviewAgent）专用；未配置时回退 llm.controller。
+  review:
+    api_key: ENV
+    api_key_env: DEEPSEEK_API_KEY
+    base_url: https://api.deepseek.com
+    model: deepseek-v4-pro
+    temperature: 0.1
+    stream: false
+
+
+# ======================================================
+# 2. 用户任务
+# ======================================================
+task:
+  # GUI 覆盖；默认留空，避免误用上一次工程任务。
+  user_request: ""
+
+
+# ======================================================
+# 3. Prompt Registry
+# ======================================================
+prompts:
+  manifest_path: prompts/manifest.yaml
+  strict_rendering: true
+  save_rendered_prompts: true
+  validate_on_startup: true
+  initial_layout_design_prompt_id: tasks.initial_layout_design.v1
+  design_unit_extraction_prompt_id: tasks.design_unit_extraction.v1
+  cap_dimension_design_prompt_id: tasks.cap_dimension_design.v1
+  cap_reinforcement_design_prompt_id: tasks.cap_reinforcement_design.v1
+
+
+# ======================================================
+# 4. 用户输入与输出目录
+# ======================================================
+paths:
+  # 以下三项由 GUI 覆盖；默认留空，避免跨工程复用旧路径。
+  data_path: ""
+  input_drawing_path: ""
+  output_dir: ""
+
+  # 样本 / 规范
+  few_shots_dir: data/few_shots
+  standards_path: data/standards.json
+
+
+# ======================================================
+# 5. 路线资料配置
+# ======================================================
+route_data:
+  # GUI 覆盖。
+  file_prefix: ""
+  structures_filename: null
+
+
+# ======================================================
+# 6. Few-shot 检索配置
+# ======================================================
+retrieval:
+  few_shots_k: 3
+
+
+# ======================================================
+# 7. 图纸裁剪与语义分割配置
+# ======================================================
+segmentation:
+  # 机器相关资源，使用本机实际绝对路径。
+  config_file: ""   # 本机语义分割模型配置，按需填写
+  checkpoint_file: ""   # 本机语义分割模型权重，按需填写
+  device: cpu
+  patch_size: 512
+  stride: 512
+  background_id: 0
+
+drawing_crop_and_mask:
+  converter_path: C:/Program Files/ODA/ODAFileConverter 26.10.0/ODAFileConverter.exe
+  # dxf_output_dir 由系统按 <output_dir>/dxf 自动生成。
+  layer_config_json: null
+  swap_xy: true
+  buffer: 200.0
+  resolution: 0.5
+  max_image_pixels: 20000
+  expand_inserts: false
+  convert_png_to_jpg: true
+  jpg_quality: 95
+
+
+# ======================================================
+# 8. 障碍物语义提取配置
+# ======================================================
+obstacle_semantic_extractor:
+  roadbed_type: integrated
+  route_scan_config_json: null
+  scan_width_integrated: 26.5
+  scan_width_separated: 13.25
+  sample_step: 0.5
+  step_k: 0.5
+  clip_to_route_range: true
+  save_visualization: true
+  show_visualization: false
+  preview_wait_ms: 0
+
+
+# ======================================================
+# 9. 设桥布跨碰撞检测配置
+# ======================================================
+collision_detection:
+  collision_offset_left_m: 7.0
+  collision_offset_right_m: 7.0
+  collision_column_half_spacing_m: 3.45
+  collision_check_radius_m: 1.25
+  collision_mask_threshold: 127
+  collision_save_visualization: true
+
+
+# ======================================================
+# 10. 结构设计配置
+# ======================================================
+structure:
+  dimension_samples_yaml_path: samples/dimension_design_samples.yaml
+  max_examples_per_group: 3
+  dimension_max_workers: 4
+  dimension_max_format_repairs: 1
+  dimension_max_regenerations: 2
+
+  reinforcement_samples_yaml_path: samples/reinforcement_design_samples.yaml
+  reinforcement_column_samples_yaml_path: samples/reinforcement_column.yaml
+  reinforcement_max_examples: 2
+  reinforcement_max_workers: 3
+  reinforcement_max_format_repairs: 1
+
+  cover_x_mm: 50.0
+  cover_y_mm: 50.0
+  cover_z_mm: 60.0
+
+  force_combo_name: ULS_basic
+  force_shear_ratio: 0.75
+  force_symmetry_tolerance: 0.08
+
+
+# ======================================================
+# 11. 规范 RAG（仅用于设计后评估与专业问答）
+# ======================================================
+code_rag:
+  enabled: false
+  retrieval_mode: auto
+  top_k: 10
+
+
+# ======================================================
+# 12. 承载力验算与反馈配置
+# ======================================================
+modeling:
+  # 承载力验算核心脚本
+  capacity_check_script_path: tools/cap_beam_capacity_envelope_overlay_refined.py
+
+  # OpenSees 输出中的组合名称
+  capacity_check_combination_name: ULS_basic
+
+  # 结构重要性系数；如果 OpenSees 内力结果已经考虑 gamma0，可改为 1.0
+  capacity_check_gamma_0: 1.10
+  capacity_check_apply_gamma0: true
+  auto_run_opensees_if_missing: false
+
+  # 反馈闭环轮次控制
+  max_modeling_check_steps: 6
+  max_check_revision_rounds: 3
+
+
+# ======================================================
+# 13. Agent 运行控制
+# ======================================================
+agent:
+  # 仅作为任务理解失败时的兜底意图；正常情况下以 LLM 输出的 user_intent 为准
+  default_user_intent: full_design
+
+  max_revision_rounds: 3
+  max_react_steps: 16
+  llm_max_format_repairs: 1
+  llm_max_regenerations: 2
+
+  save_final_state: true

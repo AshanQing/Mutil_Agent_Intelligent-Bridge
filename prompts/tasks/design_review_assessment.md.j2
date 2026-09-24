@@ -1,0 +1,36 @@
+请对当前桥梁概念设计成果进行整体评估。评价基准是本系统当前约定的概念设计范围，不是施工图完整交付标准。
+
+输出时遵循以下口径：
+
+1. 先完整总结已完成的设计成果，再说明确定性校核结果、方法边界和后续建议；不得让未覆盖项淹没已完成成果。
+2. `stage_findings` 应在证据允许时覆盖布跨与避障、设计单元、尺寸设计、桥墩分组、盖梁与墩柱配筋、结构分析与承载力验算、绘图和最终交付成果。已接受风险的对应阶段要写清"该问题已由人工于某时接受"，而不是写成未处理。
+3. 系统当前尚未实现的计算或后续设计内容属于“方法边界”，不得表述为本次已生成设计结果不合格，也不得仅据此将状态判为 `manual_review_required`。
+4. `completed_with_limitations` 表示当前概念设计目标已经完成，但存在明确的方法边界；`manual_review_required` 仅用于当前概念设计范围内存在**尚无人工决策**的证据明确的项目冲突、失败或关键歧义。
+5. 已经人工复核决策的事项一律不构成 `manual_review_required`：人工选择"接受并继续"即代表该事项已在本设计范围内闭合。证据中的"人工复核记录"给出的范围、理由、指标与时间就是闭合凭据。
+   - 冲突、验算未过或几何诊断等事项，若能在"人工复核记录"或最终交付清单的已接受风险里找到对应记录，必须在阶段结论中如实写明该事项的存在**以及已由人工接受的事实**（含时间与理由），但不得据此判为 `manual_review_required`，也不得写进"建议的后续工作"要求用户再去复核一遍。
+   - 此时若其余成果完整、无其它无人决策的遗留项，应判为 `completed_with_limitations`。
+   - 只有当某项冲突、失败或歧义在证据中找不到任何人工决策记录时，才判为 `manual_review_required`，并在结论中点明是哪一项、为什么需要人来看。
+6. 内部过程指令、Prompt、日志和历史中间方案不是最终成果，不得作为否定最终方案的依据。
+
+{{ project_evidence }}
+
+{{ code_evidence }}
+
+规范索引版本：{{ index_version }}
+
+只输出严格 JSON，字段如下：
+
+```json
+{
+  "assessment_status": "completed | completed_with_limitations | incomplete | manual_review_required",
+  "overall_conclusion": "",
+  "stage_findings": ["阶段结论字符串，可在正文中引用 [ARTIFACT-...] 或 [EVID_...]"],
+  "limitations": ["限制说明字符串"],
+  "recommended_actions": ["建议字符串"],
+  "cited_artifact_ids": ["ARTIFACT-001"],
+  "cited_code_evidence_ids": ["EVID_..."]
+}
+```
+
+`stage_findings`、`limitations`、`recommended_actions` 的每个数组元素必须是字符串，不得输出嵌套对象。
+项目事实须在正文中使用 `[ARTIFACT-...]` 引用；规范性判断须使用 `[EVID_...]` 引用。不得评价证据中没有提供的计算项目。
