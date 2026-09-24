@@ -476,6 +476,7 @@ BridgeDesign_Agent/
 | `dependencies.py` | 成果依赖、有效性与返工传播 |
 | `checkpointing.py` | Graph V2 SQLite checkpoint |
 | `batch_execution.py` | 有界并发、失败收集和稳定结果合并 |
+| `utils.py` | LLM 客户端封装（`build_llm` / `get_*_llm`）、结构化输出解析、桩号解析等通用工具 |
 | `prompt_registry.py`、`prompt_audit.py` | Prompt 注册、渲染和审计 |
 | `skill_registry.py` | 专业能力说明和 SKILL 注册 |
 | `code_rag/` | 规范四库索引、检索和评测 |
@@ -513,9 +514,7 @@ tools/plot_structural_results.py                  结构结果可视化辅助脚
 `scripts/` 中的文件不是杂项，它们被主体工具复用：
 
 ```text
-scripts/llm_client.py       LLM 调用封装
-scripts/selector.py         few-shot 相似样例选择
-scripts/prompt_builder.py   历史兼容的 Prompt 构造辅助
+scripts/selector.py         few-shot 相似样例选择（被 tools/sample_selector_tool.py 复用）
 ```
 
 ## 8. 输入配置
