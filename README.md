@@ -8,7 +8,7 @@
   <img src="assets/gui/screenshots/01-overview.png" alt="Bridge AI Studio 现代工作台 · 工程总览" width="100%">
 </p>
 
-配套可视化操作界面 `run_graph_v2_gui_modern.py`（PySide6）：工程总览、任务启动、人工复核、成果目录、设计问答与运行信息六页工作台，见 [§11 运行方式](#11-运行方式)。
+配套桥梁设计工作台 `run_bridge_design_workbench.py`（PySide6）：工程总览、任务启动、人工复核、成果中心、成果问答、运行记录六个功能模块，见 [§11 运行方式](#11-运行方式)。
 
 当前推荐运行目标架构：
 
@@ -84,6 +84,10 @@ AgentState reducer + AgentContract + ArtifactRecord
   -> final_output 确定性生成按设计组复用的配筋绘图成果包
   -> DesignReviewAgent 整体评估与后续专业问答（独立只读链）
 ```
+
+上图对应的显式协调图运行流程：
+
+![Graph V2 运行流程](assets/diagrams/graph-v2-flow.png)
 
 调度校验检查阶段注册、前置成果、成果有效性、返修目标、轮次上限、人工复核状态和无依据阶段回跳。每个阶段结束后，协调器读取最新 `StageHandoff` 再决策，专业 Agent 不直接控制顶层路由。
 
@@ -739,47 +743,79 @@ Windows 用户可以通过独立桌面窗口完成任务配置、Graph V2 启动
 
 `run_graph_v2_gui_modern.py` 是推荐的现代桌面入口。它复用 `GraphV2Controller` 和统一成果目录服务，提供工程总览、任务输入与启动、安全终止、断点恢复、人工复核、成果预览、整体评估和多轮专业问答。旧 Tkinter 控制台继续保留，用于兼容和对照。
 
+#### 桥梁设计工作台（Figma v1 对应入口）
+
+`run_bridge_design_workbench.py` 将 Figma 工作台原型 v1 的六个使用者模块落实为桌面界面：工程总览、任务启动、人工复核、成果中心、成果问答、运行记录。人工复核另有风险确认、证据缺失和继续返修三个流程状态。界面沿用现有 Graph V2 控制器、成果目录和问答服务；真实模式只展示当前输出目录可核实的验算与人工决策数据。
+
+```powershell
+python run_bridge_design_workbench.py --output-dir output
+```
+
+启动页默认为任务启动。已有输出目录可用 `--page overview`、`--page results` 或 `--page log` 直接打开对应模块。风险接受入口需要完整承载力验算摘要和两项人工确认；计算完成数量与工程验算结论分开展示。`--screenshot <PNG路径>` 可导出当前页面截图。
+
+#### 功能结构
+
+工作台不按页面堆叠，而按工程判断的组织方式划分六个功能模块，每个节点对应一项可执行能力：
+
+![工作台功能结构图](assets/diagrams/workbench-functions.png)
+
 #### 可视化操作界面演示
 
-控制台按工程视角组织工作流，覆盖从任务输入、阶段推进、人工干预到成果交付与设计问答的完整闭环。以下演示由 `run_graph_v2_gui_modern.py` 逐页导出。
+六个模块的界面与人工复核闭环如下。演示取自一次真实运行成果；项目名与桩号已替换为通用值，“人工复核”一页的复核中断为演示态构造。
 
 **① 工程总览 · Project Overview**
 
-五阶段设计链路一屏总览：初始设计 → 布跨修正 → 结构设计 → 建模验算 → 成果交付的实时完成度、当前活跃智能体、待人工判断数量，以及最近的动作事件流。
+五阶段设计链路的完成度、工程验算状态、当前控制问题与最近阶段动作。
 
 ![工程总览](assets/gui/screenshots/01-overview.png)
 
-**② 任务启动 · New Design Run**
+**② 任务启动 · Start a Run**
 
-面向工程师的极简输入面：只需填写任务描述与原始资料路径，中间成果全部由输出目录自动发现与复用，不必在多级配置之间来回切换。
+填写原始输入、启动前校验、授权模型外发，并可直接安全终止运行中的任务。
 
 ![任务启动](assets/gui/screenshots/02-task.png)
 
-**③ 人工复核中心 · Human in the Loop**
+**③ 人工复核 · Human in the Loop**
 
-自动重试耗尽后由系统主动停驻，把失败对象、运行上下文和候选处置动作一并交给工程师，支持定向重试、带风险接受或终止任务。
+呈现复核原因、轮次与返修方向，并把控制指标与判断依据逐项列出；右侧只显示当前复核节点允许的动作。
 
-![人工复核中心](assets/gui/screenshots/03-review.png)
+![人工复核](assets/gui/screenshots/03-review.png)
 
-**④ 成果目录 · Deliverables**
+**④ 决策确认 · Decision Checkpoint**
 
-按五个工程阶段汇集全部成果，图件在控制台内直接预览并支持缩放平移，数据类成果附带来源路径与诊断摘要，无需切换到资源管理器。
+接受风险前必须核对未通过结论与控制对象，并完成两项人工确认，未通过项仍保留在交付成果中。
 
-![成果目录](assets/gui/screenshots/04-results.png)
+![决策确认](assets/gui/screenshots/04-confirm.png)
 
-**⑤ 成果问答 · Design Review**
+**⑤ 证据阻断 · Blocked Action**
 
-基于工程成果与规范条文证据的多轮专业问答，每条回答显式标注所引用的成果编号与规范公式编号，结论可追溯、可核验。
+承载力证据不完整时，接受风险的动作被直接阻断，只保留继续返修与返回复核。
 
-![成果问答](assets/gui/screenshots/05-qa.png)
+![证据阻断](assets/gui/screenshots/05-missing.png)
 
-**⑥ 运行信息 · Run Information**
+**⑥ 继续返修 · Resume the Design**
 
-当前任务的公开运行摘要；论文展示模式下自动隐去本地敏感路径。
+提交继续返修后展示决策记录、返回阶段、追加轮次与后续路径。
 
-![运行信息](assets/gui/screenshots/06-info.png)
+![继续返修](assets/gui/screenshots/06-rework.png)
 
-> 演示界面使用控制台内置的样例数据（界面左下角已标注）；「成果目录」一页取自一次真实运行，预览内容为系统确定性计算生成的承载力验算成果。
+**⑦ 成果中心 · Deliverables**
+
+按阶段汇集工程成果，图件在窗口内直接预览，并给出交付风险状态。
+
+![成果中心](assets/gui/screenshots/07-results.png)
+
+**⑧ 成果问答 · Design Review**
+
+基于工程成果与规范条文证据的多轮专业问答，每条回答显式标注所引用的成果编号与规范公式编号。
+
+![成果问答](assets/gui/screenshots/08-qa.png)
+
+**⑨ 运行记录 · Run Trace**
+
+汇总本次运行身份、阶段动作与人工复核决定，可一键跳转到成果与风险。
+
+![运行记录](assets/gui/screenshots/09-log.png)
 
 
 读取真实运行成果：
