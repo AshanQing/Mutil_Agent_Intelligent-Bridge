@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import tempfile
+import re
 from pathlib import Path
 
 from PySide6.QtCore import QPointF, Qt, Signal
@@ -28,6 +29,23 @@ _MAX_SCALE = 32.0
 _SVG_RENDER_LONG_EDGE = 4096
 _SVG_MAX_SCALE = 8.0  # 对小尺寸 SVG 的超采样上限（避免渲染超大位图）
 _BG_COLOR = "#F5F8FA"
+
+
+def _svg_page_color(path: str) -> QColor:
+    """读取 SVG 明确声明的整页底色，兼容 QtSvg 对百分比矩形的渲染差异。"""
+    try:
+        with Path(path).open("rb") as source:
+            head = source.read(4096).decode("utf-8", errors="ignore")
+    except OSError:
+        return QColor(Qt.GlobalColor.white)
+    match = re.search(r"<rect\b[^>]*>", head, flags=re.IGNORECASE)
+    if not match:
+        return QColor(Qt.GlobalColor.white)
+    attrs = dict(re.findall(r"\b(width|height|fill)\s*=\s*['\"]([^'\"]+)['\"]", match.group(), flags=re.IGNORECASE))
+    if attrs.get("width") != "100%" or attrs.get("height") != "100%":
+        return QColor(Qt.GlobalColor.white)
+    color = QColor(attrs.get("fill", ""))
+    return color if color.isValid() else QColor(Qt.GlobalColor.white)
 
 
 class PanZoomImageView(QGraphicsView):
@@ -195,6 +213,12 @@ class PanZoomImageView(QGraphicsView):
     @staticmethod
     def _render_svg(path: str) -> QPixmap:
         """用 QSvgRenderer 以高分辨率渲染受控 SVG；失败时回退项目自研渲染器。"""
+        # 配筋详图包含中文标注；QtSvg 在部分 Windows 环境会把这些字绘成方框。
+        # 项目自带渲染器按绘图 SVG 的受控元素集绘制，且已提供中文字体回退。
+        if Path(path).name.lower().endswith("_reinforcement_detail.svg"):
+            preview = PanZoomImageView._render_svg_with_pillow(path)
+            if not preview.isNull():
+                return preview
         try:
             from PySide6.QtSvg import QSvgRenderer
         except ImportError:
@@ -212,7 +236,7 @@ class PanZoomImageView(QGraphicsView):
         image = QImage(
             int(width * scale), int(height * scale), QImage.Format.Format_ARGB32
         )
-        image.fill(Qt.GlobalColor.white)
+        image.fill(_svg_page_color(path))
         painter = QPainter(image)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
