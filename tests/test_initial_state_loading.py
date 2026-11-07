@@ -192,7 +192,7 @@ def test_initial_state_prefers_capacity_batch_summary(tmp_path: Path) -> None:
     }
 
 
-def test_run_agent_extracts_station_range_before_graph_v2(monkeypatch, tmp_path: Path) -> None:
+def test_run_agent_leaves_station_selection_to_graph_v2(monkeypatch, tmp_path: Path) -> None:
     import bridge_agents.agent as agent_module
     import bridge_agents.checkpointing as checkpointing_module
     import bridge_agents.graph_v2 as graph_v2_module
@@ -231,8 +231,9 @@ def test_run_agent_extracts_station_range_before_graph_v2(monkeypatch, tmp_path:
         thread_id="station-test-thread",
     )
 
-    assert captured["start_station"] == "K1+451"
-    assert captured["end_station"] == "K3+500"
+    assert "K1+451-K3+500" in captured["user_request"]
+    assert captured["start_station"] is None
+    assert captured["end_station"] is None
     invoke_config = captured["invoke_config"]
     assert invoke_config["configurable"] == {"thread_id": "station-test-thread"}
     # graph-v2 必须显式给出单次 invoke 的超级步上限（调度死循环的最后一道保险）。

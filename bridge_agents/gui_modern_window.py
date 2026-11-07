@@ -848,7 +848,13 @@ class ModernBridgeWindow(QMainWindow):
         """
         if self._route_range_override:
             return self._route_range_override
-        return route_range_from_request(self._current_user_request())
+        request = self._current_user_request()
+        if self.current_result.get("user_request") == request:
+            start = self.current_result.get("start_station")
+            end = self.current_result.get("end_station")
+            if start and end:
+                return f"{start} — {end}"
+        return route_range_from_request(request)
 
     def _update_model_from_result(self, result: dict[str, Any]) -> None:
         stage_by_agent = {

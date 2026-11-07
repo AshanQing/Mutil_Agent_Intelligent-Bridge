@@ -5,6 +5,7 @@ import logging
 import os
 import re
 import inspect
+from decimal import Decimal
 from typing import Any, Dict, Optional
 
 import yaml
@@ -269,6 +270,68 @@ def regex_extract_stations(text: str) -> Dict[str, Optional[str]]:
         "start_station": cleaned[0] if len(cleaned) >= 1 else None,
         "end_station": cleaned[1] if len(cleaned) >= 2 else None,
     }
+
+
+_STATION_LITERAL = r"[A-Z]*[+-]?\d{1,12}\s*[_+]\s*\d{1,3}(?:\.\d{1,9})?"
+_DISTANCE_NUMBER = r"[+-]?\d{1,12}(?:\.\d{1,9})?"
+_DISTANCE_UNIT = r"公里|千米|km|米|m"
+_RANGE_SEPARATOR = r"\s*(?:至|到|[-—–~～_]|[,，]\s*终点\s*(?:为|是|[:：])?)\s*"
+_RANGE_BOUNDARY = r"[A-Za-z0-9_.+]"
+
+
+def resolve_design_range(request: str, excerpt: Optional[str]) -> tuple[str, str] | None:
+    """核对模型摘录并解析区间。未提供该字段时仅对唯一的显式桩号区间兜底。"""
+    if excerpt is None and len(re.findall(_STATION_LITERAL, request, re.IGNORECASE)) != 2:
+        return None
+    distance = rf"{_DISTANCE_NUMBER}(?:\s*(?:{_DISTANCE_UNIT}))?"
+    endpoint = _STATION_LITERAL if excerpt is None else rf"(?:{_STATION_LITERAL}|{distance})"
+    pattern = rf"(?<!{_RANGE_BOUNDARY})({endpoint}){_RANGE_SEPARATOR}({endpoint})(?!{_RANGE_BOUNDARY})"
+    candidates = [
+        match.groups()
+        for match in re.finditer(pattern, request, re.IGNORECASE)
+        if excerpt is None or match.group() == excerpt.strip()
+    ]
+    if len(candidates) != 1:
+        return None
+
+    endpoints = []
+    prefixes = set()
+    shared_scale = None
+    for literal in candidates[0]:
+        station = re.fullmatch(r"([A-Z]*)([+-]?)(\d+)\s*[_+]\s*(\d+(?:\.\d+)?)", literal.upper())
+        if station:
+            prefix, sign, km, offset = station.groups()
+            if prefix:
+                prefixes.add(prefix)
+            value = Decimal(km) * 1000 + Decimal(offset)
+            endpoints.append((-value if sign == "-" else value, 1))
+        else:
+            number, unit = re.fullmatch(rf"({_DISTANCE_NUMBER})(?:\s*({_DISTANCE_UNIT}))?", literal.lower()).groups()
+            scale = None
+            if unit:
+                scale = 1000 if unit in {"公里", "千米", "km"} else 1
+                shared_scale = scale
+            endpoints.append((Decimal(number), scale))
+
+    # 例如“12.2 至 13.05 公里”共用一个单位。桩号形式不为裸数字提供单位。
+    meters = []
+    for value, scale in endpoints:
+        scale = scale or shared_scale
+        if scale is None:
+            return None
+        meters.append(value * scale)
+
+    if len(prefixes) > 1 or meters[0] >= meters[1]:
+        return None
+
+    stations = []
+    for value in meters:
+        km, offset = divmod(abs(value), Decimal(1000))
+        whole, _, fraction = format(offset.normalize(), "f").partition(".")
+        sign = "-" if value < 0 else ""
+        suffix = f".{fraction}" if fraction else ""
+        stations.append(f"K{sign}{km}+{whole.zfill(3)}{suffix}")
+    return stations[0], stations[1]
 
 
 def metric_float(metrics: Dict[str, Any], key: str, default: float = 0.0) -> float:

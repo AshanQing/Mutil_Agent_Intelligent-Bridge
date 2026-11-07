@@ -1112,11 +1112,16 @@ def run_agent(
 
     if resume is None:
         state["user_request"] = user_request
-        station_params = regex_extract_stations(user_request)
-        if not state.get("start_station") and station_params.get("start_station"):
-            state["start_station"] = station_params["start_station"]
-        if not state.get("end_station") and station_params.get("end_station"):
-            state["end_station"] = station_params["end_station"]
+        if use_graph_v2:
+            # 新请求覆盖同一线程中可能残留的范围，显式传入的工程状态优先。
+            state.setdefault("start_station", None)
+            state.setdefault("end_station", None)
+        else:
+            station_params = regex_extract_stations(user_request)
+            if not state.get("start_station") and station_params.get("start_station"):
+                state["start_station"] = station_params["start_station"]
+            if not state.get("end_station") and station_params.get("end_station"):
+                state["end_station"] = station_params["end_station"]
 
     if use_graph_v2:
         from .checkpointing import open_sqlite_checkpointer

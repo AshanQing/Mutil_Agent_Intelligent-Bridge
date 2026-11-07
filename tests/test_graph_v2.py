@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import json
 
+import pytest
 from langgraph.checkpoint.memory import InMemorySaver
 
 from bridge_agents.contracts import StageName
 from bridge_agents.graph_v2 import (
     STAGE_AGENT_NAME,
     build_graph_v2,
+    build_human_review_request,
+    make_coordinator_node,
     route_after_coordinator,
 )
 
@@ -75,6 +78,64 @@ def test_route_after_coordinator_to_stage() -> None:
         }
     }
     assert route_after_coordinator(state) == StageName.INITIAL_DESIGN.value
+
+
+def test_model_selects_design_range_and_passes_it_to_initial_design() -> None:
+    initial = StageName.INITIAL_DESIGN.value
+    runners = _fake_runners()
+    seen = []
+
+    def run_initial(state):
+        seen.append((state.get("start_station"), state.get("end_station")))
+        return runners[initial](state)
+
+    first = json.loads(_decision(next_stage=initial))
+    first["design_range"] = "12.2 到 13.05 公里"
+    llm = SequenceLLM([
+        json.dumps(first, ensure_ascii=False),
+        _decision(next_stage=StageName.LAYOUT_REVISION.value),
+        _decision(next_stage=StageName.STRUCTURAL_DESIGN.value),
+        _decision(next_stage=StageName.MODELING_CHECK.value),
+    ])
+    graph = build_graph_v2(llm_invoke=llm, stage_runners={**runners, initial: run_initial})
+
+    result = graph.invoke({
+        "data_path": "route",
+        "user_request": "避开 K12+800 障碍，对 12.2 到 13.05 公里做全流程设计",
+    })
+
+    assert seen == [("K12+200", "K13+050")]
+    assert result["task_status"] == "completed"
+    assert llm.calls == 4
+
+
+@pytest.mark.parametrize(("request_text", "excerpt"), [
+    ("在 K12+200 至 K13+050 或 K14+000 至 K15+000 选一段布跨", None),
+    ("对 K12+200 至 K13+050 布跨", "K12+200 至 K13+500"),
+    ("对 K13+050 至 K12+200 布跨", "K13+050 至 K12+200"),
+    ("对 112.2 公里至 113 公里布跨", "12.2 公里至 113 公里"),
+])
+def test_unresolved_model_range_routes_to_review(request_text, excerpt) -> None:
+    raw = json.loads(_decision(intent="layout_design", next_stage=StageName.INITIAL_DESIGN.value))
+    raw["design_range"] = excerpt
+    node = make_coordinator_node(SequenceLLM([json.dumps(raw, ensure_ascii=False)]))
+
+    update = node({"data_path": "route", "user_request": request_text})
+
+    assert route_after_coordinator(update) == StageName.MANUAL_REVIEW.value
+    assert "设计区间" in build_human_review_request(update)["message"]
+    assert not update.get("start_station") and not update.get("end_station")
+
+
+def test_standard_range_still_works_when_model_is_unavailable() -> None:
+    def unavailable(*args):
+        raise RuntimeError("offline")
+
+    node = make_coordinator_node(unavailable)
+    update = node({"data_path": "route", "user_request": "请对 K12_200-K13_050 进行布跨"})
+
+    assert route_after_coordinator(update) == StageName.INITIAL_DESIGN.value
+    assert (update["start_station"], update["end_station"]) == ("K12+200", "K13+050")
 
 
 def test_route_after_coordinator_to_final() -> None:

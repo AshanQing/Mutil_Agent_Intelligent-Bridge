@@ -207,6 +207,24 @@ def test_route_range_tracks_edits_to_the_task_description(app, tmp_path) -> None
     assert window.model.route_range == "K1+600 — K3+100"
 
 
+def test_route_range_uses_confirmed_engineering_stations(app, tmp_path) -> None:
+    request = "对 12.2 到 13.05 公里做布跨"
+    window = ModernBridgeWindow(
+        build_dashboard_model({}),
+        controller=FakeController(),
+        initial_form=_form_with_range(tmp_path, request),
+        operation_dispatcher=sync_dispatch,
+    )
+
+    window._handle_run_result({
+        "user_request": request,
+        "start_station": "K12+200",
+        "end_station": "K13+050",
+    })
+
+    assert window.top_route_range.text() == "K12+200 — K13+050"
+
+
 def test_explicit_route_range_wins_over_the_request(app, tmp_path) -> None:
     """--route-range 是显式指定，不能被任务描述里的桩号顶掉。"""
     window = ModernBridgeWindow(

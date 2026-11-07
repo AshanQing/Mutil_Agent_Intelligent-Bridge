@@ -23,6 +23,8 @@ class CoordinatorDecision:
     revision_target: Optional[str] = None
     required_artifacts: List[str] = field(default_factory=list)
     task_complete: bool = False
+    # None 兼容旧响应或规则决策；空串表示模型明确未能提供可核验的区间。
+    design_range: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return {

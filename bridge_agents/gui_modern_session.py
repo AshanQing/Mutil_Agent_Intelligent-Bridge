@@ -137,17 +137,8 @@ def find_latest_snapshot(output_dir: str | Path, thread_id: str = "") -> Path | 
 
 
 def route_range_from_request(user_request: str) -> str:
-    """从任务描述里取起终点桩号，拼成顶栏要显示的一行；取不到返回空串。
+    """模型结果返回前，仅预览任务描述中的唯一显式桩号区间。"""
+    from bridge_agents.utils import resolve_design_range
 
-    刻意复用运行时解析桩号用的同一个函数（`agent.py` 启动时也是拿
-    `regex_extract_stations` 从任务描述里取范围），这样界面显示的就是本次真正
-    要设计的范围，而不是另算一套口径。缺失时返回空串，由展示层写成占位文案。
-    """
-    from bridge_agents.utils import regex_extract_stations
-
-    stations = regex_extract_stations(user_request)
-    start = str(stations.get("start_station") or "").strip()
-    end = str(stations.get("end_station") or "").strip()
-    if not start or not end:
-        return ""
-    return f"{start} — {end}"
+    stations = resolve_design_range(user_request, None)
+    return " — ".join(stations) if stations else ""

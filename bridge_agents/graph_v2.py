@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+from dataclasses import replace
 from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from uuid import uuid4
@@ -15,6 +16,7 @@ from .design_coordinator import DesignCoordinatorAgent, LLMInvoke
 from .handoff import build_handoff
 from .human_review_store import persist_human_review_decision
 from .state import AgentState
+from .utils import resolve_design_range
 
 
 # 顶层图单次 invoke 的超级步上限（最后一次保险）。
@@ -210,8 +212,27 @@ def make_coordinator_node(llm_invoke: LLMInvoke):
                 },
                 "active_agent": "DesignCoordinatorAgent",
             }
-        decision = coordinator.decide(dict(state), state.get("user_request") or "")
+        request = state.get("user_request") or ""
+        decision = coordinator.decide(dict(state), request)
+        stations = {}
+        if decision.next_stage == StageName.INITIAL_DESIGN.value and not (
+            state.get("start_station") and state.get("end_station")
+        ):
+            interval = resolve_design_range(request, decision.design_range)
+            if interval:
+                stations = {"start_station": interval[0], "end_station": interval[1]}
+            elif state.get("data_path") and not state.get("design_input"):
+                decision = replace(
+                    decision,
+                    next_stage=StageName.MANUAL_REVIEW.value,
+                    stage_objective="确认设计区间",
+                    reason="无法从任务描述确认唯一、有效的设计区间。请明确写出目标区间的起点、终点和单位后重新启动任务。",
+                    revision_target=None,
+                    required_artifacts=[],
+                    task_complete=False,
+                )
         return {
+            **stations,
             "coordinator_decision": decision.to_dict(),
             "active_agent": "DesignCoordinatorAgent",
         }
@@ -575,7 +596,11 @@ def build_human_review_request(state: Dict[str, Any]) -> Dict[str, Any]:
     else:
         review_type = "coordinator_review"
         available_actions = ["retry_coordinator", "abort"]
-        message = str(latest_handoff.get("message") or "协调器需要人工确认后续操作。")
+        message = str(
+            latest_handoff.get("message")
+            or (state.get("coordinator_decision") or {}).get("reason")
+            or "协调器需要人工确认后续操作。"
+        )
         current_round = int(state.get("iteration_index") or 0)
         max_rounds = int(state.get("max_revision_rounds") or 3)
 

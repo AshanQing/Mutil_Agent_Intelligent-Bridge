@@ -174,6 +174,7 @@ def _parse_decision(raw: str) -> Optional[CoordinatorDecision]:
         return None
     if not isinstance(obj, dict):
         return None
+    design_range = obj.get("design_range")
     return CoordinatorDecision(
         intent=str(obj.get("intent") or "unknown"),
         next_stage=obj.get("next_stage"),
@@ -182,6 +183,7 @@ def _parse_decision(raw: str) -> Optional[CoordinatorDecision]:
         revision_target=obj.get("revision_target"),
         required_artifacts=list(obj.get("required_artifacts") or []),
         task_complete=bool(obj.get("task_complete")),
+        design_range=(design_range if isinstance(design_range, str) else "") if "design_range" in obj else None,
     )
 
 
@@ -293,7 +295,10 @@ class DesignCoordinatorAgent:
             "字段约束": {
                 "intent": "任务意图枚举；不得填入 next_stage",
                 "next_stage": "只能从允许的 next_stage 选择；task_complete=true 时填 null",
+                "design_range": "仅当进入初步设计且当前区间未确定时，逐字摘录用户原文的设计起点、连接词和终点。"
+                "保留原单位和分隔符，区分设计区间与障碍或参考桩号。区间不唯一、缺少端点或无需提取时填 null。",
             },
+            "当前设计区间已确定": bool(state.get("start_station") and state.get("end_station")),
             "上次确定性校验错误": list(validation_errors or []),
             "当前成果状态摘要": {
                 "layout_result_available": bool(state.get("layout_result") or state.get("existing_layout_result")),
@@ -309,7 +314,7 @@ class DesignCoordinatorAgent:
             "最新交接": state.get("latest_handoff"),
             "输出格式": (
                 "严格 JSON：{intent, next_stage, stage_objective, reason, "
-                "revision_target, required_artifacts, task_complete}"
+                "revision_target, required_artifacts, task_complete, design_range}"
             ),
         }
         system_text = self.skill_text or "你是桥梁设计总体协调智能体。"
