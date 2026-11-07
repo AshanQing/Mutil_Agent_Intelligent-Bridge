@@ -8,23 +8,24 @@
   <img src="assets/gui/screenshots/01-overview.png" alt="Bridge AI Studio 现代工作台 · 工程总览" width="100%">
 </p>
 
-配套桥梁设计工作台 `run_bridge_design_workbench.py`（PySide6）：工程总览、任务启动、人工复核、成果中心、成果问答、运行记录六个功能模块，见 [§11 运行方式](#11-运行方式)。
+## 启动工作台
 
-当前推荐运行目标架构：
+首次使用请先[安装项目依赖和下载分割权重](#10-技术栈与依赖)。使用默认的 DeepSeek 模型配置时，在仓库根目录按 `.env.example` 创建 `.env`，填写 `DEEPSEEK_API_KEY`。
+
+激活项目的 Python 环境，在仓库根目录运行以下命令。
 
 ```powershell
-$PYTHON = "python"
-& $PYTHON run_multi_agent.py --config config/settings.yaml --graph-v2 --interactive
+python run_bridge_design_workbench.py
 ```
 
-> `--graph-v2` 对应本文描述的目标方法架构。未传该参数时仍运行旧兼容图，供历史流程迁移和回归测试使用。
+窗口默认打开“任务启动”页。如何填写资料、启动设计及查看成果，见[工作台操作](#11-运行方式)。
 
 系统从任务启动到总体协调、四个专业子图、Action 执行、成果返修、人工复核和断点恢复的逐环节说明，见 [系统运行机制详解](docs/系统运行机制详解.md)。
 
 当前主体框架保持为：
 
 ```text
-run_multi_agent.py       命令行入口
+run_bridge_design_workbench.py   桥梁设计工作台
 bridge_agents/           LangGraph 编排、阶段 Agent、协调器、共享状态、Prompt/Skill Registry、RAG
 tools/                   工程工具脚本和 LangChain Tool 封装
 prompts/                 当前有效 Prompt 模板和 manifest
@@ -94,12 +95,12 @@ AgentState reducer + AgentContract + ArtifactRecord
 ### 1.3 两条顶层运行链路
 
 ```text
-目标显式协调图（--graph-v2）
+显式协调图（工作台）
 用户任务 -> DesignCoordinatorAgent -> 确定性调度校验 -> 专业 Agent
          -> StageHandoff -> DesignCoordinatorAgent 重新决策
          -> 下一阶段 / manual_review / final_output / error
 
-旧兼容图（当前 CLI 默认）
+历史兼容图
 用户任务 -> TaskAllocationAgent -> AgentExecutor -> 专业 Agent -> final_output
 ```
 
@@ -460,7 +461,7 @@ rendered_at
 
 ```text
 BridgeDesign_Agent/
-  run_multi_agent.py       命令行入口、交互复核和恢复入口
+  run_bridge_design_workbench.py   桌面任务启动、人工复核和成果查看
   bridge_agents/           多智能体状态、图、契约、协调和运行时
   tools/                   桥梁设计确定性工具与模型任务封装
   prompts/                 Prompt manifest、Agent/任务模板和复用片段
@@ -529,9 +530,9 @@ scripts/selector.py         few-shot 相似样例选择（被 tools/sample_selec
 
 ## 8. 输入配置
 
-普通用户主要修改 `config/settings.yaml`。
+在工作台的“任务启动”页填写任务描述、路线资料目录、输入图纸和输出目录。
 
-最小输入包括：
+`config/settings.yaml` 可以提供这些字段的默认值，并设置批处理、验算和知识检索参数。下面是配置示例。
 
 ```yaml
 task:
@@ -573,7 +574,7 @@ code_rag.enabled        是否在结构设计与最终问答中启用规范检�
 code_rag.retrieval_mode auto / keyword_only / vector_only / hybrid
 ```
 
-路线资料只需选择目录。每条线路的四份纬地资料应放在同一目录，并使用相同的文件名主体，例如 `主线.pm`、`主线.WID`、`主线.zdm`、`主线.dmx`。系统通过目录中的 `.pm` 或 `.PM` 文件识别线路，再按文件名配对其他资料。同一工程的左右线可各放一组，系统会走多线路加载。不同工程和备份资料请分目录存放。桌面表单无需填写线路前缀，旧命令行配置中的 `route_data.file_prefix` 可继续用于单线路。
+路线资料只需选择目录。每条线路的四份纬地资料应放在同一目录，并使用相同的文件名主体，例如 `主线.pm`、`主线.WID`、`主线.zdm`、`主线.dmx`。系统通过目录中的 `.pm` 或 `.PM` 文件识别线路，再按文件名配对其他资料。同一工程的左右线可各放一组，系统会走多线路加载。不同工程和备份资料请分目录存放。桌面表单无需填写线路前缀。
 
 不建议在普通配置中填写中间成果路径。以下内容由系统从 `output_dir` 自动发现：
 
@@ -591,8 +592,6 @@ opensees_force_json_path
 capacity_check_output_dir
 collision_output_dir
 ```
-
-保留 `--initial-state-json` 只是为了开发调试，普通用户不需要使用。
 
 ## 9. 输出结构
 
@@ -740,41 +739,28 @@ git lfs pull
      converter_path: C:/Program Files/ODA/ODAFileConverter 26.10.0/ODAFileConverter.exe
    ```
 
-3. 启动桌面工作台时用 `--base-config` 指向这份文件，例如 `python run_bridge_design_workbench.py --base-config config/settings.yaml`。命令行运行时使用 `--config config/settings.yaml`。选择 `.dwg` 后，转换生成的 DXF 默认写入 `<output_dir>/dxf/`，后续裁剪读取这个文件。
+3. 在工作台的“任务启动”页选择 `.dwg` 图纸。转换生成的 DXF 默认写入 `<output_dir>/dxf/`，供后续裁剪使用。
 
 ## 11. 运行方式
 
-### Graph V2 桌面控制台
+### 工作台操作
 
-Windows 用户可以通过独立桌面窗口完成任务配置、Graph V2 启动、阶段状态查看、人工复核恢复和设计后问答：
+桥梁设计工作台使用 Graph V2，提供工程总览、任务启动、人工复核、成果中心、成果问答和运行记录。
 
-```powershell
-& 'python' run_graph_v2_gui.py
-```
+1. 按[启动工作台](#启动工作台)打开窗口。在“任务启动”页填写任务描述，选择纬地资料目录、DXF 或 DWG 图纸和输出目录。系统会自动识别线路。
+2. 默认使用 `config/settings.yaml`。需要换配置时，点击“选择基础运行配置”。使用 DWG 时，先完成 [ODA File Converter 配置](#dwg-转-dxf-所需的外部程序)。
+3. 使用外部模型时，在当前会话勾选外发授权，然后点击“启动设计任务”。在“工程总览”和“运行记录”查看进度，流程暂停时进入“人工复核”处理。
+4. 在“成果中心”查看图纸、验算报告和交付文件，也可在“成果问答”中查询。打开既有工程时，可为同一工作台指定 `--output-dir` 指向该工程的输出目录。
 
-窗口固定使用 Graph V2。用户填写任务描述、路线资料目录、输入图纸、输出目录和修正轮次，线路由系统自动识别，中间成果由 `output_dir` 自动发现。最近一次填写的表单字段会自动保存到 `output/.graph_v2_gui_state.json`，下次启动自动恢复。也可通过“基础配置-选择”载入 `config/settings.yaml`。每次启动会保存独立配置快照。
+任务配置快照保存在 `<output_dir>/run_configs/`，运行断点保存在 `<output_dir>/checkpoints/graph_v2.sqlite`。
 
-#### 现代 Graph V2 工作台（PySide6）
+### 功能结构
 
-`run_graph_v2_gui_modern.py` 是推荐的现代桌面入口。它复用 `GraphV2Controller` 和统一成果目录服务，提供工程总览、任务输入与启动、安全终止、断点恢复、人工复核、成果预览、整体评估和多轮专业问答。旧 Tkinter 控制台继续保留，用于兼容和对照。
-
-#### 桥梁设计工作台（Figma v1 对应入口）
-
-`run_bridge_design_workbench.py` 将 Figma 工作台原型 v1 的六个使用者模块落实为桌面界面：工程总览、任务启动、人工复核、成果中心、成果问答、运行记录。人工复核另有风险确认、证据缺失和继续返修三个流程状态。界面沿用现有 Graph V2 控制器、成果目录和问答服务；真实模式只展示当前输出目录可核实的验算与人工决策数据。
-
-```powershell
-python run_bridge_design_workbench.py --output-dir output
-```
-
-启动页默认为任务启动。已有输出目录可用 `--page overview`、`--page results` 或 `--page log` 直接打开对应模块。风险接受入口需要完整承载力验算摘要和两项人工确认；计算完成数量与工程验算结论分开展示。`--screenshot <PNG路径>` 可导出当前页面截图。
-
-#### 功能结构
-
-工作台不按页面堆叠，而按工程判断的组织方式划分六个功能模块，每个节点对应一项可执行能力：
+工作台分为六个功能模块，每个节点对应一项可执行能力。
 
 ![工作台功能结构图](assets/diagrams/workbench-functions.png)
 
-#### 可视化操作界面演示
+### 可视化操作界面演示
 
 六个模块的界面与人工复核闭环如下。演示取自一次真实运行成果；项目名与桩号已替换为通用值，“人工复核”一页的复核中断为演示态构造。
 
@@ -832,124 +818,6 @@ python run_bridge_design_workbench.py --output-dir output
 
 ![运行记录](assets/gui/screenshots/09-log.png)
 
-
-读取真实运行成果：
-
-```powershell
-.\.venv\python.exe run_graph_v2_gui_modern.py `
-  --output-dir output\示例项目9.8 `
-  --project-name "示例项目 9.8" `
-  --route-range "K1+600 — K3+100" `
-  --paper
-```
-
-任务输入页提供任务描述、路线资料目录、输入图纸、输出目录和修正轮数。线路由系统从目录识别，运行 ID 自动生成。最近一次表单会保存到 `output/.graph_v2_gui_modern_state.json`，外发授权、运行 ID 和密钥不会持久化。Graph V2、人工恢复、整体评估和问答均在后台线程执行。
-
-生成固定 1440×900 的论文截图并自动退出：
-
-```powershell
-.\.venv\python.exe run_graph_v2_gui_modern.py `
-  --output-dir output\示例项目9.8 `
-  --project-name "示例项目 9.8" `
-  --route-range "K1+600 — K3+100" `
-  --paper `
-  --page overview `
-  --screenshot output\示例项目9.8\gui_overview.png
-```
-
-`--page` 支持 `overview`、`task`、`review`、`results`、`qa` 和 `info`，可直接导出指定页面。`--demo` 会使用明确标注为“演示数据”的样例，不会与真实成果混淆。若发现最终成果已经存在、建模验算仍未完成，工作台会将该依赖冲突提升为人工判断告警。
-
-成果问答携带最近 12 轮对话（24 条消息），回答会显示成果与规范证据编号；整体评估独立展示，不进入后续对话上下文。调用任务、评估或问答前必须在当前会话勾选外发授权。
-
-“绘图成果”页读取 `drawing_index.json`，按设计组展示桥墩总体布置图、盖梁配筋详图和墩柱配筋详图，可直接打开 SVG 预览、AutoCAD SCR 或绘图目录。旧版单文件 `scr_path/svg_path` 与新版分页 `scr_paths/svg_paths` 均可在断点恢复时识别。
-
-“成果中心”页按 初步设计 / 布跨修正 / 结构设计 / 建模验算 / 最终交付 五个阶段汇集全部工程成果：PNG/JPG 图件在窗口内直接预览（Pillow 解码与缩放，JPEG 与高 DPI 可用）；最终交付的 SVG 图纸（受控元素集：rect/line/polyline/circle/text）由轻量渲染器 `bridge_agents/svg_preview.py` 自动转 PNG 后窗口内显示，无需外部看图程序；其余数据成果在右侧信息面板展示来源路径与诊断摘要，并支持外部打开或进入所在目录。“生成目录视图”调用确定性可视化器（`bridge_agents/initial_visualizer.py`），把布跨方案叠加到地形栅格生成平面示意图，并按墩位与墩高生成纵断面示意图；初始方案（最新 `design_run` 布跨结果）与最终修正方案（`final_layout_result.json`）分别输出到 `<output_dir>/catalog_views/initial/` 与 `<output_dir>/catalog_views/final/`，互不覆盖。地形栅格与布跨坐标基准不一致时不强行叠加，界面会提示原因。成果树由共享目录服务 `bridge_agents/result_catalog.py` 提供，供窗口与 `DesignReviewAgent` 复用。运行中“运行记录”页每 2 秒增量回放 `<output_dir>/logs/agent_run_log.json` 的动作级事件（阶段规划/动作开始/完成/失败），实时反映当前运行位置。
-
-“成果问答”页以多轮对话形式运行：提问与回答按轮次气泡展示（Enter 发送、Shift+Enter 换行）。发送时自动携带最近对话作为上下文（上限 10 轮、单条截断），工程证据与规范条文的检索仍以本轮问题为准；整体评估结果会追加为一条回答，但不计入后续问答上下文，避免撑爆窗口。每轮问答与证据引用照常落盘到 `<output_dir>/design_review/answer_*.md`。
-
-```text
-<output_dir>/run_configs/<thread_id>.yaml
-```
-
-Graph checkpoint 仍保存在：
-
-```text
-<output_dir>/checkpoints/graph_v2.sqlite
-```
-
-设计运行和专业问答会调用配置中的外部模型。窗口要求用户先勾选外发授权，API Key 只从既有配置引用或环境变量读取，不写入运行配置快照。环境冒烟检查不会打开窗口：
-
-```powershell
-& 'python' run_graph_v2_gui.py --check
-```
-
-### 命令行运行
-
-从配置文件读取任务：
-
-```powershell
-python run_multi_agent.py --config config/settings.yaml
-```
-
-启用显式协调图：
-
-```powershell
-python run_multi_agent.py --config config/settings.yaml --graph-v2
-```
-
-推荐的交互式完整运行方式：
-
-```powershell
-python run_multi_agent.py `
-  --config config/settings.yaml `
-  --graph-v2 `
-  --interactive `
-  --thread-id case-001
-```
-
-恢复已暂停的 Graph V2 线程：
-
-```powershell
-python run_multi_agent.py `
-  --config config/settings.yaml `
-  --resume case-001 `
-  --decision retry_failed_tasks
-```
-
-直接传入自然语言任务：
-
-```powershell
-python run_multi_agent.py "请对K1_000-K2_600进行全流程设计任务" --config config/settings.yaml
-```
-
-开发调试时额外注入初始状态：
-
-```powershell
-python run_multi_agent.py "请基于当前已有成果继续完成验算" --config config/settings.yaml --initial-state-json path/to/state.json
-```
-
-查看命令行帮助：
-
-```powershell
-python run_multi_agent.py --help
-```
-
-设计完成后生成整体评估：
-
-```powershell
-python run_design_review.py `
-  --config config/settings.yaml `
-  --assess
-```
-
-针对已有成果提出后续专业问题：
-
-```powershell
-python run_design_review.py `
-  --config config/settings.yaml `
-  --question "当前盖梁最大利用率是多少，抗剪依据是什么？"
-```
-
 ### 规范 RAG 知识服务
 
 独立的规范四库源图谱、提示词证据层、关键词/向量/RRF 混合索引、查询和评测说明见：
@@ -966,7 +834,7 @@ docs/code_rag/README.md
 python -m pytest tests/code_rag
 python -m pytest tests/test_skill_registry.py tests/test_contracts.py tests/test_coordinator.py tests/test_design_coordinator.py tests/test_dependencies.py tests/test_handoff.py tests/test_graph_v2.py
 python -m pytest tests/test_prompt_registry.py tests/test_initial_state_loading.py
-python -m compileall bridge_agents tools tests run_multi_agent.py
+python -m compileall bridge_agents tools tests run_bridge_design_workbench.py
 ```
 
 测试覆盖重点：
