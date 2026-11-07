@@ -19,6 +19,7 @@ from .pier_group import (
 from .state import AgentState
 from .prompt_registry import render_prompt
 from .utils import (
+    discover_route_prefixes,
     extract_json_object,
     get_controller_llm,
     get_revision_llm,
@@ -240,22 +241,6 @@ def get_sample_selector(few_shots_dir: str) -> Any:
 # ============================================================
 # InitialDesignAgent 使用的固定流程工具动作
 # ============================================================
-def _discover_route_prefixes(data_path: str) -> List[str]:
-    """Scan data_path for PM files and return sorted unique file prefixes.
-
-    Returns empty list when data_path is missing or contains no PM files.
-    """
-    if not data_path or not os.path.isdir(data_path):
-        return []
-    import glob as _glob
-    candidates: List[str] = []
-    for pattern in ["*.pm", "*.PM"]:
-        for path in _glob.glob(os.path.join(data_path, pattern)):
-            if os.path.isfile(path):
-                candidates.append(os.path.splitext(os.path.basename(path))[0])
-    return sorted(set(candidates))
-
-
 def load_data_action(state: AgentState) -> Dict[str, Any]:
     if load_and_crop_project_data is None:
         return {"error": "未能导入 load_and_crop_project_data，请检查 tools/data_loader_tool.py。"}
@@ -266,14 +251,13 @@ def load_data_action(state: AgentState) -> Dict[str, Any]:
         end_station = state.get("end_station")
         output_dir = state.get("output_dir")
 
-        # ---- multi-route auto-detection ----
-        prefixes = _discover_route_prefixes(data_path)
-        use_multi_route = (
-            len(prefixes) >= 2
-            and load_and_crop_multi_route_project_data is not None
-        )
+        prefixes = discover_route_prefixes(data_path)
+        if not prefixes and not file_prefix:
+            return {"error": f"路线资料目录中未找到纬地平曲线文件（.pm）：{data_path}"}
 
-        if use_multi_route:
+        if len(prefixes) >= 2:
+            if load_and_crop_multi_route_project_data is None:
+                return {"error": "未能导入多线路数据加载工具，请检查 tools/data_loader_tool.py。"}
             route_ids = ["K", "Z", "Z1", "Z2"]
             route_configs: List[Dict[str, str]] = []
             for idx, pfx in enumerate(prefixes):
@@ -305,7 +289,7 @@ def load_data_action(state: AgentState) -> Dict[str, Any]:
         else:
             payload: Dict[str, Any] = {
                 "base_dir": data_path,
-                "file_prefix": file_prefix,
+                "file_prefix": file_prefix or prefixes[0],
                 "start_station": start_station,
                 "end_station": end_station,
                 "output_dir": output_dir,

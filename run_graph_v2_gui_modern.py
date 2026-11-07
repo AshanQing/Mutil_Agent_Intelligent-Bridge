@@ -29,7 +29,7 @@ def load_initial_form(args: argparse.Namespace):
     form = load_form_state()
     base_config = args.base_config or form.base_config_path
     should_prefill = bool(args.base_config) or not any(
-        (form.user_request, form.data_path, form.drawing_path, form.file_prefix)
+        (form.user_request, form.data_path, form.drawing_path)
     )
     if should_prefill and Path(base_config).is_file():
         loaded = load_form_from_yaml(base_config)

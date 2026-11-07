@@ -83,7 +83,6 @@ def _window(tmp_path: Path, controller=None, dispatcher=None) -> BridgeDesignWor
         data_path=str(tmp_path / "route"),
         drawing_path=str(tmp_path / "input.dxf"),
         output_dir=str(tmp_path),
-        file_prefix="K",
         thread_id="bridge-test",
         external_authorized=True,
     )

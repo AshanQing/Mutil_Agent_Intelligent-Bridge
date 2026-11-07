@@ -8,7 +8,7 @@ import pytest
 
 pytest.importorskip("PySide6")
 
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QLabel
 
 from bridge_agents.gui_modern_model import build_dashboard_model, build_demo_dashboard_model
 from bridge_agents.gui_modern_runtime import run_operation
@@ -69,7 +69,6 @@ def _form(tmp_path) -> ModernGuiForm:
         data_path=str(tmp_path / "route"),
         drawing_path=str(tmp_path / "input.dxf"),
         output_dir=str(tmp_path / "output"),
-        file_prefix="K",
         thread_id="bridge-test-001",
         external_authorized=True,
     )
@@ -84,6 +83,7 @@ def test_window_exposes_complete_workbench_navigation(app, tmp_path) -> None:
     )
 
     assert window.pages.count() == 6
+    assert "线路文件前缀" not in [label.text() for label in window.findChildren(QLabel)]
     assert [button.text().split()[-1] for button in window.nav_buttons] == [
         "工程总览",
         "任务启动",

@@ -19,7 +19,6 @@ PERSISTED_FIELDS = (
     "data_path",
     "drawing_path",
     "output_dir",
-    "file_prefix",
     "max_revision_rounds",
     "max_check_revision_rounds",
     "code_rag_enabled",
@@ -37,7 +36,6 @@ class ModernGuiForm:
     data_path: str = ""
     drawing_path: str = ""
     output_dir: str = ""
-    file_prefix: str = ""
     thread_id: str = field(default_factory=new_thread_id)
     max_revision_rounds: int = 3
     max_check_revision_rounds: int = 2
@@ -50,7 +48,6 @@ class ModernGuiForm:
             data_path=self.data_path,
             input_drawing_path=self.drawing_path,
             output_dir=self.output_dir,
-            file_prefix=self.file_prefix,
             thread_id=self.thread_id,
             max_revision_rounds=int(self.max_revision_rounds),
             max_check_revision_rounds=int(self.max_check_revision_rounds),
@@ -117,7 +114,6 @@ def load_form_from_yaml(path: str | Path) -> ModernGuiForm:
         data_path=str(_pick(payload, "paths", "data_path")),
         drawing_path=str(_pick(payload, "paths", "input_drawing_path")),
         output_dir=str(_pick(payload, "paths", "output_dir")),
-        file_prefix=str(_pick(payload, "route_data", "file_prefix")),
         max_revision_rounds=int(_pick(payload, "agent", "max_revision_rounds", 3)),
         max_check_revision_rounds=int(_pick(payload, "modeling", "max_check_revision_rounds", 2)),
         code_rag_enabled=bool(_pick(payload, "code_rag", "enabled", False)),

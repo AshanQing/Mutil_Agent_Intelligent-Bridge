@@ -28,6 +28,18 @@ def load_settings(config_path: str = "config/settings.yaml") -> Dict[str, Any]:
         return yaml.safe_load(f) or {}
 
 
+def discover_route_prefixes(data_path: str | os.PathLike[str] | None) -> list[str]:
+    """按路线资料目录中的平曲线文件识别线路前缀。"""
+    if not data_path or not os.path.isdir(data_path):
+        return []
+    with os.scandir(data_path) as entries:
+        return sorted({
+            os.path.splitext(entry.name)[0]
+            for entry in entries
+            if not entry.name.startswith(".") and entry.name.lower().endswith(".pm") and entry.is_file()
+        })
+
+
 def pick(settings: Dict[str, Any], *keys: str, default: Any = None) -> Any:
     """从 settings 中宽松读取配置，兼容 flat / nested 两种写法。"""
     for key in keys:

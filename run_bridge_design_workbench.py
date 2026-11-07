@@ -28,7 +28,7 @@ def load_initial_form(args: argparse.Namespace):
     form = load_form_state()
     base_config = args.base_config or form.base_config_path
     should_prefill = bool(args.base_config) or not any(
-        (form.user_request, form.data_path, form.drawing_path, form.file_prefix)
+        (form.user_request, form.data_path, form.drawing_path)
     )
     if should_prefill and Path(base_config).is_file():
         form = load_form_from_yaml(base_config)
@@ -76,14 +76,11 @@ def load_workbench_form(args: argparse.Namespace):
             if isinstance(payload, dict):
                 task = payload.get("task") or {}
                 paths = payload.get("paths") or {}
-                route = payload.get("route_data") or {}
                 if isinstance(task, dict) and task.get("user_request"):
                     form.user_request = str(task["user_request"])
                 if isinstance(paths, dict):
                     form.data_path = str(paths.get("data_path") or form.data_path)
                     form.drawing_path = str(paths.get("input_drawing_path") or form.drawing_path)
-                if isinstance(route, dict):
-                    form.file_prefix = str(route.get("file_prefix") or form.file_prefix)
     return form
 
 

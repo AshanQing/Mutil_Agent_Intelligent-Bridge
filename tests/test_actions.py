@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from typing import Any, Dict
 
+import pytest
+
 from bridge_agents.actions import ActionSpec, get_agent_action_specs, run_action
 from bridge_agents.stage_agents import InitialDesignAgent, StructuralDesignAgent
 from bridge_agents import tool_actions
@@ -50,6 +52,37 @@ def test_stage_plans_resolve_to_registered_action_specs() -> None:
     assert [step.name for step in initial_steps] == ["load_data", "generate_layout_design"]
     assert [step.expected_key for step in initial_steps] == ["cropped_data", "layout_result"]
     assert [step.name for step in structural_steps] == ["extract_design_units"]
+
+
+@pytest.mark.parametrize("prefixes", [("主线",), ("左线", "右线")])
+def test_route_load_action_discovers_routes_without_prefix(tmp_path, monkeypatch, prefixes) -> None:
+    for prefix in prefixes:
+        for extension in ("pm", "WID", "zdm", "dmx"):
+            (tmp_path / f"{prefix}.{extension}").touch()
+    monkeypatch.setattr(
+        tool_actions, "load_and_crop_project_data",
+        lambda **kwargs: {"prefixes": [kwargs["file_prefix"]]},
+    )
+    monkeypatch.setattr(
+        tool_actions, "load_and_crop_multi_route_project_data",
+        lambda **kwargs: {"prefixes": [route["file_prefix"] for route in kwargs["route_configs"]]},
+    )
+    spec = get_agent_action_specs("InitialDesignAgent")["load_data"]
+
+    result = run_action(spec, {"data_path": str(tmp_path), "start_station": "K1+000", "end_station": "K2+000"})
+
+    assert result.ok, result.error
+    assert result.update["cropped_data"]["prefixes"] == sorted(prefixes)
+
+
+def test_route_load_action_explains_directory_without_pm_files(tmp_path) -> None:
+    spec = get_agent_action_specs("InitialDesignAgent")["load_data"]
+
+    result = run_action(spec, {"data_path": str(tmp_path), "start_station": "K1+000", "end_station": "K2+000"})
+
+    assert not result.ok
+    assert ".pm" in result.error
+    assert str(tmp_path) in result.error
 
 
 def test_structural_plan_always_injects_compute_pier_groups_before_reinforcement() -> None:

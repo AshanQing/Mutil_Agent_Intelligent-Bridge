@@ -23,7 +23,6 @@ def test_form_round_trip_excludes_authorization_and_thread_id(tmp_path: Path) ->
         data_path="D:/route",
         drawing_path="D:/input.dxf",
         output_dir="D:/output/run",
-        file_prefix="K",
         thread_id="secret-thread",
         external_authorized=True,
     )
@@ -65,7 +64,7 @@ def test_load_form_from_yaml_reads_only_public_run_inputs(tmp_path: Path) -> Non
 
     assert form.user_request == "设计桥梁"
     assert form.data_path == "data/route"
-    assert form.file_prefix == "K"
+    assert not form.to_run_config().file_prefix
     assert form.max_revision_rounds == 4
     assert form.max_check_revision_rounds == 5
     assert form.code_rag_enabled is True

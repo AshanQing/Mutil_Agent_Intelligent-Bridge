@@ -542,9 +542,6 @@ paths:
   input_drawing_path: path/to/input_drawing.dxf
   output_dir: output/layout_agent_run_example_K1_000-K2_600
 
-route_data:
-  file_prefix: K-终版
-
 structure:
   dimension_max_workers: 4
   reinforcement_max_workers: 3
@@ -567,9 +564,8 @@ code_rag:
 ```text
 task.user_request       用户自然语言设计任务
 paths.data_path         纬地原始资料目录
-paths.input_drawing_path 输入图纸路径，通常是 DXF/DWG 转换后的图纸
+paths.input_drawing_path 输入图纸路径，支持 DXF 和 DWG
 paths.output_dir        本次运行主输出目录，也是断点续跑扫描目录
-route_data.file_prefix  纬地文件前缀，用于定位 .pm/.WID/.zdm/.dmx 文件
 structure.*             尺寸和配筋批处理并发数、模型格式修复次数
 modeling.*              验算子图最大步骤数和结构返修轮次
 modeling.auto_run_opensees_if_missing 分组缺少 OpenSees 内力文件时是否自动补跑分析（默认 false，需人工确认后显式开启）
@@ -577,7 +573,7 @@ code_rag.enabled        是否在结构设计与最终问答中启用规范检�
 code_rag.retrieval_mode auto / keyword_only / vector_only / hybrid
 ```
 
-如果 `data_path` 下只有一个 `.pm` 或 `.PM` 文件，系统会自动推断 `file_prefix`。如果目录内有多条路线资料，建议显式填写。
+路线资料只需选择目录。每条线路的四份纬地资料应放在同一目录，并使用相同的文件名主体，例如 `主线.pm`、`主线.WID`、`主线.zdm`、`主线.dmx`。系统通过目录中的 `.pm` 或 `.PM` 文件识别线路，再按文件名配对其他资料。同一工程的左右线可各放一组，系统会走多线路加载。不同工程和备份资料请分目录存放。桌面表单无需填写线路前缀，旧命令行配置中的 `route_data.file_prefix` 可继续用于单线路。
 
 不建议在普通配置中填写中间成果路径。以下内容由系统从 `output_dir` 自动发现：
 
@@ -714,18 +710,26 @@ mmsegmentation==1.2.2
 ftfy
 ```
 
-当前推荐使用项目已配置的 `bridge_design` Conda 环境：
-
-```powershell
-python
-```
-
-安装依赖：
+在项目的 Python 环境中，从仓库根目录安装依赖：
 
 ```powershell
 python -m pip install -r requirements.txt
 python -m pip install -r requirements-vision.txt
 ```
+
+### DWG 转 DXF 所需的外部程序
+
+已有 `.dxf` 时，在桌面表单或 `paths.input_drawing_path` 直接选择它。使用 `.dwg` 且需要裁剪图纸时，系统会调用单独安装的 ODA File Converter 生成 DXF。`pip install -r requirements.txt` 只安装 Python 包，ODA File Converter 需要通过官方安装程序另行安装。[ODA File Converter 官方下载](https://www.opendesign.com/guestfiles/oda_file_converter)
+
+1. 在 Windows 上安装 ODA File Converter，找到实际的 `ODAFileConverter.exe`。
+2. 编辑 `config/settings.yaml` 的 `drawing_crop_and_mask.converter_path`。仓库随附的值如下。如果安装版本或位置不同，把它改为本机的可执行文件绝对路径。
+
+   ```yaml
+   drawing_crop_and_mask:
+     converter_path: C:/Program Files/ODA/ODAFileConverter 26.10.0/ODAFileConverter.exe
+   ```
+
+3. 启动桌面工作台时用 `--base-config` 指向这份文件，例如 `python run_bridge_design_workbench.py --base-config config/settings.yaml`。命令行运行时使用 `--config config/settings.yaml`。选择 `.dwg` 后，转换生成的 DXF 默认写入 `<output_dir>/dxf/`，后续裁剪读取这个文件。
 
 ## 11. 运行方式
 
@@ -737,7 +741,7 @@ Windows 用户可以通过独立桌面窗口完成任务配置、Graph V2 启动
 & 'python' run_graph_v2_gui.py
 ```
 
-窗口固定使用 Graph V2，不提供兼容图选择。它只暴露任务描述、路线数据、输入图纸、输出目录、线路前缀和修正轮次；中间成果继续由 `output_dir` 自动发现。最近一次填写的表单字段（任务描述、路径、前缀、轮次与 RAG 开关等）会自动保存到 `output/.graph_v2_gui_state.json`，下次启动自动恢复上次内容，避免重复填写；需要时仍可点“基础配置-选择”载入历史 `config/settings.yaml` 回填。每次启动会在以下位置保存独立配置快照，不覆盖原始 `config/settings.yaml`：
+窗口固定使用 Graph V2。用户填写任务描述、路线资料目录、输入图纸、输出目录和修正轮次，线路由系统自动识别，中间成果由 `output_dir` 自动发现。最近一次填写的表单字段会自动保存到 `output/.graph_v2_gui_state.json`，下次启动自动恢复。也可通过“基础配置-选择”载入 `config/settings.yaml`。每次启动会保存独立配置快照。
 
 #### 现代 Graph V2 工作台（PySide6）
 
@@ -828,7 +832,7 @@ python run_bridge_design_workbench.py --output-dir output
   --paper
 ```
 
-任务输入页只暴露任务描述、路线数据、输入图纸、输出目录、线路前缀和修正轮数。运行 ID 自动生成；最近一次表单会保存到 `output/.graph_v2_gui_modern_state.json`，外发授权、运行 ID 和密钥不会持久化。Graph V2、人工恢复、整体评估和问答均在后台线程执行。
+任务输入页提供任务描述、路线资料目录、输入图纸、输出目录和修正轮数。线路由系统从目录识别，运行 ID 自动生成。最近一次表单会保存到 `output/.graph_v2_gui_modern_state.json`，外发授权、运行 ID 和密钥不会持久化。Graph V2、人工恢复、整体评估和问答均在后台线程执行。
 
 生成固定 1440×900 的论文截图并自动退出：
 

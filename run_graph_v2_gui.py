@@ -45,7 +45,6 @@ GUI_STATE_KEYS = (
     "data_path",
     "drawing_path",
     "output_dir",
-    "file_prefix",
     "max_revision",
     "max_check_revision",
     "code_rag",
@@ -295,7 +294,6 @@ class BridgeDesignConsole(tk.Tk):
             "data_path": tk.StringVar(),
             "drawing_path": tk.StringVar(),
             "output_dir": tk.StringVar(),
-            "file_prefix": tk.StringVar(),
             "thread_id": tk.StringVar(value=f"bridge-{datetime.now():%Y%m%d-%H%M}-{uuid4().hex[:5]}"),
             "max_revision": tk.IntVar(value=3),
             "max_check_revision": tk.IntVar(value=2),
@@ -307,9 +305,8 @@ class BridgeDesignConsole(tk.Tk):
         self.request_text.pack(fill="x", pady=(0, 11))
         self._path_field("基础配置", "base_config", self._choose_base_config)
         self._path_field("路线数据目录", "data_path", lambda: self._choose_dir("data_path"))
-        self._path_field("输入 DXF 图纸", "drawing_path", self._choose_drawing)
+        self._path_field("输入 DXF / DWG 图纸", "drawing_path", self._choose_drawing)
         self._path_field("输出目录", "output_dir", lambda: self._choose_dir("output_dir"))
-        self._entry_field("线路文件前缀", "file_prefix")
         self._thread_field()
 
         rounds = ttk.Frame(parent, style="Panel.TFrame")
@@ -335,10 +332,6 @@ class BridgeDesignConsole(tk.Tk):
 
     def _label(self, text: str) -> None:
         ttk.Label(self.config_panel, text=text, style="Hint.TLabel").pack(anchor="w", pady=(0, 3))
-
-    def _entry_field(self, label: str, key: str) -> None:
-        self._label(label)
-        ttk.Entry(self.config_panel, textvariable=self.vars[key]).pack(fill="x", pady=(0, 10))
 
     def _path_field(self, label: str, key: str, command: Callable[[], None]) -> None:
         self._label(label)
@@ -1049,7 +1042,6 @@ class BridgeDesignConsole(tk.Tk):
         self.vars["data_path"].set(_pick(settings, "paths", "data_path"))
         self.vars["drawing_path"].set(_pick(settings, "paths", "input_drawing_path"))
         self.vars["output_dir"].set(_pick(settings, "paths", "output_dir"))
-        self.vars["file_prefix"].set(_pick(settings, "route_data", "file_prefix"))
         self.vars["max_revision"].set(int(_pick(settings, "agent", "max_revision_rounds", 3)))
         self.vars["max_check_revision"].set(int(_pick(settings, "modeling", "max_check_revision_rounds", 2)))
         self.vars["code_rag"].set(bool(_pick(settings, "code_rag", "enabled", False)))
@@ -1061,7 +1053,6 @@ class BridgeDesignConsole(tk.Tk):
             "data_path": self.vars["data_path"].get().strip(),
             "drawing_path": self.vars["drawing_path"].get().strip(),
             "output_dir": self.vars["output_dir"].get().strip(),
-            "file_prefix": self.vars["file_prefix"].get().strip(),
             "max_revision": int(self.vars["max_revision"].get()),
             "max_check_revision": int(self.vars["max_check_revision"].get()),
             "code_rag": bool(self.vars["code_rag"].get()),
@@ -1078,7 +1069,7 @@ class BridgeDesignConsole(tk.Tk):
         values = load_gui_form_state()
         if not values:
             return
-        for key in ("base_config", "data_path", "drawing_path", "output_dir", "file_prefix"):
+        for key in ("base_config", "data_path", "drawing_path", "output_dir"):
             if key in values and isinstance(values[key], str):
                 self.vars[key].set(values[key])
         for key in ("max_revision", "max_check_revision"):
@@ -1118,7 +1109,6 @@ class BridgeDesignConsole(tk.Tk):
             data_path=self.vars["data_path"].get(),
             input_drawing_path=self.vars["drawing_path"].get(),
             output_dir=self.vars["output_dir"].get(),
-            file_prefix=self.vars["file_prefix"].get(),
             thread_id=self.vars["thread_id"].get(),
             max_revision_rounds=self.vars["max_revision"].get(),
             max_check_revision_rounds=self.vars["max_check_revision"].get(),

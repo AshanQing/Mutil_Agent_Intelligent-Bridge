@@ -388,13 +388,10 @@ class ModernBridgeWindow(QMainWindow):
             form_layout.addLayout(row)
         grid = QGridLayout()
         grid.setHorizontalSpacing(12)
-        grid.addWidget(self._field_label("线路文件前缀"), 0, 0)
-        grid.addWidget(self._field_label("运行 ID（自动生成）"), 0, 1)
-        self.prefix_edit = QLineEdit(self.form.file_prefix)
+        grid.addWidget(self._field_label("运行 ID（自动生成）"), 0, 0, 1, 2)
         self.thread_edit = QLineEdit(self.form.thread_id)
         self.thread_edit.setReadOnly(True)
-        grid.addWidget(self.prefix_edit, 1, 0)
-        grid.addWidget(self.thread_edit, 1, 1)
+        grid.addWidget(self.thread_edit, 1, 0, 1, 2)
         grid.addWidget(self._field_label("布跨修正轮数"), 2, 0)
         grid.addWidget(self._field_label("验算返修轮数"), 2, 1)
         self.revision_spin = QSpinBox()
@@ -660,7 +657,7 @@ class ModernBridgeWindow(QMainWindow):
             data_path=self.form_edits["data_path"].text().strip(),
             drawing_path=self.form_edits["drawing_path"].text().strip(),
             output_dir=self.form_edits["output_dir"].text().strip(),
-            file_prefix=self.prefix_edit.text().strip(), thread_id=self.thread_edit.text().strip(),
+            thread_id=self.thread_edit.text().strip(),
             max_revision_rounds=self.revision_spin.value(),
             max_check_revision_rounds=self.check_revision_spin.value(),
             code_rag_enabled=self.rag_check.isChecked(),
@@ -672,7 +669,6 @@ class ModernBridgeWindow(QMainWindow):
         self.task_request.setPlainText(form.user_request)
         for key in ("base_config_path", "data_path", "drawing_path", "output_dir"):
             self.form_edits[key].setText(str(getattr(form, key)))
-        self.prefix_edit.setText(form.file_prefix)
         self.thread_edit.setText(form.thread_id)
         self.revision_spin.setValue(form.max_revision_rounds)
         self.check_revision_spin.setValue(form.max_check_revision_rounds)

@@ -15,7 +15,15 @@ from .stage_agents import AGENT_REGISTRY
 from .state import AgentState
 from .agent_logger import AgentLogger, summarize_state_for_log
 from .prompt_registry import render_prompt
-from .utils import extract_json_object, get_controller_llm, json_safe, load_settings, pick, regex_extract_stations
+from .utils import (
+    discover_route_prefixes,
+    extract_json_object,
+    get_controller_llm,
+    json_safe,
+    load_settings,
+    pick,
+    regex_extract_stations,
+)
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -543,24 +551,6 @@ def _all_files(pattern: str) -> List[str]:
     )
 
 
-def _infer_single_route_prefix(data_path: Any) -> Optional[str]:
-    """Infer route file prefix when a route folder contains exactly one PM file."""
-    if not data_path:
-        return None
-    data_path = str(data_path)
-    if not os.path.isdir(data_path):
-        return None
-
-    candidates: List[str] = []
-    for pattern in ["*.pm", "*.PM"]:
-        for path in glob.glob(os.path.join(data_path, pattern)):
-            if os.path.isfile(path):
-                candidates.append(os.path.splitext(os.path.basename(path))[0])
-
-    unique = sorted(set(candidates))
-    return unique[0] if len(unique) == 1 else None
-
-
 def _reinforcement_task_ids(payload: Any) -> List[str]:
     """从配筋成果里取出全部设计组任务号（用于判断图纸索引是否覆盖完整）。"""
     if not isinstance(payload, dict):
@@ -863,7 +853,11 @@ def _load_initial_state_from_settings(config_path: str) -> Dict[str, Any]:
     reinforcement_yaml_path = discovered.get("reinforcement_yaml_path")
     opensees_force_json_path = discovered.get("opensees_force_json_path")
     data_path = pick(settings, "data_path", "base_dir")
-    file_prefix = pick(settings, "file_prefix") or _infer_single_route_prefix(data_path)
+    file_prefix = pick(settings, "file_prefix")
+    if not file_prefix:
+        prefixes = discover_route_prefixes(data_path)
+        if len(prefixes) == 1:
+            file_prefix = prefixes[0]
     max_revision_rounds = int(pick(settings, "max_revision_rounds", default=3) or 3)
     restored_revision_round = int(discovered.get("iteration_index") or 0)
     restored_manual_review = bool(

@@ -100,7 +100,7 @@ ACTION_SPECS: Dict[str, ActionSpec] = {
         name="load_data",
         func=load_data_action,
         expected_key="cropped_data",
-        required_keys=("data_path", "file_prefix", "start_station", "end_station"),
+        required_keys=("data_path", "start_station", "end_station"),
         produced_keys=("data_loader_result", "cropped_data", "plane_json_path"),
         description="Load and crop route source data.",
     ),

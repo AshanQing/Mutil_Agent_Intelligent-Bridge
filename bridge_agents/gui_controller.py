@@ -103,8 +103,8 @@ class GuiRunConfig:
     data_path: str
     input_drawing_path: str
     output_dir: str
-    file_prefix: str
-    thread_id: str
+    file_prefix: str = ""
+    thread_id: str = ""
     max_revision_rounds: int = 3
     max_check_revision_rounds: int = 2
     code_rag_enabled: bool = False
@@ -115,7 +115,6 @@ class GuiRunConfig:
             "路线数据目录": self.data_path,
             "输入图纸": self.input_drawing_path,
             "输出目录": self.output_dir,
-            "线路文件前缀": self.file_prefix,
             "运行 ID": self.thread_id,
         }
         missing = [label for label, value in required.items() if not str(value or "").strip()]
@@ -397,7 +396,13 @@ class GraphV2Controller:
         paths["data_path"] = config.data_path.strip()
         paths["input_drawing_path"] = config.input_drawing_path.strip()
         paths["output_dir"] = config.output_dir.strip()
-        payload.setdefault("route_data", {})["file_prefix"] = config.file_prefix.strip()
+        payload.pop("file_prefix", None)
+        for section in ("paths", "data", "route_data"):
+            values = payload.get(section)
+            if isinstance(values, dict):
+                values.pop("file_prefix", None)
+        if config.file_prefix.strip():
+            payload.setdefault("route_data", {})["file_prefix"] = config.file_prefix.strip()
         payload.setdefault("agent", {})["max_revision_rounds"] = int(config.max_revision_rounds)
         payload.setdefault("modeling", {})["max_check_revision_rounds"] = int(
             config.max_check_revision_rounds

@@ -86,6 +86,7 @@ def test_gui_form_state_round_trip_uses_allowlist(tmp_path: Path) -> None:
     assert restored["user_request"] == "执行全流程设计"
     assert restored["output_dir"] == "D:/output/test"
     assert restored["code_rag"] is True
+    assert "file_prefix" not in restored
     assert "thread_id" not in restored
     assert "external_authorized" not in restored
     assert "api_key" not in restored
@@ -134,6 +135,21 @@ def test_start_writes_isolated_snapshot_and_forces_graph_v2(tmp_path: Path) -> N
             },
         )
     ]
+
+
+def test_snapshot_uses_route_directory_instead_of_saved_prefix(tmp_path: Path) -> None:
+    base = _base_config(tmp_path / "settings.yaml")
+    config = GuiRunConfig(
+        user_request="完成布跨", data_path=str(tmp_path / "route"),
+        input_drawing_path=str(tmp_path / "input.dwg"),
+        output_dir=str(tmp_path / "output"), thread_id="route-auto",
+    )
+    controller = GraphV2Controller(run_agent_fn=lambda *args, **kwargs: {})
+
+    snapshot = controller.write_config_snapshot(config, base_config_path=base)
+
+    assert "file_prefix" not in yaml.safe_load(snapshot.read_text(encoding="utf-8")).get("route_data", {})
+    assert yaml.safe_load(base.read_text(encoding="utf-8"))["route_data"]["file_prefix"] == "OLD"
 
 
 def test_snapshot_absolutizes_relative_path_fields(tmp_path: Path) -> None:

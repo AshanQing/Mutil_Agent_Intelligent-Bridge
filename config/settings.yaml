@@ -114,7 +114,7 @@ paths:
 # 5. 路线资料配置
 # ======================================================
 route_data:
-  # GUI 覆盖。
+  # 可留空，由系统从路线资料目录识别。旧命令行配置可显式指定单线路前缀。
   file_prefix: ""
   structures_filename: null
 
@@ -139,6 +139,7 @@ segmentation:
   background_id: 0
 
 drawing_crop_and_mask:
+  # DWG 输入使用外部 ODA File Converter。请按本机安装位置填写；DXF 可直接读取。
   converter_path: C:/Program Files/ODA/ODAFileConverter 26.10.0/ODAFileConverter.exe
   # dxf_output_dir 由系统按 <output_dir>/dxf 自动生成。
   layer_config_json: null
