@@ -717,6 +717,17 @@ python -m pip install -r requirements.txt
 python -m pip install -r requirements-vision.txt
 ```
 
+### 图纸语义分割模型
+
+默认模型配置与权重在 `seg_model/` 中，`config/settings.yaml` 已指向仓库内的相对路径。权重使用 Git LFS 跟踪。安装 [Git LFS](https://git-lfs.com/) 后，在仓库根目录运行：
+
+```powershell
+git lfs install
+git lfs pull
+```
+
+确认 `seg_model/best_mIoU_iter_40000.pth` 已下载，再安装 `requirements-vision.txt` 中的依赖，并从仓库根目录启动程序。`二值化掩码.ipynb` 是早期独立试验示例，单独运行时需调整其中的模型和图片路径。
+
 ### DWG 转 DXF 所需的外部程序
 
 已有 `.dxf` 时，在桌面表单或 `paths.input_drawing_path` 直接选择它。使用 `.dwg` 且需要裁剪图纸时，系统会调用单独安装的 ODA File Converter 生成 DXF。`pip install -r requirements.txt` 只安装 Python 包，ODA File Converter 需要通过官方安装程序另行安装。[ODA File Converter 官方下载](https://www.opendesign.com/guestfiles/oda_file_converter)

@@ -34,7 +34,6 @@ tests/**/test_tmp_*.py
 doc_dump.xml
 _resume_extract.txt
 resume_text.txt
-seg_model/
 
 # Unrelated external apps / tests
 apps/

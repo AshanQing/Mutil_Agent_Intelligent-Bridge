@@ -130,9 +130,9 @@ retrieval:
 # 7. 图纸裁剪与语义分割配置
 # ======================================================
 segmentation:
-  # 机器相关资源，使用本机实际绝对路径。
-  config_file: ""   # 本机语义分割模型配置，按需填写
-  checkpoint_file: ""   # 本机语义分割模型权重，按需填写
+  # 仓库内模型路径，权重通过 Git LFS 下载。
+  config_file: seg_model/Hailong_DeepLabV3plus_20230818.py
+  checkpoint_file: seg_model/best_mIoU_iter_40000.pth
   device: cpu
   patch_size: 512
   stride: 512
