@@ -2,6 +2,7 @@
 python-dotenv
 langgraph
 langgraph-checkpoint-sqlite
+msgpack  # Readable diagnostics for legacy checkpoint writes.
 langchain-core
 langchain-openai
 openai
@@ -23,6 +24,7 @@ tqdm
 # Drawing and visualization
 opencv-python<4.12
 matplotlib
+Pillow>=9.1
 ezdxf
 PySide6>=6.7,<7
 # OpenSeesPy 3.7.0.3 Windows wheel links against python312.dll;

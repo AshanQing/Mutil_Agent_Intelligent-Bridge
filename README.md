@@ -672,49 +672,13 @@ layout_revision/final_layout_result.json
 
 ## 10. 技术栈与依赖
 
-核心依赖见 `requirements.txt`：
-
-```text
-python-dotenv
-langgraph
-langgraph-checkpoint-sqlite
-langchain-core
-langchain-openai
-openai
-PyYAML
-numpy
-pandas
-pydantic
-jinja2
-sentence-transformers==2.7.0
-transformers==4.35.2
-pytest
-httpx
-tqdm
-opencv-python
-matplotlib
-ezdxf
-openseespy==3.5.1.11
-openseespywin==3.5.1.11（Windows）
-```
-
-视觉分割相关依赖见 `requirements-vision.txt`：
-
-```text
-torch==2.1.0+cpu
-torchvision==0.16.0+cpu
-mmengine
-mmcv==2.1.0
-mmsegmentation==1.2.2
-ftfy
-```
-
-在项目的 Python 环境中，从仓库根目录安装依赖：
+完整工作台的安装环境为 Windows x64、Python 3.11。建议在新建的 Python 环境中，从仓库根目录执行以下命令。
 
 ```powershell
-python -m pip install -r requirements.txt
 python -m pip install -r requirements-vision.txt
 ```
+
+视觉依赖清单已包含主依赖清单，这一条命令会安装工作台、工程计算和 CPU 图纸分割所需的 Python 包。[主依赖清单](requirements.txt) · [视觉依赖清单](requirements-vision.txt)
 
 ### 图纸语义分割模型
 
@@ -725,7 +689,7 @@ git lfs install
 git lfs pull
 ```
 
-确认 `seg_model/best_mIoU_iter_40000.pth` 已下载，再安装 `requirements-vision.txt` 中的依赖，并从仓库根目录启动程序。`二值化掩码.ipynb` 是早期独立试验示例，单独运行时需调整其中的模型和图片路径。
+确认 `seg_model/best_mIoU_iter_40000.pth` 已下载，再从仓库根目录启动工作台。`二值化掩码.ipynb` 是早期独立试验示例，单独运行时需调整其中的模型和图片路径。
 
 ### DWG 转 DXF 所需的外部程序
 
