@@ -1,5 +1,7 @@
 # 高速公路桥梁智能设计多智能体系统
 
+> 文档同步日期：2026-11-24。本仓库为整理后的公开代码快照；使用说明按当前公开实现校对，未包含开发仓库的布跨复盘与策略进化模块。
+
 本项目面向高速公路桥梁初步布跨、布跨修正、下部结构尺寸与配筋设计、OpenSees 内力分析和承载力验算反馈，构建了一个基于 LangGraph 的层级多智能体原型系统。
 
 系统采用“LLM 规划与候选生成 + 确定性工程计算与校验 + 状态治理 + 人工复核 + 设计后规范问答”的混合方法。大语言模型承担任务理解、阶段规划和设计候选生成；路线解析、图纸处理、碰撞检测、结构分析、承载力计算、返修方向、批次完整性检查与调度合法性校验由确定性代码执行。规范 RAG 服务于设计完成后的评估和用户专业问答，不参与尺寸、配筋、荷载、分析或验算运行链。LLM 的调度结果通过工程规则校验后才能进入下一阶段。
@@ -28,7 +30,8 @@ python run_bridge_design_workbench.py
 run_bridge_design_workbench.py   桥梁设计工作台
 bridge_agents/           LangGraph 编排、阶段 Agent、协调器、共享状态、Prompt/Skill Registry、RAG
 tools/                   工程工具脚本和 LangChain Tool 封装
-prompts/                 当前有效 Prompt 模板和 manifest
+skills/                  角色职责与评估、问答专项方法
+prompts/                 当前有效 Agent/任务 Prompt、复用片段和 manifest
 config/                  用户配置文件
 data/                    规范四库、RAG 评测、few-shot、规则和绘图配置
 samples/                 尺寸设计、配筋设计样例
@@ -46,7 +49,7 @@ misc/                    非主体资料：历史归档、计划文档、面试�
 ```text
 总体协调与治理层
 DesignCoordinatorAgent + 调度合法性校验 + Human Review
-        │ 阶段目标                      ▲ StageHandoff
+        │ 阶段路由                      ▲ StageHandoff
         ▼                               │
 专业 Agent 子图层
 InitialDesign / LayoutRevision / StructuralDesign / ModelingCheck
@@ -173,6 +176,14 @@ task_allocation
 
 ## 3. 阶段 Agent
 
+### DesignCoordinatorAgent
+
+位置：`bridge_agents/design_coordinator.py`，角色来源：`skills/design-coordinator/SKILL.md`。
+
+Graph V2 的总体协调角色。模型读取用户需求、成果状态摘要、最新 StageHandoff 与上次调度校验错误，提出 `intent / next_stage / stage_objective / reason / revision_target / required_artifacts / task_complete`。调度经确定性规则校验后执行；终态判断和模型不可用时的规则兜底也由代码处理。
+
+它与四个专业 Agent 组成“总体协调—专业执行”两层组织。专业 Agent 通过共享成果、结构化交接和验算返修反馈协作，当前没有专业 Agent 之间的自由协商。`stage_objective` 已被记录，专业阶段尚未普遍将其作为独立输入消费；实际联动以阶段路由、成果状态和返修上下文为主。
+
 ### TaskAllocationAgent
 
 位置：`bridge_agents/agent.py`
@@ -292,7 +303,7 @@ finish_check
 该 Agent 位于设计主图结束后的独立只读链，负责：
 
 - 从 `output_dir` 检索布跨、结构设计、批量验算等项目成果；
-- 检索与问题相关的规范证据；
+- 针对需要规范依据的专业问题，按需检索相关规范证据；
 - 生成整体设计评估；
 - 回答针对当前成果的后续专业问题；
 - 校验回答引用的 `[ARTIFACT-...]` 与 `[EVID_...]` 是否真实存在；
@@ -347,15 +358,16 @@ AgentState
   `- handoff / manual_review / accepted_risks
 
 AgentContract
-  |- required_inputs
-  |- produced_outputs
-  `- allowed_handoffs
+  |- agent_name / skill_id
+  |- allowed_actions
+  |- readable_state_keys
+  `- produced_state_keys
 
 StageHandoff
-  |- source_stage / target_stage
-  |- status / summary
-  |- artifacts
-  `- feedback / retry metadata
+  |- stage / status / message
+  |- produced_artifacts / findings
+  |- revision_request / invalidated_artifacts
+  `- recommended_next_stage / unresolved_code_items
 ```
 
 工程成果按依赖关系组织：
@@ -464,6 +476,7 @@ BridgeDesign_Agent/
   run_bridge_design_workbench.py   桌面任务启动、人工复核和成果查看
   bridge_agents/           多智能体状态、图、契约、协调和运行时
   tools/                   桥梁设计确定性工具与模型任务封装
+  skills/                  角色职责与评估、问答专项方法包
   prompts/                 Prompt manifest、Agent/任务模板和复用片段
   config/                  普通运行配置与模型配置
   data/                    few-shot、规则、示例数据和绘图配置
@@ -682,14 +695,18 @@ python -m pip install -r requirements-vision.txt
 
 ### 图纸语义分割模型
 
-默认模型配置与权重在 `seg_model/` 中，`config/settings.yaml` 已指向仓库内的相对路径。权重使用 Git LFS 跟踪。安装 [Git LFS](https://git-lfs.com/) 后，在仓库根目录运行：
+默认模型配置随源码放在 `seg_model/` 中。从本仓库的公开 Release 下载权重（无需登录或安装 Git LFS），将文件保存为 `seg_model/best_mIoU_iter_40000.pth`，再从仓库根目录启动工作台。已有同一权重时可以直接复用。[下载分割权重（约 245 MiB）](https://github.com/AshanQing/Mutil_Agent_Intelligent-Bridge/releases/download/segmentation-model-v1/best_mIoU_iter_40000.pth)
+
+权重 SHA-256 为 `836b0e2fda15b913f8a16e777a15947dbaba1930f06e6d25c14eb7bf80485419`。
+
+可在仓库根目录用 PowerShell 下载并校验：
 
 ```powershell
-git lfs install
-git lfs pull
+Invoke-WebRequest -Uri "https://github.com/AshanQing/Mutil_Agent_Intelligent-Bridge/releases/download/segmentation-model-v1/best_mIoU_iter_40000.pth" -OutFile "seg_model/best_mIoU_iter_40000.pth"
+Get-FileHash "seg_model/best_mIoU_iter_40000.pth" -Algorithm SHA256
 ```
 
-确认 `seg_model/best_mIoU_iter_40000.pth` 已下载，再从仓库根目录启动工作台。`二值化掩码.ipynb` 是早期独立试验示例，单独运行时需调整其中的模型和图片路径。
+`config/settings.yaml` 默认读取上述相对路径。`二值化掩码.ipynb` 是早期独立试验示例，单独运行时需调整其中的模型和图片路径。
 
 ### DWG 转 DXF 所需的外部程序
 

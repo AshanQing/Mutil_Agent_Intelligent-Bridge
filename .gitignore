@@ -38,3 +38,6 @@ resume_text.txt
 # Unrelated external apps / tests
 apps/
 tests/test_ai_study_tracker.py
+
+# Model weights are downloaded from GitHub Releases.
+/seg_model/*.pth
