@@ -17,8 +17,8 @@ from PySide6.QtWidgets import (
 )
 
 from bridge_agents.gui_controller import (
-    GraphV2Controller, extract_interrupt, infer_stage_states, load_drawing_catalog,
-    snapshot_run_progress,
+    STAGE_ORDER, GraphV2Controller, extract_interrupt, infer_stage_states,
+    load_drawing_catalog, snapshot_run_progress,
 )
 from bridge_agents.gui_modern_chat import ChatSession, format_answer
 from bridge_agents.gui_modern_chat_view import ChatTranscript
@@ -879,6 +879,7 @@ class ModernBridgeWindow(QMainWindow):
         if not self.busy or not self.form.output_dir:
             return
         progress = snapshot_run_progress(self.form.output_dir)
+        self._mark_run_active(progress)
         self.model = build_dashboard_model(
             progress, drawings=load_drawing_catalog(self.form.output_dir),
             project_name=self.model.project_name, route_range=self._resolve_route_range(),
@@ -889,6 +890,32 @@ class ModernBridgeWindow(QMainWindow):
         if recent and recent not in self.run_log.toPlainText()[-600:]:
             self._append_run_log(recent)
         self._refresh_action_log()
+
+    def _mark_run_active(self, progress: dict[str, Any]) -> None:
+        """运行中必须点亮当前阶段，不能只靠日志文件的写入时间判断。
+
+        snapshot_run_progress 用 prompt_trace / llm_usage / checkpoint WAL 最近 5 分钟
+        内有写入来推断是否在跑；初始设计是单个未子图化的节点，布跨生成的一次 LLM 调用
+        往往要 5 到 15 分钟，这期间三处都不写，于是整条链路退回「待开始」。
+        任务线程还没结束（self.busy）才是运行真源：以它为准，并把当前阶段置为 running，
+        避免出现「运行中却没有一个阶段点亮」。
+        """
+        if not self.busy:
+            return
+        progress["running"] = True
+        states = progress.get("stage_states")
+        if not isinstance(states, dict):
+            states = {}
+            progress["stage_states"] = states
+        stage = str(progress.get("active_stage") or "")
+        if stage not in STAGE_ORDER or states.get(stage) == "completed":
+            stage = next(
+                (name for name in STAGE_ORDER if states.get(name) != "completed"),
+                STAGE_ORDER[0],
+            )
+        if states.get(stage) == "pending":
+            states[stage] = "running"
+        progress["active_stage"] = stage
 
     def _refresh_action_log(self) -> None:
         log_path = Path(self.form.output_dir) / "logs" / "agent_run_log.json"

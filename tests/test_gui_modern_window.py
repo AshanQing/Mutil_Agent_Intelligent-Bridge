@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import time
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -238,3 +239,28 @@ def test_explicit_route_range_wins_over_the_request(app, tmp_path) -> None:
     window.start_task()
 
     assert window.model.route_range == "K1+000 — K2+000"
+
+
+def test_overview_stays_lit_while_initial_design_llm_runs(app, tmp_path) -> None:
+    """初始设计长时间调用 LLM 时，日志和检查点可能几分钟不写，总览不能退回「待开始」。"""
+    output = tmp_path / "output"
+    (output / "checkpoints").mkdir(parents=True)
+    (output / "logs").mkdir()
+    stale = time.time() - 900  # 远超 snapshot_run_progress 的 5 分钟活跃窗口
+    for name in ("checkpoints/graph_v2.sqlite-wal", "logs/prompt_trace.jsonl", "logs/llm_usage.jsonl"):
+        path = output / name
+        path.write_text("", encoding="utf-8")
+        os.utime(path, (stale, stale))
+
+    window = ModernBridgeWindow(
+        build_dashboard_model({}),
+        controller=FakeController(),
+        initial_form=_form(tmp_path),
+        operation_dispatcher=sync_dispatch,
+    )
+    window.busy = True  # 任务线程还在跑，进度定时器因此会刷新总览
+    window.refresh_progress()
+
+    assert window.model.run_status == "运行中"
+    assert window.model.stages[0].state == "running"
+    assert window.model.stages[0].state_label == "进行中"
